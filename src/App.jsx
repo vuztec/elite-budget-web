@@ -4,7 +4,6 @@ import {
   Tasks,
   Home,
   Login,
-  LoginAdmin,
   DateFormat,
   Holidays,
   Package,
@@ -95,7 +94,6 @@ function App() {
           <Route path="/packages" element={<Package />} />
         </Route>
         <Route path="/login" element={<Login />} />
-        <Route path="/login/admin" element={<LoginAdmin />} />
         <Route path="/forgetpassword" element={<ForgetPassword />} />
         <Route path="/verifyotp" element={<VerifyOtp />} />
         <Route path="/updatepassword" element={<UpdatePassword />} />

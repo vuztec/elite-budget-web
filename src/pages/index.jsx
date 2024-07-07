@@ -10,7 +10,6 @@ import { TaskDetails } from "./task/TaskDetails";
 import { Home } from "./home/Home";
 
 import { Login } from "./login/Login";
-import { LoginAdmin } from "./login/LoginAdmin";
 
 import { DateFormat } from "./setting/DateFormat";
 import { Holidays } from "./setting/Holidays";
@@ -34,7 +33,6 @@ export {
   Tasks,
   Home,
   Login,
-  LoginAdmin,
   DateFormat,
   Holidays,
   Package,

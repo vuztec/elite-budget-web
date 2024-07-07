@@ -40,7 +40,6 @@ export const Login = () => {
       const response = await axios.post(SERVER_URL + "/api/auth/login", {
         email,
         password,
-        type: "ProjectLiteManager",
       });
 
       if (response.status === 200) {
