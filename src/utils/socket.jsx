@@ -1,7 +1,7 @@
 import { io } from "socket.io-client";
 
 const serverUrl = import.meta.env.VITE_SERVER_URL;
-const storage = window.localStorage.getItem("projectlitemanager");
+const storage = window.localStorage.getItem("elite-budget");
 const auth = storage ? JSON.parse(storage) : null;
 const token = auth ? auth.state.jwt : null;
 

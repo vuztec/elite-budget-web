@@ -1,7 +1,7 @@
 import axios from "axios";
 
 axios.interceptors.request.use(function (config) {
-  const storage = window.localStorage.getItem("projectlitemanager");
+  const storage = window.localStorage.getItem("elite-budget");
   const auth = storage ? JSON.parse(storage) : null;
   const token = auth ? auth.state.jwt : null;
 
@@ -26,7 +26,7 @@ axios.interceptors.response.use(
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     // Do something with response error
     if (error?.response?.data?.code === "jwt_error") {
-      window.localStorage.setItem("projectlitemanager", JSON.stringify({ user: null, jwt: null }));
+      window.localStorage.setItem("elite-budget", JSON.stringify({ user: null, jwt: null }));
       // window.localStorage.setItem("currentUser", JSON.stringify(null));
     }
     return Promise.reject(error);

@@ -25,7 +25,7 @@ const useUserStore = create()(
       setIsRefresh: (refresh) => set(() => ({ isRefresh: refresh })),
     }),
     {
-      name: "projectlitemanager",
+      name: "elite-budget",
     }
   )
 );
