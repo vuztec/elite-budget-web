@@ -7,7 +7,6 @@ import { MdOutlineEdit } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { Menu, Transition } from "@headlessui/react";
 import AddTask from "./AddTask";
-import socket from "../../utils/socket";
 import ConfirmationDialog from "../Dialogs";
 import { useQueryClient } from "react-query";
 import { FaEdit } from "react-icons/fa";
@@ -16,7 +15,7 @@ import { getSuperTaskPermission, getEditTaskPermission } from "../../utils/permi
 
 export const TaskDialog = ({ task, projectData }) => {
   const { user, root } = useUserStore();
-  const current_subcription = root.subscriptions?.[0];
+  const current_subcription = root?.subscriptions?.[0];
 
   //----------------CRUD----------------//
   const queryClient = useQueryClient();
@@ -24,21 +23,8 @@ export const TaskDialog = ({ task, projectData }) => {
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState(null);
 
-  useEffect(() => {
-    socket?.on("taskDeleted", (taskId) => {
-      console.log("Task id ---------", taskId);
-      queryClient.setQueryData(["tasks"], (prev) => prev.filter((task) => task.id !== taskId));
-      setOpenDialog(false);
-    });
-
-    return () => {
-      socket?.off("taskDeleted");
-    };
-  }, []);
-
   const deleteHandler = async (selected) => {
     try {
-      socket?.emit("deleteTask", selected);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -134,7 +120,7 @@ export const TaskDialog = ({ task, projectData }) => {
         </Menu>
       </div>
 
-      <AddTask socket={socket} open={open} setOpen={setOpen} recordData={selected} key={new Date().getTime().toString()} />
+      <AddTask open={open} setOpen={setOpen} recordData={selected} key={new Date().getTime().toString()} />
       <ConfirmationDialog open={openDialog} setOpen={setOpenDialog} onClick={() => deleteHandler(selected)} />
     </>
   );

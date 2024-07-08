@@ -14,6 +14,7 @@ export const getRootUser = async () => {
 /* ----------- =============== Tasks API ============= ---------------- */
 
 export const getTasks = async () => {
+  return [];
   const response = await axios.get(SERVER_URL + `/api/task/rootid`);
 
   if (response.data.status === "success") return response.data?.items;
@@ -23,6 +24,7 @@ export const getTasks = async () => {
 /* ----------- ================ Projects API ================ ---------------- */
 
 export const getProjects = async () => {
+  return [];
   const response = await axios.get(SERVER_URL + `/api/project/rootid`);
 
   if (response.data.status === "success") return response.data.items;
@@ -32,6 +34,7 @@ export const getProjects = async () => {
 /* ---------- ================== Resources API ================= ---------------- */
 
 export const getResources = async () => {
+  return [];
   const response = await axios.get(SERVER_URL + `/api/resource/rootid`);
 
   if (response.data.status === "success") return response.data.items;
@@ -41,6 +44,7 @@ export const getResources = async () => {
 /* ---------- ================== Risks API ================= ---------------- */
 
 export const getRisks = async () => {
+  return [];
   const response = await axios.get(SERVER_URL + `/api/risk/rootid`);
 
   if (response.data.status === "success") return response.data.items;
@@ -50,6 +54,7 @@ export const getRisks = async () => {
 /* ---------- ================== Risks API ================= ---------------- */
 
 export const getCosts = async () => {
+  return [];
   const response = await axios.get(SERVER_URL + `/api/cost/rootid`);
 
   if (response.data.status === "success") return response.data.items;
@@ -59,6 +64,7 @@ export const getCosts = async () => {
 /* ---------- ================== Actions API ================= ---------------- */
 
 export const getActions = async () => {
+  return [];
   const response = await axios.get(SERVER_URL + `/api/action/rootid`);
 
   if (response.data.status === "success") return response.data.items;
@@ -68,6 +74,7 @@ export const getActions = async () => {
 /* ---------- ================== Changes API ================= ---------------- */
 
 export const getChanges = async () => {
+  return [];
   const response = await axios.get(SERVER_URL + `/api/change/rootid`);
 
   if (response.data.status === "success") return response.data.items;
@@ -77,6 +84,7 @@ export const getChanges = async () => {
 /* ---------- ================== Decisions API ================= ---------------- */
 
 export const getDecisions = async () => {
+  return [];
   const response = await axios.get(SERVER_URL + `/api/decision/rootid`);
 
   if (response.data.status === "success") return response.data.items;
@@ -86,6 +94,7 @@ export const getDecisions = async () => {
 /* ---------- ================== Issues API ================= ---------------- */
 
 export const getIssues = async () => {
+  return [];
   const response = await axios.get(SERVER_URL + `/api/issue/rootid`);
 
   if (response.data.status === "success") return response.data.items;
@@ -95,6 +104,7 @@ export const getIssues = async () => {
 /* ---------- ================== Abseentees API ================= ---------------- */
 
 export const getAbsentees = async () => {
+  return [];
   const response = await axios.get(SERVER_URL + `/api/absentee/rootid`);
 
   if (response.data.status === "success") return response.data.items;
@@ -104,6 +114,7 @@ export const getAbsentees = async () => {
 /* ---------- ================== Date Format API ================= ---------------- */
 
 export const getDateFormat = async () => {
+  return [];
   const response = await axios.get(SERVER_URL + `/api/dateformat/rootid`);
 
   if (response.data.status === "success") return response.data.items;
@@ -113,6 +124,7 @@ export const getDateFormat = async () => {
 /* ---------- ================== Currency API ================= ---------------- */
 
 export const getCurrency = async () => {
+  return [];
   const response = await axios.get(SERVER_URL + `/api/currency/rootid`);
 
   if (response.data.status === "success") return response.data.items;
@@ -122,6 +134,7 @@ export const getCurrency = async () => {
 /* ---------- ================== Week Start API ================= ---------------- */
 
 export const getWeekStart = async () => {
+  return [];
   const response = await axios.get(SERVER_URL + `/api/weekstart/rootid`);
 
   if (response.data.status === "success") return response.data.items;
@@ -131,6 +144,7 @@ export const getWeekStart = async () => {
 /* ---------- ================== Weekend API ================= ---------------- */
 
 export const getWeekend = async () => {
+  return [];
   const response = await axios.get(SERVER_URL + `/api/weekend/rootid`);
 
   if (response.data.status === "success") return response.data.items;
@@ -140,6 +154,7 @@ export const getWeekend = async () => {
 /* ---------- ================== Holiday API ================= ---------------- */
 
 export const getHoliday = async () => {
+  return [];
   const response = await axios.get(SERVER_URL + `/api/holiday/rootid`);
 
   if (response.data.status === "success") return response.data.items;
@@ -149,6 +164,7 @@ export const getHoliday = async () => {
 /* ---------- ================== Timesheet API ================= ---------------- */
 
 export const getTimesheets = async () => {
+  return [];
   const response = await axios.get(SERVER_URL + `/api/timesheet/rootid`);
 
   if (response.data.status === "success") return response.data.items;
@@ -158,6 +174,7 @@ export const getTimesheets = async () => {
 /* ---------- ================== Attachments API ================= ---------------- */
 
 export const getAttachments = async (type, id) => {
+  return [];
   if (!id) return [];
   const response = await axios.get(SERVER_URL + `/api/attachment?type=${type}&id=${id}`);
 
@@ -168,6 +185,7 @@ export const getAttachments = async (type, id) => {
 /* ---------- ================== Comments API ================= ---------------- */
 
 export const getComments = async (type, id) => {
+  return [];
   if (!id) return [];
   const response = await axios.get(SERVER_URL + `/api/comment?type=${type}&id=${id}`);
 
@@ -178,6 +196,7 @@ export const getComments = async (type, id) => {
 /* ---------- ================== Sub Task API ================= ---------------- */
 
 export const getSubTasks = async (type, id) => {
+  return [];
   if (!id) return [];
   const response = await axios.get(SERVER_URL + `/api/subtask?type=${type}&id=${id}`);
 
@@ -188,6 +207,7 @@ export const getSubTasks = async (type, id) => {
 /* ---------- ================== Notification API ================= ---------------- */
 
 export const getNotifications = async () => {
+  return [];
   const response = await axios.get(SERVER_URL + `/api/notification/unread`);
 
   if (response.data.status === "success") return response.data.items;
@@ -197,6 +217,7 @@ export const getNotifications = async () => {
 /* ----------- ================ Exchange Rate ================ ----------------- */
 
 export const getExchangeRate = async (currency) => {
+  return [];
   const response = await axios.get(SERVER_URL + `/api/exchange-rate/${currency}`);
 
   if (response.data.status === "success") return response.data.items;

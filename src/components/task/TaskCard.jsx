@@ -28,7 +28,7 @@ import { getEditTaskPermission, getSuperTaskPermission } from "../../utils/permi
 
 export const TaskCard = ({ task, customDateFormat, projectData }) => {
   const { user, root } = useUserStore();
-  const current_subcription = root.subscriptions?.[0];
+  const current_subcription = root?.subscriptions?.[0];
 
   const actual = task?.ActualComplete ? task.ActualComplete : 0;
   const plan = getTaskPlanPercentage(task?.StartDate, task?.TaskDuration);

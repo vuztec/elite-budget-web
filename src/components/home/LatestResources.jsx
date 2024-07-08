@@ -38,31 +38,19 @@ export const LatestResources = ({ resourceData }) => {
     <tr className="border border-gray-300 text-sm xl:text-[16px] hover:bg-gray-400/10 text-left">
       <td className="min-w-fit whitespace-nowrap px-2 border-l border-gray-200">
         <div className="flex items-center gap-3">
-          <div
-            className={clsx(
-              "w-9 h-9 rounded-full text-white flex items-center justify-center text-sm",
-              `bg-[${themeColors[0]}]`
-            )}
-          >
+          <div className={clsx("w-9 h-9 rounded-full text-white flex items-center justify-center text-sm", `bg-[${themeColors[0]}]`)}>
             <span className="text-center">{getInitials(user?.FullName)}</span>
           </div>
 
           <div className="flex flex-col items-start gap-1">
-            <p className="font-semibold"> {user.FullName}</p>
-            <span className="text-xs text-black italic">
-              {user?.Designation}
-            </span>
+            <p className="font-semibold"> {user?.FullName}</p>
+            <span className="text-xs text-black italic">{user?.Designation}</span>
           </div>
         </div>
       </td>
 
       <td className="min-w-fit whitespace-nowrap px-2 border-l border-gray-200">
-        <p
-          className={clsx(
-            "w-full px-3 py-1 rounded-full",
-            user?.Status === "Active" ? "bg-green-200" : "bg-yellow-100"
-          )}
-        >
+        <p className={clsx("w-full px-3 py-1 rounded-full", user?.Status === "Active" ? "bg-green-200" : "bg-yellow-100")}>
           {user?.Status}
         </p>
       </td>
@@ -79,9 +67,7 @@ export const LatestResources = ({ resourceData }) => {
         </div>
       </td>
 
-      <td className="min-w-fit whitespace-nowrap px-2 border-l border-gray-200">
-        {moment(user?.CreatedOn).fromNow()}
-      </td>
+      <td className="min-w-fit whitespace-nowrap px-2 border-l border-gray-200">{moment(user?.CreatedOn).fromNow()}</td>
     </tr>
   );
 
@@ -117,11 +103,9 @@ export const LatestResources = ({ resourceData }) => {
                 <table className="w-[96%] m-5">
                   <TableHeader />
                   <tbody>
-                    {resourceData
-                      ?.slice(pagesVisited, pagesVisited + itemsPerPage)
-                      ?.map((user, index) => (
-                        <TableRow key={index} user={user} />
-                      ))}
+                    {resourceData?.slice(pagesVisited, pagesVisited + itemsPerPage)?.map((user, index) => (
+                      <TableRow key={index} user={user} />
+                    ))}
                   </tbody>
                 </table>
               </div>

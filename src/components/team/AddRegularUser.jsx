@@ -13,7 +13,7 @@ import { TiCancel } from "react-icons/ti";
 import { dateFormatter } from "../../utils";
 import { getAdminUserPermission } from "../../utils/permissions";
 
-export const AddRegularUser = ({ open, setOpen, recordData, socket }) => {
+export const AddRegularUser = ({ open, setOpen, recordData }) => {
   const queryClient = useQueryClient();
 
   let defaultValues = recordData
@@ -41,34 +41,6 @@ export const AddRegularUser = ({ open, setOpen, recordData, socket }) => {
     formState: { errors },
   } = useForm({ defaultValues });
 
-  useEffect(() => {
-    socket?.on("userAdded", (user) => {
-      console.log("User added : ", user);
-      setIsLoading(() => false);
-
-      queryClient.setQueryData(["resources"], (prev) => (prev ? [...prev, user] : [user]));
-
-      setOpen(false);
-    });
-
-    socket?.on("userUpdated", (updatedUser, id) => {
-      console.log("updated user :", updatedUser);
-      setIsLoading(() => false);
-
-      queryClient.setQueryData(["resources"], (prev) => prev.map((user) => (user.id === id ? updatedUser : user)));
-
-      if (currentUser.id === id) {
-        setUser(updatedUser);
-      }
-      setOpen(false);
-    });
-
-    return () => {
-      socket?.off("userAdded");
-      socket?.off("userUpdated");
-    };
-  }, []);
-
   // Define handleOnSubmit function to handle form submission
   const handleOnSubmit = async (data) => {
     const numericSelectedID = parseInt(data.id);
@@ -79,13 +51,11 @@ export const AddRegularUser = ({ open, setOpen, recordData, socket }) => {
         // If 'id' is not present, it's a new resource, so we add 'RootID' and use POST method
         data.RootID = currentUser.RootID;
         data.Password = currentUser.Email;
-        socket?.emit("addUser", data);
       } else {
         // If 'id' is present, it's an update, so we remove 'RootID' and 'id' and use PUT method
         delete data.RootID;
         delete data.id;
         delete data.Password;
-        socket?.emit("updateUser", data, numericSelectedID);
       }
     } catch (error) {
       setIsLoading(() => false);

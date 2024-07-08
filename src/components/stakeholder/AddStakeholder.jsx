@@ -14,7 +14,7 @@ import { handleAxiosResponseError } from "../../utils/handleResponseError";
 
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
-const AddStakeholder = ({ open, setOpen, recordData, itemID, type, socket, stakeholders }) => {
+const AddStakeholder = ({ open, setOpen, recordData, itemID, type, stakeholders }) => {
   const queryClient = useQueryClient();
   const [isLoading, setIsLoading] = useState(false);
 

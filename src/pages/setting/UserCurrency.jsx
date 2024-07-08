@@ -11,13 +11,10 @@ import ConfirmationDialog from "../../components/Dialogs";
 import { AddCurrency } from "../../components/setting";
 import { FaEdit } from "react-icons/fa";
 import { RiDeleteBin2Fill } from "react-icons/ri";
-import socket from "../../utils/socket";
+
 import { themeColors } from "../../utils";
 import { GrCurrency } from "react-icons/gr";
-import {
-  getActiveAccount,
-  getAddProjectPermission,
-} from "../../utils/permissions";
+import { getActiveAccount, getAddProjectPermission } from "../../utils/permissions";
 import Package from "../../package/Package";
 
 export const UserCurrency = () => {
@@ -31,21 +28,8 @@ export const UserCurrency = () => {
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState(null);
 
-  useEffect(() => {
-    socket?.on("currencyDeleted", (user) => {
-      console.log("Currency id ---------", user);
-      updateRoot({ Currency: "$" });
-      setOpenDialog(false);
-    });
-
-    return () => {
-      socket?.off("currencyDeleted");
-    };
-  }, []);
-
   const deleteHandler = () => {
     try {
-      socket?.emit("deleteCurrency");
     } catch (error) {
       console.error("Error:", error);
     }
@@ -71,33 +55,23 @@ export const UserCurrency = () => {
     <thead>
       <tr className="text-gray-600 font-bold bg-[whitesmoke] border border-gray-400 text-left text-sm xl:text-[16px]">
         <th className="border-l border-gray-300 p-2">Currency</th>
-        {getAddProjectPermission(user) && (
-          <th className="border-l border-gray-300 p-2">Actions</th>
-        )}
+        {getAddProjectPermission(user) && <th className="border-l border-gray-300 p-2">Actions</th>}
       </tr>
     </thead>
   );
 
   const TableRow = ({ currency }) => (
     <tr className="border border-gray-300 text-sm xl:text-[16px] hover:bg-gray-400/10 text-left">
-      <td className="min-w-max p-2 whitespace-nowrap border-l border-gray-200">
-        {currency.Currency}
-      </td>
+      <td className="min-w-max p-2 whitespace-nowrap border-l border-gray-200">{currency.Currency}</td>
       {getAddProjectPermission(user) && (
         <td className="min-w-max p-2 border-l border-gray-200">
           <div className="flex items-center text-left gap-4 justify-start">
             <FaEdit
-              className={clsx(
-                "text-editcolor",
-                "hover:text-orange-500 font-semibold cursor-pointer"
-              )}
+              className={clsx("text-editcolor", "hover:text-orange-500 font-semibold cursor-pointer")}
               onClick={() => editClick(currency)}
             />
             <RiDeleteBin2Fill
-              className={clsx(
-                "text-deletecolor",
-                "hover:text-red-500 font-semibold cursor-pointer sm:px-0"
-              )}
+              className={clsx("text-deletecolor", "hover:text-red-500 font-semibold cursor-pointer sm:px-0")}
               onClick={() => deleteClick(currency.id)}
             />
           </div>
@@ -153,19 +127,9 @@ export const UserCurrency = () => {
           <Package />
         ))}
 
-      <AddCurrency
-        socket={socket}
-        open={open}
-        setOpen={setOpen}
-        recordData={selected}
-        key={new Date().getTime().toString()}
-      />
+      <AddCurrency open={open} setOpen={setOpen} recordData={selected} key={new Date().getTime().toString()} />
 
-      <ConfirmationDialog
-        open={openDialog}
-        setOpen={setOpenDialog}
-        onClick={() => deleteHandler(selected)}
-      />
+      <ConfirmationDialog open={openDialog} setOpen={setOpenDialog} onClick={() => deleteHandler(selected)} />
     </>
   );
 };

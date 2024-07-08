@@ -17,7 +17,7 @@ import { handleAxiosResponseError } from "../../utils/handleResponseError";
 
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
-export const AddAbsentee = ({ open, setOpen, recordData, socket }) => {
+export const AddAbsentee = ({ open, setOpen, recordData }) => {
   const queryClient = useQueryClient();
   const { data: resourceData } = useQuery({
     queryKey: ["resources"],

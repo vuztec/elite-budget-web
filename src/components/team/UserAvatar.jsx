@@ -7,7 +7,6 @@ import { getInitials } from "../../utils";
 import useUserStore from "../../app/user";
 import AddRootUser from "./AddRootUser";
 import { AddRegularUser, ChangePassword } from "../team";
-import socket from "../../utils/socket";
 import { useQueryClient } from "react-query";
 
 const serverUrl = import.meta.env.VITE_SERVER_URL;
@@ -25,7 +24,6 @@ export const UserAvatar = () => {
     setJwt(null);
     setIsRefresh(true);
     queryClient.clear();
-    socket?.disconnect();
     navigate("/login");
   };
 
@@ -121,7 +119,6 @@ export const UserAvatar = () => {
       )}
       {user?.Type !== "Root" && (
         <AddRegularUser
-          socket={socket}
           // setResourceData={setResourceData}
           open={open}
           setOpen={setOpen}

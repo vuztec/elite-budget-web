@@ -12,7 +12,6 @@ import { RiDeleteBin2Fill } from "react-icons/ri";
 import ConfirmationDialog from "../Dialogs";
 import AddAdministrator from "./AddAdministrator";
 import { useQueryClient } from "react-query";
-import socket from "../../utils/socket";
 import { IoMdAddCircle } from "react-icons/io";
 import axios from "../../config/axios";
 import { handleAxiosResponseError } from "../../utils/handleResponseError";
@@ -32,8 +31,6 @@ export const Administrators = ({ administrators, type, itemID, hasAdd, hasEdit, 
   const [selected, setSelected] = useState(null);
 
   const deleteHandler = async (selected) => {
-    // socket?.emit("deleteAdmin", itemID, selected);
-
     setIsLoading(true);
     axios
       .post(SERVER_URL + "/api/general/admin/remove", { item_id: itemID, resource_id: selected, query, db })
@@ -155,7 +152,6 @@ export const Administrators = ({ administrators, type, itemID, hasAdd, hasEdit, 
           </table>
         </div>
         <AddAdministrator
-          socket={socket}
           admins={administrators?.map((admin) => admin.resource_id)}
           open={open}
           type={type}

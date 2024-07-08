@@ -7,35 +7,17 @@ import Button from "../../components/Button";
 import { IoMdAdd } from "react-icons/io";
 import Tabs from "../../components/Tabs";
 import Loading from "../../components/Loader";
-import {
-  AddTask,
-  TaskBoardView,
-  TaskDashView,
-  TaskGanttView,
-  TaskListView,
-} from "../../components/task";
+import { AddTask, TaskBoardView, TaskDashView, TaskGanttView, TaskListView } from "../../components/task";
 import { useQuery } from "react-query";
 import useUserStore from "../../app/user";
-import {
-  dueDataSource,
-  getUpdateTaskGridData,
-  startDataSource,
-} from "../../utils/filters";
+import { dueDataSource, getUpdateTaskGridData, startDataSource } from "../../utils/filters";
 import clsx from "clsx";
-import socket from "../../utils/socket";
-import {
-  getDateFormat,
-  getProjects,
-  getResources,
-  getTasks,
-} from "../../config/api";
+
+import { getDateFormat, getProjects, getResources, getTasks } from "../../config/api";
 import { BsBarChart } from "react-icons/bs";
 import { themeColors } from "../../utils";
 import Select from "../../components/Select";
-import {
-  getActiveAccount,
-  getAddTaskPermission,
-} from "../../utils/permissions";
+import { getActiveAccount, getAddTaskPermission } from "../../utils/permissions";
 import Package from "../../package/Package";
 
 const TABS = [
@@ -45,15 +27,7 @@ const TABS = [
   // { title: "Gantt View", icon: <FaList /> },
 ];
 
-const TaskStages = [
-  "To-Do",
-  "In-Progress",
-  "On-Hold",
-  "Backlog",
-  "Review",
-  "Completed",
-  "Cancelled",
-];
+const TaskStages = ["To-Do", "In-Progress", "On-Hold", "Backlog", "Review", "Completed", "Cancelled"];
 
 export const Tasks = () => {
   const { user, root } = useUserStore();
@@ -129,13 +103,8 @@ export const Tasks = () => {
   }, [name, tab]);
 
   useEffect(() => {
-    if (
-      isProjectLoaded === "success" &&
-      isResourceLoaded === "success" &&
-      isDateFormatLoaded === "success" &&
-      isTaskLoaded === "success"
-    ) {
-      const sub = root.subscriptions?.[0];
+    if (isProjectLoaded === "success" && isResourceLoaded === "success" && isDateFormatLoaded === "success" && isTaskLoaded === "success") {
+      const sub = root?.subscriptions?.[0];
       if (sub?.Payment && !sub?.Is_Expired) {
         // setGridData(taskData);
         setUpdatedTaskData(taskData);
@@ -144,27 +113,15 @@ export const Tasks = () => {
         setUpdatedTaskData([]);
       }
 
-      const targetFormatData = dateFormatData?.find(
-        (item) => item.UserID === user.id
-      );
-      const userDateFormat = targetFormatData
-        ? targetFormatData.Format
-        : "MMM dd, yyyy";
+      const targetFormatData = dateFormatData?.find((item) => item.UserID === user.id);
+      const userDateFormat = targetFormatData ? targetFormatData.Format : "MMM dd, yyyy";
       setCustomDateFormat(userDateFormat);
 
       setIsDataLoaded(true);
     } else {
       setIsDataLoaded(false);
     }
-  }, [
-    taskData,
-    isTaskLoaded,
-    isProjectLoaded,
-    isResourceLoaded,
-    dateFormatData,
-    isDateFormatLoaded,
-    user,
-  ]);
+  }, [taskData, isTaskLoaded, isProjectLoaded, isResourceLoaded, dateFormatData, isDateFormatLoaded, user]);
 
   useEffect(() => {
     const updatedData = getUpdateTaskGridData(
@@ -180,17 +137,7 @@ export const Tasks = () => {
     );
 
     setGridData(updatedData);
-  }, [
-    updatedTaskData,
-    dates,
-    projectFilter,
-    assignedToFilter,
-    startDateFilter,
-    dueDateFilter,
-    stageFilter,
-    priorityFilter,
-    statusFilter,
-  ]);
+  }, [updatedTaskData, dates, projectFilter, assignedToFilter, startDateFilter, dueDateFilter, stageFilter, priorityFilter, statusFilter]);
 
   const handleProjectChange = (e) => {
     if (e && e.target?.value) {
@@ -247,13 +194,7 @@ export const Tasks = () => {
             <div className="text-sm">
               <Button
                 label={!isShowing ? "Show Filters" : "Hide Filters"}
-                icon={
-                  !isShowing ? (
-                    <MdFilterAlt className="text-lg" />
-                  ) : (
-                    <MdFilterAltOff className="text-lg" />
-                  )
-                }
+                icon={!isShowing ? <MdFilterAlt className="text-lg" /> : <MdFilterAltOff className="text-lg" />}
                 className={clsx(
                   "flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white ",
                   !isShowing ? "bg-green-800" : "bg-red-800"
@@ -375,51 +316,30 @@ export const Tasks = () => {
           <Tabs tab={"tasks"} tabs={TABS} selected={selected}>
             {selected === 0 && (
               <div className="py-4 w-full">
-                <TaskDashView
-                  gridData={gridData}
-                  customDateFormat={customDateFormat}
-                  projectData={projectData}
-                />
+                <TaskDashView gridData={gridData} customDateFormat={customDateFormat} projectData={projectData} />
               </div>
             )}
 
             {selected === 1 && (
               <div className="py-4 w-full">
-                <TaskBoardView
-                  tasks={gridData}
-                  customDateFormat={customDateFormat}
-                  projectData={projectData}
-                />
+                <TaskBoardView tasks={gridData} customDateFormat={customDateFormat} projectData={projectData} />
               </div>
             )}
 
             {selected === 2 && (
               <div className="py-4 w-full">
-                <TaskListView
-                  gridData={gridData}
-                  customDateFormat={customDateFormat}
-                  projectData={projectData}
-                />
+                <TaskListView gridData={gridData} customDateFormat={customDateFormat} projectData={projectData} />
               </div>
             )}
 
             {selected === 3 && (
               <div className="py-4 w-full">
-                <TaskGanttView
-                  tasks={gridData}
-                  customDateFormat={customDateFormat}
-                />
+                <TaskGanttView tasks={gridData} customDateFormat={customDateFormat} />
               </div>
             )}
           </Tabs>
 
-          <AddTask
-            socket={socket}
-            open={open}
-            setOpen={setOpen}
-            recordData={""}
-            key={new Date().getTime().toString()}
-          />
+          <AddTask open={open} setOpen={setOpen} recordData={""} key={new Date().getTime().toString()} />
         </div>
       )}
     </>

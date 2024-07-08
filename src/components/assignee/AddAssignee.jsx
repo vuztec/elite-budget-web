@@ -14,7 +14,7 @@ import { handleAxiosResponseError } from "../../utils/handleResponseError";
 
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
-export const AddAssignee = ({ open, setOpen, recordData, itemID, type, socket, assignees, query, idType, db }) => {
+export const AddAssignee = ({ open, setOpen, recordData, itemID, type, assignees, query, idType, db }) => {
   const queryClient = useQueryClient();
 
   const { data: resourceData } = useQuery({

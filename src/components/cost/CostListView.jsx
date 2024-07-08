@@ -11,7 +11,6 @@ import { UserInfo } from "../../components/team";
 import { useQueryClient } from "react-query";
 import { AddCost } from "../../components/cost";
 import ConfirmationDialog from "../../components/Dialogs";
-import socket from "../../utils/socket";
 import { useNavigate } from "react-router-dom";
 import { AiTwotoneFolderOpen } from "react-icons/ai";
 import { TbCalendarDollar, TbCalendarTime, TbSubtask } from "react-icons/tb";
@@ -26,7 +25,7 @@ const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
 export const CostListView = ({ gridData, customDateFormat, usedCurrency, projectData }) => {
   const { user, root } = useUserStore();
-  const current_subcription = root.subscriptions?.[0];
+  const current_subcription = root?.subscriptions?.[0];
 
   //----------------CRUD----------------//
   const queryClient = useQueryClient();
@@ -270,14 +269,7 @@ export const CostListView = ({ gridData, customDateFormat, usedCurrency, project
           </tbody>
         </table>
       </div>
-      <AddCost
-        socket={socket}
-        open={open}
-        setOpen={setOpen}
-        recordData={selected}
-        key={new Date().getTime().toString()}
-        chatUsers={selectedChatUsers}
-      />
+      <AddCost open={open} setOpen={setOpen} recordData={selected} key={new Date().getTime().toString()} chatUsers={selectedChatUsers} />
       <ConfirmationDialog open={openDialog} setOpen={setOpenDialog} isLoading={isLoading} onClick={() => deleteHandler(selected)} />
       <SubTasksDialog
         open={openSubTasks}

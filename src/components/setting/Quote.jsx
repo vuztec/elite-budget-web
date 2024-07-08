@@ -14,13 +14,13 @@ const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
 export const Quote = ({ creditAmount, projectSize, teamSize, currentPackage, currentPrice, subscription, ratio, rate }) => {
   const { user, root } = useUserStore();
-  const current_subcription = root.subscriptions?.[0];
+  const current_subcription = root?.subscriptions?.[0];
 
   const hasAccount =
     current_subcription?.Projects > 0 &&
     current_subcription?.TeamSize > 0 &&
     (currentPackage === "Basic" || currentPackage === "Standard" || currentPackage === "Premium");
-  const customDateFormat = root.DateFormat ? root.DateFormat : "MMM dd, yyyy";
+  const customDateFormat = root?.DateFormat ? root?.DateFormat : "MMM dd, yyyy";
   const [projectFilter, setProjectFilter] = useState(current_subcription?.Projects ? current_subcription?.Projects : 1);
   const [teamFilter, setTeamFilter] = useState(current_subcription?.TeamSize ? current_subcription?.TeamSize : 1);
   const [selectedPackage, setSelectedPackage] = useState("Premium");

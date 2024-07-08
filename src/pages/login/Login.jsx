@@ -14,7 +14,7 @@ const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
 export const Login = () => {
   //const user = false
-  const { user, root } = useUserStore();
+  const { user } = useUserStore();
   const setUser = useUserStore((state) => state.setUser);
   const setJwt = useUserStore((state) => state.setJwt);
   const [open, setOpen] = useState(false);
@@ -31,22 +31,19 @@ export const Login = () => {
   }, [user]);
 
   const submitHandler = async (data) => {
-    const email = data.email;
-    const password = data.password;
+    const Email = data.email;
+    const Password = data.password;
     const id = toast.loading("Loading....");
 
-    try {
-      // Perform API call to check if the username and password match
-      const response = await axios.post(SERVER_URL + "/api/auth/login", {
-        email,
-        password,
-      });
-
-      if (response.status === 200) {
-        const { data } = response;
-
-        // Set user details in Redux store
-        setUser(data.items, data.root);
+    // Perform API call to check if the username and password match
+    axios
+      .post(SERVER_URL + "/api/auth/login", {
+        Email,
+        Password,
+      })
+      .then(({ data }) => {
+        console.log(data);
+        setUser(data.user);
         setJwt(data.jwt);
         toast.update(id, {
           render: data.message,
@@ -54,18 +51,16 @@ export const Login = () => {
           isLoading: false,
           autoClose: 3000,
         });
-        // If user credentials match, navigate to home page
         navigate("/");
-        //toast.success("Welcome " + recordData.items?.FullName);
-      }
-    } catch (error) {
-      toast.update(id, {
-        render: handleAxiosResponseError(error),
-        type: "error",
-        isLoading: false,
-        autoClose: 3000,
+      })
+      .catch((err) => {
+        toast.update(id, {
+          render: handleAxiosResponseError(err),
+          type: "error",
+          isLoading: false,
+          autoClose: 3000,
+        });
       });
-    }
   };
 
   const addClick = () => {

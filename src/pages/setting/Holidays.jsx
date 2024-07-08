@@ -9,7 +9,6 @@ import { format } from "date-fns";
 import AddHoliday from "../../components/setting/AddHoliday";
 import { getDateFormat, getHoliday } from "../../config/api";
 import { useQuery, useQueryClient } from "react-query";
-import socket from "../../utils/socket";
 import { FaEdit, FaRegCalendarCheck, FaRegCalendarPlus } from "react-icons/fa";
 import { RiDeleteBin2Fill, RiFolderWarningLine } from "react-icons/ri";
 import clsx from "clsx";
@@ -46,7 +45,7 @@ export const Holidays = () => {
   useEffect(() => {
     if (isHolidayLoaded === "success" && isDateFormatLoaded === "success") {
       const filteredData = holidayData;
-      const sub = root.subscriptions?.[0];
+      const sub = root?.subscriptions?.[0];
       if (sub?.Payment && !sub?.Is_Expired) {
         setGridData(filteredData);
       } else {
@@ -59,26 +58,10 @@ export const Holidays = () => {
     }
   }, [holidayData, isHolidayLoaded, root, dateFormatData, isDateFormatLoaded, currentUser]);
 
-  useEffect(() => {
-    socket?.on("holidayDeleted", (holidayId) => {
-      console.log("Holiday id ---------", holidayId);
-      // setHolidayData((prevHolidays) =>
-      //   prevHolidays.filter((holiday) => holiday.id !== holidayId)
-      // );
-      queryClient.setQueryData(["holiday"], (prevHolidays) => prevHolidays.filter((holiday) => holiday.id !== holidayId));
-      setOpenDialog(false);
-    });
-
-    return () => {
-      socket?.off("holidayDeleted");
-    };
-  }, []);
-
   const userActionHandler = () => {};
 
   const deleteHandler = async (selected) => {
     try {
-      socket?.emit("deleteHoliday", selected);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -185,7 +168,6 @@ export const Holidays = () => {
         ))}
 
       <AddHoliday
-        socket={socket}
         // setHolidayData={setHolidayData}
         open={open}
         customDateFormat={customDateFormat}

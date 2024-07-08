@@ -20,7 +20,6 @@ import { useQueryClient } from "react-query";
 
 import { AddTask } from "../../components/task";
 import ConfirmationDialog from "../../components/Dialogs";
-import socket from "../../utils/socket";
 import { useNavigate } from "react-router-dom";
 import { AiTwotoneFolderOpen } from "react-icons/ai";
 import useUserStore from "../../app/user";
@@ -37,7 +36,7 @@ const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
 export const TaskListView = ({ gridData, customDateFormat, projectData }) => {
   const { user, root } = useUserStore();
-  const current_subcription = root.subscriptions?.[0];
+  const current_subcription = root?.subscriptions?.[0];
 
   const [pageNumber, setPageNumber] = useState(0);
   const itemsPerPage = 10;
@@ -306,14 +305,7 @@ export const TaskListView = ({ gridData, customDateFormat, projectData }) => {
           renderOnZeroPageCount={null}
         />
       )}
-      <AddTask
-        socket={socket}
-        open={open}
-        setOpen={setOpen}
-        recordData={selected}
-        key={new Date().getTime().toString()}
-        chatUsers={selectedChatUsers}
-      />
+      <AddTask open={open} setOpen={setOpen} recordData={selected} key={new Date().getTime().toString()} chatUsers={selectedChatUsers} />
       <ConfirmationDialog open={openDialog} setOpen={setOpenDialog} isLoading={isLoading} onClick={() => deleteHandler(selected)} />
       <SubTasksDialog
         open={openSubTasks}

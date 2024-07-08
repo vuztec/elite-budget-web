@@ -10,7 +10,7 @@ import ConfirmationDialog from "../../components/Dialogs";
 import { AddRegularUser } from "../../components/team";
 import { getProjects, getResources, getRootUser } from "../../config/api";
 import { useQuery, useQueryClient } from "react-query";
-import socket from "../../utils/socket";
+
 import { MdEmail, MdPeople } from "react-icons/md";
 import { RiDeleteBin2Fill } from "react-icons/ri";
 import { FaEdit, FaEye, FaPhoneSquare } from "react-icons/fa";
@@ -38,7 +38,7 @@ export const Users = () => {
   const [hasDel, setHasDel] = useState(false);
   const [selectedChatUsers, setSelectedChatUsers] = useState(null);
   const { user: currentUser, root } = useUserStore();
-  const current_subcription = root.subscriptions?.[0];
+  const current_subcription = root?.subscriptions?.[0];
 
   const activeAccount = getActiveAccount(root);
 
@@ -79,24 +79,10 @@ export const Users = () => {
     }
   }, [resourceData, isResourceLoaded, rootUserData, isRootUserLoaded]);
 
-  useEffect(() => {
-    socket?.on("userDeleted", (userId) => {
-      console.log("User id ---------", userId);
-      setIsLoading(false);
-      queryClient.setQueryData(["resources"], (prev) => prev.filter((user) => user.id !== userId));
-      setOpenDialog(false);
-    });
-
-    return () => {
-      socket?.off("userDeleted");
-    };
-  }, []);
-
   const deleteHandler = async (selected) => {
     try {
       setIsLoading(true);
       await axios.delete(`${SERVER_URL}/api/attachment/delete-file?type=resource_id&id=${selected}`);
-      socket?.emit("deleteUser", selected);
     } catch (error) {
       setIsLoading(false);
       console.error("Error:", error);
@@ -324,7 +310,6 @@ export const Users = () => {
         ))}
 
       <AddRegularUser
-        socket={socket}
         // setResourceData={setResourceData}
         setUser={setUser}
         open={open}

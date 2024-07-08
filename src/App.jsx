@@ -36,6 +36,7 @@ import UpdatePassword from "./pages/updatepassword";
 function Layout() {
   //const user = false;
   const { sidebar, user, setSidebar } = useUserStore();
+
   const location = useLocation();
   return user ? (
     <div className="w-full h-screen flex">
@@ -89,7 +90,7 @@ function App() {
           <Route path="/settings/weekstart" element={<WeekStart />} />
           <Route path="/settings/dateformat" element={<DateFormat />} />
           <Route path="/settings/currency" element={<UserCurrency />} />
-          <Route path="/settings/membership" element={<Membership />} />
+          {/* <Route path="/settings/membership" element={<Membership />} /> */}
 
           <Route path="/packages" element={<Package />} />
         </Route>

@@ -14,7 +14,7 @@ import { toast } from "react-toastify";
 
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
-export const AddAttachment = ({ open, setOpen, recordData, socket, type, itemID, query, chatUsers }) => {
+export const AddAttachment = ({ open, setOpen, recordData, type, itemID, query, chatUsers }) => {
   const queryClient = useQueryClient();
   // type will tell us the column and itemID which main item the attachment belongs to. UpdatedBy is currentUser.FullName
   let defaultValues = recordData;
@@ -26,16 +26,6 @@ export const AddAttachment = ({ open, setOpen, recordData, socket, type, itemID,
     handleSubmit,
     formState: { errors },
   } = useForm({ defaultValues });
-
-  useEffect(() => {
-    socket?.on("attachmentAdded", (attachment, type, id, query) => {
-      console.log("Attachment added : ", attachment, type, id);
-    });
-
-    return () => {
-      socket?.off("attachmentAdded");
-    };
-  }, []);
 
   // Define handleOnSubmit function to handle form submission
   const handleOnSubmit = async (postdata) => {

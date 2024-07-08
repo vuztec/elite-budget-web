@@ -24,7 +24,7 @@ import { getEditProjectPermission, getFinancialPermission, getSuperProjectPermis
 
 export const ProjectCard = ({ project, costData, taskData, customDateFormat, usedCurrency }) => {
   const { user, root } = useUserStore();
-  const current_subcription = root.subscriptions?.[0];
+  const current_subcription = root?.subscriptions?.[0];
 
   const hasFin = getFinancialPermission(user);
   const actual = getActualProjectPercentageComplete(taskData, parseInt(project?.id))

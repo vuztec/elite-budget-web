@@ -9,7 +9,7 @@ import clsx from "clsx";
 import AddWeekStart from "../../components/setting/AddWeekStart";
 import { getWeekStart } from "../../config/api";
 import { useQuery, useQueryClient } from "react-query";
-import socket from "../../utils/socket";
+
 import { FaEdit } from "react-icons/fa";
 import { RiCalendarEventFill, RiDeleteBin2Fill } from "react-icons/ri";
 import { themeColors } from "../../utils";
@@ -36,7 +36,7 @@ export const WeekStart = () => {
   useEffect(() => {
     if (isWeekStartLoaded === "success") {
       const filteredData = weekStartData;
-      const sub = root.subscriptions?.[0];
+      const sub = root?.subscriptions?.[0];
       if (sub?.Payment && !sub?.Is_Expired) {
         setGridData(filteredData);
       } else {
@@ -46,25 +46,8 @@ export const WeekStart = () => {
     }
   }, [weekStartData, isWeekStartLoaded, root]);
 
-  useEffect(() => {
-    socket?.on("weekstartDeleted", (weekstartId) => {
-      console.log("Weekstart id ---------", weekstartId);
-      // setWeekStartData((prevWeekstarts) =>
-      //   prevWeekstarts.filter((weekstart) => weekstart.id !== weekstartId)
-      // );
-
-      queryClient.setQueryData(["weekstart"], (prevWeek) => prevWeek.filter((week) => week.id !== weekstartId));
-      setOpenDialog(false);
-    });
-
-    return () => {
-      socket?.off("weekstartDeleted");
-    };
-  }, []);
-
   const deleteHandler = async (selected) => {
     try {
-      socket?.emit("deleteWeekstart", selected);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -163,7 +146,6 @@ export const WeekStart = () => {
         ))}
 
       <AddWeekStart
-        socket={socket}
         // setWeekStartData={setWeekStartData}
         open={open}
         setOpen={setOpen}

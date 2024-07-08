@@ -17,7 +17,7 @@ import { handleAxiosResponseError } from "../../utils/handleResponseError";
 
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
-export const AddTimesheet = ({ open, setOpen, recordData, socket }) => {
+export const AddTimesheet = ({ open, setOpen, recordData }) => {
   const queryClient = useQueryClient();
 
   const { data: resourceData } = useQuery({
@@ -56,30 +56,6 @@ export const AddTimesheet = ({ open, setOpen, recordData, socket }) => {
     control,
     formState: { errors },
   } = useForm({ defaultValues });
-
-  useEffect(() => {
-    socket?.on("timesheetAdded", (timesheet) => {
-      console.log("Timesheet added : ", timesheet);
-      setIsLoading(() => false);
-
-      queryClient.setQueryData(["timesheets"], (prev) => (prev ? [timesheet, ...prev] : [timesheet]));
-
-      setOpen(false);
-    });
-
-    socket?.on("timesheetUpdated", (updatedTimesheet, id) => {
-      console.log("updated timesheet :", updatedTimesheet);
-      setIsLoading(() => false);
-
-      queryClient.setQueryData(["timesheets"], (prev) => prev.map((timesheet) => (timesheet.id === id ? updatedTimesheet : timesheet)));
-      setOpen(false);
-    });
-
-    return () => {
-      socket?.off("timesheetAdded");
-      socket?.off("timesheetUpdated");
-    };
-  }, []);
 
   // Define handleOnSubmit function to handle form submission
   const handleOnSubmit = async (data) => {

@@ -11,7 +11,7 @@ import { dateFormatter } from "../../utils";
 import { IoMdSend } from "react-icons/io";
 import { TiCancel } from "react-icons/ti";
 
-const AddHoliday = ({ open, setOpen, recordData, socket }) => {
+const AddHoliday = ({ open, setOpen, recordData }) => {
   const queryClient = useQueryClient();
 
   const defaultValues = recordData
@@ -30,31 +30,6 @@ const AddHoliday = ({ open, setOpen, recordData, socket }) => {
     formState: { errors },
   } = useForm({ defaultValues });
 
-  useEffect(() => {
-    socket?.on("holidayAdded", (holiday) => {
-      console.log("Holiday added : ", holiday);
-      setIsLoading(() => false);
-
-      queryClient.setQueryData(["holiday"], (prevHolidays) => (prevHolidays ? [...prevHolidays, holiday] : [holiday]));
-      setOpen(false);
-    });
-
-    socket?.on("holidayUpdated", (updatedHoliday, id) => {
-      console.log("updated holiday :", updatedHoliday);
-      setIsLoading(() => false);
-
-      queryClient.setQueryData(["holiday"], (prevHolidays) =>
-        prevHolidays.map((holiday) => (holiday.id === id ? updatedHoliday : holiday))
-      );
-      setOpen(false);
-    });
-
-    return () => {
-      socket?.off("holidayAdded");
-      socket?.off("holidayUpdated");
-    };
-  }, []);
-
   // Define handleOnSubmit function to handle form submission
   const handleOnSubmit = async (data) => {
     const numericSelectedID = parseInt(data.id);
@@ -65,13 +40,11 @@ const AddHoliday = ({ open, setOpen, recordData, socket }) => {
         // If 'id' is not present, it's a new new holiday, so we add 'RootID' & 'UserID' and use POST method
         data.RootID = currentUser.RootID;
         data.UserID = currentUser.id;
-        socket?.emit("addHoliday", data);
       } else {
         // If 'id' is present, it's an update, so we remove 'RootID' and 'id' and use PUT method
         delete data.RootID;
         delete data.id;
         delete data.UserID;
-        socket?.emit("updateHoliday", data, numericSelectedID);
       }
     } catch (error) {
       setIsLoading(() => false);

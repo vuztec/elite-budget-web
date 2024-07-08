@@ -13,7 +13,7 @@ import { AddAbsentee } from "../../components/team";
 import { FaEdit, FaEye, FaRegCalendarCheck, FaRegCalendarTimes } from "react-icons/fa";
 import { RiDeleteBin2Fill } from "react-icons/ri";
 import clsx from "clsx";
-import socket from "../../utils/socket";
+
 import { useNavigate } from "react-router-dom";
 import { BiCommentDetail } from "react-icons/bi";
 import { AttachmentsDialog, CommentsDialog } from "../../components/DisplayDialogs";
@@ -32,7 +32,7 @@ const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
 export const Absentee = () => {
   const { user: currentUser, root } = useUserStore();
-  const current_subcription = root.subscriptions?.[0];
+  const current_subcription = root?.subscriptions?.[0];
 
   const activeAccount = getActiveAccount(root);
   const [customDateFormat, setCustomDateFormat] = useState();
@@ -316,7 +316,7 @@ export const Absentee = () => {
           <Package />
         ))}
 
-      <AddAbsentee socket={socket} open={open} setOpen={setOpen} recordData={selected} key={new Date().getTime().toString()} />
+      <AddAbsentee open={open} setOpen={setOpen} recordData={selected} key={new Date().getTime().toString()} />
       <ConfirmationDialog open={openDialog} setOpen={setOpenDialog} isLoading={isLoading} onClick={() => deleteHandler(selected)} />
       <AttachmentsDialog
         open={openAttachments}

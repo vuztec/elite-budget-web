@@ -12,7 +12,6 @@ import { useQuery } from "react-query";
 import useUserStore from "../../app/user";
 import { themeColors } from "../../utils";
 import clsx from "clsx";
-import socket from "../../utils/socket";
 import { getCosts, getDateFormat, getProjects, getResources, getTasks } from "../../config/api";
 import { BsBarChart } from "react-icons/bs";
 import { dueDataSource, getUpdateProjectGridData, startDataSource } from "../../utils/filters";
@@ -32,7 +31,7 @@ const ProjectStages = ["Initiation", "Planning", "Execution", "Monitoring", "Clo
 export const Projects = () => {
   const { user, root } = useUserStore();
   const dates = useDateCalculator();
-  const usedCurrency = root.Currency ? root.Currency : "$";
+  const usedCurrency = root?.Currency ? root?.Currency : "$";
   const [customDateFormat, setCustomDateFormat] = useState();
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [updatedTaskData, setUpdatedTaskData] = useState([]);
@@ -136,7 +135,7 @@ export const Projects = () => {
       isCostLoaded === "success" &&
       isTaskLoaded === "success"
     ) {
-      const sub = root.subscriptions?.[0];
+      const sub = root?.subscriptions?.[0];
       if (sub?.Payment && !sub?.Is_Expired) {
         setUpdatedProjectData(projectData);
       } else {
@@ -454,7 +453,7 @@ export const Projects = () => {
             )}
           </Tabs>
 
-          <AddProject socket={socket} open={open} setOpen={setOpen} recordData={""} key={new Date().getTime().toString()} />
+          <AddProject open={open} setOpen={setOpen} recordData={""} key={new Date().getTime().toString()} />
         </div>
       )}
     </>

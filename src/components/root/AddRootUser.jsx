@@ -11,7 +11,7 @@
 // import { IoMdSend } from "react-icons/io";
 // import { TiCancel } from "react-icons/ti";
 
-// export const AddUser = ({ open, setOpen, recordData, socket }) => {
+// export const AddUser = ({ open, setOpen, recordData }) => {
 //   const queryClient = useQueryClient();
 
 //   let defaultValues = recordData ?? {};
@@ -24,60 +24,7 @@
 //     register,
 //     handleSubmit,
 //     formState: { errors },
-//   } = useForm({ defaultValues });
-
-//   useEffect(() => {
-//     socket?.on("userAdded", (user) => {
-//       console.log("User added : ", user);
-//       setIsLoading(() => false);
-
-//       queryClient.setQueryData(["resources"], (prev) => (prev ? [...prev, user] : [user]));
-
-//       setOpen(false);
-//     });
-
-//     socket?.on("userUpdated", (updatedUser, id) => {
-//       console.log("updated user :", updatedUser);
-//       setIsLoading(() => false);
-
-//       queryClient.setQueryData(["resources"], (prev) => prev.map((user) => (user.id === id ? updatedUser : user)));
-
-//       if (currentUser.id === id) {
-//         setUser(updatedUser);
-//       }
-//       setOpen(false);
-//     });
-
-//     return () => {
-//       socket?.off("userAdded");
-//       socket?.off("userUpdated");
-//     };
-//   }, []);
-
-//   // Define handleOnSubmit function to handle form submission
-//   const handleOnSubmit = async (data) => {
-//     const numericSelectedID = parseInt(data.id);
-//     setIsLoading(() => true);
-
-//     try {
-//       if (!data.id) {
-//         // If 'id' is not present, it's a new resource, so we add 'RootID' and use POST method
-//         data.RootID = currentUser.RootID;
-//         data.Password = user.Email;
-//         socket?.emit("addUser", data);
-//       } else {
-//         // If 'id' is present, it's an update, so we remove 'RootID' and 'id' and use PUT method
-//         delete data.RootID;
-//         delete data.id;
-//         delete data.Password;
-//         socket?.emit("updateUser", data, numericSelectedID);
-//       }
-//     } catch (error) {
-//       setIsLoading(() => false);
-
-//       console.error("Error:", error);
-//     }
-//   };
+//   } = useForm({ defaultValues })
 
 //   return (
 //     <>

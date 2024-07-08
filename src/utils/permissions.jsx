@@ -511,7 +511,7 @@ export function getFinancialPermission(currentUser) {
 //--------------------ActiveAccount--------------------//
 export function getActiveAccount(root) {
   let isActive = false;
-  const sub = root.subscriptions?.[0];
+  const sub = root?.subscriptions?.[0];
 
   if (sub && (sub.Package === "Basic" || sub.Package === "Standard" || sub.Package === "Premium") && sub.Payment && !sub.Is_Expired) {
     isActive = true;

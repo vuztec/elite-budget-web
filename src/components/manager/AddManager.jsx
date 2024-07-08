@@ -14,7 +14,7 @@ import { handleAxiosResponseError } from "../../utils/handleResponseError";
 
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
-export const AddManager = ({ open, setOpen, recordData, itemID, type, socket, managers }) => {
+export const AddManager = ({ open, setOpen, recordData, itemID, type, managers }) => {
   const queryClient = useQueryClient();
 
   const { data: resourceData } = useQuery({
@@ -42,8 +42,6 @@ export const AddManager = ({ open, setOpen, recordData, itemID, type, socket, ma
   const handleOnSubmit = async (data) => {
     console.log(data);
     setIsLoading(() => true);
-
-    // socket?.emit("addManagers", data, itemID);
 
     axios
       .post(SERVER_URL + "/api/general/manager", { data, itemID })

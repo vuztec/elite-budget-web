@@ -3,14 +3,7 @@ import useUserStore from "../../app/user";
 import Title from "../../components/Title";
 import { themeColors } from "../../utils";
 import clsx from "clsx";
-import {
-  InternationalPrices,
-  NumberOfProject,
-  NumberOfTeam,
-  Packages,
-  getPackagePrice,
-  getProjectItems,
-} from "../../utils/PackageData";
+import { InternationalPrices, NumberOfProject, NumberOfTeam, Packages, getPackagePrice, getProjectItems } from "../../utils/PackageData";
 import { MdPeople } from "react-icons/md";
 import { BsFillBagCheckFill, BsFillBagXFill } from "react-icons/bs";
 import { RiVerifiedBadgeFill } from "react-icons/ri";
@@ -22,7 +15,7 @@ import Loading from "../../components/Loader";
 export const Membership = () => {
   const { root } = useUserStore();
   const gridData = Packages;
-  const current_subcription = root.subscriptions?.[0];
+  const current_subcription = root?.subscriptions?.[0];
   const currentPackage = current_subcription?.Package;
 
   const [creditAmount, setCreditedAmount] = useState(0);
@@ -56,12 +49,7 @@ export const Membership = () => {
   }, [isExchangeRateLoaded, exchangeRate]);
 
   useEffect(() => {
-    if (
-      currentPackage !== "Basic" &&
-      currentPackage !== "Standard" &&
-      currentPackage !== "Premium" &&
-      isExchangeRateLoaded === "success"
-    ) {
+    if (currentPackage !== "Basic" && currentPackage !== "Standard" && currentPackage !== "Premium" && isExchangeRateLoaded === "success") {
       setCreditedAmount(0);
       const numberOfProject = NumberOfProject?.map((project) => ({
         value: project,
@@ -97,31 +85,20 @@ export const Membership = () => {
       setSubcription(totalDaysInYears);
       setRatio(credit);
       // remove team sizes that are not greater than teamSize
-      const filteredNumberOfProject = NumberOfProject?.filter(
-        (project) => project >= projectData?.length
-      )?.map((project) => ({
+      const filteredNumberOfProject = NumberOfProject?.filter((project) => project >= projectData?.length)?.map((project) => ({
         value: project,
         label: project,
       }));
       setProjectSize(filteredNumberOfProject);
 
       // remove projects sizes that are not greater than projectSize
-      const filteredNumberOfTeam = NumberOfTeam?.filter(
-        (team) => team >= resourceData?.length
-      )?.map((team) => ({
+      const filteredNumberOfTeam = NumberOfTeam?.filter((team) => team >= resourceData?.length)?.map((team) => ({
         value: team,
         label: team,
       }));
       setTeamSize(filteredNumberOfTeam);
     }
-  }, [
-    root,
-    NumberOfProject,
-    NumberOfTeam,
-    projectData,
-    resourceData,
-    isExchangeRateLoaded,
-  ]);
+  }, [root, NumberOfProject, NumberOfTeam, projectData, resourceData, isExchangeRateLoaded]);
 
   // Function to check if a year is a leap year
   function isLeapYear(year) {
@@ -148,8 +125,7 @@ export const Membership = () => {
                 currentPackage === "Basic" ? `bg-viewcolor` : `bg-gray-600`
               )}
             >
-              From {root.CountryCurrency}{" "}
-              {Math.round(InternationalPrices.Basic * rate)?.toFixed(2)} /month
+              From {root.CountryCurrency} {Math.round(InternationalPrices.Basic * rate)?.toFixed(2)} /month
             </span>
           </div>
         </th>
@@ -169,9 +145,7 @@ export const Membership = () => {
                 currentPackage === "Standard" ? `bg-viewcolor` : `bg-gray-600`
               )}
             >
-              From {root.CountryCurrency}{" "}
-              {Math.round(InternationalPrices.Standard * rate)?.toFixed(2)}{" "}
-              /month
+              From {root.CountryCurrency} {Math.round(InternationalPrices.Standard * rate)?.toFixed(2)} /month
             </span>
           </div>
         </th>
@@ -191,9 +165,7 @@ export const Membership = () => {
                 currentPackage === "Premium" ? `bg-viewcolor` : `bg-gray-600`
               )}
             >
-              From {root.CountryCurrency}{" "}
-              {Math.round(InternationalPrices.Premium * rate)?.toFixed(2)}{" "}
-              /month
+              From {root.CountryCurrency} {Math.round(InternationalPrices.Premium * rate)?.toFixed(2)} /month
             </span>
           </div>
         </th>

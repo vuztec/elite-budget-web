@@ -7,7 +7,6 @@ import { MdOutlineEdit } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { Menu, Transition } from "@headlessui/react";
 import AddCost from "./AddCost";
-import socket from "../../utils/socket";
 import ConfirmationDialog from "../Dialogs";
 import { useQueryClient } from "react-query";
 import { FaEdit } from "react-icons/fa";
@@ -16,7 +15,7 @@ import useUserStore from "../../app/user";
 
 export const CostDialog = ({ cost, projectData }) => {
   const { user, root } = useUserStore();
-  const current_subcription = root.subscriptions?.[0];
+  const current_subcription = root?.subscriptions?.[0];
 
   //----------------CRUD----------------//
   const queryClient = useQueryClient();
@@ -24,21 +23,8 @@ export const CostDialog = ({ cost, projectData }) => {
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState(null);
 
-  useEffect(() => {
-    socket?.on("costDeleted", (costId) => {
-      console.log("Cost id ---------", costId);
-      queryClient.setQueryData(["costs"], (prev) => prev.filter((cost) => cost.id !== costId));
-      setOpenDialog(false);
-    });
-
-    return () => {
-      socket?.off("costDeleted");
-    };
-  }, []);
-
   const deleteHandler = async (selected) => {
     try {
-      socket?.emit("deleteCost", selected);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -134,7 +120,7 @@ export const CostDialog = ({ cost, projectData }) => {
         </Menu>
       </div>
 
-      <AddCost socket={socket} open={open} setOpen={setOpen} recordData={selected} key={new Date().getTime().toString()} />
+      <AddCost open={open} setOpen={setOpen} recordData={selected} key={new Date().getTime().toString()} />
       <ConfirmationDialog open={openDialog} setOpen={setOpenDialog} onClick={() => deleteHandler(selected)} />
     </>
   );

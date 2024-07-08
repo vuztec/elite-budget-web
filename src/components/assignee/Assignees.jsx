@@ -12,7 +12,6 @@ import { RiDeleteBin2Fill } from "react-icons/ri";
 import ConfirmationDialog from "../Dialogs";
 import AddAssignee from "./AddAssignee";
 import { useQueryClient } from "react-query";
-import socket from "../../utils/socket";
 import { IoMdAddCircle } from "react-icons/io";
 import axios from "../../config/axios";
 import { handleAxiosResponseError } from "../../utils/handleResponseError";
@@ -52,7 +51,6 @@ export const Assignees = ({ assignees, type, itemID, hasAdd, hasEdit, hasDel, qu
   }, [query]);
 
   const deleteHandler = async (selected) => {
-    // socket?.emit("deleteAssignee", itemID, selected, type, db);
     setIsLoading(true);
     axios
       .post(SERVER_URL + "/api/general/assignee/remove", { item_id: itemID, resource_id: selected, query, db })
@@ -174,7 +172,6 @@ export const Assignees = ({ assignees, type, itemID, hasAdd, hasEdit, hasDel, qu
           </table>
         </div>
         <AddAssignee
-          socket={socket}
           open={open}
           assignees={assignees?.map((assignee) => assignee.resource_id)}
           type={type}

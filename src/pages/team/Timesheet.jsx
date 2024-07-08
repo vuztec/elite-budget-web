@@ -13,7 +13,7 @@ import { AddTimesheet, UserInfo } from "../../components/team";
 import { FaEdit, FaEye, FaRegCalendarCheck, FaRegCalendarPlus } from "react-icons/fa";
 import { RiDeleteBin2Fill } from "react-icons/ri";
 import clsx from "clsx";
-import socket from "../../utils/socket";
+
 import { TbCalendarDollar } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
 import { AttachmentsDialog, CommentsDialog } from "../../components/DisplayDialogs";
@@ -33,7 +33,7 @@ const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
 export const Timesheet = () => {
   const { user: currentUser, root } = useUserStore();
-  const current_subcription = root.subscriptions?.[0];
+  const current_subcription = root?.subscriptions?.[0];
 
   const activeAccount = getActiveAccount(root);
   const [customDateFormat, setCustomDateFormat] = useState();
@@ -343,7 +343,7 @@ export const Timesheet = () => {
           <Package />
         ))}
 
-      <AddTimesheet socket={socket} open={open} setOpen={setOpen} recordData={selected} key={new Date().getTime().toString()} />
+      <AddTimesheet open={open} setOpen={setOpen} recordData={selected} key={new Date().getTime().toString()} />
       <ConfirmationDialog open={openDialog} setOpen={setOpenDialog} isLoading={isLoading} onClick={() => deleteHandler(selected)} />
       <AttachmentsDialog
         open={openAttachments}

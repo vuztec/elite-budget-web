@@ -10,7 +10,7 @@ import { useQueryClient } from "react-query";
 import { IoMdSend } from "react-icons/io";
 import { TiCancel } from "react-icons/ti";
 
-const AddWeekStart = ({ open, setOpen, recordData, socket }) => {
+const AddWeekStart = ({ open, setOpen, recordData }) => {
   const queryClient = useQueryClient();
 
   const defaultValues = recordData;
@@ -24,36 +24,6 @@ const AddWeekStart = ({ open, setOpen, recordData, socket }) => {
     formState: { errors },
   } = useForm({ defaultValues });
 
-  useEffect(() => {
-    socket?.on("weekstartAdded", (weekstart) => {
-      console.log("Weekstart added : ", weekstart);
-      setIsLoading(() => false);
-
-      // setWeekStartData((prevWeekstarts) => [...prevWeekstarts, weekstart]);
-
-      queryClient.setQueryData(["weekstart"], (prev) => (prev ? [...prev, weekstart] : [weekstart]));
-
-      setOpen(false);
-    });
-
-    socket?.on("weekstartUpdated", (updatedWeekstart, id) => {
-      console.log("updated weekstart :", updatedWeekstart);
-      setIsLoading(() => false);
-
-      // setWeekStartData((prevWeekstarts) =>
-      //   prevWeekstarts.map((weekstart) => (weekstart.id === id ? updatedWeekstart : weekstart))
-      // );
-
-      queryClient.setQueryData(["weekstart"], (prev) => prev.map((week) => (week.id === id ? updatedWeekstart : week)));
-      setOpen(false);
-    });
-
-    return () => {
-      socket?.off("weekstartAdded");
-      socket?.off("weekstartUpdated");
-    };
-  }, []);
-
   // Define handleOnSubmit function to handle form submission
   const handleOnSubmit = async (data) => {
     const numericSelectedID = parseInt(data.id);
@@ -64,13 +34,11 @@ const AddWeekStart = ({ open, setOpen, recordData, socket }) => {
         // If 'id' is not present, it's a new new holiday, so we add 'RootID' & 'UserID' and use POST method
         data.RootID = currentUser.RootID;
         data.UserID = currentUser.id;
-        socket?.emit("addWeekstart", data);
       } else {
         // If 'id' is present, it's an update, so we remove 'RootID' and 'id' and use PUT method
         delete data.RootID;
         delete data.id;
         delete data.UserID;
-        socket?.emit("updateWeekstart", data, numericSelectedID);
       }
     } catch (error) {
       setIsLoading(() => false);

@@ -15,7 +15,7 @@ import { handleAxiosResponseError } from "../../utils/handleResponseError";
 
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
-export const AddSubTask = ({ open, setOpen, recordData, socket, type, itemID, query, chatUsers }) => {
+export const AddSubTask = ({ open, setOpen, recordData, type, itemID, query, chatUsers }) => {
   const queryClient = useQueryClient();
   // type will tell us the column and itemID which main item the subtask belongs to. UpdatedBy is currentUser.id
   let defaultValues = recordData
@@ -75,8 +75,6 @@ export const AddSubTask = ({ open, setOpen, recordData, socket, type, itemID, qu
       } else {
         // If 'id' is present
         delete data.id;
-
-        socket?.emit("updateSubtask", data, recordData.Status !== data.Status, numericSelectedID, type, itemID, chatUsers);
 
         axios
           .put(SERVER_URL + "/api/subtask/" + numericSelectedID, {

@@ -16,9 +16,7 @@ export const Package = () => {
   };
   return isRoot ? (
     <div className="text-xl flex flex-col items-center justify-center p-5 bg-white">
-      <p className="flex flex-col items-center justify-center font-bold text-red-500">
-        This Package is not Active in this Account.
-      </p>
+      <p className="flex flex-col items-center justify-center font-bold text-red-500">This Package is not Active in this Account.</p>
 
       <div className="flex flex-col items-center gap-1 pt-3">
         <Button
@@ -34,16 +32,12 @@ export const Package = () => {
     </div>
   ) : (
     <div className="text-xl flex flex-col items-center justify-center p-5 bg-white">
-      <p className="font-bold text-red-500">
-        This Package is not Active in this Account.
-      </p>
+      <p className="font-bold text-red-500">This Package is not Active in this Account.</p>
 
       <div className="flex flex-col items-center gap-1 pt-3">
-        <p className="font-bold text-red-500">
-          Please contact your account Administrator:
-        </p>
-        <span>{root.FullName}</span>
-        <span className="text-lg italic">{root.Email}</span>
+        <p className="font-bold text-red-500">Please contact your account Administrator:</p>
+        <span>{root?.FullName}</span>
+        <span className="text-lg italic">{root?.Email}</span>
       </div>
     </div>
   );

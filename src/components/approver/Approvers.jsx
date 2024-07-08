@@ -12,7 +12,6 @@ import { RiDeleteBin2Fill } from "react-icons/ri";
 import ConfirmationDialog from "../Dialogs";
 import AddApprover from "./AddApprover";
 import { useQueryClient } from "react-query";
-import socket from "../../utils/socket";
 import { IoMdAddCircle } from "react-icons/io";
 
 export const Approvers = ({ approvers, type, itemID, hasAdd, hasEdit, hasDel, query }) => {
@@ -162,7 +161,6 @@ export const Approvers = ({ approvers, type, itemID, hasAdd, hasEdit, hasDel, qu
           </table>
         </div>
         <AddApprover
-          socket={socket}
           open={open}
           type={type}
           query={query}

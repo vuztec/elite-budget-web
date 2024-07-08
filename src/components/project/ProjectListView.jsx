@@ -21,7 +21,6 @@ import { UserInfo } from "../../components/team";
 import { useQueryClient } from "react-query";
 import { AddProject } from "../../components/project";
 import ConfirmationDialog from "../../components/Dialogs";
-import socket from "../../utils/socket";
 import { useNavigate } from "react-router-dom";
 import { AiTwotoneFolderOpen } from "react-icons/ai";
 import { IoMdAttach } from "react-icons/io";
@@ -39,7 +38,7 @@ export const ProjectListView = ({ gridData, customDateFormat, usedCurrency, cost
   const itemsPerPage = 10;
   const pagesVisited = pageNumber * itemsPerPage;
   const { user, root } = useUserStore();
-  const current_subcription = root.subscriptions?.[0];
+  const current_subcription = root?.subscriptions?.[0];
 
   const hasFin = getFinancialPermission(user);
 
@@ -340,14 +339,7 @@ export const ProjectListView = ({ gridData, customDateFormat, usedCurrency, cost
           renderOnZeroPageCount={null}
         />
       )}
-      <AddProject
-        socket={socket}
-        open={open}
-        setOpen={setOpen}
-        recordData={selected}
-        key={new Date().getTime().toString()}
-        chatUsers={selectedChatUsers}
-      />
+      <AddProject open={open} setOpen={setOpen} recordData={selected} key={new Date().getTime().toString()} chatUsers={selectedChatUsers} />
       <ConfirmationDialog isLoading={isLoading} open={openDialog} setOpen={setOpenDialog} onClick={() => deleteHandler(selected)} />
       <AttachmentsDialog
         open={openAttachments}

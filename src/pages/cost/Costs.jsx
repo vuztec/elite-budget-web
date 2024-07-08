@@ -7,34 +7,16 @@ import Button from "../../components/Button";
 import { IoMdAdd } from "react-icons/io";
 import Tabs from "../../components/Tabs";
 import Loading from "../../components/Loader";
-import {
-  AddCost,
-  CostBoardView,
-  CostDashView,
-  CostListView,
-} from "../../components/cost";
+import { AddCost, CostBoardView, CostDashView, CostListView } from "../../components/cost";
 import { useQuery } from "react-query";
 import useUserStore from "../../app/user";
-import {
-  payDataSource,
-  getUpdateCostGridData,
-  invoiceDataSource,
-} from "../../utils/filters";
+import { payDataSource, getUpdateCostGridData, invoiceDataSource } from "../../utils/filters";
 import clsx from "clsx";
-import socket from "../../utils/socket";
-import {
-  getDateFormat,
-  getProjects,
-  getResources,
-  getCosts,
-} from "../../config/api";
+import { getDateFormat, getProjects, getResources, getCosts } from "../../config/api";
 import { BsBarChart } from "react-icons/bs";
 import { themeColors } from "../../utils";
 import Select from "../../components/Select";
-import {
-  getActiveAccount,
-  getAddCostPermission,
-} from "../../utils/permissions";
+import { getActiveAccount, getAddCostPermission } from "../../utils/permissions";
 import Package from "../../package/Package";
 
 const TABS = [
@@ -47,7 +29,7 @@ const CostStages = ["Quote", "PO", "Invoice", "Paid", "Void"];
 
 export const Costs = () => {
   const { user, root } = useUserStore();
-  const usedCurrency = root.Currency ? root.Currency : "$";
+  const usedCurrency = root?.Currency ? root?.Currency : "$";
   const dates = useDateCalculator();
   const [customDateFormat, setCustomDateFormat] = useState();
   const [selected, setSelected] = useState(0);
@@ -113,9 +95,7 @@ export const Costs = () => {
     }));
   }, [projectData]);
 
-  const uniqueCategories = [
-    ...new Set(costData?.map((item) => (item.Category ? item.Category : ""))),
-  ];
+  const uniqueCategories = [...new Set(costData?.map((item) => (item.Category ? item.Category : "")))];
   const categories = useMemo(() => {
     return uniqueCategories?.map((category) => ({
       value: category,
@@ -123,13 +103,7 @@ export const Costs = () => {
     }));
   }, [uniqueCategories]);
 
-  const uniqueServiceProviders = [
-    ...new Set(
-      costData?.map((item) =>
-        item.ServiceProvider ? item.ServiceProvider : ""
-      )
-    ),
-  ];
+  const uniqueServiceProviders = [...new Set(costData?.map((item) => (item.ServiceProvider ? item.ServiceProvider : "")))];
   const serviceProviders = useMemo(() => {
     return uniqueServiceProviders?.map((ServiceProvider) => ({
       value: ServiceProvider,
@@ -143,13 +117,8 @@ export const Costs = () => {
   }, [name, tab]);
 
   useEffect(() => {
-    if (
-      isProjectLoaded === "success" &&
-      isResourceLoaded === "success" &&
-      isDateFormatLoaded === "success" &&
-      isCostLoaded === "success"
-    ) {
-      const sub = root.subscriptions?.[0];
+    if (isProjectLoaded === "success" && isResourceLoaded === "success" && isDateFormatLoaded === "success" && isCostLoaded === "success") {
+      const sub = root?.subscriptions?.[0];
       if (sub?.Payment && !sub?.Is_Expired) {
         // setGridData(costData);
         setUpdatedCostData(costData);
@@ -158,29 +127,15 @@ export const Costs = () => {
         setUpdatedCostData([]);
       }
 
-      const targetFormatData = dateFormatData?.find(
-        (item) => item.UserID === user.id
-      );
-      const userDateFormat = targetFormatData
-        ? targetFormatData.Format
-        : "MMM dd, yyyy";
+      const targetFormatData = dateFormatData?.find((item) => item.UserID === user.id);
+      const userDateFormat = targetFormatData ? targetFormatData.Format : "MMM dd, yyyy";
       setCustomDateFormat(userDateFormat);
 
       setIsDataLoaded(true);
     } else {
       setIsDataLoaded(false);
     }
-  }, [
-    projectData,
-    costData,
-    resourceData,
-    isCostLoaded,
-    isProjectLoaded,
-    isResourceLoaded,
-    dateFormatData,
-    isDateFormatLoaded,
-    user,
-  ]);
+  }, [projectData, costData, resourceData, isCostLoaded, isProjectLoaded, isResourceLoaded, dateFormatData, isDateFormatLoaded, user]);
 
   useEffect(() => {
     const updatedData = getUpdateCostGridData(
@@ -262,13 +217,7 @@ export const Costs = () => {
             <div className="text-sm">
               <Button
                 label={!isShowing ? "Show Filters" : "Hide Filters"}
-                icon={
-                  !isShowing ? (
-                    <MdFilterAlt className="text-lg" />
-                  ) : (
-                    <MdFilterAltOff className="text-lg" />
-                  )
-                }
+                icon={!isShowing ? <MdFilterAlt className="text-lg" /> : <MdFilterAltOff className="text-lg" />}
                 className={clsx(
                   "flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white ",
                   !isShowing ? "bg-green-800" : "bg-red-800"
@@ -391,12 +340,7 @@ export const Costs = () => {
             )}
             {selected === 1 && (
               <div className="py-4 w-full">
-                <CostBoardView
-                  costs={gridData}
-                  customDateFormat={customDateFormat}
-                  usedCurrency={usedCurrency}
-                  projectData={projectData}
-                />
+                <CostBoardView costs={gridData} customDateFormat={customDateFormat} usedCurrency={usedCurrency} projectData={projectData} />
               </div>
             )}
             {selected === 2 && (
@@ -411,13 +355,7 @@ export const Costs = () => {
             )}
           </Tabs>
 
-          <AddCost
-            socket={socket}
-            open={open}
-            setOpen={setOpen}
-            recordData={""}
-            key={new Date().getTime().toString()}
-          />
+          <AddCost open={open} setOpen={setOpen} recordData={""} key={new Date().getTime().toString()} />
         </div>
       )}
     </>

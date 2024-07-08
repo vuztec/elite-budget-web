@@ -5,7 +5,6 @@ import "../Pagination.css";
 import { IoMdAddCircle, IoMdAttach } from "react-icons/io";
 import { RiDeleteBin2Fill, RiFileGifFill } from "react-icons/ri";
 import { useQueryClient } from "react-query";
-import socket from "../../utils/socket";
 import AddAttachment from "./AddAttachment";
 import ConfirmationDialog from "../Dialogs";
 import axios from "../../config/axios";
@@ -98,7 +97,6 @@ export const Attachments = ({ attachments, type, itemID, query, hasAdd, hasEdit,
       .post(SERVER_URL + "/api/attachment/delete-file/" + selected)
       .then(({ data }) => {
         console.log("Data  ---- ", data);
-        // socket?.emit("deleteAttachment", selected, type, itemID, query);
         queryClient.setQueryData(["attachments", type, parseInt(itemID)], (prev) => {
           queryClient.setQueryData([query], (prev) =>
             prev.map((item) =>
@@ -249,7 +247,6 @@ export const Attachments = ({ attachments, type, itemID, query, hasAdd, hasEdit,
           </table>
         </div>
         <AddAttachment
-          socket={socket}
           open={open}
           setOpen={setOpen}
           recordData={selected}

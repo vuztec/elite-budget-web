@@ -10,7 +10,6 @@ import { RiDeleteBin2Fill } from "react-icons/ri";
 import { format } from "date-fns";
 import { useQuery, useQueryClient } from "react-query";
 import AddSubTask from "./AddSubTask";
-import socket from "../../utils/socket";
 import ConfirmationDialog from "../Dialogs";
 import { IoMdAddCircle } from "react-icons/io";
 import { getDateFormat } from "../../config/api";
@@ -187,7 +186,6 @@ export const SubTasks = ({ subtasks, type, itemID, query, hasAdd, hasEdit, hasDe
         </div>
       </div>
       <AddSubTask
-        socket={socket}
         open={open}
         setOpen={setOpen}
         recordData={selected}

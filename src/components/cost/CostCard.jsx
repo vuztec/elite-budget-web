@@ -17,7 +17,7 @@ import { getEditCostPermission, getSuperCostPermission } from "../../utils/permi
 
 export const CostCard = ({ cost, customDateFormat, usedCurrency, projectData }) => {
   const { user, root } = useUserStore();
-  const current_subcription = root.subscriptions?.[0];
+  const current_subcription = root?.subscriptions?.[0];
 
   const [openSubTasks, setOpenSubTasks] = useState(false);
   const [openAttachments, setOpenAttachments] = useState(false);

@@ -19,7 +19,7 @@ import { handleAxiosResponseError } from "../../utils/handleResponseError";
 
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
-export const AddProject = ({ open, setOpen, recordData, socket, chatUsers }) => {
+export const AddProject = ({ open, setOpen, recordData, chatUsers }) => {
   const queryClient = useQueryClient();
   const { user } = useUserStore();
   const hasFin = getFinancialPermission(user);

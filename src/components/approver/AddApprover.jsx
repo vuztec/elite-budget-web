@@ -14,7 +14,7 @@ import { handleAxiosResponseError } from "../../utils/handleResponseError";
 
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
-export const AddApprover = ({ open, setOpen, recordData, itemID, type, socket, approvers, query, db, idType }) => {
+export const AddApprover = ({ open, setOpen, recordData, itemID, type, approvers, query, db, idType }) => {
   const queryClient = useQueryClient();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -41,7 +41,6 @@ export const AddApprover = ({ open, setOpen, recordData, itemID, type, socket, a
   const handleOnSubmit = async (data) => {
     console.log(data);
     setIsLoading(() => true);
-    // socket?.emit("addApprover", data, itemID, type, db);
     axios
       .post(SERVER_URL + "/api/general/approver", { data, itemID, type, db, idType, query })
       .then(({ data }) => {

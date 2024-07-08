@@ -34,7 +34,7 @@ export const DateFormat = () => {
   useEffect(() => {
     if (isDateFormatLoaded === "success") {
       const filteredData = dateFormatData;
-      const sub = root.subscriptions?.[0];
+      const sub = root?.subscriptions?.[0];
       if (sub?.Payment && !sub?.Is_Expired) {
         setGridData(filteredData);
       } else {

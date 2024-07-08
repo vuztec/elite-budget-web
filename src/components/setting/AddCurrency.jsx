@@ -9,7 +9,7 @@ import Button from "../Button";
 import { IoMdSend } from "react-icons/io";
 import { TiCancel } from "react-icons/ti";
 
-export const AddCurrency = ({ open, setOpen, recordData, socket }) => {
+export const AddCurrency = ({ open, setOpen, recordData }) => {
   const [isLoading, setIsLoading] = useState(false);
   const { updateRoot, user, updateUserData } = useUserStore();
   const {
@@ -18,25 +18,10 @@ export const AddCurrency = ({ open, setOpen, recordData, socket }) => {
     formState: { errors },
   } = useForm({ defaultValues: { Currency: recordData?.Currency } });
 
-  useEffect(() => {
-    socket?.on("currencyUpdated", (data) => {
-      console.log("updated currency :", data);
-      setIsLoading(() => false);
-      if (user.Type === "Root") updateUserData(data);
-      updateRoot(data);
-      setOpen(false);
-    });
-
-    return () => {
-      socket?.off("currencyUpdated");
-    };
-  }, []);
-
   // Define handleOnSubmit function to handle form submission
   const handleOnSubmit = async (data) => {
     // setIsLoading(() => true);
     try {
-      socket?.emit("updateCurrency", data);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -46,10 +31,7 @@ export const AddCurrency = ({ open, setOpen, recordData, socket }) => {
     <>
       <ModalWrapper open={open} setOpen={setOpen}>
         <form onSubmit={handleSubmit(handleOnSubmit)} className="">
-          <Dialog.Title
-            as="h2"
-            className="text-base font-bold leading-6 text-gray-900 mb-4"
-          >
+          <Dialog.Title as="h2" className="text-base font-bold leading-6 text-gray-900 mb-4">
             {recordData ? "UPDATE CURRENCY" : "ADD NEW CURRENCY"}
           </Dialog.Title>
           <div className="h-[90%] mt-2 flex flex-col gap-6 overflow-y-scroll bg-scroll">

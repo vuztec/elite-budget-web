@@ -8,7 +8,7 @@ import ConfirmationDialog from "../../components/Dialogs";
 import AddWeekday from "../../components/setting/AddWeekday";
 import { getWeekend } from "../../config/api";
 import { useQuery, useQueryClient } from "react-query";
-import socket from "../../utils/socket";
+
 import { RiDeleteBin2Fill } from "react-icons/ri";
 import { FaEdit } from "react-icons/fa";
 import clsx from "clsx";
@@ -35,7 +35,7 @@ export const Weekends = () => {
   useEffect(() => {
     if (isWeekendLoaded === "success") {
       const filteredData = weekendData;
-      const sub = root.subscriptions?.[0];
+      const sub = root?.subscriptions?.[0];
       if (sub?.Payment && !sub?.Is_Expired) {
         setGridData(filteredData);
       } else {
@@ -45,22 +45,8 @@ export const Weekends = () => {
     }
   }, [weekendData, isWeekendLoaded]);
 
-  useEffect(() => {
-    socket?.on("weekdayDeleted", (weekdayId) => {
-      console.log("Weekday id ---------", weekdayId);
-
-      queryClient.setQueryData(["weekend"], (prevWeek) => prevWeek.filter((week) => week.id !== weekdayId));
-      setOpenDialog(false);
-    });
-
-    return () => {
-      socket?.off("weekdayDeleted");
-    };
-  }, []);
-
   const deleteHandler = async (selected) => {
     try {
-      socket?.emit("deleteWeekday", selected);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -162,7 +148,6 @@ export const Weekends = () => {
         ))}
 
       <AddWeekday
-        socket={socket}
         // setWeekendData={setWeekendData}
         open={open}
         setOpen={setOpen}

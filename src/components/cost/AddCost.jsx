@@ -20,10 +20,10 @@ import { handleAxiosResponseError } from "../../utils/handleResponseError";
 
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
-export const AddCost = ({ open, setOpen, recordData, socket, chatUsers }) => {
+export const AddCost = ({ open, setOpen, recordData, chatUsers }) => {
   const queryClient = useQueryClient();
   const { user: currentUser, root } = useUserStore();
-  const current_subcription = root.subscriptions?.[0];
+  const current_subcription = root?.subscriptions?.[0];
 
   const { data: projectData } = useQuery({
     queryKey: ["projects"],

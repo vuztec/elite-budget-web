@@ -15,7 +15,7 @@ import { handleAxiosResponseError } from "../../utils/handleResponseError";
 
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
-export const AddAdministrator = ({ open, setOpen, recordData, itemID, type, socket, admins, query }) => {
+export const AddAdministrator = ({ open, setOpen, recordData, itemID, type, admins, query }) => {
   const queryClient = useQueryClient();
   const [isLoading, setIsLoading] = useState(false);
   // const [team, setTeam] = useState(recordData?.projectdb_admin || []);

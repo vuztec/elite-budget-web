@@ -10,7 +10,6 @@ import { RiDeleteBin2Fill } from "react-icons/ri";
 import ConfirmationDialog from "../Dialogs";
 import AddStakeholder from "./AddStakeholder";
 import { useQueryClient } from "react-query";
-import socket from "../../utils/socket";
 import { IoMdAddCircle } from "react-icons/io";
 import axios from "../../config/axios";
 import { handleAxiosResponseError } from "../../utils/handleResponseError";
@@ -28,30 +27,7 @@ export const Stakeholders = ({ stakeholders, type, itemID, hasAdd, hasEdit, hasD
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState(null);
 
-  useEffect(() => {
-    //TYPE SHOULD TELL US WHICH DB
-    socket?.on("stakeholderDeleted", (pid, id) => {
-      queryClient.setQueryData(["projects"], (prev) =>
-        prev?.map((project) =>
-          project.id === pid
-            ? {
-                ...project,
-                projectdb_stakeholder: project.projectdb_stakeholder.filter((stake) => stake.resource_id !== id),
-              }
-            : project
-        )
-      );
-      setOpenDialog(false);
-    });
-
-    return () => {
-      socket.off("stakeholderDeleted");
-    };
-  }, []);
-
   const deleteHandler = async (selected) => {
-    // socket?.emit("deleteStakeholder", itemID, selected);
-
     setIsLoading(() => true);
 
     axios
@@ -169,7 +145,6 @@ export const Stakeholders = ({ stakeholders, type, itemID, hasAdd, hasEdit, hasD
           </table>
         </div>
         <AddStakeholder
-          socket={socket}
           stakeholders={stakeholders?.map((stake) => stake.resource_id)}
           open={open}
           type={type}
