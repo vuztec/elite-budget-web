@@ -26,7 +26,6 @@ import { AiTwotoneFolderOpen } from "react-icons/ai";
 import { IoMdAttach } from "react-icons/io";
 import { BiCommentDetail } from "react-icons/bi";
 import { GrProjects } from "react-icons/gr";
-import { AttachmentsDialog, CommentsDialog } from "../DisplayDialogs";
 import axios from "../../config/axios";
 import { getProjectChatUsers } from "../../utils/users";
 import { getSuperProjectPermission, getEditProjectPermission, getFinancialPermission } from "../../utils/permissions";
@@ -341,28 +340,6 @@ export const ProjectListView = ({ gridData, customDateFormat, usedCurrency, cost
       )}
       <AddProject open={open} setOpen={setOpen} recordData={selected} key={new Date().getTime().toString()} chatUsers={selectedChatUsers} />
       <ConfirmationDialog isLoading={isLoading} open={openDialog} setOpen={setOpenDialog} onClick={() => deleteHandler(selected)} />
-      <AttachmentsDialog
-        open={openAttachments}
-        setOpen={setOpenAttachments}
-        recordData={selected}
-        type={"project_id"}
-        query={"projects"}
-        hasAdd={hasAdd}
-        hasEdit={hasEdit}
-        hasDel={hasDel}
-        chatUsers={selectedChatUsers}
-      />
-      <CommentsDialog
-        open={openComments}
-        setOpen={setOpenComments}
-        recordData={selected}
-        type={"project_id"}
-        query={"projects"}
-        hasAdd={hasAdd}
-        hasEdit={hasEdit}
-        hasDel={hasDel}
-        chatUsers={selectedChatUsers}
-      />
     </div>
   );
 };

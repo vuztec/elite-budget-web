@@ -12,10 +12,6 @@ export const LatestProjects = ({ updatedProjectData, usedCurrency, updatedCostDa
   const [gridData, setGridData] = useState([]);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    setGridData(updatedProjectData);
-  }, [updatedProjectData]);
-
   const viewAllClick = () => {
     navigate("/projects?name=projects&tab=2");
   };

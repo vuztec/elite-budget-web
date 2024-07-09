@@ -3,91 +3,86 @@ import Loading from "../../components/Loader";
 import useUserStore from "../../app/user";
 import { LatestProjects, LatestResources, LatestTasks } from "../../components/home";
 import { ProjectCostChart, StageChart } from "../../components/project";
-import { CurrentAbsentees } from "../../components/setting";
-import { getAbsentees, getCosts, getProjects, getResources, getTasks } from "../../config/api";
+import {
+  getBankAccountNames,
+  getBankAccountTransactions,
+  getDebts,
+  getExpenses,
+  getExtraFundsTrackers,
+  getIncomes,
+  getJointSplits,
+  getRetirements,
+  getSavings,
+} from "../../config/api";
 import { useQuery } from "react-query";
-import { getActiveAccount } from "../../utils/permissions";
 import Package from "../../package/Package";
 
 export const Home = () => {
-  const { user, root } = useUserStore();
-  const usedCurrency = root?.Currency ? root?.Currency : "$";
-  const customDateFormat = root?.DateFormat ? root?.DateFormat : "MMM dd, yyyy";
-  const [isDataLoaded, setIsDataLoaded] = useState(false);
+  const { user } = useUserStore();
+  const usedCurrency = "$";
+  const customDateFormat = "MMM dd, yyyy";
+  const [isDataLoaded, setIsDataLoaded] = useState(true);
   const [updatedProjectData, setUpdatedProjectData] = useState([]);
   const [updatedCostData, setUpdatedCostData] = useState([]);
   const [updatedTaskData, setUpdatedTaskData] = useState([]);
   const [updatedAbsenteeData, setUpdatedAbsenteeData] = useState([]);
-  const activeAccount = getActiveAccount(root);
+  const activeAccount = true;
 
-  const { data: projectData, status: isProjectLoaded } = useQuery({
-    queryKey: ["projects"],
-    queryFn: getProjects,
+  const { data: accountnames, status: isNamesLoaded } = useQuery({
+    queryKey: ["accountnames"],
+    queryFn: getBankAccountNames,
     staleTime: 1000 * 60 * 60,
   });
 
-  const { data: taskData, status: isTaskLoaded } = useQuery({
-    queryKey: ["tasks"],
-    queryFn: getTasks,
+  const { data: transactions, status: isTransactionLoaded } = useQuery({
+    queryKey: ["banktransactions"],
+    queryFn: getBankAccountTransactions,
     staleTime: 1000 * 60 * 60,
   });
 
-  const { data: resourceData, status: isResourceLoaded } = useQuery({
-    queryKey: ["resources"],
-    queryFn: getResources,
+  const { data: debts, status: isDebtLoaded } = useQuery({
+    queryKey: ["debts"],
+    queryFn: getDebts,
     staleTime: 1000 * 60 * 60,
   });
 
-  const { data: costData, status: isCostLoaded } = useQuery({
-    queryKey: ["costs"],
-    queryFn: getCosts,
+  const { data: expenses, status: isExpenseLoaded } = useQuery({
+    queryKey: ["expenses"],
+    queryFn: getExpenses,
     staleTime: 1000 * 60 * 60,
   });
 
-  const { data: absenteeData, status: isAbsenteeLoaded } = useQuery({
-    queryKey: ["absentees"],
-    queryFn: getAbsentees,
+  const { data: extrafunds, status: isFundLoaded } = useQuery({
+    queryKey: ["extrafunds"],
+    queryFn: getExtraFundsTrackers,
     staleTime: 1000 * 60 * 60,
   });
 
-  useEffect(() => {
-    if (
-      isProjectLoaded === "success" &&
-      isAbsenteeLoaded === "success" &&
-      isResourceLoaded === "success" &&
-      isCostLoaded === "success" &&
-      isTaskLoaded === "success"
-    ) {
-      const sub = root?.subscriptions?.[0];
-      if (sub?.Payment && !sub?.Is_Expired) {
-        setUpdatedProjectData(projectData);
-        setUpdatedCostData(costData);
-        setUpdatedTaskData(taskData);
-        setUpdatedAbsenteeData(absenteeData);
-      } else {
-        setUpdatedProjectData([]);
-        setUpdatedCostData([]);
-        setUpdatedTaskData([]);
-        setUpdatedAbsenteeData([]);
-      }
+  const { data: incomes, status: isIncomeLoaded } = useQuery({
+    queryKey: ["incomes"],
+    queryFn: getIncomes,
+    staleTime: 1000 * 60 * 60,
+  });
 
-      setIsDataLoaded(true);
-    }
-  }, [
-    absenteeData,
-    isAbsenteeLoaded,
-    projectData,
-    taskData,
-    costData,
-    resourceData,
-    isCostLoaded,
-    isTaskLoaded,
-    isProjectLoaded,
-    isResourceLoaded,
-    user,
-  ]);
+  const { data: jointsplits, status: isJointLoaded } = useQuery({
+    queryKey: ["jointsplits"],
+    queryFn: getJointSplits,
+    staleTime: 1000 * 60 * 60,
+  });
 
-  const uniqueProjectIDs = [...new Set(updatedProjectData?.map((item) => (item.id ? item.id : "")))];
+  const { data: savings, status: isSavingLoaed } = useQuery({
+    queryKey: ["savings"],
+    queryFn: getSavings,
+    staleTime: 1000 * 60 * 60,
+  });
+
+  const { data: retirements, status: isRetLoaded } = useQuery({
+    queryKey: ["retirements"],
+    queryFn: getRetirements,
+    staleTime: 1000 * 60 * 60,
+  });
+
+  const uniqueProjectIDs = [];
 
   return !isDataLoaded ? (
     <div className="py-10">
@@ -118,11 +113,10 @@ export const Home = () => {
               />
             </div>
             <div className="w-full flex flex-col 2xl:flex-row gap-5">
-              <CurrentAbsentees resourceData={resourceData} updatedAbsenteeData={updatedAbsenteeData} customDateFormat={customDateFormat} />
-              <LatestResources resourceData={resourceData} />
+              <LatestResources resourceData={[]} />
             </div>
             <div className="w-full flex flex-col xl:flex-row gap-5">
-              <LatestTasks updatedProjectData={updatedProjectData} updatedTaskData={updatedTaskData} resourceData={resourceData} />
+              <LatestTasks updatedProjectData={updatedProjectData} updatedTaskData={updatedTaskData} resourceData={[]} />
             </div>
           </div>
         ) : (

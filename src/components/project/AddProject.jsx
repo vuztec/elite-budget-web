@@ -7,7 +7,6 @@ import Select from "../Select";
 import Loading from "../Loader";
 import Button from "../Button";
 import { useQueryClient, useQuery } from "react-query";
-import { getResources } from "../../config/api";
 import CustomSelect from "../CustomSelect";
 import { dateFormatter } from "../../utils";
 import useUserStore from "../../app/user";
@@ -23,29 +22,10 @@ export const AddProject = ({ open, setOpen, recordData, chatUsers }) => {
   const queryClient = useQueryClient();
   const { user } = useUserStore();
   const hasFin = getFinancialPermission(user);
-  const { data: resourceData } = useQuery({
-    queryKey: ["resources"],
-    queryFn: getResources,
-    staleTime: 1000 * 60 * 60,
-  });
 
-  const resources = useMemo(() => {
-    return resourceData?.map((resource) => ({
-      value: resource.id,
-      label: resource.FullName,
-    }));
-  }, [resourceData]);
+  const resources = [];
 
-  let defaultValues = recordData
-    ? {
-        ...recordData,
-        project_admins: recordData?.projectdb_admin?.map((admin) => admin.resource_id) ?? [],
-        project_managers: recordData?.projectdb_manager?.map((manager) => manager.resource_id) ?? [],
-        project_stakeholders: recordData?.projectdb_stakeholders?.map((stake) => stake.resource_id) ?? [],
-        StartDate: recordData?.StartDate ? dateFormatter(recordData?.StartDate) : "",
-        EndDate: recordData?.EndDate ? dateFormatter(recordData?.EndDate) : "",
-      }
-    : {};
+  let defaultValues = recordData ? {} : {};
 
   const [isLoading, setIsLoading] = useState(false);
 

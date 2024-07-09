@@ -12,9 +12,8 @@ import { useQuery } from "react-query";
 import useUserStore from "../../app/user";
 import { themeColors } from "../../utils";
 import clsx from "clsx";
-import { getCosts, getDateFormat, getProjects, getResources, getTasks } from "../../config/api";
 import { BsBarChart } from "react-icons/bs";
-import { dueDataSource, getUpdateProjectGridData, startDataSource } from "../../utils/filters";
+import { dueDataSource, startDataSource } from "../../utils/filters";
 import Select from "../../components/Select";
 import { getActiveAccount, getAddProjectPermission } from "../../utils/permissions";
 import Package from "../../package/Package";
@@ -58,36 +57,6 @@ export const Projects = () => {
   const name = searchParams.get("name");
   const tab = searchParams.get("tab");
 
-  const { data: projectData, status: isProjectLoaded } = useQuery({
-    queryKey: ["projects"],
-    queryFn: getProjects,
-    staleTime: 1000 * 60 * 60,
-  });
-
-  const { data: taskData, status: isTaskLoaded } = useQuery({
-    queryKey: ["tasks"],
-    queryFn: getTasks,
-    staleTime: 1000 * 60 * 60,
-  });
-
-  const { data: resourceData, status: isResourceLoaded } = useQuery({
-    queryKey: ["resources"],
-    queryFn: getResources,
-    staleTime: 1000 * 60 * 60,
-  });
-
-  const { data: costData, status: isCostLoaded } = useQuery({
-    queryKey: ["costs"],
-    queryFn: getCosts,
-    staleTime: 1000 * 60 * 60,
-  });
-
-  const { data: dateFormatData, status: isDateFormatLoaded } = useQuery({
-    queryKey: ["dateformat"],
-    queryFn: getDateFormat,
-    staleTime: 1000 * 60 * 60,
-  });
-
   // console.log("data: ", projectData);
 
   ///-------------Filters Data Source --------------------------------///
@@ -104,19 +73,19 @@ export const Projects = () => {
     }));
   }, [resourceData]);
 
-  const uniquePortfolios = [...new Set(projectData?.map((item) => (item.Portfolio ? item.Portfolio : "")))];
+  const uniquePortfolios = [];
   const portfolios = uniquePortfolios.map((portfolio) => ({
     value: portfolio,
     label: portfolio,
   }));
 
-  const uniqueProgrammes = [...new Set(projectData?.map((item) => (item.Programme ? item.Programme : "")))];
+  const uniqueProgrammes = [];
   const programmes = uniqueProgrammes.map((programme) => ({
     value: programme,
     label: programme,
   }));
 
-  const uniqueTypes = [...new Set(projectData?.map((item) => (item.Type ? item.Type : "")))];
+  const uniqueTypes = [];
   const types = uniqueTypes.map((type) => ({
     value: type,
     label: type,
@@ -126,74 +95,6 @@ export const Projects = () => {
   useEffect(() => {
     if (name === "projects") setSelected(parseInt(tab));
   }, [name, tab]);
-
-  useEffect(() => {
-    if (
-      isProjectLoaded === "success" &&
-      isResourceLoaded === "success" &&
-      isDateFormatLoaded === "success" &&
-      isCostLoaded === "success" &&
-      isTaskLoaded === "success"
-    ) {
-      const sub = root?.subscriptions?.[0];
-      if (sub?.Payment && !sub?.Is_Expired) {
-        setUpdatedProjectData(projectData);
-      } else {
-        setUpdatedProjectData([]);
-      }
-
-      const targetFormatData = dateFormatData?.find((item) => item.UserID === user.id);
-      const userDateFormat = targetFormatData ? targetFormatData.Format : "MMM dd, yyyy";
-      setCustomDateFormat(userDateFormat);
-
-      setIsDataLoaded(true);
-    }
-  }, [projectData, resourceData, dateFormatData, isCostLoaded, isTaskLoaded, isProjectLoaded, isResourceLoaded, isDateFormatLoaded, user]);
-
-  useEffect(() => {
-    const updatedData = getUpdateProjectGridData(
-      updatedProjectData,
-      taskData,
-      costData,
-      portfolioFilter,
-      programmeFilter,
-      typeFilter,
-      stageFilter,
-      managerFilter,
-      adminFilter,
-      budgetFilter,
-      scheduleFilter,
-      dueDateFilter,
-      startDateFilter,
-      dates
-    );
-
-    setGridData(updatedData);
-  }, [
-    updatedProjectData,
-    portfolioFilter,
-    programmeFilter,
-    typeFilter,
-    stageFilter,
-    managerFilter,
-    adminFilter,
-    budgetFilter,
-    scheduleFilter,
-    dueDateFilter,
-    startDateFilter,
-    dates,
-  ]);
-
-  useEffect(() => {
-    const uniqueProjectIDs = [...new Set(gridData?.map((item) => (item.id ? item.id : "")))];
-    // Filter data based on unique project IDs
-    const filteredCostData = costData?.filter((item) => uniqueProjectIDs.includes(item.ProjectID));
-    const filteredTaskData = taskData?.filter((item) => uniqueProjectIDs.includes(item.ProjectID));
-
-    // Set filtered data
-    setUpdatedCostData(filteredCostData);
-    setUpdatedTaskData(filteredTaskData);
-  }, [gridData]);
 
   const handlePortfolioChange = (e) => {
     if (e && e.target?.value) {

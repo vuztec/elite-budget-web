@@ -1,5 +1,7 @@
 import axios from "axios";
 
+const SERVER_URL = import.meta.env.VITE_SERVER_URL;
+
 axios.interceptors.request.use(function (config) {
   const storage = window.localStorage.getItem("elite-budget");
   const auth = storage ? JSON.parse(storage) : null;
@@ -12,6 +14,8 @@ axios.interceptors.request.use(function (config) {
       Authorization: "Bearer " + (!token ? "logged_out" : token),
     };
   }
+
+  config.baseURL = SERVER_URL;
 
   return config;
 });

@@ -1,27 +1,4 @@
-import {
-  Costs,
-  Projects,
-  Tasks,
-  Home,
-  Login,
-  DateFormat,
-  Holidays,
-  Package,
-  UserCurrency,
-  Weekends,
-  WeekStart,
-  Membership,
-  Users,
-  Allocation,
-  Absentee,
-  Timesheet,
-  CostDetails,
-  TaskDetails,
-  ProjectDetails,
-  TimesheetDetails,
-  UserDetails,
-  AbsenteeDetails,
-} from "./pages";
+import { Projects, Home, Login, Users, ProjectDetails, UserDetails } from "./pages";
 
 import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
@@ -69,30 +46,9 @@ function App() {
           <Route path="/projects" element={<Projects />} />
           <Route path="/project/:id" element={<ProjectDetails />} />
 
-          <Route path="/tasks" element={<Tasks />} />
-          <Route path="/task/:id" element={<TaskDetails />} />
-
-          <Route path="/costs" element={<Costs />} />
-          <Route path="/cost/:id" element={<CostDetails />} />
-
           <Route path="/team" element={<Users />} />
           <Route path="/team/list" element={<Users />} />
           <Route path="/user/:id" element={<UserDetails />} />
-          <Route path="/team/allocations" element={<Allocation />} />
-          <Route path="/team/absentee" element={<Absentee />} />
-          <Route path="/absentee/:id" element={<AbsenteeDetails />} />
-          <Route path="/team/timesheet" element={<Timesheet />} />
-          <Route path="/timesheet/:id" element={<TimesheetDetails />} />
-
-          <Route path="/settings" element={<Holidays />} />
-          <Route path="/settings/holidays" element={<Holidays />} />
-          <Route path="/settings/weekends" element={<Weekends />} />
-          <Route path="/settings/weekstart" element={<WeekStart />} />
-          <Route path="/settings/dateformat" element={<DateFormat />} />
-          <Route path="/settings/currency" element={<UserCurrency />} />
-          {/* <Route path="/settings/membership" element={<Membership />} /> */}
-
-          <Route path="/packages" element={<Package />} />
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/forgetpassword" element={<ForgetPassword />} />

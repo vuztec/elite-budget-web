@@ -1,225 +1,55 @@
 import axios from "./axios";
 
-const SERVER_URL = import.meta.env.VITE_SERVER_URL;
+export const getBankAccountNames = async () => {
+  const res = await axios.get("/api/bank-accounts/name");
 
-/* ----------- =============== Tasks API ============= ---------------- */
-
-export const getRootUser = async () => {
-  const response = await axios.get(SERVER_URL + `/api/rootuser/id`);
-
-  if (response.data.status === "success") return response.data.items;
-  else return data;
+  return res.data;
 };
 
-/* ----------- =============== Tasks API ============= ---------------- */
+export const getBankAccountTransactions = async () => {
+  const res = await axios.get("/api/bank-accounts/transaction");
 
-export const getTasks = async () => {
-  return [];
-  const response = await axios.get(SERVER_URL + `/api/task/rootid`);
-
-  if (response.data.status === "success") return response.data?.items;
-  else return data;
+  return res.data;
 };
 
-/* ----------- ================ Projects API ================ ---------------- */
+export const getDebts = async () => {
+  const res = await axios.get("/api/debt");
 
-export const getProjects = async () => {
-  return [];
-  const response = await axios.get(SERVER_URL + `/api/project/rootid`);
-
-  if (response.data.status === "success") return response.data.items;
-  else return data;
+  return res.data;
 };
 
-/* ---------- ================== Resources API ================= ---------------- */
+export const getExpenses = async () => {
+  const res = await axios.get("/api/expenses");
 
-export const getResources = async () => {
-  return [];
-  const response = await axios.get(SERVER_URL + `/api/resource/rootid`);
-
-  if (response.data.status === "success") return response.data.items;
-  else return data;
+  return res.data;
 };
 
-/* ---------- ================== Risks API ================= ---------------- */
+export const getExtraFundsTrackers = async () => {
+  const res = await axios.get("/api/extra-funds-tracker");
 
-export const getRisks = async () => {
-  return [];
-  const response = await axios.get(SERVER_URL + `/api/risk/rootid`);
-
-  if (response.data.status === "success") return response.data.items;
-  else return data;
+  return res.data;
 };
 
-/* ---------- ================== Risks API ================= ---------------- */
+export const getIncomes = async () => {
+  const res = await axios.get("/api/income");
 
-export const getCosts = async () => {
-  return [];
-  const response = await axios.get(SERVER_URL + `/api/cost/rootid`);
-
-  if (response.data.status === "success") return response.data.items;
-  else return data;
+  return res.data;
 };
 
-/* ---------- ================== Actions API ================= ---------------- */
+export const getJointSplits = async () => {
+  const res = await axios.get("/api/joint-split");
 
-export const getActions = async () => {
-  return [];
-  const response = await axios.get(SERVER_URL + `/api/action/rootid`);
-
-  if (response.data.status === "success") return response.data.items;
-  else return data;
+  return res.data;
 };
 
-/* ---------- ================== Changes API ================= ---------------- */
+export const getSavings = async () => {
+  const res = await axios.get("/api/savings-retirements?type=Savings");
 
-export const getChanges = async () => {
-  return [];
-  const response = await axios.get(SERVER_URL + `/api/change/rootid`);
-
-  if (response.data.status === "success") return response.data.items;
-  else return data;
+  return res.data;
 };
 
-/* ---------- ================== Decisions API ================= ---------------- */
+export const getRetirements = async () => {
+  const res = await axios.get("/api/savings-retirements?type=Retirements");
 
-export const getDecisions = async () => {
-  return [];
-  const response = await axios.get(SERVER_URL + `/api/decision/rootid`);
-
-  if (response.data.status === "success") return response.data.items;
-  else return data;
-};
-
-/* ---------- ================== Issues API ================= ---------------- */
-
-export const getIssues = async () => {
-  return [];
-  const response = await axios.get(SERVER_URL + `/api/issue/rootid`);
-
-  if (response.data.status === "success") return response.data.items;
-  else return data;
-};
-
-/* ---------- ================== Abseentees API ================= ---------------- */
-
-export const getAbsentees = async () => {
-  return [];
-  const response = await axios.get(SERVER_URL + `/api/absentee/rootid`);
-
-  if (response.data.status === "success") return response.data.items;
-  else return data;
-};
-
-/* ---------- ================== Date Format API ================= ---------------- */
-
-export const getDateFormat = async () => {
-  return [];
-  const response = await axios.get(SERVER_URL + `/api/dateformat/rootid`);
-
-  if (response.data.status === "success") return response.data.items;
-  else return data;
-};
-
-/* ---------- ================== Currency API ================= ---------------- */
-
-export const getCurrency = async () => {
-  return [];
-  const response = await axios.get(SERVER_URL + `/api/currency/rootid`);
-
-  if (response.data.status === "success") return response.data.items;
-  else return data;
-};
-
-/* ---------- ================== Week Start API ================= ---------------- */
-
-export const getWeekStart = async () => {
-  return [];
-  const response = await axios.get(SERVER_URL + `/api/weekstart/rootid`);
-
-  if (response.data.status === "success") return response.data.items;
-  else return data;
-};
-
-/* ---------- ================== Weekend API ================= ---------------- */
-
-export const getWeekend = async () => {
-  return [];
-  const response = await axios.get(SERVER_URL + `/api/weekend/rootid`);
-
-  if (response.data.status === "success") return response.data.items;
-  else return data;
-};
-
-/* ---------- ================== Holiday API ================= ---------------- */
-
-export const getHoliday = async () => {
-  return [];
-  const response = await axios.get(SERVER_URL + `/api/holiday/rootid`);
-
-  if (response.data.status === "success") return response.data.items;
-  else return data;
-};
-
-/* ---------- ================== Timesheet API ================= ---------------- */
-
-export const getTimesheets = async () => {
-  return [];
-  const response = await axios.get(SERVER_URL + `/api/timesheet/rootid`);
-
-  if (response.data.status === "success") return response.data.items;
-  else return data;
-};
-
-/* ---------- ================== Attachments API ================= ---------------- */
-
-export const getAttachments = async (type, id) => {
-  return [];
-  if (!id) return [];
-  const response = await axios.get(SERVER_URL + `/api/attachment?type=${type}&id=${id}`);
-
-  if (response.data.status === "success") return response.data.items;
-  else return data;
-};
-
-/* ---------- ================== Comments API ================= ---------------- */
-
-export const getComments = async (type, id) => {
-  return [];
-  if (!id) return [];
-  const response = await axios.get(SERVER_URL + `/api/comment?type=${type}&id=${id}`);
-
-  if (response.data.status === "success") return response.data.items;
-  else return data;
-};
-
-/* ---------- ================== Sub Task API ================= ---------------- */
-
-export const getSubTasks = async (type, id) => {
-  return [];
-  if (!id) return [];
-  const response = await axios.get(SERVER_URL + `/api/subtask?type=${type}&id=${id}`);
-
-  if (response.data.status === "success") return response.data.items;
-  else return data;
-};
-
-/* ---------- ================== Notification API ================= ---------------- */
-
-export const getNotifications = async () => {
-  return [];
-  const response = await axios.get(SERVER_URL + `/api/notification/unread`);
-
-  if (response.data.status === "success") return response.data.items;
-  else return data;
-};
-
-/* ----------- ================ Exchange Rate ================ ----------------- */
-
-export const getExchangeRate = async (currency) => {
-  return [];
-  const response = await axios.get(SERVER_URL + `/api/exchange-rate/${currency}`);
-
-  if (response.data.status === "success") return response.data.items;
-  else return data;
+  return res.data;
 };

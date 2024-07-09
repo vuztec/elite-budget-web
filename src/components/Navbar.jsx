@@ -1,28 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import UserAvatar from "./team/UserAvatar";
-import NotificationPanel from "./NotificationPanel";
 import useUserStore from "../app/user";
 import { useLocation } from "react-router-dom";
 import { SidebarLinks } from "../utils/sidebar.data";
 import { useQueryClient, useQuery } from "react-query";
-import { getNotifications } from "../config/api";
-import axios from "../config/axios";
-const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
 const Navbar = () => {
-  const { setSidebar, user, updateRoot, setUser, isRefresh, setIsRefresh } = useUserStore();
+  const { setSidebar, isRefresh, setIsRefresh } = useUserStore();
   const location = useLocation();
   const [title, setTitle] = useState("");
   const [searchParams] = useSearchParams();
   const tab = searchParams.get("tab");
   const queryClient = useQueryClient();
-
-  const { data: notifications } = useQuery({
-    queryKey: ["notifications"],
-    queryFn: getNotifications,
-    staleTime: 1000 * 60,
-  });
 
   useEffect(() => {
     if (isRefresh) {
@@ -66,8 +56,6 @@ const Navbar = () => {
       </div>
 
       <div className="flex gap-2 items-center">
-        <NotificationPanel notifications={notifications} />
-
         <UserAvatar />
       </div>
     </div>

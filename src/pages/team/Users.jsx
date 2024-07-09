@@ -8,7 +8,6 @@ import { getInitials, getResourceBirthdayStatus, themeColors } from "../../utils
 import clsx from "clsx";
 import ConfirmationDialog from "../../components/Dialogs";
 import { AddRegularUser } from "../../components/team";
-import { getProjects, getResources, getRootUser } from "../../config/api";
 import { useQuery, useQueryClient } from "react-query";
 
 import { MdEmail, MdPeople } from "react-icons/md";
@@ -16,11 +15,8 @@ import { RiDeleteBin2Fill } from "react-icons/ri";
 import { FaEdit, FaEye, FaPhoneSquare } from "react-icons/fa";
 import useDateCalculator from "../../config/useDateCalculator";
 import { useNavigate } from "react-router-dom";
-import { AttachmentsDialog, CommentsDialog } from "../../components/DisplayDialogs";
 import { BiCommentDetail } from "react-icons/bi";
 import axios from "../../config/axios";
-import { getActiveAccount, getAddUserPermission, getDeleteUserPermission, getEditUserPermission } from "../../utils/permissions";
-import { getAllChatUsers } from "../../utils/users";
 import { AiTwotoneFolderOpen } from "react-icons/ai";
 import Package from "../../package/Package";
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
@@ -37,47 +33,15 @@ export const Users = () => {
   const [hasEdit, setHasEdit] = useState(false);
   const [hasDel, setHasDel] = useState(false);
   const [selectedChatUsers, setSelectedChatUsers] = useState(null);
-  const { user: currentUser, root } = useUserStore();
-  const current_subcription = root?.subscriptions?.[0];
+  const { user: currentUser } = useUserStore();
+  const current_subcription = {};
 
-  const activeAccount = getActiveAccount(root);
+  const activeAccount = true;
 
   const setUser = useUserStore((state) => state.setUser);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [gridData, setGridData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-
-  const { data: resourceData, status: isResourceLoaded } = useQuery({
-    queryKey: ["resources"],
-    queryFn: getResources,
-    staleTime: 1000 * 60 * 60,
-  });
-  const { data: projectData, status: isProjectLoaded } = useQuery({
-    queryKey: ["projects"],
-    queryFn: getProjects,
-    staleTime: 1000 * 60 * 60,
-  });
-  const { data: rootUserData, status: isRootUserLoaded } = useQuery({
-    queryKey: ["rootuser"],
-    queryFn: getRootUser,
-    staleTime: 1000 * 60 * 60,
-  });
-
-  console.log(resourceData);
-
-  useEffect(() => {
-    if (isResourceLoaded === "success" && isRootUserLoaded) {
-      const filteredData = resourceData;
-      const sub = current_subcription;
-      if (sub?.Payment && !sub?.Is_Expired) {
-        setGridData(filteredData);
-      } else {
-        setGridData([]);
-      }
-
-      setIsDataLoaded(true);
-    }
-  }, [resourceData, isResourceLoaded, rootUserData, isRootUserLoaded]);
 
   const deleteHandler = async (selected) => {
     try {
@@ -111,25 +75,15 @@ export const Users = () => {
 
   const viewAttachClick = (el) => {
     setSelected(el);
-    const chatUsers = getAllChatUsers(resourceData, currentUser);
+    const chatUsers = [];
     setSelectedChatUsers(chatUsers);
-    const add = getAddUserPermission(currentUser, projectData);
-    const edit = getEditUserPermission(currentUser, el, projectData);
-    setHasAdd(() => add);
-    setHasEdit(() => edit);
-    setHasDel(() => add);
     setOpenAttachments(true);
   };
 
   const viewCommentClick = (el) => {
     setSelected(el);
-    const chatUsers = getAllChatUsers(resourceData, currentUser);
+    const chatUsers = [];
     setSelectedChatUsers(chatUsers);
-    const add = getAddUserPermission(currentUser, projectData);
-    const edit = getEditUserPermission(currentUser, el, projectData);
-    setHasAdd(() => add);
-    setHasEdit(() => edit);
-    setHasDel(() => add);
     setOpenComments(true);
   };
 
@@ -245,18 +199,15 @@ export const Users = () => {
               onClick={() => viewDetailClick(user.id)}
             />
           )}
-          {getEditUserPermission(currentUser, user, projectData) && (
-            <FaEdit
-              className={clsx("text-editcolor", "hover:text-orange-500 font-semibold cursor-pointer sm:px-0")}
-              onClick={() => editClick(user)}
-            />
-          )}
-          {getDeleteUserPermission(currentUser, user) && (
-            <RiDeleteBin2Fill
-              className={clsx("text-deletecolor", "hover:text-red-500 font-semibold cursor-pointer sm:px-0")}
-              onClick={() => deleteClick(user.id)}
-            />
-          )}
+          <FaEdit
+            className={clsx("text-editcolor", "hover:text-orange-500 font-semibold cursor-pointer sm:px-0")}
+            onClick={() => editClick(user)}
+          />
+
+          <RiDeleteBin2Fill
+            className={clsx("text-deletecolor", "hover:text-red-500 font-semibold cursor-pointer sm:px-0")}
+            onClick={() => deleteClick(user.id)}
+          />
         </div>
       </td>
     </tr>
@@ -278,17 +229,15 @@ export const Users = () => {
                   <Title title="Team Members" />
                 </div>
 
-                {getAddUserPermission(currentUser, projectData) && resourceData.length < root.TeamSize && (
-                  <Button
-                    label="Add New"
-                    icon={<IoMdAdd className="text-lg" />}
-                    className={clsx(
-                      "flex flex-row-reverse gap-1 items-center text-white hover:bg-viewcolor rounded-full px-2 py-1",
-                      `bg-[${themeColors[1]}] hover:text-[${themeColors[1]}]`
-                    )}
-                    onClick={() => addClick()}
-                  />
-                )}
+                <Button
+                  label="Add New"
+                  icon={<IoMdAdd className="text-lg" />}
+                  className={clsx(
+                    "flex flex-row-reverse gap-1 items-center text-white hover:bg-viewcolor rounded-full px-2 py-1",
+                    `bg-[${themeColors[1]}] hover:text-[${themeColors[1]}]`
+                  )}
+                  onClick={() => addClick()}
+                />
               </div>
 
               <div className="w-full h-fit bg-white py-2 rounded">
@@ -319,28 +268,6 @@ export const Users = () => {
       />
 
       <ConfirmationDialog open={openDialog} setOpen={setOpenDialog} isLoading={isLoading} onClick={() => deleteHandler(selected)} />
-      <AttachmentsDialog
-        open={openAttachments}
-        setOpen={setOpenAttachments}
-        recordData={selected}
-        type={"resource_id"}
-        query={"resources"}
-        hasAdd={hasAdd}
-        hasEdit={hasEdit}
-        hasDel={hasDel}
-        chatUsers={selectedChatUsers}
-      />
-      <CommentsDialog
-        open={openComments}
-        setOpen={setOpenComments}
-        recordData={selected}
-        type={"resource_id"}
-        query={"resources"}
-        hasAdd={hasAdd}
-        hasEdit={hasEdit}
-        hasDel={hasDel}
-        chatUsers={selectedChatUsers}
-      />
     </>
   );
 };

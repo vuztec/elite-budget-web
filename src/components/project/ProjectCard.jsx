@@ -16,7 +16,6 @@ import { IoMdAttach } from "react-icons/io";
 import ProjectDialog from "./ProjectDialog";
 import { BsPeopleFill } from "react-icons/bs";
 import { TbCalendarDollar, TbCalendarTime } from "react-icons/tb";
-import { AttachmentsDialog, CommentsDialog } from "../DisplayDialogs";
 import { FaPeopleGroup } from "react-icons/fa6";
 import { getProjectChatUsers } from "../../utils/users";
 import useUserStore from "../../app/user";
@@ -234,28 +233,6 @@ export const ProjectCard = ({ project, costData, taskData, customDateFormat, use
           </>
         )}
       </div>
-      <AttachmentsDialog
-        open={openAttachments}
-        setOpen={setOpenAttachments}
-        recordData={selected}
-        type={"project_id"}
-        query={"projects"}
-        hasAdd={hasAdd}
-        hasEdit={hasEdit}
-        hasDel={hasDel}
-        chatUsers={selectedChatUsers}
-      />
-      <CommentsDialog
-        open={openComments}
-        setOpen={setOpenComments}
-        recordData={selected}
-        type={"project_id"}
-        query={"projects"}
-        hasAdd={hasAdd}
-        hasEdit={hasEdit}
-        hasDel={hasDel}
-        chatUsers={selectedChatUsers}
-      />
     </>
   );
 };
