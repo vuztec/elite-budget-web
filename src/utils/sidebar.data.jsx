@@ -25,8 +25,8 @@ export const SidebarLinks = [
     icon: <GrProjects />,
     dropdown: false,
     sub: [
-      { label: "Expense Records", link: "/expense/expense-records" },
-      { label: "Joint Contribution", link: "/expense/joint-contribution" },
+      { label: "Expense Records", link: "/expenses/expense-records" },
+      { label: "Joint Contribution", link: "/expenses/joint-contribution" },
     ],
   },
   {
@@ -36,7 +36,7 @@ export const SidebarLinks = [
     dropdown: false,
   },
   {
-    label: "Retirement",
+    label: "Retirements",
     link: "/retirements",
     icon: <FiHome />,
     dropdown: false,
