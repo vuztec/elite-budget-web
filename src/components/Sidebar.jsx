@@ -6,54 +6,19 @@ import { SidebarLinks } from "../utils/sidebar.data";
 import Logo from "../assets/logo.png";
 import useUserStore from "../app/user";
 import { GrClose } from "react-icons/gr";
-import { getFinancialPermission } from "../utils/permissions";
 
 const Sidebar = () => {
-  const { user, root } = useUserStore();
-  const hasFin = getFinancialPermission(user); // only show Cost if hasFin is true
-  const current_subcription = root?.subscriptions?.[0];
-  const Package = current_subcription?.Package; //ONLY show (Acsentee, Allocation, Timesheet) if Package === "Premium"
+  const { user } = useUserStore();
   const isAdmin = true;
   const location = useLocation();
   const navigate = useNavigate();
-  const [sidebarData, setSideBarData] = useState(isAdmin ? SidebarLinks : SidebarLinks.slice(0, 1));
+  const [sidebarData, setSideBarData] = useState(SidebarLinks);
   const { setSidebar } = useUserStore();
   const [searchParams] = useSearchParams();
   const name = searchParams.get("name");
   const tab = searchParams.get("tab");
 
   const path = location.pathname?.split("/")[1];
-
-  useEffect(() => {
-    if (sidebarData?.length && !hasFin) setSideBarData((old) => old.filter((item) => item.label !== "Costs"));
-
-    if (sidebarData?.length && Package !== "Premium") {
-      const tabs = ["Allocation", "Absentees", "Timesheets"];
-      setSideBarData((old) =>
-        old.map((sidebar) =>
-          sidebar.label === "Team"
-            ? {
-                ...sidebar,
-                sub: sidebar.sub.filter((item) => !tabs.includes(item.label)),
-              }
-            : sidebar
-        )
-      );
-    }
-
-    if (sidebarData?.length && user.Type !== "Root") {
-      setSideBarData((old) =>
-        old.map((sidebar) =>
-          sidebar.label === "Settings"
-            ? {
-                ...sidebar,
-                sub: sidebar.sub.filter((item) => item.label !== "Membership"),
-              }
-            : sidebar
-        )
-      );
-    }
-  }, [hasFin, user]);
 
   const NavLinks = ({ el }) => {
     const title = el.label.split(" ")[0].toLocaleLowerCase();
@@ -110,7 +75,7 @@ const Sidebar = () => {
               key={index}
               onClick={(e) => e.stopPropagation()}
             >
-              <NavLink to={item.link + `?name=${title}&tab=${index}`} className="w-full flex" onClick={() => handleSubMenu(index)}>
+              <NavLink to={item.link} className="w-full flex" onClick={() => handleSubMenu(index)}>
                 {item.label}
               </NavLink>
             </div>
