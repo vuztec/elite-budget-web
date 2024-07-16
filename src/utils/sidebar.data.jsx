@@ -36,8 +36,8 @@ export const SidebarLinks = [
     dropdown: false,
   },
   {
-    label: "Retirements",
-    link: "/retirements",
+    label: "Retirement",
+    link: "/retirement",
     icon: <FiHome />,
     dropdown: false,
   },
@@ -53,7 +53,7 @@ export const SidebarLinks = [
     icon: <MdPeople />,
     dropdown: false,
     sub: [
-      { label: "Transactions", link: "/bank/transactions" },
+      { label: "Bank Transactions", link: "/bank/bank-transactions" },
       { label: "Bank Account", link: "/bank/bank-account" },
     ],
   },

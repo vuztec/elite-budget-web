@@ -1,4 +1,20 @@
-import { Projects, Home, Login, Users, ProjectDetails, UserDetails } from "./pages";
+import {
+  Home,
+  Login,
+  IncomeRecords,
+  ExtraPayDates,
+  ExpenseRecords,
+  JointContribution,
+  OtherDebts,
+  Retirement,
+  Savings,
+  Transactions,
+  BankAccounts,
+  BudgetDetails,
+  Checklist,
+  ExtraFundsTracker,
+  Networth,
+} from "./pages";
 
 import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
@@ -43,12 +59,28 @@ function App() {
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
-          <Route path="/projects" element={<Projects />} />
-          <Route path="/project/:id" element={<ProjectDetails />} />
-
-          <Route path="/team" element={<Users />} />
-          <Route path="/team/list" element={<Users />} />
-          <Route path="/user/:id" element={<UserDetails />} />
+          <Route path="//income/income-records" element={<IncomeRecords />} />
+          <Route path="/income/extra-pay-dates" element={<ExtraPayDates />} />
+          <Route
+            path="/expenses/expense-records"
+            element={<ExpenseRecords />}
+          />
+          <Route
+            path="/expenses/joint-contribution"
+            element={<JointContribution />}
+          />
+          <Route path="/debts" element={<OtherDebts />} />
+          <Route path="/retirement" element={<Retirement />} />
+          <Route path="/savings" element={<Savings />} />
+          <Route path="/bank/bank-transactions" element={<Transactions />} />
+          <Route path="/bank/bank-account" element={<BankAccounts />} />
+          <Route path="/budget/budget-details" element={<BudgetDetails />} />
+          <Route path="/budget/checklist" element={<Checklist />} />
+          <Route
+            path="/budget/extra-funds-tracker"
+            element={<ExtraFundsTracker />}
+          />
+          <Route path="/net-worth" element={<Networth />} />
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/forgetpassword" element={<ForgetPassword />} />

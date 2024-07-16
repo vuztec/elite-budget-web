@@ -3,7 +3,11 @@ import { getProjectAdministrators, getProjectManagers } from "./users";
 //--------------------Common--------------------//
 export function isProjectManager(currentUser, projectData) {
   let isProjectManager = false;
-  const projects = projectData?.filter((project) => project?.projectdb_manager?.map((user) => user.resource_id)?.includes(currentUser.id));
+  const projects = projectData?.filter((project) =>
+    project?.projectdb_manager
+      ?.map((user) => user.resource_id)
+      ?.includes(currentUser.id)
+  );
   if (projects?.length > 0) {
     isProjectManager = true;
   }
@@ -11,7 +15,11 @@ export function isProjectManager(currentUser, projectData) {
 }
 export function isProjectAdministrator(currentUser, projectData) {
   let isProjectAdministrator = false;
-  const projects = projectData?.filter((project) => project?.projectdb_admin?.map((user) => user.resource_id)?.includes(currentUser.id));
+  const projects = projectData?.filter((project) =>
+    project?.projectdb_admin
+      ?.map((user) => user.resource_id)
+      ?.includes(currentUser.id)
+  );
   if (projects?.length > 0) {
     isProjectAdministrator = true;
   }
@@ -78,21 +86,31 @@ export function getEditUserPermission(currentUser, user, projectData) {
 }
 export function getPmUserPermission(currentUser, user, projectData) {
   let permissions = false;
-  if (currentUser?.Type === "Root" || currentUser?.isAdmin === true || isProjectManager(currentUser, projectData) === true) {
+  if (
+    currentUser?.Type === "Root" ||
+    currentUser?.isAdmin === true ||
+    isProjectManager(currentUser, projectData) === true
+  ) {
     permissions = true;
   }
   return permissions;
 }
 export function getDeleteUserPermission(currentUser, user) {
   let permissions = false;
-  if (currentUser?.Type === "Root" || (currentUser?.isAdmin === true && currentUser?.id !== user?.id)) {
+  if (
+    currentUser?.Type === "Root" ||
+    (currentUser?.isAdmin === true && currentUser?.id !== user?.id)
+  ) {
     permissions = true;
   }
   return permissions;
 }
 export function getAdminUserPermission(currentUser, user) {
   let permissions = false;
-  if (currentUser?.Type === "Root" || (currentUser?.isAdmin === true && currentUser?.id !== user?.id)) {
+  if (
+    currentUser?.Type === "Root" ||
+    (currentUser?.isAdmin === true && currentUser?.id !== user?.id)
+  ) {
     permissions = true;
   }
   return permissions;
@@ -107,7 +125,11 @@ export function getAddProjectPermission(currentUser) {
 }
 export function getEditProjectPermission(currentUser, project) {
   let permissions = false;
-  if (currentUser.Type === "Root" || currentUser.isAdmin === true || isManager(currentUser, project) === true) {
+  if (
+    currentUser.Type === "Root" ||
+    currentUser.isAdmin === true ||
+    isManager(currentUser, project) === true
+  ) {
     permissions = true;
   }
   return permissions;
@@ -156,7 +178,11 @@ export function getEditTaskPermission(currentUser, task, projectData) {
 }
 export function getSuperTaskPermission(currentUser, task, projectData) {
   let permissions = false;
-  if (currentUser.Type === "Root" || currentUser.isAdmin === true || isPM(currentUser, task?.ProjectID, projectData) === true) {
+  if (
+    currentUser.Type === "Root" ||
+    currentUser.isAdmin === true ||
+    isPM(currentUser, task?.ProjectID, projectData) === true
+  ) {
     permissions = true;
   }
   return permissions;
@@ -198,7 +224,11 @@ export function getEditRiskPermission(currentUser, risk, projectData) {
 }
 export function getSuperRiskPermission(currentUser, risk, projectData) {
   let permissions = false;
-  if (currentUser.Type === "Root" || currentUser.isAdmin === true || isPM(currentUser, risk?.ProjectID, projectData) === true) {
+  if (
+    currentUser.Type === "Root" ||
+    currentUser.isAdmin === true ||
+    isPM(currentUser, risk?.ProjectID, projectData) === true
+  ) {
     permissions = true;
   }
   return permissions;
@@ -240,7 +270,11 @@ export function getEditIssuePermission(currentUser, issue, projectData) {
 }
 export function getSuperIssuePermission(currentUser, issue, projectData) {
   let permissions = false;
-  if (currentUser.Type === "Root" || currentUser.isAdmin === true || isPM(currentUser, issue?.ProjectID, projectData) === true) {
+  if (
+    currentUser.Type === "Root" ||
+    currentUser.isAdmin === true ||
+    isPM(currentUser, issue?.ProjectID, projectData) === true
+  ) {
     permissions = true;
   }
   return permissions;
@@ -283,7 +317,11 @@ export function getEditActionPermission(currentUser, action, projectData) {
 }
 export function getSuperActionPermission(currentUser, action, projectData) {
   let permissions = false;
-  if (currentUser.Type === "Root" || currentUser.isAdmin === true || isPM(currentUser, action?.ProjectID, projectData) === true) {
+  if (
+    currentUser.Type === "Root" ||
+    currentUser.isAdmin === true ||
+    isPM(currentUser, action?.ProjectID, projectData) === true
+  ) {
     permissions = true;
   }
   return permissions;
@@ -325,7 +363,11 @@ export function getEditCostPermission(currentUser, cost, projectData) {
 }
 export function getSuperCostPermission(currentUser, cost, projectData) {
   let permissions = false;
-  if (currentUser.Type === "Root" || currentUser.isAdmin === true || isPM(currentUser, cost?.ProjectID, projectData) === true) {
+  if (
+    currentUser.Type === "Root" ||
+    currentUser.isAdmin === true ||
+    isPM(currentUser, cost?.ProjectID, projectData) === true
+  ) {
     permissions = true;
   }
   return permissions;
@@ -377,7 +419,11 @@ export function getEditChangePermission(currentUser, change, projectData) {
 }
 export function getSuperChangePermission(currentUser, change, projectData) {
   let permissions = false;
-  if (currentUser.Type === "Root" || currentUser.isAdmin === true || isPM(currentUser, change?.ProjectID, projectData) === true) {
+  if (
+    currentUser.Type === "Root" ||
+    currentUser.isAdmin === true ||
+    isPM(currentUser, change?.ProjectID, projectData) === true
+  ) {
     permissions = true;
   }
   return permissions;
@@ -429,7 +475,11 @@ export function getEditDecisionPermission(currentUser, decision, projectData) {
 }
 export function getSuperDecisionPermission(currentUser, decision, projectData) {
   let permissions = false;
-  if (currentUser.Type === "Root" || currentUser.isAdmin === true || isPM(currentUser, decision?.ProjectID, projectData) === true) {
+  if (
+    currentUser.Type === "Root" ||
+    currentUser.isAdmin === true ||
+    isPM(currentUser, decision?.ProjectID, projectData) === true
+  ) {
     permissions = true;
   }
   return permissions;
@@ -479,7 +529,11 @@ export function getAddTimesheetPermission(currentUser, projectData) {
   }
   return permissions;
 }
-export function getEditTimesheetPermission(currentUser, timesheet, projectData) {
+export function getEditTimesheetPermission(
+  currentUser,
+  timesheet,
+  projectData
+) {
   let permissions = false;
   if (
     currentUser.Type === "Root" ||
@@ -502,7 +556,11 @@ export function getDeleteTimesheetPermission(currentUser) {
 //--------------------Financials--------------------//
 export function getFinancialPermission(currentUser) {
   let permissions = false;
-  if (currentUser.Type === "Root" || currentUser.isAdmin === true || currentUser.hasFin === true) {
+  if (
+    currentUser.Type === "Root" ||
+    currentUser.isAdmin === true ||
+    currentUser.hasFin === true
+  ) {
     permissions = true;
   }
   return permissions;
@@ -510,10 +568,17 @@ export function getFinancialPermission(currentUser) {
 
 //--------------------ActiveAccount--------------------//
 export function getActiveAccount(root) {
-  let isActive = false;
+  let isActive = true;
   const sub = root?.subscriptions?.[0];
 
-  if (sub && (sub.Package === "Basic" || sub.Package === "Standard" || sub.Package === "Premium") && sub.Payment && !sub.Is_Expired) {
+  if (
+    sub &&
+    (sub.Package === "Basic" ||
+      sub.Package === "Standard" ||
+      sub.Package === "Premium") &&
+    sub.Payment &&
+    !sub.Is_Expired
+  ) {
     isActive = true;
   }
   return isActive;
