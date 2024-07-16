@@ -16,15 +16,7 @@ import { getIncomes } from "../../config/api";
 import { getOwnerGridData, incomeOwners } from "../../utils/budget.filter";
 import { IncomeListView } from "../../components/income/IncomeListView";
 
-const customList = [
-  "Main Job",
-  "Side Job",
-  "Interest/Dividends",
-  "Child Support",
-  "Bonus",
-  "Rental Income",
-  "Other",
-];
+const customList = ["Main Job", "Side Job", "Interest/Dividends", "Child Support", "Bonus", "Rental Income", "Other"];
 
 export const IncomeRecords = () => {
   const { user } = useUserStore();
@@ -101,15 +93,9 @@ export const IncomeRecords = () => {
             <div className="text-sm">
               <Button
                 label={!isShowing ? "Show Filters" : "Hide Filters"}
-                icon={
-                  !isShowing ? (
-                    <MdFilterAlt className="text-lg" />
-                  ) : (
-                    <MdFilterAltOff className="text-lg" />
-                  )
-                }
+                icon={!isShowing ? <MdFilterAlt className="text-lg" /> : <MdFilterAltOff className="text-lg" />}
                 className={clsx(
-                  "flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white ",
+                  "flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:text-black",
                   !isShowing ? "bg-green-800" : "bg-red-800"
                 )}
                 onClick={() => setIsShowing((old) => !old)}
@@ -122,7 +108,7 @@ export const IncomeRecords = () => {
               icon={<IoMdAdd className="text-lg" />}
               className={clsx(
                 "flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:bg-viewcolor",
-                `bg-[${themeColors[1]}] hover:text-[${themeColors[1]}]`
+                `bg-black hover:text-black`
               )}
               onClick={() => addNewClick()}
             />
@@ -159,12 +145,7 @@ export const IncomeRecords = () => {
             <IncomeListView gridData={gridData} usedCurrency={usedCurrency} />
           </div>
 
-          <AddIncome
-            open={open}
-            setOpen={setOpen}
-            recordData={""}
-            key={new Date().getTime().toString()}
-          />
+          <AddIncome open={open} setOpen={setOpen} recordData={""} key={new Date().getTime().toString()} />
         </div>
       )}
     </>

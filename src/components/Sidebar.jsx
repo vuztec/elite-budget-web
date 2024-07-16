@@ -46,13 +46,15 @@ const Sidebar = () => {
       <div onClick={handleLink} className={clsx("w-full flex flex-col cursor-pointer ")}>
         <div
           className={clsx(
-            "w-full flex justify-between gap-2 px-3 py-2 items-center rounded-full text-gray-800 text-base hover:bg-[#2564ed2d]",
-            path === el?.link?.split("/")[0] || location.pathname.includes(title) ? "bg-[#00ABBD] " : ""
+            "w-full flex justify-between gap-2 px-3 py-2 items-center rounded-full text-gray-800 text-base hover:bg-[#ffe99b]",
+            path === el?.link?.split("/")[0] || location.pathname.includes(title) ? "bg-black " : ""
           )}
         >
           <div
             className={`flex items-center gap-4 ${
-              path === el?.link?.split("/")[0] || location.pathname.includes(title) ? "text-white" : "text-[#27708A] hover:text-[#00ABBD]"
+              path === el?.link?.split("/")[0] || location.pathname.includes(title)
+                ? "text-white hover:text-black"
+                : "text-black hover:text-gray-500"
             } `}
           >
             <div className="text-lg">{el.icon}</div>

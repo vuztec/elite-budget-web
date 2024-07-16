@@ -43,7 +43,7 @@ export const UserAvatar = () => {
       <div>
         <Menu as="div" className="relative inline-block text-left">
           <div>
-            <Menu.Button className="w-10 h-10 2xl:w-12 2xl:h-12 items-center justify-center rounded-full bg-[#20409A]">
+            <Menu.Button className="w-10 h-10 2xl:w-12 2xl:h-12 items-center justify-center rounded-full bg-black">
               <span className="text-white font-semibold">{getInitials(user?.FullName)}</span>
             </Menu.Button>
           </div>

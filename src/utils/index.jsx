@@ -2,24 +2,11 @@ import { AiOutlineIssuesClose } from "react-icons/ai";
 import { BiSolidXSquare } from "react-icons/bi";
 import { BsHourglassTop, BsSignStopFill } from "react-icons/bs";
 import { FaCheckSquare, FaTasks } from "react-icons/fa";
-import {
-  GiBattery0,
-  GiBattery100,
-  GiBattery25,
-  GiBattery50,
-  GiBattery75,
-  GiProgression,
-} from "react-icons/gi";
+import { GiBattery0, GiBattery100, GiBattery25, GiBattery50, GiBattery75, GiProgression } from "react-icons/gi";
 import { GoThumbsup } from "react-icons/go";
 import { GrProjects } from "react-icons/gr";
 import { LiaMoneyCheckAltSolid } from "react-icons/lia";
-import {
-  MdCancel,
-  MdFiberNew,
-  MdOutlinePublishedWithChanges,
-  MdPendingActions,
-  MdRateReview,
-} from "react-icons/md";
+import { MdCancel, MdFiberNew, MdOutlinePublishedWithChanges, MdPendingActions, MdRateReview } from "react-icons/md";
 import { PiPulseFill } from "react-icons/pi";
 
 export const PRIOTITYSTYELS = {
@@ -76,7 +63,7 @@ export const trackBarColor = "#C6EFCE";
 export const progressBarColor = "#006100";
 export const trackBarColorPlan = "#C4EFFF";
 export const progressBarColorPlan = "#004F6C";
-export const themeColors = ["#20409A", "#00ABBD"];
+export const themeColors = ["#20409A", "#ffe99b"];
 export const varyingColors = [
   "#1A4A5E",
   "#27708B",
@@ -205,30 +192,22 @@ export function getIssueRatingColor(severity) {
 }
 
 export function getFullName(resourceData, resourceID) {
-  const foundResource = resourceData.find(
-    (resource) => resource.id === resourceID
-  );
+  const foundResource = resourceData.find((resource) => resource.id === resourceID);
   return foundResource ? foundResource.FullName : null;
 }
 
 export function getDesignation(resourceData, resourceID) {
-  const foundResource = resourceData.find(
-    (resource) => resource.id === resourceID
-  );
+  const foundResource = resourceData.find((resource) => resource.id === resourceID);
   return foundResource ? foundResource.Designation : null;
 }
 
 export function getTelephone(resourceData, name) {
-  const foundResource = resourceData.find(
-    (resource) => resource.FullName === name
-  );
+  const foundResource = resourceData.find((resource) => resource.FullName === name);
   return foundResource ? foundResource.Telephone : null;
 }
 
 export function getEmail(resourceData, name) {
-  const foundResource = resourceData.find(
-    (resource) => resource.FullName === name
-  );
+  const foundResource = resourceData.find((resource) => resource.FullName === name);
   return foundResource ? foundResource.Email : null;
 }
 
@@ -251,25 +230,13 @@ export function getResourceBirthdayStatus(dateOfBirth, dates) {
     return "Birthday Today!";
   } else if (birthdayThisYear === dates.tomorrow) {
     return "Birthday Tomorrow!";
-  } else if (
-    birthdayThisYear > dates.tomorrow &&
-    birthdayThisYear <= dates.endOfWeek
-  ) {
+  } else if (birthdayThisYear > dates.tomorrow && birthdayThisYear <= dates.endOfWeek) {
     return "Birthday This Week!";
-  } else if (
-    birthdayThisYear > dates.tomorrow &&
-    birthdayThisYear <= dates.endOfNextWeek
-  ) {
+  } else if (birthdayThisYear > dates.tomorrow && birthdayThisYear <= dates.endOfNextWeek) {
     return "Birthday Next Week!";
-  } else if (
-    birthdayThisYear > dates.tomorrow &&
-    birthdayThisYear <= dates.endOfMonth
-  ) {
+  } else if (birthdayThisYear > dates.tomorrow && birthdayThisYear <= dates.endOfMonth) {
     return "Birthday This Month!";
-  } else if (
-    birthdayThisYear > dates.tomorrow &&
-    birthdayThisYear <= dates.endOfNextMonth
-  ) {
+  } else if (birthdayThisYear > dates.tomorrow && birthdayThisYear <= dates.endOfNextMonth) {
     return "Birthday Next Month!";
   } else {
     return "Still to come";
@@ -539,18 +506,11 @@ export function getTotalCount(Data, uniqueProjectIDs) {
 }
 
 export function getTotalTaskCount(Data, uniqueProjectIDs) {
-  const matchingData = Data?.filter((item) =>
-    uniqueProjectIDs.includes(item.ProjectID)
-  );
-  const parentIDs = matchingData?.map((task) =>
-    task.ParentID ? task.ParentID : ""
-  );
+  const matchingData = Data?.filter((item) => uniqueProjectIDs.includes(item.ProjectID));
+  const parentIDs = matchingData?.map((task) => (task.ParentID ? task.ParentID : ""));
   const subTasks = matchingData?.filter((task) => !parentIDs.includes(task.id));
   const activeMatchingData = subTasks?.filter(
-    (item) =>
-      item.Stage !== "Cancelled" &&
-      item.Stage !== "On-Hold" &&
-      Number(item.ActualComplete) < 100
+    (item) => item.Stage !== "Cancelled" && item.Stage !== "On-Hold" && Number(item.ActualComplete) < 100
   );
   const totalCount = activeMatchingData?.length;
   return totalCount;
@@ -561,9 +521,7 @@ export function getTaskEndDate(start, duration) {
   const taskDuration = Number(duration);
   let dueDate = startDate;
   if (!isNaN(startDate.getTime()) && !isNaN(taskDuration)) {
-    dueDate = new Date(
-      startDate.getTime() + taskDuration * 24 * 60 * 60 * 1000
-    );
+    dueDate = new Date(startDate.getTime() + taskDuration * 24 * 60 * 60 * 1000);
     //dueDate.setDate(startDate.getDate() + taskDuration);
   }
   return dueDate;
@@ -575,9 +533,7 @@ export function getTaskPlanPercentage(start, duration) {
   const taskDuration = Number(duration);
   let plan = 0;
   if (!isNaN(startDate.getTime()) && !isNaN(taskDuration)) {
-    const dueDate = new Date(
-      startDate.getTime() + taskDuration * 24 * 60 * 60 * 1000
-    );
+    const dueDate = new Date(startDate.getTime() + taskDuration * 24 * 60 * 60 * 1000);
     if (today < startDate) {
       plan = 0;
     } else if (today > dueDate) {
@@ -592,12 +548,7 @@ export function getTaskPlanPercentage(start, duration) {
 }
 
 export const getActualProjectPercentageComplete = (Data, projectID) => {
-  const activeMatchingData = Data?.filter(
-    (item) =>
-      item.Stage !== "Cancelled" &&
-      item.Stage !== "On-Hold" &&
-      item.ProjectID === projectID
-  );
+  const activeMatchingData = Data?.filter((item) => item.Stage !== "Cancelled" && item.Stage !== "On-Hold" && item.ProjectID === projectID);
 
   // Calculate the total duration of all tasks
   const totalDuration = activeMatchingData?.reduce((total, task) => {
@@ -608,9 +559,7 @@ export const getActualProjectPercentageComplete = (Data, projectID) => {
   let totalComplete = activeMatchingData?.reduce((total, task) => {
     // Calculate the completion percentage for each task
     const taskDuration = task.TaskDuration ? Number(task.TaskDuration) : 0;
-    const actualComplete = task.ActualComplete
-      ? parseFloat(task.ActualComplete)
-      : 0;
+    const actualComplete = task.ActualComplete ? parseFloat(task.ActualComplete) : 0;
     const taskComplete = (actualComplete * taskDuration) / totalDuration;
     return total + taskComplete;
   }, 0);
@@ -620,12 +569,7 @@ export const getActualProjectPercentageComplete = (Data, projectID) => {
 };
 
 export const getPlanProjectPercentageComplete = (Data, projectID) => {
-  const activeMatchingData = Data?.filter(
-    (item) =>
-      item.Stage !== "Cancelled" &&
-      item.Stage !== "On-Hold" &&
-      item.ProjectID === projectID
-  );
+  const activeMatchingData = Data?.filter((item) => item.Stage !== "Cancelled" && item.Stage !== "On-Hold" && item.ProjectID === projectID);
   // Calculate the total planned duration of all tasks
   const totalDuration = activeMatchingData?.reduce((total, task) => {
     const taskDuration = Number(task.TaskDuration);
@@ -671,26 +615,19 @@ export function getTaskStatus(actual, start, duration) {
 
 export const getProjectCost = (Data, projectID) => {
   const matchingCosts = Data?.filter(
-    (cost) =>
-      cost.ProjectID === parseInt(projectID) &&
-      (cost.Stage === "PO" || cost.Stage === "Invoice" || cost.Stage === "Paid")
+    (cost) => cost.ProjectID === parseInt(projectID) && (cost.Stage === "PO" || cost.Stage === "Invoice" || cost.Stage === "Paid")
   );
-  const totalCost = matchingCosts?.reduce(
-    (total, cost) => total + (Number(cost.CostAmount) || 0),
-    0
-  );
+  const totalCost = matchingCosts?.reduce((total, cost) => total + (Number(cost.CostAmount) || 0), 0);
   return totalCost;
 };
 
 export const getRemainingBudget = (budget, Data, projectID) => {
-  const remainingBudget =
-    Number(budget) - Number(getProjectCost(Data, projectID));
+  const remainingBudget = Number(budget) - Number(getProjectCost(Data, projectID));
   return remainingBudget;
 };
 
 export const getRemainingBudgetColor = (budget, Data, projectID) => {
-  const remainingBudget =
-    Number(budget) - Number(getProjectCost(Data, projectID));
+  const remainingBudget = Number(budget) - Number(getProjectCost(Data, projectID));
   let color = "bg-[#C6EFCE] text-[#006100] px-0 rounded-xs";
   if (remainingBudget < 0) {
     color = "bg-[#FFC7CE] text-[#9C0006] px-0 rounded-xs";
