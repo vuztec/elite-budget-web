@@ -20,7 +20,7 @@ export const ExpenseSummary = ({ gridData }) => {
 
   const TableHeader = () => (
     <thead>
-      <tr className="border border-gray-300 bg-black text-white">
+      <tr className="border border-gray-300 bg-black text-white text-xs xl:text-sm">
         <td className="min-w-fit whitespace-nowrap p-3 font-bold border-l border-gray-300">
           CATEGORY
         </td>
@@ -43,24 +43,26 @@ export const ExpenseSummary = ({ gridData }) => {
   const TableRow = ({ cat }) => (
     <tr className="border border-gray-300">
       <td className="min-w-fit whitespace-nowrap text-right p-2">{cat}</td>
-      <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">
+      <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-300">
         {getExpenseSummaryMarketValueTotal(user, gridData, cat)}
       </td>
-      <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">
+      <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-300">
         {getExpenseSummaryLoanBalanceTotal(user, gridData, cat)}
       </td>
-      <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">
+      <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-300">
         {getExpenseSummaryMonthlyBudgetTotal(user, gridData, cat)}
       </td>
-      <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">
+      <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-300">
         {getExpenseSummaryYearlyBudgetTotal(user, gridData, cat)}
       </td>
     </tr>
   );
 
   const TableTotal = ({ gridData }) => (
-    <tr className="border border-gray-300 bg-black text-white">
-      <td className="min-w-fit whitespace-nowrap text-right p-2">Total</td>
+    <tr className="border border-gray-300 bg-[whitesmoke] text-gray-600 text-sm xl:text-[18px]">
+      <td className="min-w-fit whitespace-nowrap text-right p-2 font-bold">
+        Total
+      </td>
       <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">
         {getMarketValueTotal(user, gridData)}
       </td>
