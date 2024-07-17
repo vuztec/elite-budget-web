@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useLocation, NavLink, useNavigate, useSearchParams } from "react-router-dom";
+import React, { useState } from "react";
+import { useLocation, NavLink, useNavigate } from "react-router-dom";
 import clsx from "clsx";
 import { IoMdArrowDropright } from "react-icons/io";
 import { SidebarLinks } from "../utils/sidebar.data";
@@ -9,19 +9,17 @@ import { GrClose } from "react-icons/gr";
 
 const Sidebar = () => {
   const { user } = useUserStore();
-  const isAdmin = true;
+
   const location = useLocation();
   const navigate = useNavigate();
   const [sidebarData, setSideBarData] = useState(SidebarLinks);
   const { setSidebar } = useUserStore();
-  const [searchParams] = useSearchParams();
-  const name = searchParams.get("name");
-  const tab = searchParams.get("tab");
 
   const path = location.pathname?.split("/")[1];
 
   const NavLinks = ({ el }) => {
-    const title = el.label.split(" ")[0].toLocaleLowerCase();
+    const title = el.activename;
+
     const handleLink = () => {
       if (el.link) {
         navigate(el.link);
@@ -42,21 +40,19 @@ const Sidebar = () => {
           prev.map((item) => (item.label === el.label ? { ...item, dropdown: !item.dropdown } : { ...item, dropdown: false }))
         );
     };
+
+    const isActive =
+      (title === "home" && !path) || (title !== "home" && path && (path === el?.link?.split("/")[0] || location.pathname.includes(title)));
+
     return (
       <div onClick={handleLink} className={clsx("w-full flex flex-col cursor-pointer ")}>
         <div
           className={clsx(
             "w-full flex justify-between gap-2 px-3 py-2 items-center rounded-full text-gray-800 text-base hover:bg-[#ffe99b]",
-            path === el?.link?.split("/")[0] || location.pathname.includes(title) ? "bg-black " : ""
+            isActive ? "bg-black " : ""
           )}
         >
-          <div
-            className={`flex items-center gap-4 ${
-              path === el?.link?.split("/")[0] || location.pathname.includes(title)
-                ? "text-white hover:text-black"
-                : "text-black hover:text-gray-500"
-            } `}
-          >
+          <div className={`flex items-center gap-4 ${isActive ? "text-white hover:text-black" : "text-black hover:text-gray-500"} `}>
             <div className="text-lg">{el.icon}</div>
             <span className="md:hidden lg:block">{el.label}</span>
           </div>
@@ -72,7 +68,7 @@ const Sidebar = () => {
           {el.sub?.map((item, index) => (
             <div
               className={`w-full text-md leading-6 px-3 py-1 rounded-full hover:bg-[#2564ed15]  ${
-                parseInt(tab) === index && title === name ? "md:text-white lg:text-[#27708A] bg-[#2564ed2d] " : "text-[#A7A7A7]"
+                item.link === location.pathname ? "text-black bg-[#ffe99b] " : "text-[#A7A7A7]"
               }`}
               key={index}
               onClick={(e) => e.stopPropagation()}

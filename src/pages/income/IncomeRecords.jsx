@@ -95,7 +95,7 @@ export const IncomeRecords = () => {
                 label={!isShowing ? "Show Filters" : "Hide Filters"}
                 icon={!isShowing ? <MdFilterAlt className="text-lg" /> : <MdFilterAltOff className="text-lg" />}
                 className={clsx(
-                  "flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:text-black",
+                  "flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:text-black hover:bg-viewcolor",
                   !isShowing ? "bg-green-800" : "bg-red-800"
                 )}
                 onClick={() => setIsShowing((old) => !old)}
