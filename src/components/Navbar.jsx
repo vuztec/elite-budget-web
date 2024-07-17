@@ -37,10 +37,7 @@ const Navbar = () => {
       item.link ? item.link === location.pathname : item.sub.find((sub_item) => sub_item.link === location.pathname)
     );
 
-    if (data?.sub?.length) {
-      const sub = data?.sub[parseInt(tab)];
-      setTitle(data?.label + " - " + sub?.label);
-    } else setTitle(data?.label);
+    setTitle(data?.label);
   }, [location.pathname, tab]);
 
   return (
