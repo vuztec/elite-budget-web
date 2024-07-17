@@ -5,9 +5,10 @@ import useUserStore from "../app/user";
 import { useLocation } from "react-router-dom";
 import { SidebarLinks } from "../utils/sidebar.data";
 import { useQueryClient, useQuery } from "react-query";
+import axios from "../config/axios";
 
 const Navbar = () => {
-  const { setSidebar, isRefresh, setIsRefresh } = useUserStore();
+  const { setSidebar, isRefresh, setIsRefresh, setUser } = useUserStore();
   const location = useLocation();
   const [title, setTitle] = useState("");
   const [searchParams] = useSearchParams();
@@ -21,26 +22,23 @@ const Navbar = () => {
     }
   }, [isRefresh]);
 
-  // useEffect(() => {
-  //   axios
-  //     .get(SERVER_URL + "/api/auth/me")
-  //     .then(({ data }) => {
-  //       setUser(data.resource);
-  //     })
-  //     .catch((err) => {
-  //       console.log("Error : ", err);
-  //     });
-  // }, []);
+  useEffect(() => {
+    axios
+      .get("/api/auth/me")
+      .then(({ data }) => {
+        setUser(data);
+      })
+      .catch((err) => {
+        console.log("Error : ", err);
+      });
+  }, []);
 
   useEffect(() => {
     const data = SidebarLinks.find((item) =>
       item.link ? item.link === location.pathname : item.sub.find((sub_item) => sub_item.link === location.pathname)
     );
 
-    if (data?.sub?.length) {
-      const sub = data?.sub[parseInt(tab)];
-      setTitle(data?.label + " - " + sub?.label);
-    } else setTitle(data?.label);
+    setTitle(data?.label);
   }, [location.pathname, tab]);
 
   return (
