@@ -6,11 +6,15 @@ import { ProjectCostChart, StageChart } from "../../components/project";
 import {
   getBankAccountNames,
   getBankAccountTransactions,
+  getDebtGoals,
   getDebts,
+  getExpenseGoals,
   getExpenses,
   getExtraFundsTrackers,
+  getExtraPayChecks,
   getIncomes,
   getJointSplits,
+  getMainGoals,
   getRetirements,
   getSavings,
 } from "../../config/api";
@@ -79,6 +83,30 @@ export const Home = () => {
   const { data: retirements, status: isRetLoaded } = useQuery({
     queryKey: ["retirements"],
     queryFn: getRetirements,
+    staleTime: 1000 * 60 * 60,
+  });
+
+  const { data: debtgoals, status: isDebtGoalsLoaded } = useQuery({
+    queryKey: ["debtgoals"],
+    queryFn: getDebtGoals,
+    staleTime: 1000 * 60 * 60,
+  });
+
+  const { data: expensegoals, status: isExpenseGoalsLoaded } = useQuery({
+    queryKey: ["expensegoals"],
+    queryFn: getExpenseGoals,
+    staleTime: 1000 * 60 * 60,
+  });
+
+  const { data: maingoals, status: isMainGoalsLoaded } = useQuery({
+    queryKey: ["maingoals"],
+    queryFn: getMainGoals,
+    staleTime: 1000 * 60 * 60,
+  });
+
+  const { data: extrapaychecks, status: isPayChecksLoaded } = useQuery({
+    queryKey: ["extrapaychecks"],
+    queryFn: getExtraPayChecks,
     staleTime: 1000 * 60 * 60,
   });
 

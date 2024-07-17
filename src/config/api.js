@@ -53,3 +53,26 @@ export const getRetirements = async () => {
 
   return res.data;
 };
+
+export const getDebtGoals = async () => {
+  const res = await axios.get("/api/goals?type=Debt");
+
+  return res.data;
+};
+
+export const getExpenseGoals = async () => {
+  const res = await axios.get("/api/goals?type=Expense");
+
+  return res.data;
+};
+export const getMainGoals = async () => {
+  const res = await axios.get("/api/goals?type=Main");
+
+  return res.data;
+};
+
+export const getExtraPayChecks = async () => {
+  const res = await axios.get("/api/extra-pay-checks");
+
+  return res.data;
+};
