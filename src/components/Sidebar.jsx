@@ -52,11 +52,11 @@ const Sidebar = () => {
             isActive ? "bg-black " : ""
           )}
         >
-          <div className={`flex items-center gap-4 ${isActive ? "text-white hover:text-black" : "text-black hover:text-gray-500"} `}>
+          <div className={`flex items-center gap-4 ${isActive ? "text-[#ffe99b] hover:text-black" : "text-black hover:text-gray-500"} `}>
             <div className="text-lg">{el.icon}</div>
             <span className="md:hidden lg:block">{el.label}</span>
           </div>
-          <div className={el.sub?.length ? "text-[#27708A] hover:text-[#00ABBD]" : "hidden"}>
+          <div className={el.sub?.length ? (isActive ? "text-[#ffe99b] hover:text-black" : "text-black hover:text-gray-500") : "hidden"}>
             <IoMdArrowDropright />
           </div>
         </div>
