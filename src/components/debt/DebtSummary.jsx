@@ -12,7 +12,7 @@ import {
   getYearlyBudgetTotal,
 } from "../../utils/budget.calculation";
 
-export const ExpenseSummary = ({ gridData }) => {
+export const DebtSummary = ({ gridData }) => {
   const { user } = useUserStore();
   const uniqueCategories = [
     ...new Set(gridData.map((record) => record.Category)),
@@ -53,7 +53,7 @@ export const ExpenseSummary = ({ gridData }) => {
         {getSummaryMonthlyBudgetTotal(user, gridData, cat)}
       </td>
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-300">
-        {getExpenseSummaryYearlyBudgetTotal(user, gridData, cat)}
+        {getSummaryYearlyBudgetTotal(user, gridData, cat)}
       </td>
     </tr>
   );
@@ -86,7 +86,7 @@ export const ExpenseSummary = ({ gridData }) => {
             <thead>
               <tr>
                 <th className="p-2 w-full uppercase bg-black text-white flex items-center justify-center">
-                  EXPENSE SUMMARY
+                  OTHER DEBT SUMMARY
                 </th>
               </tr>
             </thead>

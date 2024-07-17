@@ -19,7 +19,7 @@ import {
 } from "../../utils/budget.calculation";
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
-export const ExpenseListView = ({ Data, category }) => {
+export const ExpenseListView = ({ Data, category, showColumn }) => {
   const { user } = useUserStore();
   const [gridData, setGridData] = useState([]);
   useEffect(() => {
@@ -91,23 +91,31 @@ export const ExpenseListView = ({ Data, category }) => {
         <th className="border-l border-gray-300 p-2 text-xs xl:text-sm">
           Description
         </th>
-        <th className="border-l border-gray-300 p-1">
-          <div className="flex flex-col">
-            <span className="whitespace-nowrap text-left">Market Value</span>
-            <span className="whitespace-nowrap text-left">
-              (For Net Worth Calc)
-            </span>
-          </div>
-        </th>
-        <th className="border-l border-gray-300 p-1">
-          <div className="flex flex-col">
-            <span className="whitespace-nowrap text-left">Loan Balance</span>
-            <span className="whitespace-nowrap text-left">
-              {" "}
-              (For Net Worth Calc)
-            </span>
-          </div>
-        </th>
+        {showColumn && (
+          <>
+            <th className="border-l border-gray-300 p-1">
+              <div className="flex flex-col">
+                <span className="whitespace-nowrap text-left">
+                  Market Value
+                </span>
+                <span className="whitespace-nowrap text-left">
+                  (For Net Worth Calc)
+                </span>
+              </div>
+            </th>
+            <th className="border-l border-gray-300 p-1">
+              <div className="flex flex-col">
+                <span className="whitespace-nowrap text-left">
+                  Loan Balance
+                </span>
+                <span className="whitespace-nowrap text-left">
+                  {" "}
+                  (For Net Worth Calc)
+                </span>
+              </div>
+            </th>
+          </>
+        )}
         <th className="border-l border-gray-300 p-2 text-xs xl:text-sm">
           Day Due
         </th>
@@ -160,26 +168,28 @@ export const ExpenseListView = ({ Data, category }) => {
           </p>
         </div>
       </td>
+      {showColumn && (
+        <>
+          <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
+            <div className="flex flex-col items-start gap-1">
+              <p className="text-black">
+                {getFormattedValue(user, record?.MarketValue)}
+              </p>
+            </div>
+          </td>
 
+          <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
+            <div className="flex flex-col items-start gap-1">
+              <p className="text-black">
+                {getFormattedValue(user, record?.LoanBalance)}
+              </p>
+            </div>
+          </td>
+        </>
+      )}
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p className="text-black">
-            {getFormattedValue(user, record?.MarketValue)}
-          </p>
-        </div>
-      </td>
-
-      <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
-        <div className="flex flex-col items-start gap-1">
-          <p className="text-black">
-            {getFormattedValue(user, record?.LoanBalance)}
-          </p>
-        </div>
-      </td>
-
-      <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
-        <div className="flex flex-col items-start gap-1">
-          <p className="text-black"> N/A</p>
+          <p className="text-black">{record?.DueDate}</p>
         </div>
       </td>
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
@@ -234,19 +244,21 @@ export const ExpenseListView = ({ Data, category }) => {
           <p>{category} Category Total</p>
         </div>
       </td>
+      {showColumn && (
+        <>
+          <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200">
+            <div className="flex flex-col items-start gap-1">
+              <p>{getMarketValueTotal(user, gridData)}</p>
+            </div>
+          </td>
 
-      <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200">
-        <div className="flex flex-col items-start gap-1">
-          <p>{getMarketValueTotal(user, gridData)}</p>
-        </div>
-      </td>
-
-      <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200">
-        <div className="flex flex-col items-start gap-1">
-          <p>{getLoanBalanceTotal(user, gridData)}</p>
-        </div>
-      </td>
-
+          <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200">
+            <div className="flex flex-col items-start gap-1">
+              <p>{getLoanBalanceTotal(user, gridData)}</p>
+            </div>
+          </td>
+        </>
+      )}
       <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200"></td>
 
       <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200"></td>

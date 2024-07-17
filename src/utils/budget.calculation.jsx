@@ -330,3 +330,18 @@ export const getSummaryYearlyBudgetTotal = (user, data, cat) => {
   const formattedAmount = getYearlyBudgetTotal(user, updatedData);
   return formattedAmount;
 };
+
+export const hasRecords = (data) => {
+  let hasRecords = false;
+  const updatedData = data.filter(
+    (item) =>
+      item.MarketValue > 0 ||
+      item.LoanBalance > 0 ||
+      item.MonthlyBudget > 0 ||
+      item.GrossAmount > 0
+  );
+  if (updatedData.length > 0) {
+    hasRecords = true;
+  }
+  return hasRecords;
+};

@@ -301,63 +301,60 @@ export const IncomeListView = ({ gridData }) => {
   return (
     <div className="w-full h-fit bg-white py-2 shadow-md rounded">
       <div className="flex flex-col gap-5 w-full">
-        <div className="flex w-full">
-          <div className="w-2/3 overflow-x-auto">
-            <table className="w-[97%] m-5">
-              <TableHeader />
-              <tbody>
-                {gridData?.map((record, index) => (
-                  <TableRow key={index} record={record} />
-                ))}
-                {/* <TableTotal gridData={gridData} /> */}
-              </tbody>
-            </table>
-          </div>
-          <div className="w-1/3 m-5">
-            <table>
-              <tbody className="border border-gray-300">
-                <tr className="border border-gray-300 bg-black text-white">
-                  <td className="p-3 font-bold">INCOME SUMMARY</td>
-                  <td></td>
-                </tr>
-
-                <tr className="border border-gray-300">
-                  <td className="min-w-fit whitespace-nowrap text-right p-2">
-                    Monthly Budgeted Gross Income:
-                  </td>
-                  <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">
-                    {getGrossMonthlyTotal(user, gridData)}
-                  </td>
-                </tr>
-                <tr className="border border-gray-300">
-                  <td className="text-right p-2 min-w-fit whitespace-nowrap">
-                    Monthly Budgeted Net Income:
-                  </td>
-                  <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">
-                    {getNetMonthlyTotal(user, gridData)}
-                  </td>
-                </tr>
-                <tr className="border border-gray-300">
-                  <td className="text-right p-2 min-w-fit whitespace-nowrap">
-                    Total Annual Gross Income:
-                  </td>
-                  <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">
-                    {getGrossYearlyTotal(user, gridData)}
-                  </td>
-                </tr>
-                <tr className="border border-gray-300">
-                  <td className="min-w-fit whitespace-nowrap text-right p-2">
-                    Total Annual Net Income:
-                  </td>
-                  <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">
-                    {getNetYearlyTotal(user, gridData)}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+        <div className="w-fit xl:w-2/3 overflow-x-auto">
+          <table className="w-[97%] m-5">
+            <TableHeader />
+            <tbody>
+              {gridData?.map((record, index) => (
+                <TableRow key={index} record={record} />
+              ))}
+              {/* <TableTotal gridData={gridData} /> */}
+            </tbody>
+          </table>
         </div>
-        <div className="w-1/3 mx-5 bg-green-600">Extra Pay</div>
+        <div className="w-fit m-5">
+          <table>
+            <tbody className="border border-gray-300">
+              <tr className="border border-gray-300 bg-black text-white">
+                <td className="p-3 font-bold">INCOME SUMMARY</td>
+                <td></td>
+              </tr>
+
+              <tr className="border border-gray-300">
+                <td className="min-w-fit whitespace-nowrap text-right p-2">
+                  Monthly Budgeted Gross Income:
+                </td>
+                <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">
+                  {getGrossMonthlyTotal(user, gridData)}
+                </td>
+              </tr>
+              <tr className="border border-gray-300">
+                <td className="text-right p-2 min-w-fit whitespace-nowrap">
+                  Monthly Budgeted Net Income:
+                </td>
+                <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">
+                  {getNetMonthlyTotal(user, gridData)}
+                </td>
+              </tr>
+              <tr className="border border-gray-300">
+                <td className="text-right p-2 min-w-fit whitespace-nowrap">
+                  Total Annual Gross Income:
+                </td>
+                <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">
+                  {getGrossYearlyTotal(user, gridData)}
+                </td>
+              </tr>
+              <tr className="border border-gray-300">
+                <td className="min-w-fit whitespace-nowrap text-right p-2">
+                  Total Annual Net Income:
+                </td>
+                <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">
+                  {getNetYearlyTotal(user, gridData)}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
 
       <AddIncome

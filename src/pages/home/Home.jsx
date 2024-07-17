@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Loading from "../../components/Loader";
 import useUserStore from "../../app/user";
-import { LatestProjects, LatestResources, LatestTasks } from "../../components/home";
+import {
+  LatestProjects,
+  LatestResources,
+  LatestTasks,
+} from "../../components/home";
 import { ProjectCostChart, StageChart } from "../../components/project";
 import {
   getBankAccountNames,
@@ -144,7 +148,11 @@ export const Home = () => {
               <LatestResources resourceData={[]} />
             </div>
             <div className="w-full flex flex-col xl:flex-row gap-5">
-              <LatestTasks updatedProjectData={updatedProjectData} updatedTaskData={updatedTaskData} resourceData={[]} />
+              <LatestTasks
+                updatedProjectData={updatedProjectData}
+                updatedTaskData={updatedTaskData}
+                resourceData={[]}
+              />
             </div>
           </div>
         ) : (

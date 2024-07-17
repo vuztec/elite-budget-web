@@ -14,12 +14,11 @@ import { getExpenses } from "../../config/api";
 import {
   expenseCategories,
   expenseOwners,
-  getExpenseGridData,
-  getOwnerGridData,
-  incomeOwners,
+  getCatGridData,
 } from "../../utils/budget.filter";
 import { ExpenseListView } from "../../components/expense/ExpenseListView";
 import { ExpenseSummary } from "../../components/expense/ExpenseSummary";
+import { hasRecords } from "../../utils/budget.calculation";
 
 export const ExpenseRecords = () => {
   const [showAll, setShowAll] = useState(false);
@@ -62,9 +61,9 @@ export const ExpenseRecords = () => {
 
   useEffect(() => {
     if (isExpenseLoaded === "success") {
-      const expenseData = getExpenseGridData(expenses, owner, catFilter);
+      const expenseData = getCatGridData(expenses, owner, catFilter);
       let updatedData = expenseData;
-      if (!showAll) {
+      if (!showAll && hasRecords(expenseData)) {
         updatedData = expenseData.filter(
           (item) =>
             item.MarketValue > 0 ||
@@ -180,66 +179,123 @@ export const ExpenseRecords = () => {
       {isDataLoaded && (
         <div className="w-full">
           <div className="w-full">
-            <ExpenseListView Data={gridData} category="Charity" />
+            <ExpenseListView
+              Data={gridData}
+              category="Charity"
+              showColumn={false}
+            />
           </div>
 
           <div className="w-full">
-            <ExpenseListView Data={gridData} category="Children" />
+            <ExpenseListView
+              Data={gridData}
+              category="Children"
+              showColumn={true}
+            />
           </div>
 
           <div className="w-full">
-            <ExpenseListView Data={gridData} category="Dues/Subscriptions" />
+            <ExpenseListView
+              Data={gridData}
+              category="Dues/Subscriptions"
+              showColumn={false}
+            />
           </div>
 
           <div className="w-full">
-            <ExpenseListView Data={gridData} category="Entertainment" />
+            <ExpenseListView
+              Data={gridData}
+              category="Entertainment"
+              showColumn={false}
+            />
           </div>
 
           <div className="w-full">
-            <ExpenseListView Data={gridData} category="Food" />
+            <ExpenseListView
+              Data={gridData}
+              category="Food"
+              showColumn={false}
+            />
           </div>
 
           <div className="w-full">
-            <ExpenseListView Data={gridData} category="Health / Medical" />
+            <ExpenseListView
+              Data={gridData}
+              category="Health / Medical"
+              showColumn={false}
+            />
           </div>
 
           <div className="w-full">
             <ExpenseListView
               Data={gridData}
               category="Household, Personal Care & Gifts"
+              showColumn={true}
             />
           </div>
 
           <div className="w-full">
-            <ExpenseListView Data={gridData} category="Housing" />
+            <ExpenseListView
+              Data={gridData}
+              category="Housing"
+              showColumn={true}
+            />
           </div>
 
           <div className="w-full">
-            <ExpenseListView Data={gridData} category="Other Insurance" />
+            <ExpenseListView
+              Data={gridData}
+              category="Other Insurance"
+              showColumn={false}
+            />
           </div>
 
           <div className="w-full">
-            <ExpenseListView Data={gridData} category="Parents/Elder Care" />
+            <ExpenseListView
+              Data={gridData}
+              category="Parents/Elder Care"
+              showColumn={false}
+            />
           </div>
 
           <div className="w-full">
-            <ExpenseListView Data={gridData} category="Pets/Animals" />
+            <ExpenseListView
+              Data={gridData}
+              category="Pets/Animals"
+              showColumn={false}
+            />
           </div>
 
           <div className="w-full">
-            <ExpenseListView Data={gridData} category="Recreation" />
+            <ExpenseListView
+              Data={gridData}
+              category="Recreation"
+              showColumn={true}
+            />
           </div>
 
           <div className="w-full">
-            <ExpenseListView Data={gridData} category="Rental Property" />
+            <ExpenseListView
+              Data={gridData}
+              category="Rental Property"
+              showColumn={true}
+            />
           </div>
 
           <div className="w-full">
-            <ExpenseListView Data={gridData} category="Transportation" />
+            <ExpenseListView
+              Data={gridData}
+              category="Transportation"
+              showColumn={true}
+            />
           </div>
 
           <div className="w-full">
-            <ExpenseListView Data={gridData} category="Vacations" />
+            <ExpenseListView
+              Data={gridData}
+              category="Vacations"
+              showColumn={false}
+            />
           </div>
 
           <div className="w-full">

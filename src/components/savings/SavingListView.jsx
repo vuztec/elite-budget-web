@@ -9,7 +9,7 @@ import ConfirmationDialog from "../Dialogs";
 import axios from "../../config/axios";
 import { getProjectChatUsers } from "../../utils/users";
 import { handleAxiosResponseError } from "../../utils/handleResponseError";
-import AddDebt from "./AddDebt";
+import { AddSaving } from "./AddSaving";
 import {
   getFormattedValue,
   getMarketValueTotal,
@@ -19,20 +19,8 @@ import {
 } from "../../utils/budget.calculation";
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
-export const DebtListView = ({ Data, category }) => {
+export const SavingListView = ({ gridData }) => {
   const { user } = useUserStore();
-  const [gridData, setGridData] = useState([]);
-  useEffect(() => {
-    const updatedData = Data.filter((item) => item.Category === category);
-
-    const sortedData = updatedData.sort((a, b) => {
-      if (a.Owner === b.Owner) {
-        return a.Description.localeCompare(b.Description); // Ascending order for Description
-      }
-      return a.Owner < b.Owner ? 1 : -1; // Descending order for Owner
-    });
-    setGridData(sortedData);
-  }, [Data]);
 
   //----------------CRUD----------------//
   const queryClient = useQueryClient();
@@ -91,15 +79,15 @@ export const DebtListView = ({ Data, category }) => {
         <th className="border-l border-gray-300 p-2 text-xs xl:text-sm">
           Description
         </th>
-        {/* <th className="border-l border-gray-300 p-1">
+        <th className="border-l border-gray-300 p-1">
           <div className="flex flex-col">
             <span className="whitespace-nowrap text-left">Market Value</span>
             <span className="whitespace-nowrap text-left">
               (For Net Worth Calc)
             </span>
           </div>
-        </th> */}
-        <th className="border-l border-gray-300 p-1">
+        </th>
+        {/* <th className="border-l border-gray-300 p-1">
           <div className="flex flex-col">
             <span className="whitespace-nowrap text-left">Loan Balance</span>
             <span className="whitespace-nowrap text-left">
@@ -107,7 +95,7 @@ export const DebtListView = ({ Data, category }) => {
               (For Net Worth Calc)
             </span>
           </div>
-        </th>
+        </th> */}
         <th className="border-l border-gray-300 p-2 text-xs xl:text-sm">
           Day Due
         </th>
@@ -161,21 +149,21 @@ export const DebtListView = ({ Data, category }) => {
         </div>
       </td>
 
-      {/* <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
+      <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
           <p className="text-black">
             {getFormattedValue(user, record?.MarketValue)}
           </p>
         </div>
-      </td> */}
+      </td>
 
-      <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
+      {/* <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
           <p className="text-black">
             {getFormattedValue(user, record?.LoanBalance)}
           </p>
         </div>
-      </td>
+      </td> */}
 
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
@@ -231,21 +219,21 @@ export const DebtListView = ({ Data, category }) => {
 
       <td className="min-w-fit whitespace-nowrap p-3 border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p>{category} Category Total</p>
+          <p>Total</p>
+        </div>
+      </td>
+
+      <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200">
+        <div className="flex flex-col items-start gap-1">
+          <p>{getMarketValueTotal(user, gridData)}</p>
         </div>
       </td>
 
       {/* <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p>{getMarketValueTotal(user, gridData)}</p>
-        </div>
-      </td> */}
-
-      <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200">
-        <div className="flex flex-col items-start gap-1">
           <p>{getLoanBalanceTotal(user, gridData)}</p>
         </div>
-      </td>
+      </td> */}
 
       <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200"></td>
 
@@ -277,7 +265,7 @@ export const DebtListView = ({ Data, category }) => {
                 <thead>
                   <tr>
                     <th className="p-2 w-full uppercase bg-black text-white flex items-center justify-center">
-                      {category}
+                      NORMAL SAVINGS
                     </th>
                   </tr>
                 </thead>
@@ -295,7 +283,7 @@ export const DebtListView = ({ Data, category }) => {
           </div>
         </div>
       )}
-      <AddDebt
+      <AddSaving
         open={open}
         setOpen={setOpen}
         recordData={selected}

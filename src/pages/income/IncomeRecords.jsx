@@ -12,9 +12,11 @@ import Select from "../../components/Select";
 import { getActiveAccount } from "../../utils/permissions";
 import Package from "../../package/Package";
 import AddIncome from "../../components/income/AddIncome";
-import { getIncomes } from "../../config/api";
+import { getExtraPayChecks, getIncomes } from "../../config/api";
 import { getOwnerGridData, incomeOwners } from "../../utils/budget.filter";
 import { IncomeListView } from "../../components/income/IncomeListView";
+import { hasRecords } from "../../utils/budget.calculation";
+import { ExtraPayListView } from "../../components/extrapay/ExtraPayListView";
 
 const customList = [
   "Main Job",
@@ -47,7 +49,13 @@ export const IncomeRecords = () => {
     staleTime: 1000 * 60 * 60,
   });
 
-  console.log("data: ", gridData);
+  const { data: extrapaychecks, status: isPayChecksLoaded } = useQuery({
+    queryKey: ["extrapaychecks"],
+    queryFn: getExtraPayChecks,
+    staleTime: 1000 * 60 * 60,
+  });
+
+  console.log("extrapaychecks: ", extrapaychecks);
 
   ///-------------Filters Data Source --------------------------------///
   const owners = incomeOwners.map((owner) => ({
@@ -62,10 +70,10 @@ export const IncomeRecords = () => {
   }, [name, tab]);
 
   useEffect(() => {
-    if (isIncomeLoaded === "success") {
+    if (isIncomeLoaded === "success" && isPayChecksLoaded === "success") {
       const incomeData = getOwnerGridData(incomes, owner);
       let updatedData = incomeData;
-      if (!showAll) {
+      if (!showAll && hasRecords(incomeData)) {
         updatedData = incomeData.filter((item) => item.GrossAmount > 0);
       }
       // Sort the data by Owner property
@@ -82,16 +90,12 @@ export const IncomeRecords = () => {
     } else {
       setIsDataLoaded(false);
     }
-  }, [incomes, isIncomeLoaded, owner, showAll]);
+  }, [incomes, isIncomeLoaded, isPayChecksLoaded, owner, showAll]);
 
   const handleOwnerChange = (e) => {
     if (e && e.target?.value) {
       setOwner(e.target?.value);
     }
-  };
-
-  const addNewClick = () => {
-    setShowAll(true);
   };
 
   const [isShowing, setIsShowing] = useState(false);
@@ -164,8 +168,12 @@ export const IncomeRecords = () => {
 
       {isDataLoaded && (
         <div className="w-full">
-          <div className="py-4 w-full">
+          <div className="pt-4 w-full">
             <IncomeListView gridData={gridData} />
+          </div>
+
+          <div className="w-full">
+            <ExtraPayListView gridData={extrapaychecks} />
           </div>
 
           {/* <AddIncome

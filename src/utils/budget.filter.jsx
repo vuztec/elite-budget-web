@@ -17,6 +17,15 @@ export const expenseCategories = [
   "Transportation",
   "Vacations",
 ];
+export const debtCategories = [
+  "Credit Card",
+  "Department Store",
+  "Family/Friend Loan",
+  "Medical Debt",
+  "Personal Loan",
+  "Student Loan",
+  "Other Debt",
+];
 export const getOwnerGridData = (data, owner) => {
   let ownerFilteredData;
   if (owner !== "Household" && owner !== "All" && parseInt(owner) !== 0) {
@@ -28,7 +37,7 @@ export const getOwnerGridData = (data, owner) => {
   return ownerFilteredData;
 };
 
-export const getExpenseGridData = (data, owner, catFilter) => {
+export const getCatGridData = (data, owner, catFilter) => {
   const ownerFilteredData = getOwnerGridData(data, owner);
 
   let catFilteredData;

@@ -9,7 +9,7 @@ import ConfirmationDialog from "../Dialogs";
 import axios from "../../config/axios";
 import { getProjectChatUsers } from "../../utils/users";
 import { handleAxiosResponseError } from "../../utils/handleResponseError";
-import AddDebt from "./AddDebt";
+import AddTransaction from "./AddTransaction";
 import {
   getFormattedValue,
   getMarketValueTotal,
@@ -19,20 +19,8 @@ import {
 } from "../../utils/budget.calculation";
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
-export const DebtListView = ({ Data, category }) => {
+export const TransactionListView = ({ gridData }) => {
   const { user } = useUserStore();
-  const [gridData, setGridData] = useState([]);
-  useEffect(() => {
-    const updatedData = Data.filter((item) => item.Category === category);
-
-    const sortedData = updatedData.sort((a, b) => {
-      if (a.Owner === b.Owner) {
-        return a.Description.localeCompare(b.Description); // Ascending order for Description
-      }
-      return a.Owner < b.Owner ? 1 : -1; // Descending order for Owner
-    });
-    setGridData(sortedData);
-  }, [Data]);
 
   //----------------CRUD----------------//
   const queryClient = useQueryClient();
@@ -82,50 +70,39 @@ export const DebtListView = ({ Data, category }) => {
   const TableHeader = () => (
     <thead>
       <tr className="font-bold bg-black text-white border border-gray-400 text-left text-xs xl:text-sm">
-        {/* <th className="border-l border-gray-300 p-2 text-xs xl:text-sm">
-          Category
-        </th> */}
         <th className="border-l border-gray-300 p-2 text-xs xl:text-sm">
           Name
         </th>
         <th className="border-l border-gray-300 p-2 text-xs xl:text-sm">
+          Bank Name
+        </th>
+        <th className="border-l border-gray-300 p-2 text-xs xl:text-sm">
+          Date
+        </th>
+        <th className="border-l border-gray-300 p-2 text-xs xl:text-sm">
           Description
         </th>
-        {/* <th className="border-l border-gray-300 p-1">
-          <div className="flex flex-col">
-            <span className="whitespace-nowrap text-left">Market Value</span>
-            <span className="whitespace-nowrap text-left">
-              (For Net Worth Calc)
-            </span>
-          </div>
-        </th> */}
-        <th className="border-l border-gray-300 p-1">
-          <div className="flex flex-col">
-            <span className="whitespace-nowrap text-left">Loan Balance</span>
-            <span className="whitespace-nowrap text-left">
-              {" "}
-              (For Net Worth Calc)
-            </span>
-          </div>
-        </th>
-        <th className="border-l border-gray-300 p-2 text-xs xl:text-sm">
-          Day Due
-        </th>
+
         <th className="border-l border-gray-300 p-2 text-xs xl:text-sm">
           <div className="flex flex-col">
-            <span className="whitespace-nowrap text-left">Payment</span>
-            <span className="whitespace-nowrap text-left">Method</span>
+            <span className="whitespace-nowrap text-left">Pmt, Fee,</span>
+            <span className="whitespace-nowrap text-left">Withdrawal (-)</span>
           </div>
         </th>
-        <th className="border-l border-gray-300 p-1">
+
+        <th className="border-l border-gray-300 p-2 text-xs xl:text-sm">
           <div className="flex flex-col">
-            <span className="whitespace-nowrap text-left">Monthly Expense</span>
+            <span className="whitespace-nowrap text-left">Deposit,</span>
+            <span className="whitespace-nowrap text-left">Credit (+)</span>
           </div>
         </th>
-        <th className="border-l border-gray-300 p-1">
-          <div className="flex flex-col">
-            <span className="whitespace-nowrap text-left">Annual Cost</span>
-          </div>
+
+        <th className="border-l border-gray-300 p-2 text-xs xl:text-sm">
+          Is Cleared?
+        </th>
+
+        <th className="border-l border-gray-300 p-2 text-xs xl:text-sm">
+          Balance
         </th>
 
         <th className="p-2 border-l border-gray-300 text-xs xl:text-sm">
@@ -137,14 +114,6 @@ export const DebtListView = ({ Data, category }) => {
 
   const TableRow = ({ record }) => (
     <tr className="border border-gray-300 text-sm xl:text-[16px] hover:bg-gray-400/10 text-left">
-      {/* <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
-        <div className="flex flex-col items-start gap-1">
-          <span className="flex items-center justify-left gap-2 border-b border-gray-200 text-center mb-0 text-gray-900">
-            {record?.Category}
-          </span>
-        </div>
-      </td> */}
-
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
           <span className="flex items-center justify-left gap-2 border-b border-gray-200 text-center mb-0 text-gray-900">
@@ -155,50 +124,53 @@ export const DebtListView = ({ Data, category }) => {
 
       <td className="max-w-[300px] whitespace-normal p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p className="text-black">
-            {record?.NickName ? record?.NickName : record?.Description}
-          </p>
+          <p className="text-black">{record?.bankAccountNameId}</p>
         </div>
       </td>
 
-      {/* <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
+      <td className="max-w-[300px] whitespace-normal p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p className="text-black">
-            {getFormattedValue(user, record?.MarketValue)}
-          </p>
+          <p className="text-black">{record?.Date}</p>
         </div>
-      </td> */}
+      </td>
 
-      <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
+      <td className="max-w-[300px] whitespace-normal p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p className="text-black">
-            {getFormattedValue(user, record?.LoanBalance)}
-          </p>
+          <p className="text-black">{record?.Description}</p>
         </div>
       </td>
 
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p className="text-black">{record?.DueDate}</p>
+          <p className="text-black">
+            {getFormattedValue(
+              user,
+              record?.Amount,
+              record?.Type,
+              "withdrawal"
+            )}
+          </p>
         </div>
       </td>
+
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p className="text-black"> {record?.PaymentMethod}</p>
+          <p className="text-black">
+            {getFormattedValue(user, record?.Amount, record?.Type, "credit")}
+          </p>
         </div>
       </td>
+
+      <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
+        <div className="flex flex-col items-start gap-1">
+          <p className="text-black">{record?.isCleared}</p>
+        </div>
+      </td>
+
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
           <p className="text-black">
             {getFormattedValue(user, record?.MonthlyBudget)}
-          </p>
-        </div>
-      </td>
-
-      <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
-        <div className="flex flex-col items-start gap-1">
-          <p className="text-black">
-            {getFormattedValue(user, 12 * record?.MonthlyBudget)}
           </p>
         </div>
       </td>
@@ -229,33 +201,27 @@ export const DebtListView = ({ Data, category }) => {
     <tr className="border border-gray-300 text-sm xl:text-[18px] bg-[whitesmoke] text-gray-600 text-left font-bold">
       <td className="min-w-fit whitespace-nowrap p-3 border-gray-200"></td>
 
-      <td className="min-w-fit whitespace-nowrap p-3 border-gray-200">
-        <div className="flex flex-col items-start gap-1">
-          <p>{category} Category Total</p>
-        </div>
-      </td>
+      <td className="min-w-fit whitespace-nowrap p-3 border-gray-200"></td>
 
-      {/* <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200">
-        <div className="flex flex-col items-start gap-1">
-          <p>{getMarketValueTotal(user, gridData)}</p>
-        </div>
-      </td> */}
+      <td className="min-w-fit whitespace-nowrap p-3 border-gray-200"></td>
 
       <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200">
-        <div className="flex flex-col items-start gap-1">
-          <p>{getLoanBalanceTotal(user, gridData)}</p>
-        </div>
+        TOTAL
       </td>
-
-      <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200"></td>
-
-      <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200"></td>
 
       <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
           <p>{getMonthlyBudgetTotal(user, gridData)}</p>
         </div>
       </td>
+
+      <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200">
+        <div className="flex flex-col items-start gap-1">
+          <p>{getMonthlyBudgetTotal(user, gridData)}</p>
+        </div>
+      </td>
+
+      <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200"></td>
 
       <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
@@ -269,7 +235,7 @@ export const DebtListView = ({ Data, category }) => {
 
   return (
     <>
-      {gridData.length > 0 && (
+      {gridData.length > -1 && (
         <div className="w-full h-fit bg-white py-6 mt-4 shadow-md rounded">
           <div className="flex flex-col gap-5 w-full">
             <div className="w-full overflow-x-auto">
@@ -277,7 +243,7 @@ export const DebtListView = ({ Data, category }) => {
                 <thead>
                   <tr>
                     <th className="p-2 w-full uppercase bg-black text-white flex items-center justify-center">
-                      {category}
+                      BANK REGISTER
                     </th>
                   </tr>
                 </thead>
@@ -295,7 +261,7 @@ export const DebtListView = ({ Data, category }) => {
           </div>
         </div>
       )}
-      <AddDebt
+      <AddTransaction
         open={open}
         setOpen={setOpen}
         recordData={selected}

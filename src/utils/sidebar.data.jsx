@@ -61,7 +61,7 @@ export const SidebarLinks = [
     dropdown: false,
     sub: [
       { label: "Bank Transactions", link: "/bank/bank-transactions" },
-      { label: "Bank Account", link: "/bank/bank-account" },
+      { label: "Bank Accounts", link: "/bank/bank-account" },
     ],
   },
   {
