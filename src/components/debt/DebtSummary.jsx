@@ -53,7 +53,7 @@ export const ExpenseSummary = ({ gridData }) => {
         {getSummaryMonthlyBudgetTotal(user, gridData, cat)}
       </td>
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-300">
-        {getSummaryYearlyBudgetTotal(user, gridData, cat)}
+        {getExpenseSummaryYearlyBudgetTotal(user, gridData, cat)}
       </td>
     </tr>
   );

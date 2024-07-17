@@ -307,25 +307,25 @@ export const getYearlyBudgetTotal = (user, data) => {
 
 ///**************EXPENSE SUMMARY*********************** */
 
-export const getExpenseSummaryMarketValueTotal = (user, data, cat) => {
+export const getSummaryMarketValueTotal = (user, data, cat) => {
   const updatedData = data.filter((item) => item.Category === cat);
   const formattedAmount = getMarketValueTotal(user, updatedData);
   return formattedAmount;
 };
 
-export const getExpenseSummaryLoanBalanceTotal = (user, data, cat) => {
+export const getSummaryLoanBalanceTotal = (user, data, cat) => {
   const updatedData = data.filter((item) => item.Category === cat);
   const formattedAmount = getLoanBalanceTotal(user, updatedData);
   return formattedAmount;
 };
 
-export const getExpenseSummaryMonthlyBudgetTotal = (user, data, cat) => {
+export const getSummaryMonthlyBudgetTotal = (user, data, cat) => {
   const updatedData = data.filter((item) => item.Category === cat);
   const formattedAmount = getMonthlyBudgetTotal(user, updatedData);
   return formattedAmount;
 };
 
-export const getExpenseSummaryYearlyBudgetTotal = (user, data, cat) => {
+export const getSummaryYearlyBudgetTotal = (user, data, cat) => {
   const updatedData = data.filter((item) => item.Category === cat);
   const formattedAmount = getYearlyBudgetTotal(user, updatedData);
   return formattedAmount;
