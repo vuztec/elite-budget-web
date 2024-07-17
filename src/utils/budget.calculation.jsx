@@ -1,12 +1,17 @@
 export const getFormattedValue = (user, Amount) => {
   const usedCurrency = user?.Currency ? user?.Currency : "$";
   const separator = user?.Separator ? user?.Separator : "en-us";
-  const formattedAmount =
-    usedCurrency +
-    new Intl.NumberFormat(separator, {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    }).format(Amount);
+
+  let formattedAmount = "";
+  if (Amount !== "" && Amount > 0.0) {
+    formattedAmount =
+      usedCurrency +
+      new Intl.NumberFormat(separator, {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      }).format(Amount);
+  }
+
   return formattedAmount;
 };
 
@@ -259,5 +264,69 @@ export const getNetYearlyTotal = (user, data) => {
     return accumulator + Number(yearlyIncome);
   }, 0);
   const formattedAmount = getFormattedValue(user, Amount);
+  return formattedAmount;
+};
+
+export const getMarketValueTotal = (user, data) => {
+  const Amount = data.reduce((accumulator, record) => {
+    const amount = record?.MarketValue || 0;
+    return accumulator + Number(amount);
+  }, 0);
+  const formattedAmount = getFormattedValue(user, Amount);
+  return formattedAmount;
+};
+
+export const getLoanBalanceTotal = (user, data) => {
+  const Amount = data.reduce((accumulator, record) => {
+    const amount = record?.LoanBalance || 0;
+    return accumulator + Number(amount);
+  }, 0);
+  const formattedAmount = getFormattedValue(user, Amount);
+  return formattedAmount;
+};
+
+export const getMonthlyBudgetTotal = (user, data) => {
+  const Amount = data.reduce((accumulator, record) => {
+    const amount = record?.MonthlyBudget || 0;
+    return accumulator + Number(amount);
+  }, 0);
+  const formattedAmount = getFormattedValue(user, Amount);
+  return formattedAmount;
+};
+
+export const getYearlyBudgetTotal = (user, data) => {
+  const Amount =
+    12 *
+    data.reduce((accumulator, record) => {
+      const amount = record?.MonthlyBudget || 0;
+      return accumulator + Number(amount);
+    }, 0);
+  const formattedAmount = getFormattedValue(user, Amount);
+  return formattedAmount;
+};
+
+///**************EXPENSE SUMMARY*********************** */
+
+export const getExpenseSummaryMarketValueTotal = (user, data, cat) => {
+  const updatedData = data.filter((item) => item.Category === cat);
+  const formattedAmount = getMarketValueTotal(user, updatedData);
+  return formattedAmount;
+};
+
+export const getExpenseSummaryLoanBalanceTotal = (user, data, cat) => {
+  const updatedData = data.filter((item) => item.Category === cat);
+  const formattedAmount = getLoanBalanceTotal(user, updatedData);
+  return formattedAmount;
+};
+
+export const getExpenseSummaryMonthlyBudgetTotal = (user, data, cat) => {
+  const updatedData = data.filter((item) => item.Category === cat);
+  const formattedAmount = getMonthlyBudgetTotal(user, updatedData);
+  return formattedAmount;
+};
+
+export const getExpenseSummaryYearlyBudgetTotal = (user, data, cat) => {
+  const updatedData = data.filter((item) => item.Category === cat);
+  const formattedAmount = getYearlyBudgetTotal(user, updatedData);
   return formattedAmount;
 };

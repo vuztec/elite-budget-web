@@ -1,26 +1,38 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { RiDeleteBin2Fill } from "react-icons/ri";
 import { FaEdit } from "react-icons/fa";
 import clsx from "clsx";
 
 import useUserStore from "../../app/user";
 import { useQueryClient } from "react-query";
-import ConfirmationDialog from "../../components/Dialogs";
+import ConfirmationDialog from "../Dialogs";
 import axios from "../../config/axios";
 import { getProjectChatUsers } from "../../utils/users";
 import { handleAxiosResponseError } from "../../utils/handleResponseError";
-import AddIncome from "./AddIncome";
+import { AddExpense } from "./AddExpense";
 import {
-  getGrossMonthlyTotal,
-  getNetMonthlyTotal,
-  getGrossYearlyTotal,
-  getNetYearlyTotal,
   getFormattedValue,
+  getMarketValueTotal,
+  getLoanBalanceTotal,
+  getMonthlyBudgetTotal,
+  getYearlyBudgetTotal,
 } from "../../utils/budget.calculation";
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
-export const IncomeListView = ({ gridData }) => {
+export const ExpenseListView = ({ Data, category }) => {
   const { user } = useUserStore();
+  const [gridData, setGridData] = useState([]);
+  useEffect(() => {
+    const updatedData = Data.filter((item) => item.Category === category);
+
+    const sortedData = updatedData.sort((a, b) => {
+      if (a.Owner === b.Owner) {
+        return a.Description.localeCompare(b.Description); // Ascending order for Description
+      }
+      return a.Owner < b.Owner ? 1 : -1; // Descending order for Owner
+    });
+    setGridData(sortedData);
+  }, [Data]);
 
   //----------------CRUD----------------//
   const queryClient = useQueryClient();
@@ -70,69 +82,51 @@ export const IncomeListView = ({ gridData }) => {
   const TableHeader = () => (
     <thead>
       <tr className="font-bold bg-black text-white border border-gray-400 text-left text-xs xl:text-sm">
+        {/* <th className="border-l border-gray-300 p-2 text-xs xl:text-sm">
+          Category
+        </th> */}
         <th className="border-l border-gray-300 p-2 text-xs xl:text-sm">
           Name
         </th>
         <th className="border-l border-gray-300 p-2 text-xs xl:text-sm">
-          Income Source
+          Description
+        </th>
+        <th className="border-l border-gray-300 p-1">
+          <div className="flex flex-col">
+            <span className="whitespace-nowrap text-left">Market Value</span>
+            <span className="whitespace-nowrap text-left">
+              (For Net Worth Calc)
+            </span>
+          </div>
+        </th>
+        <th className="border-l border-gray-300 p-1">
+          <div className="flex flex-col">
+            <span className="whitespace-nowrap text-left">Loan Balance</span>
+            <span className="whitespace-nowrap text-left">
+              {" "}
+              (For Net Worth Calc)
+            </span>
+          </div>
         </th>
         <th className="border-l border-gray-300 p-2 text-xs xl:text-sm">
-          Frequency
+          Day Due
         </th>
-        <th className="border-l border-gray-300 p-1">
+        <th className="border-l border-gray-300 p-2 text-xs xl:text-sm">
           <div className="flex flex-col">
-            <span className="whitespace-nowrap text-left">Gross Pay</span>
-            <span className="whitespace-nowrap text-left">(Before Taxes)</span>
-            {/* <span className="whitespace-nowrap text-left">Paid Weekly</span> */}
+            <span className="whitespace-nowrap text-left">Payment</span>
+            <span className="whitespace-nowrap text-left">Method</span>
           </div>
         </th>
         <th className="border-l border-gray-300 p-1">
           <div className="flex flex-col">
-            <span className="whitespace-nowrap text-left">Net Pay</span>
-            <span className="whitespace-nowrap text-left">(Pay Rec'd)</span>
-            {/* <span className="whitespace-nowrap text-left">Paid Weekly</span> */}
-          </div>
-        </th>
-        {/* <th className="border-l border-gray-300 p-1">
-          <div className="flex flex-col">
-            <span className="whitespace-nowrap text-left">
-              Monthly-Gross Pay
-            </span>
-            <span className="whitespace-nowrap text-left">(Before Taxes)</span>
-            <span className="whitespace-nowrap text-left">
-              Paid 1x per Month
-            </span>
+            <span className="whitespace-nowrap text-left">Monthly Expense</span>
           </div>
         </th>
         <th className="border-l border-gray-300 p-1">
           <div className="flex flex-col">
-            <span className="whitespace-nowrap text-left">Monthly-Net Pay</span>
-            <span className="whitespace-nowrap text-left">(Pay Rec'd)</span>
-            <span className="whitespace-nowrap text-left">
-              Paid 1x per Month
-            </span>
+            <span className="whitespace-nowrap text-left">Annual Cost</span>
           </div>
         </th>
-        <th className="border-l border-gray-300 p-1">
-          <div className="flex flex-col">
-            <span className="whitespace-nowrap text-left">
-              Yearly-Gross Pay
-            </span>
-            <span className="whitespace-nowrap text-left">(Before Taxes)</span>
-            <span className="whitespace-nowrap text-left">
-              Paid 1x per Year
-            </span>
-          </div>
-        </th>
-        <th className="border-l border-gray-300 p-1">
-          <div className="flex flex-col">
-            <span className="whitespace-nowrap text-left">Yearly-Net Pay</span>
-            <span className="whitespace-nowrap text-left">(Pay Rec'd)</span>
-            <span className="whitespace-nowrap text-left">
-              Paid 1x per Year
-            </span>
-          </div>
-        </th> */}
 
         <th className="p-2 border-l border-gray-300 text-xs xl:text-sm">
           Actions
@@ -143,6 +137,14 @@ export const IncomeListView = ({ gridData }) => {
 
   const TableRow = ({ record }) => (
     <tr className="border border-gray-300 text-sm xl:text-[16px] hover:bg-gray-400/10 text-left">
+      {/* <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
+        <div className="flex flex-col items-start gap-1">
+          <span className="flex items-center justify-left gap-2 border-b border-gray-200 text-center mb-0 text-gray-900">
+            {record?.Category}
+          </span>
+        </div>
+      </td> */}
+
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
           <span className="flex items-center justify-left gap-2 border-b border-gray-200 text-center mb-0 text-gray-900">
@@ -151,23 +153,10 @@ export const IncomeListView = ({ gridData }) => {
         </div>
       </td>
 
-      <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
+      <td className="max-w-[300px] whitespace-normal p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
           <p className="text-black">
-            {record?.NickName ? record?.NickName : record?.IncomeSource}
-          </p>
-        </div>
-      </td>
-      <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
-        <div className="flex flex-col items-start gap-1">
-          <p className="text-black"> {record?.Frequency}</p>
-        </div>
-      </td>
-
-      <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
-        <div className="flex flex-col items-start gap-1">
-          <p className="text-black">
-            {getFormattedValue(user, record?.GrossAmount)}
+            {record?.NickName ? record?.NickName : record?.Description}
           </p>
         </div>
       </td>
@@ -175,20 +164,7 @@ export const IncomeListView = ({ gridData }) => {
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
           <p className="text-black">
-            {getFormattedValue(user, record?.NetAmount)}
-          </p>
-        </div>
-      </td>
-
-      {/* <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
-        <div className="flex flex-col items-start gap-1">
-          <p className="text-black">
-            {getIncomeAmount(
-              user,
-              record?.GrossAmount,
-              record?.Frequency,
-              "Monthly"
-            )}
+            {getFormattedValue(user, record?.MarketValue)}
           </p>
         </div>
       </td>
@@ -196,12 +172,25 @@ export const IncomeListView = ({ gridData }) => {
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
           <p className="text-black">
-            {getIncomeAmount(
-              user,
-              record?.NetAmount,
-              record?.Frequency,
-              "Monthly"
-            )}
+            {getFormattedValue(user, record?.LoanBalance)}
+          </p>
+        </div>
+      </td>
+
+      <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
+        <div className="flex flex-col items-start gap-1">
+          <p className="text-black"> N/A</p>
+        </div>
+      </td>
+      <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
+        <div className="flex flex-col items-start gap-1">
+          <p className="text-black"> {record?.PaymentMethod}</p>
+        </div>
+      </td>
+      <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
+        <div className="flex flex-col items-start gap-1">
+          <p className="text-black">
+            {getFormattedValue(user, record?.MonthlyBudget)}
           </p>
         </div>
       </td>
@@ -209,28 +198,10 @@ export const IncomeListView = ({ gridData }) => {
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
           <p className="text-black">
-            {getIncomeAmount(
-              user,
-              record?.GrossAmount,
-              record?.Frequency,
-              "Yearly"
-            )}
+            {getFormattedValue(user, 12 * record?.MonthlyBudget)}
           </p>
         </div>
       </td>
-
-      <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
-        <div className="flex flex-col items-start gap-1">
-          <p className="text-black">
-            {getIncomeAmount(
-              user,
-              record?.NetAmount,
-              record?.Frequency,
-              "Yearly"
-            )}
-          </p>
-        </div>
-      </td> */}
 
       <td className="min-w-max p-2 border-l border-r border-gray-200">
         <div className="flex items-center text-left gap-3 justify-start">
@@ -256,13 +227,23 @@ export const IncomeListView = ({ gridData }) => {
 
   const TableTotal = ({ gridData }) => (
     <tr className="border border-gray-300 text-sm xl:text-[18px] bg-black text-white text-left font-bold">
-      <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200"></td>
-
       <td className="min-w-fit whitespace-nowrap p-3 border-gray-200"></td>
 
       <td className="min-w-fit whitespace-nowrap p-3 border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p> Total</p>
+          <p>{category} Category Total</p>
+        </div>
+      </td>
+
+      <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200">
+        <div className="flex flex-col items-start gap-1">
+          <p>{getMarketValueTotal(user, gridData)}</p>
+        </div>
+      </td>
+
+      <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200">
+        <div className="flex flex-col items-start gap-1">
+          <p>{getLoanBalanceTotal(user, gridData)}</p>
         </div>
       </td>
 
@@ -272,25 +253,13 @@ export const IncomeListView = ({ gridData }) => {
 
       <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p>{getGrossMonthlyTotal(user, gridData)}</p>
+          <p>{getMonthlyBudgetTotal(user, gridData)}</p>
         </div>
       </td>
 
       <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p>{getNetMonthlyTotal(user, gridData)}</p>
-        </div>
-      </td>
-
-      <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200">
-        <div className="flex flex-col items-start gap-1">
-          <p>{getGrossYearlyTotal(user, gridData)}</p>
-        </div>
-      </td>
-
-      <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200">
-        <div className="flex flex-col items-start gap-1">
-          <p>{getNetYearlyTotal(user, gridData)}</p>
+          <p>{getYearlyBudgetTotal(user, gridData)}</p>
         </div>
       </td>
 
@@ -299,68 +268,34 @@ export const IncomeListView = ({ gridData }) => {
   );
 
   return (
-    <div className="w-full h-fit bg-white py-2 shadow-md rounded">
-      <div className="flex flex-col gap-5 w-full">
-        <div className="flex w-full">
-          <div className="w-2/3 overflow-x-auto">
-            <table className="w-[97%] m-5">
-              <TableHeader />
-              <tbody>
-                {gridData?.map((record, index) => (
-                  <TableRow key={index} record={record} />
-                ))}
-                {/* <TableTotal gridData={gridData} /> */}
-              </tbody>
-            </table>
-          </div>
-          <div className="w-1/3 m-5">
-            <table>
-              <tbody className="border border-gray-300">
-                <tr className="border border-gray-300 bg-black text-white">
-                  <td className="p-3 font-bold">INCOME SUMMARY</td>
-                  <td></td>
-                </tr>
-
-                <tr className="border border-gray-300">
-                  <td className="min-w-fit whitespace-nowrap text-right p-2">
-                    Monthly Budgeted Gross Income:
-                  </td>
-                  <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">
-                    {getGrossMonthlyTotal(user, gridData)}
-                  </td>
-                </tr>
-                <tr className="border border-gray-300">
-                  <td className="text-right p-2 min-w-fit whitespace-nowrap">
-                    Monthly Budgeted Net Income:
-                  </td>
-                  <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">
-                    {getNetMonthlyTotal(user, gridData)}
-                  </td>
-                </tr>
-                <tr className="border border-gray-300">
-                  <td className="text-right p-2 min-w-fit whitespace-nowrap">
-                    Total Annual Gross Income:
-                  </td>
-                  <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">
-                    {getGrossYearlyTotal(user, gridData)}
-                  </td>
-                </tr>
-                <tr className="border border-gray-300">
-                  <td className="min-w-fit whitespace-nowrap text-right p-2">
-                    Total Annual Net Income:
-                  </td>
-                  <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">
-                    {getNetYearlyTotal(user, gridData)}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+    <>
+      {gridData.length > 0 && (
+        <div className="w-full h-fit bg-white py-6 mt-4 shadow-md rounded">
+          <div className="flex flex-col gap-5 w-full">
+            <div className="w-full overflow-x-auto">
+              <table className="w-[97%] ml-5 -mb-5">
+                <thead>
+                  <tr>
+                    <th className="p-2 w-full uppercase bg-black text-white flex items-center justify-center">
+                      {category}
+                    </th>
+                  </tr>
+                </thead>
+              </table>
+              <table className="w-[97%] m-5">
+                <TableHeader />
+                <tbody>
+                  {gridData?.map((record, index) => (
+                    <TableRow key={index} record={record} />
+                  ))}
+                  <TableTotal gridData={gridData} />
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
-        <div className="w-1/3 mx-5 bg-green-600">Extra Pay</div>
-      </div>
-
-      <AddIncome
+      )}
+      <AddExpense
         open={open}
         setOpen={setOpen}
         recordData={selected}
@@ -373,6 +308,6 @@ export const IncomeListView = ({ gridData }) => {
         setOpen={setOpenDialog}
         onClick={() => deleteHandler(selected)}
       />
-    </div>
+    </>
   );
 };

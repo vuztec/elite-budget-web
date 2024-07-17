@@ -3,10 +3,10 @@ import { useSearchParams } from "react-router-dom";
 import { MdFilterAlt, MdFilterAltOff } from "react-icons/md";
 import Button from "../../components/Button";
 import { IoMdAdd } from "react-icons/io";
+import { HiMinusSm } from "react-icons/hi";
 import Loading from "../../components/Loader";
 import { useQuery } from "react-query";
 import useUserStore from "../../app/user";
-import { themeColors } from "../../utils";
 import clsx from "clsx";
 import Select from "../../components/Select";
 import { getActiveAccount } from "../../utils/permissions";
@@ -16,12 +16,19 @@ import { getIncomes } from "../../config/api";
 import { getOwnerGridData, incomeOwners } from "../../utils/budget.filter";
 import { IncomeListView } from "../../components/income/IncomeListView";
 
-const customList = ["Main Job", "Side Job", "Interest/Dividends", "Child Support", "Bonus", "Rental Income", "Other"];
+const customList = [
+  "Main Job",
+  "Side Job",
+  "Interest/Dividends",
+  "Child Support",
+  "Bonus",
+  "Rental Income",
+  "Other",
+];
 
 export const IncomeRecords = () => {
   const { user } = useUserStore();
-  const usedCurrency = user?.Currency ? user?.Currency : "$";
-
+  const [showAll, setShowAll] = useState(false);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [gridData, setGridData] = useState([]);
   const [open, setOpen] = useState(false);
@@ -56,7 +63,11 @@ export const IncomeRecords = () => {
 
   useEffect(() => {
     if (isIncomeLoaded === "success") {
-      const updatedData = getOwnerGridData(incomes, owner);
+      const incomeData = getOwnerGridData(incomes, owner);
+      let updatedData = incomeData;
+      if (!showAll) {
+        updatedData = incomeData.filter((item) => item.GrossAmount > 0);
+      }
       // Sort the data by Owner property
       const sortedData = updatedData.sort((a, b) => {
         if (a.Owner < b.Owner) return 1;
@@ -71,7 +82,7 @@ export const IncomeRecords = () => {
     } else {
       setIsDataLoaded(false);
     }
-  }, [incomes, isIncomeLoaded, owner]);
+  }, [incomes, isIncomeLoaded, owner, showAll]);
 
   const handleOwnerChange = (e) => {
     if (e && e.target?.value) {
@@ -80,7 +91,7 @@ export const IncomeRecords = () => {
   };
 
   const addNewClick = () => {
-    setOpen(true);
+    setShowAll(true);
   };
 
   const [isShowing, setIsShowing] = useState(false);
@@ -93,7 +104,13 @@ export const IncomeRecords = () => {
             <div className="text-sm">
               <Button
                 label={!isShowing ? "Show Filters" : "Hide Filters"}
-                icon={!isShowing ? <MdFilterAlt className="text-lg" /> : <MdFilterAltOff className="text-lg" />}
+                icon={
+                  !isShowing ? (
+                    <MdFilterAlt className="text-lg" />
+                  ) : (
+                    <MdFilterAltOff className="text-lg" />
+                  )
+                }
                 className={clsx(
                   "flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:text-black",
                   !isShowing ? "bg-green-800" : "bg-red-800"
@@ -104,13 +121,19 @@ export const IncomeRecords = () => {
           </div>
           <div className="text-sm">
             <Button
-              label="Add New"
-              icon={<IoMdAdd className="text-lg" />}
+              label={!showAll ? "Add New" : "Cancel Add"}
+              icon={
+                !showAll ? (
+                  <IoMdAdd className="text-lg" />
+                ) : (
+                  <HiMinusSm className="text-lg" />
+                )
+              }
               className={clsx(
-                "flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:bg-viewcolor",
-                `bg-black hover:text-black`
+                "flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:bg-viewcolor bg-black hover:text-black",
+                !showAll ? "bg-black" : "bg-red-800"
               )}
-              onClick={() => addNewClick()}
+              onClick={() => setShowAll((old) => !old)}
             />
           </div>
         </div>
@@ -142,10 +165,15 @@ export const IncomeRecords = () => {
       {isDataLoaded && (
         <div className="w-full">
           <div className="py-4 w-full">
-            <IncomeListView gridData={gridData} usedCurrency={usedCurrency} />
+            <IncomeListView gridData={gridData} />
           </div>
 
-          <AddIncome open={open} setOpen={setOpen} recordData={""} key={new Date().getTime().toString()} />
+          {/* <AddIncome
+            open={open}
+            setOpen={setOpen}
+            recordData={""}
+            key={new Date().getTime().toString()}
+          /> */}
         </div>
       )}
     </>

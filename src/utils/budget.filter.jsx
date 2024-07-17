@@ -1,4 +1,22 @@
 export const incomeOwners = ["Self", "Partner"];
+export const expenseOwners = ["Self", "Partner", "Joint"];
+export const expenseCategories = [
+  "Charity",
+  "Children",
+  "Dues/Subscriptions",
+  "Entertainment",
+  "Food",
+  "Health/Medical",
+  "Household, Personal Care & Gifts",
+  "Housing",
+  "Other Insurance",
+  "Parents/Elder Care",
+  "Pets/Animals",
+  "Recreation",
+  "Rental Property",
+  "Transportation",
+  "Vacations",
+];
 export const getOwnerGridData = (data, owner) => {
   let ownerFilteredData;
   if (owner !== "Household" && owner !== "All" && parseInt(owner) !== 0) {
@@ -7,12 +25,20 @@ export const getOwnerGridData = (data, owner) => {
     ownerFilteredData = data;
   }
 
-  // Sort the data by the Owner property
-  const sortedData = ownerFilteredData.sort((a, b) => {
-    if (a.Owner < b.Owner) return 1;
-    if (a.Owner > b.Owner) return -1;
-    return 0;
-  });
+  return ownerFilteredData;
+};
 
-  return sortedData;
+export const getExpenseGridData = (data, owner, catFilter) => {
+  const ownerFilteredData = getOwnerGridData(data, owner);
+
+  let catFilteredData;
+  if (catFilter !== "All" && parseInt(catFilter) !== 0) {
+    catFilteredData = ownerFilteredData?.filter(
+      (item) => item.Category === catFilter
+    );
+  } else {
+    catFilteredData = ownerFilteredData;
+  }
+
+  return catFilteredData;
 };
