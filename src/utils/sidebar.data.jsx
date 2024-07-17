@@ -8,9 +8,11 @@ export const SidebarLinks = [
     link: "/",
     icon: <FiHome />,
     dropdown: false,
+    activename: "home",
   },
   {
     label: "Income",
+    activename: "income",
     link: null,
     icon: <GrProjects />,
     dropdown: false,
@@ -21,6 +23,7 @@ export const SidebarLinks = [
   },
   {
     label: "Expenses",
+    activename: "expenses",
     link: null,
     icon: <GrProjects />,
     dropdown: false,
@@ -31,24 +34,28 @@ export const SidebarLinks = [
   },
   {
     label: "Other Debts",
+    activename: "debts",
     link: "/debts",
     icon: <FiHome />,
     dropdown: false,
   },
   {
     label: "Retirement",
+    activename: "retirement",
     link: "/retirement",
     icon: <FiHome />,
     dropdown: false,
   },
   {
     label: "Savings",
+    activename: "savings",
     link: "/savings",
     icon: <FiHome />,
     dropdown: false,
   },
   {
     label: "Bank Register",
+    activename: "bank",
     link: null,
     icon: <MdPeople />,
     dropdown: false,
@@ -59,6 +66,7 @@ export const SidebarLinks = [
   },
   {
     label: "Final Budget",
+    activename: "budget",
     link: null,
     icon: <MdPeople />,
     dropdown: false,
@@ -70,6 +78,7 @@ export const SidebarLinks = [
   },
   {
     label: "Net Worth",
+    activename: "net-worth",
     link: "/net-worth",
     icon: <FiHome />,
     dropdown: false,

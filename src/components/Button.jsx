@@ -8,7 +8,7 @@ const Button = ({ icon, className, label, type, onClick = () => {} }) => {
       type={type || "button"}
       className={clsx(
         "px-4 py-1 rounded-full text-sm font-semibold outline-none sm:w-auto",
-        `bg-[${themeColors[1]}] hover:bg-viewcolor`,
+        // `bg-[${themeColors[1]}] hover:bg-viewcolor`,
         className
       )}
       onClick={onClick}
