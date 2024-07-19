@@ -29,6 +29,7 @@ import {
   getSelfContributionTotal,
   getUnformattedMonthlyBudgetTotal,
 } from "../../utils/budget.calculation";
+import { FaEdit, FaRegThumbsUp } from "react-icons/fa";
 
 export const JointContribution = () => {
   const { user } = useUserStore();
@@ -177,13 +178,13 @@ export const JointContribution = () => {
             NOTE: Couples can contribute to joint expenses in proportion to
             their respective gross income or override the calculated split.
           </p>
-          <div className="w-full h-fit bg-white p-5 mt-4 shadow-md rounded">
+          <div className="w-full h-fit bg-white p-5 mt-4 shadow-md rounded text-xs md:text-sm">
             <div className="flex flex-col gap-5 xl:gap-10 w-full p-5">
-              <div className="w-full xl:w-fit flex flex-col items-center justify-center">
-                <table>
+              <div className="w-full xl:w-fit flex flex-col overflow-x-auto">
+                <table className="w-[97%]">
                   <tbody className="border border-gray-300">
                     <tr className="border border-gray-300 bg-black text-white">
-                      <td className="p-3 font-bold text-[#ffe99b]">
+                      <td className="min-w-fit whitespace-nowrap p-3 font-bold text-[#ffe99b]">
                         HOUSEHOLD MONTHLY INCOME
                       </td>
                       <td></td>
@@ -235,36 +236,36 @@ export const JointContribution = () => {
                   </tbody>
                 </table>
               </div>
-              <div className="w-full xl:w-fit flex items-center justify-center gap-5">
-                <div className="text-sm">
+              <div className="w-full xl:w-fit flex flex-col md:flex-row items-center justify-center gap-5">
+                <div className="min-w-fit whitespace-nowrap text-sm">
                   <Button
                     label="Use Income Split"
-                    icon={<IoMdAdd className="text-lg" />}
+                    icon={<FaRegThumbsUp className="text-lg" />}
                     className={clsx(
                       "flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:bg-viewcolor",
-                      `bg-orange-800 hover:text-black`
+                      `bg-green-800 hover:text-black`
                     )}
                     onClick={() => deleteClick(selectedSelfAmount)}
                   />
                 </div>
-                <div className="text-sm">
+                <div className="min-w-fit whitespace-nowrap text-sm">
                   <Button
                     label="Override Income Split"
-                    icon={<IoMdAdd className="text-lg" />}
+                    icon={<FaEdit className="text-lg" />}
                     className={clsx(
                       "flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:bg-viewcolor",
-                      `bg-green-800 hover:text-black`
+                      `bg-orange-800 hover:text-black`
                     )}
                     onClick={() => editClick(selectedSelfAmount)}
                   />
                 </div>
               </div>
 
-              <div className="w-full xl:w-fit flex flex-col items-center justify-center">
-                <table>
+              <div className="w-full xl:w-fit flex flex-col overflow-x-auto">
+                <table className="w-[97%]">
                   <tbody className="border border-gray-300">
                     <tr className="border border-gray-300 bg-black text-white">
-                      <td className="p-3 font-bold text-[#ffe99b]">
+                      <td className="min-w-fit whitespace-nowrap p-3 font-bold text-[#ffe99b]">
                         TOTAL JOINT EXPENSES
                       </td>
                       <td></td>
