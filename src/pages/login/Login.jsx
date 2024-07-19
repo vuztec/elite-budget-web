@@ -131,12 +131,6 @@ export const Login = () => {
                   >
                     Forget Password?
                   </a>
-                  <a
-                    href="/login/admin"
-                    className={clsx("text-sm text-gray-500 hover:underline cursor-pointer", `hover:text-[${themeColors[1]}]`)}
-                  >
-                    Admin Login?
-                  </a>
                 </div>
 
                 <Button
