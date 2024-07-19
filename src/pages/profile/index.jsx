@@ -27,7 +27,7 @@ const Profile = () => {
   const [countryCode, setCountryCode] = useState(user ? CountryData.find((country) => country.name === user.Country)?.isoCode : "");
   const [states, setStates] = useState(countryCode ? State.getStatesOfCountry(countryCode) : []);
 
-  const [stateCode, setStateCode] = useState(user ? states.find((state) => state.name === user.State)?.isoCode : "");
+  const [stateCode, setStateCode] = useState(states.find((state) => state.name === user.Province)?.isoCode);
   const [cities, setCities] = useState(countryCode && stateCode ? City.getCitiesOfState(countryCode, stateCode) : []);
 
   const [isLoading, setIsLoading] = useState(false);
@@ -48,25 +48,37 @@ const Profile = () => {
       setValue("City", user.City);
       setValue("Address", user.Address);
       setValue("Currency", user.Currency);
+      setValue("PartnerAge", user.PartnerAge);
+      setValue("SelfAge", user.SelfAge);
     }
 
     return () => reset();
-  }, [user?.id]);
+  }, [user?.id, countryCode]);
 
   // Define handleOnSubmit function to handle form submission
   const handleOnSubmit = async (data) => {
     // setIsLoading(() => true);
-    console.log(data);
+    const id = toast.loading("Loading....");
 
     axios
-      .patch("/api/rootuser/" + user.id, data)
+      .patch("/api/rootusers/" + user.id, data)
       .then(({ data }) => {
         setUser(data);
-        toast.success("Profile Updated Successfully");
+        toast.update(id, {
+          render: "Profile Updated Successfully",
+          type: "success",
+          isLoading: false,
+          autoClose: 3000,
+        });
       })
       .catch((err) => {
         console.log("Error : ", err);
-        console.log(handleAxiosResponseError(err));
+        toast.update(id, {
+          render: handleAxiosResponseError(err),
+          type: "error",
+          isLoading: false,
+          autoClose: 3000,
+        });
       });
   };
 
@@ -83,7 +95,7 @@ const Profile = () => {
   const handleStateChange = (e) => {
     const isoCode = e.target.value;
     const state = State.getStateByCodeAndCountry(isoCode, countryCode);
-    setValue("State", state.name);
+    setValue("Province", state.name);
     const cities = City.getCitiesOfState(countryCode, state.isoCode);
     setCities(() => cities);
   };
