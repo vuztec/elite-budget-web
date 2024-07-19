@@ -1,12 +1,14 @@
-import { FiHome } from "react-icons/fi";
-import { GrProjects } from "react-icons/gr";
-import { MdPeople } from "react-icons/md";
+import { MdAreaChart, MdPayment, MdSavings } from "react-icons/md";
+import { AiFillDollarCircle } from "react-icons/ai";
+import { FaCashRegister, FaPiggyBank, FaShoppingCart } from "react-icons/fa";
+import { IoMdBriefcase } from "react-icons/io";
+import { IoHome } from "react-icons/io5";
 
 export const SidebarLinks = [
   {
     label: "Home",
     link: "/",
-    icon: <FiHome />,
+    icon: <IoHome />,
     dropdown: false,
     activename: "home",
   },
@@ -14,7 +16,7 @@ export const SidebarLinks = [
     label: "Income",
     activename: "income",
     link: null,
-    icon: <GrProjects />,
+    icon: <AiFillDollarCircle />,
     dropdown: false,
     sub: [
       { label: "Income Records", link: "/income/income-records" },
@@ -25,7 +27,7 @@ export const SidebarLinks = [
     label: "Expenses",
     activename: "expenses",
     link: null,
-    icon: <GrProjects />,
+    icon: <FaShoppingCart />,
     dropdown: false,
     sub: [
       { label: "Expense Records", link: "/expenses/expense-records" },
@@ -36,28 +38,28 @@ export const SidebarLinks = [
     label: "Other Debts",
     activename: "debts",
     link: "/debts",
-    icon: <FiHome />,
+    icon: <MdPayment />,
     dropdown: false,
   },
   {
     label: "Retirement",
     activename: "retirement",
     link: "/retirement",
-    icon: <FiHome />,
+    icon: <FaPiggyBank />,
     dropdown: false,
   },
   {
     label: "Savings",
     activename: "savings",
     link: "/savings",
-    icon: <FiHome />,
+    icon: <MdSavings />,
     dropdown: false,
   },
   {
     label: "Bank Register",
     activename: "bank",
     link: null,
-    icon: <MdPeople />,
+    icon: <FaCashRegister />,
     dropdown: false,
     sub: [
       { label: "Bank Transactions", link: "/bank/bank-transactions" },
@@ -68,7 +70,7 @@ export const SidebarLinks = [
     label: "Final Budget",
     activename: "budget",
     link: null,
-    icon: <MdPeople />,
+    icon: <MdAreaChart />,
     dropdown: false,
     sub: [
       { label: "Budget Details", link: "/budget/budget-details" },
@@ -81,7 +83,7 @@ export const SidebarLinks = [
     label: "Net Worth",
     activename: "net-worth",
     link: "/net-worth",
-    icon: <FiHome />,
+    icon: <IoMdBriefcase />,
     dropdown: false,
   },
   // {
