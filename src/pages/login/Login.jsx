@@ -10,7 +10,6 @@ import { themeColors } from "../../utils";
 import { toast } from "react-toastify";
 import { handleAxiosResponseError } from "../../utils/handleResponseError";
 import { AddRootUser } from "../../components/team";
-const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
 export const Login = () => {
   //const user = false
@@ -37,7 +36,7 @@ export const Login = () => {
 
     // Perform API call to check if the username and password match
     axios
-      .post(SERVER_URL + "/api/auth/login", {
+      .post("/api/auth/login", {
         Email,
         Password,
       })
@@ -153,14 +152,7 @@ export const Login = () => {
         </div>
       </div>
       <div>
-        <AddRootUser
-          serverUrl={SERVER_URL}
-          setUser={setUser}
-          open={open}
-          setOpen={setOpen}
-          recordData={selected}
-          key={`UP${new Date().getTime().toString()}`}
-        />
+        <AddRootUser setUser={setUser} open={open} setOpen={setOpen} recordData={selected} key={`UP${new Date().getTime().toString()}`} />
       </div>
     </>
   );

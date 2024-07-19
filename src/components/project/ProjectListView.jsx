@@ -30,7 +30,6 @@ import axios from "../../config/axios";
 import { getProjectChatUsers } from "../../utils/users";
 import { getSuperProjectPermission, getEditProjectPermission, getFinancialPermission } from "../../utils/permissions";
 import { handleAxiosResponseError } from "../../utils/handleResponseError";
-const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
 export const ProjectListView = ({ gridData, customDateFormat, usedCurrency, costData, taskData }) => {
   const [pageNumber, setPageNumber] = useState(0);
@@ -56,9 +55,8 @@ export const ProjectListView = ({ gridData, customDateFormat, usedCurrency, cost
 
   const deleteHandler = async (selected) => {
     setIsLoading(true);
-    await axios.delete(`${SERVER_URL}/api/attachment/delete-file?type=project_id&id=${selected}`);
     axios
-      .delete(`${SERVER_URL}/api/project/${selected}`)
+      .delete(`/api/project/${selected}`)
       .then(({ data }) => {
         console.log(data);
         queryClient.setQueryData(["projects"], (prev) => prev.filter((project) => project.id !== selected));

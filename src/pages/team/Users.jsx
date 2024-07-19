@@ -19,7 +19,6 @@ import { BiCommentDetail } from "react-icons/bi";
 import axios from "../../config/axios";
 import { AiTwotoneFolderOpen } from "react-icons/ai";
 import Package from "../../package/Package";
-const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
 export const Users = () => {
   const dates = useDateCalculator();
@@ -46,7 +45,7 @@ export const Users = () => {
   const deleteHandler = async (selected) => {
     try {
       setIsLoading(true);
-      await axios.delete(`${SERVER_URL}/api/attachment/delete-file?type=resource_id&id=${selected}`);
+      await axios.delete(`/api/attachment/delete-file?type=resource_id&id=${selected}`);
     } catch (error) {
       setIsLoading(false);
       console.error("Error:", error);

@@ -17,8 +17,6 @@ import {
   getFormattedValue,
 } from "../../utils/budget.calculation";
 
-const SERVER_URL = import.meta.env.VITE_SERVER_URL;
-
 export const IncomeListView = ({ gridData }) => {
   const { user } = useUserStore();
 

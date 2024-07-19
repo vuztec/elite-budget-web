@@ -12,8 +12,6 @@ const useQuery = () => {
   return new URLSearchParams(useLocation().search);
 };
 
-const SERVER_URL = import.meta.env.VITE_SERVER_URL;
-
 const VerifyOtp = () => {
   const { handleSubmit } = useForm();
   const [otp, setOtp] = useState(new Array(6).fill(""));
@@ -62,7 +60,7 @@ const VerifyOtp = () => {
     const id = toast.loading("Loading....");
 
     axios
-      .post(SERVER_URL + "/api/auth/verifyotp", { otp: otp.join(""), email })
+      .post("/api/auth/verifyotp", { otp: otp.join(""), email })
       .then(({ data }) => {
         console.log(data);
         toast.update(id, {

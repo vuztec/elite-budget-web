@@ -6,12 +6,11 @@ const useAppDataFetch = () => {
   const { user, root } = useUserStore();
   const [appData, setAppData] = useState([]);
   const [isAppLoaded, setIsAppLoaded] = useState(false);
-  const serverUrl = import.meta.env.VITE_SERVER_URL;
 
   // Define the fetchData function for tasks
   const fetchAppData = async () => {
     try {
-      const response = await axios.get(serverUrl + "/api/app/");
+      const response = await axios.get("/api/app/");
       setIsAppLoaded(true);
       return response.data.items;
     } catch (error) {

@@ -9,7 +9,7 @@ import axios from "../../config/axios";
 import { handleAxiosResponseError } from "../../utils/handleResponseError";
 import { toast } from "react-toastify";
 
-export const ChangePassword = ({ open, setOpen, recordData, serverUrl, setUser }) => {
+export const ChangePassword = ({ open, setOpen }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const {

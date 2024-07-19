@@ -8,7 +8,6 @@ import { handleAxiosResponseError } from "../../utils/handleResponseError";
 import Loading from "../../components/Loader";
 import { useLocation, useNavigate } from "react-router-dom";
 
-const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 const useQuery = () => {
   return new URLSearchParams(useLocation().search);
 };
@@ -31,7 +30,7 @@ const UpdatePassword = () => {
     const id = toast.loading("Loading....");
     setIsLoading(true);
     axios
-      .post(SERVER_URL + "/api/auth/updatepassword", { password: data.password, email })
+      .post("/api/auth/updatepassword", { password: data.password, email })
       .then(({ data }) => {
         console.log(data);
         setIsLoading(false);

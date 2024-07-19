@@ -9,8 +9,6 @@ import AddRootUser from "./AddRootUser";
 import { AddRegularUser, ChangePassword } from "../team";
 import { useQueryClient } from "react-query";
 
-const serverUrl = import.meta.env.VITE_SERVER_URL;
-
 export const UserAvatar = () => {
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState(null);
@@ -101,21 +99,13 @@ export const UserAvatar = () => {
         </Menu>
       </div>
       <ChangePassword
-        serverUrl={serverUrl}
         setUser={setUser}
         open={openPassword}
         setOpen={setOpenPassword}
         recordData={selected}
         key={`CP${new Date().getTime().toString()}`}
       />
-      <AddRootUser
-        serverUrl={serverUrl}
-        setUser={setUser}
-        open={open}
-        setOpen={setOpen}
-        recordData={selected}
-        key={`UP${new Date().getTime().toString()}`}
-      />
+      <AddRootUser setUser={setUser} open={open} setOpen={setOpen} recordData={selected} key={`UP${new Date().getTime().toString()}`} />
     </>
   );
 };

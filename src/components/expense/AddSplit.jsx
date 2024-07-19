@@ -12,8 +12,6 @@ import { TiCancel } from "react-icons/ti";
 import axios from "../../config/axios";
 import { handleAxiosResponseError } from "../../utils/handleResponseError";
 
-const SERVER_URL = import.meta.env.VITE_SERVER_URL;
-
 export const AddSplit = ({ open, setOpen, recordData }) => {
   const queryClient = useQueryClient();
 
@@ -34,7 +32,7 @@ export const AddSplit = ({ open, setOpen, recordData }) => {
     setIsLoading(() => true);
 
     axios
-      .put(SERVER_URL + "/api/project/" + numericSelectedID, data)
+      .put("/api/project/" + numericSelectedID, data)
       .then(({ data }) => {
         queryClient.setQueryData(["projects"], (prev) =>
           prev.map((project) => (project.id === numericSelectedID ? { ...project, ...data.items } : project))

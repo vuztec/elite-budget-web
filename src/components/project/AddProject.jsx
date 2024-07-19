@@ -16,8 +16,6 @@ import { getFinancialPermission } from "../../utils/permissions";
 import axios from "../../config/axios";
 import { handleAxiosResponseError } from "../../utils/handleResponseError";
 
-const SERVER_URL = import.meta.env.VITE_SERVER_URL;
-
 export const AddProject = ({ open, setOpen, recordData, chatUsers }) => {
   const queryClient = useQueryClient();
   const { user } = useUserStore();
@@ -43,7 +41,7 @@ export const AddProject = ({ open, setOpen, recordData, chatUsers }) => {
 
     if (!data.id) {
       axios
-        .post(SERVER_URL + "/api/project", data)
+        .post("/api/project", data)
         .then(({ data }) => {
           const project = data.items;
           queryClient.setQueryData(["projects"], (prev) => {
@@ -82,7 +80,7 @@ export const AddProject = ({ open, setOpen, recordData, chatUsers }) => {
       delete data.project_stakeholders;
 
       axios
-        .put(SERVER_URL + "/api/project/" + numericSelectedID, {
+        .put("/api/project/" + numericSelectedID, {
           project: { ...data, newManagers, removedManagers, newAdmins, removedAdmin, newStakeholders, removeStakeholder },
           chatUsers,
           is_stage_change: recordData.ProjectStage !== data.ProjectStage,

@@ -16,7 +16,7 @@ import { useNavigate } from "react-router-dom";
 import useUserStore from "../../app/user";
 import { DateFormats } from "../../utils/budget.filter";
 
-export const AddRootUser = ({ open, setOpen, recordData, serverUrl }) => {
+export const AddRootUser = ({ open, setOpen, recordData }) => {
   const CountryData = Country.getAllCountries();
   const { setUser, user } = useUserStore();
 
@@ -78,7 +78,7 @@ export const AddRootUser = ({ open, setOpen, recordData, serverUrl }) => {
     try {
       if (recordData?.id) {
         delete data.id;
-        const response = await axios.put(`${serverUrl}/api/rootuser/${recordData?.id}`, data);
+        const response = await axios.put(`/api/rootuser/${recordData?.id}`, data);
         if (response.status === 201 || response.status === 203) {
           // Adjusted status code check
           // Handle success
@@ -97,7 +97,7 @@ export const AddRootUser = ({ open, setOpen, recordData, serverUrl }) => {
           console.error("Failed to update profile");
         }
       } else {
-        const response = await axios.post(`${serverUrl}/api/rootuser`, data);
+        const response = await axios.post(`/api/rootuser`, data);
         if (response.status === 201 || response.status === 203) {
           // Adjusted status code check
           // Handle success

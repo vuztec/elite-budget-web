@@ -8,7 +8,6 @@ import { themeColors } from "../../utils";
 import { toast } from "react-toastify";
 import { handleAxiosResponseError } from "../../utils/handleResponseError";
 import { useNavigate } from "react-router-dom";
-const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
 const ForgetPassword = () => {
   const {
@@ -22,7 +21,7 @@ const ForgetPassword = () => {
     const id = toast.loading("Loading....");
 
     axios
-      .post(SERVER_URL + "/api/auth/forgetpassword", postdata)
+      .post("/api/auth/forgetpassword", postdata)
       .then(({ data }) => {
         console.log(data);
         toast.update(id, {
