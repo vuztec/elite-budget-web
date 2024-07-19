@@ -9,13 +9,7 @@ import axios from "../../config/axios";
 import { handleAxiosResponseError } from "../../utils/handleResponseError";
 import { toast } from "react-toastify";
 
-export const ChangePassword = ({
-  open,
-  setOpen,
-  recordData,
-  serverUrl,
-  setUser,
-}) => {
+export const ChangePassword = ({ open, setOpen, recordData, serverUrl, setUser }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const {
@@ -32,44 +26,36 @@ export const ChangePassword = ({
     setIsLoading(() => true);
     const id = toast.loading("Loading....");
 
-    try {
-      let response = await axios.put(
-        `${serverUrl}/api/auth/change-password`,
-        data
-      );
-
-      if (response.status === 200 || response.status === 203) {
-        // Adjusted status code check
-        // Handle success
+    axios
+      .patch("/api/auth/password", data)
+      .then(({ data }) => {
         setIsLoading(() => false);
 
         toast.update(id, {
-          render: response.data.message,
+          render: "Password Updated Successfully",
           type: "success",
           isLoading: false,
           autoClose: 3000,
         });
         console.log("Password updated successfully");
         setOpen(false);
-      }
-    } catch (error) {
-      setIsLoading(() => false);
-      toast.update(id, {
-        render: handleAxiosResponseError(error),
-        type: "error",
-        isLoading: false,
-        autoClose: 3000,
+      })
+      .catch((err) => {
+        setIsLoading(() => false);
+        toast.update(id, {
+          render: handleAxiosResponseError(error),
+          type: "error",
+          isLoading: false,
+          autoClose: 3000,
+        });
       });
-    }
   };
 
   return (
     <>
       <ModalWrapper open={open} setOpen={setOpen}>
         <form onSubmit={handleSubmit(handleOnSubmit)} className="">
-          <Dialog.Title
-            as="h2"
-            className="text-base font-bold leading-6 text-gray-900 mb-10">
+          <Dialog.Title as="h2" className="text-base font-bold leading-6 text-gray-900 mb-10">
             CHANGE PASSWORD
           </Dialog.Title>
           <div className="h-[90%] mt-2 flex flex-col gap-6 overflow-y-scroll bg-scroll">
@@ -82,9 +68,7 @@ export const ChangePassword = ({
               register={register("CurrentPassword", {
                 required: "Current Password is required!",
               })}
-              error={
-                errors.CurrentPassword ? errors.CurrentPassword.message : ""
-              }
+              error={errors.CurrentPassword ? errors.CurrentPassword.message : ""}
             />
 
             <Textbox
@@ -107,12 +91,9 @@ export const ChangePassword = ({
               className="w-full rounded"
               register={register("ConfirmPassword", {
                 required: "Confirm Password is required!",
-                validate: (value) =>
-                  value === newPassword || "Passwords do not match",
+                validate: (value) => value === newPassword || "Passwords do not match",
               })}
-              error={
-                errors.ConfirmPassword ? errors.ConfirmPassword.message : ""
-              }
+              error={errors.ConfirmPassword ? errors.ConfirmPassword.message : ""}
             />
           </div>
 
