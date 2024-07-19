@@ -155,7 +155,7 @@ export const ExpenseListView = ({ Data, category, showColumn }) => {
 
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <span className="flex items-center justify-left gap-2 border-b border-gray-200 text-center mb-0 text-gray-900">
+          <span className="flex items-center justify-left gap-2 text-center mb-0 text-gray-900">
             {record?.Owner}
           </span>
         </div>
@@ -281,7 +281,7 @@ export const ExpenseListView = ({ Data, category, showColumn }) => {
 
   return (
     <>
-      {gridData.length > 0 && (
+      {gridData?.length > 0 && (
         <div className="w-full h-fit bg-white py-6 mt-4 shadow-md rounded">
           <div className="flex flex-col gap-5 w-full">
             <div className="w-full overflow-x-auto">

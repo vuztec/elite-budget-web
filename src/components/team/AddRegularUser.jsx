@@ -19,7 +19,9 @@ export const AddRegularUser = ({ open, setOpen, recordData }) => {
   let defaultValues = recordData
     ? {
         ...recordData,
-        DateOfBirth: recordData?.DateOfBirth ? dateFormatter(recordData?.DateOfBirth) : "",
+        DateOfBirth: recordData?.DateOfBirth
+          ? dateFormatter(recordData?.DateOfBirth)
+          : "",
       }
     : {
         hasAdd: false,
@@ -68,11 +70,14 @@ export const AddRegularUser = ({ open, setOpen, recordData }) => {
     <>
       <ModalWrapper open={open} setOpen={setOpen}>
         <form onSubmit={handleSubmit(handleOnSubmit)} className="">
-          <Dialog.Title as="h2" className="text-base font-bold leading-6 text-gray-900 mb-4">
+          <Dialog.Title
+            as="h2"
+            className="text-base font-bold leading-6 text-gray-900 mb-4"
+          >
             {recordData ? "UPDATE USER PROFILE" : "ADD NEW USER"}
           </Dialog.Title>
           <div className="mt-2 flex flex-col gap-6 overflow-y-scroll bg-scroll">
-            <div className="flex flex-col gap-6 sm:flex-row w-full">
+            <div className="flex flex-col gap-6 w-full">
               <Textbox
                 placeholder="Enter Full name"
                 type="text"
@@ -96,7 +101,7 @@ export const AddRegularUser = ({ open, setOpen, recordData }) => {
                 error={errors.Designation ? errors.Designation.message : ""}
               />
             </div>
-            <div className="flex flex-col gap-6 sm:flex-row w-full">
+            <div className="flex flex-col gap-6 w-full">
               <div className="w-full sm:w-2/3">
                 <Textbox
                   placeholder="Enter Email Address"
@@ -124,7 +129,7 @@ export const AddRegularUser = ({ open, setOpen, recordData }) => {
                 />
               </div>
             </div>
-            <div className="flex flex-col gap-6 sm:flex-row w-full">
+            <div className="flex flex-col gap-6 w-full">
               <div className="w-full sm:w-1/3">
                 <Textbox
                   placeholder="Select Date"
@@ -152,7 +157,7 @@ export const AddRegularUser = ({ open, setOpen, recordData }) => {
                 />
               </div>
             </div>
-            <div className="flex flex-col gap-6 sm:flex-row w-full">
+            <div className="flex flex-col gap-6 w-full">
               <Textbox
                 placeholder="Enter Department"
                 type="text"
@@ -176,7 +181,7 @@ export const AddRegularUser = ({ open, setOpen, recordData }) => {
                 //error={errors.Manager ? errors.Manager.message : ""}
               />
             </div>
-            <div className="flex flex-col gap-6 sm:flex-row w-full">
+            <div className="flex flex-col gap-6 w-full">
               <div className="w-full sm:w-2/3">
                 <Textbox
                   placeholder="Enter Manager Email"
@@ -207,13 +212,15 @@ export const AddRegularUser = ({ open, setOpen, recordData }) => {
             <>
               {getAdminUserPermission(currentUser, recordData) && (
                 <>
-                  <div className="flex flex-col gap-6 sm:flex-row w-full">
+                  <div className="flex flex-col gap-6 w-full">
                     <Textbox // minimum value = 0
                       placeholder="0"
                       type="number"
                       name="HrRate"
                       label="Hourly Rate"
-                      disabled={!getAdminUserPermission(currentUser, recordData)}
+                      disabled={
+                        !getAdminUserPermission(currentUser, recordData)
+                      }
                       className="w-full rounded"
                       register={register("HrRate", {
                         valueAsNumber: true,
@@ -223,7 +230,9 @@ export const AddRegularUser = ({ open, setOpen, recordData }) => {
                       placeholder="Status"
                       name="Status"
                       label="Status"
-                      disabled={!getAdminUserPermission(currentUser, recordData)}
+                      disabled={
+                        !getAdminUserPermission(currentUser, recordData)
+                      }
                       options={[
                         { value: "Active", label: "Active" },
                         { value: "In-Active", label: "In-Active" },
@@ -238,7 +247,9 @@ export const AddRegularUser = ({ open, setOpen, recordData }) => {
                       placeholder="Select"
                       name="isAdmin"
                       label="Is Admin?"
-                      disabled={!getAdminUserPermission(currentUser, recordData)}
+                      disabled={
+                        !getAdminUserPermission(currentUser, recordData)
+                      }
                       options={[
                         { value: true, label: "Yes" },
                         { value: false, label: "No" },
@@ -252,7 +263,9 @@ export const AddRegularUser = ({ open, setOpen, recordData }) => {
                       placeholder="Select"
                       name="hasFin"
                       label="Financial Access?"
-                      disabled={!getAdminUserPermission(currentUser, recordData)}
+                      disabled={
+                        !getAdminUserPermission(currentUser, recordData)
+                      }
                       options={[
                         { value: true, label: "Yes" },
                         { value: false, label: "No" },
@@ -263,12 +276,14 @@ export const AddRegularUser = ({ open, setOpen, recordData }) => {
                       })}
                     />
                   </div>
-                  <div className="flex flex-col gap-6 sm:flex-row w-full">
+                  <div className="flex flex-col gap-6 w-full">
                     <Select
                       placeholder="Select"
                       name="hasAdd"
                       label="Can Add?"
-                      disabled={!getAdminUserPermission(currentUser, recordData)}
+                      disabled={
+                        !getAdminUserPermission(currentUser, recordData)
+                      }
                       options={[
                         { value: true, label: "Yes" },
                         { value: false, label: "No" },
@@ -282,7 +297,9 @@ export const AddRegularUser = ({ open, setOpen, recordData }) => {
                       placeholder="Select"
                       name="hasEdit"
                       label="Can Edit?"
-                      disabled={!getAdminUserPermission(currentUser, recordData)}
+                      disabled={
+                        !getAdminUserPermission(currentUser, recordData)
+                      }
                       options={[
                         { value: true, label: "Yes" },
                         { value: false, label: "No" },
@@ -296,7 +313,9 @@ export const AddRegularUser = ({ open, setOpen, recordData }) => {
                       placeholder="Select"
                       name="hasDel"
                       label="Can Delete?"
-                      disabled={!getAdminUserPermission(currentUser, recordData)}
+                      disabled={
+                        !getAdminUserPermission(currentUser, recordData)
+                      }
                       options={[
                         { value: true, label: "Yes" },
                         { value: false, label: "No" },

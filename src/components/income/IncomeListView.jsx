@@ -145,7 +145,7 @@ export const IncomeListView = ({ gridData }) => {
     <tr className="border border-gray-300 text-sm xl:text-[16px] hover:bg-gray-400/10 text-left">
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <span className="flex items-center justify-left gap-2 border-b border-gray-200 text-center mb-0 text-gray-900">
+          <span className="flex items-center justify-left gap-2 text-center mb-0 text-gray-900">
             {record?.Owner}
           </span>
         </div>

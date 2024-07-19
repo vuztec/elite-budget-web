@@ -10,10 +10,10 @@ import axios from "../../config/axios";
 import { getProjectChatUsers } from "../../utils/users";
 import { handleAxiosResponseError } from "../../utils/handleResponseError";
 import { getFormattedValue } from "../../utils/budget.calculation";
-import AddBank from "./AddBank";
+import AddGoal from "./AddGoal";
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
-export const BankListView = ({ gridData }) => {
+export const GoalListView = ({ gridData, goal }) => {
   const { user } = useUserStore();
 
   //----------------CRUD----------------//
@@ -68,14 +68,11 @@ export const BankListView = ({ gridData }) => {
           Name
         </th>
         <th className="border-l border-gray-300 p-2 text-xs xl:text-sm">
-          Bank Account Name
-        </th>
-        <th className="border-l border-gray-300 p-2 text-xs xl:text-sm">
-          Opening Balance
+          Goal
         </th>
 
         <th className="p-2 border-l border-gray-300 text-xs xl:text-sm">
-          Actions
+          Edit
         </th>
       </tr>
     </thead>
@@ -86,24 +83,24 @@ export const BankListView = ({ gridData }) => {
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
           <span className="flex items-center justify-left gap-2 text-center mb-0 text-gray-900">
-            {record?.Owner}
+            {record?.Category}
           </span>
         </div>
       </td>
 
       <td className="max-w-[300px] whitespace-normal p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p className="text-black">{record?.Name}</p>
+          <p className="text-black">{record?.Percentage}%</p>
         </div>
       </td>
 
-      <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
+      {/* <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
           <p className="text-black">
             {getFormattedValue(user, record?.OpeningBalance)}
           </p>
         </div>
-      </td>
+      </td> */}
 
       <td className="min-w-max p-2 border-l border-r border-gray-200">
         <div className="flex items-center text-left gap-3 justify-start">
@@ -114,14 +111,6 @@ export const BankListView = ({ gridData }) => {
             )}
             onClick={() => editClick(record)}
           />
-
-          <RiDeleteBin2Fill
-            className={clsx(
-              `text-deletecolor`,
-              "hover:text-red-500 font-semibold cursor-pointer sm:px-0"
-            )}
-            onClick={() => deleteClick(record.id)}
-          />
         </div>
       </td>
     </tr>
@@ -130,14 +119,14 @@ export const BankListView = ({ gridData }) => {
   return (
     <>
       {gridData?.length > -1 && (
-        <div className="w-full h-fit bg-white py-6 mt-4 shadow-md rounded">
+        <div className="w-full md:w-fit h-fit bg-white p-6 mt-4 shadow-md rounded">
           <div className="flex flex-col gap-5 w-full">
-            <div className="w-full overflow-x-auto">
-              <table className="w-[97%] ml-5 -mb-5">
+            <div className="w-full md:w-fit overflow-x-auto">
+              <table className="w-[97%] ml-5 mr-5 -mb-5">
                 <thead>
                   <tr>
                     <th className="p-2 w-full uppercase bg-black text-white flex items-center justify-center">
-                      LIST OF BANK ACCOUNTS
+                      {goal} GOALS
                     </th>
                   </tr>
                 </thead>
@@ -154,7 +143,7 @@ export const BankListView = ({ gridData }) => {
           </div>
         </div>
       )}
-      <AddBank
+      <AddGoal
         open={open}
         setOpen={setOpen}
         recordData={selected}

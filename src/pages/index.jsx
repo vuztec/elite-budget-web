@@ -11,6 +11,7 @@ import { Savings } from "./savings/Savings";
 import { Transactions } from "./bank/Transactions";
 import { BankAccounts } from "./bank/BankAccounts";
 import { BudgetDetails } from "./budget/BudgetDetails";
+import { BudgetGoals } from "./budget/BudgetGoals";
 import { Checklist } from "./budget/Checklist";
 import { ExtraFundsTracker } from "./budget/ExtraFundsTracker";
 import { Networth } from "./networth/Networth";
@@ -28,6 +29,7 @@ export {
   Transactions,
   BankAccounts,
   BudgetDetails,
+  BudgetGoals,
   Checklist,
   ExtraFundsTracker,
   Networth,

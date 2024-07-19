@@ -3,14 +3,16 @@ import { useSearchParams } from "react-router-dom";
 import { MdFilterAlt, MdFilterAltOff } from "react-icons/md";
 import Button from "../../components/Button";
 import { IoMdAdd } from "react-icons/io";
-import { HiMinusSm } from "react-icons/hi";
 import Loading from "../../components/Loader";
 import { useQuery } from "react-query";
 import clsx from "clsx";
 import Select from "../../components/Select";
 import { getActiveAccount } from "../../utils/permissions";
 import Package from "../../package/Package";
-import { getBankAccountTransactions } from "../../config/api";
+import {
+  getBankAccountNames,
+  getBankAccountTransactions,
+} from "../../config/api";
 import { getOwnerGridData, incomeOwners } from "../../utils/budget.filter";
 import { TransactionListView } from "../../components/bank/TransactionListView";
 import AddTransaction from "../../components/bank/AddTransaction";
@@ -35,6 +37,12 @@ export const Transactions = () => {
     staleTime: 1000 * 60 * 60,
   });
 
+  const { data: accountnames, status: isNamesLoaded } = useQuery({
+    queryKey: ["accountnames"],
+    queryFn: getBankAccountNames,
+    staleTime: 1000 * 60 * 60,
+  });
+
   console.log("transactions: ", transactions);
 
   ///-------------Filters Data Source --------------------------------///
@@ -50,7 +58,7 @@ export const Transactions = () => {
   }, [name, tab]);
 
   useEffect(() => {
-    if (isTransactionLoaded === "success") {
+    if (isTransactionLoaded === "success" && isNamesLoaded === "success") {
       const transData = getOwnerGridData(transactions, owner);
 
       // Sort the data by Owner property
@@ -65,7 +73,7 @@ export const Transactions = () => {
     } else {
       setIsDataLoaded(false);
     }
-  }, [transactions, isTransactionLoaded, owner, showAll]);
+  }, [transactions, isTransactionLoaded, isNamesLoaded, owner, showAll]);
 
   const handleOwnerChange = (e) => {
     if (e && e.target?.value) {
@@ -141,10 +149,15 @@ export const Transactions = () => {
 
       {isDataLoaded && (
         <div className="w-full">
-          <div className="w-full">
-            <TransactionListView gridData={gridData} />
-          </div>
-
+          {accountnames?.map((bankName, index) => (
+            <div className="w-full">
+              <TransactionListView
+                Data={gridData}
+                key={index}
+                bankName={bankName}
+              />
+            </div>
+          ))}
           <AddTransaction
             open={open}
             setOpen={setOpen}

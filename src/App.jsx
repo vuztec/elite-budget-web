@@ -14,6 +14,7 @@ import {
   Checklist,
   ExtraFundsTracker,
   Networth,
+  BudgetGoals,
 } from "./pages";
 
 import Navbar from "./components/Navbar";
@@ -75,6 +76,7 @@ function App() {
           <Route path="/bank/bank-transactions" element={<Transactions />} />
           <Route path="/bank/bank-account" element={<BankAccounts />} />
           <Route path="/budget/budget-details" element={<BudgetDetails />} />
+          <Route path="/budget/budget-goals" element={<BudgetGoals />} />
           <Route path="/budget/checklist" element={<Checklist />} />
           <Route
             path="/budget/extra-funds-tracker"

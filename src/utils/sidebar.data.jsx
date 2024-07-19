@@ -72,6 +72,7 @@ export const SidebarLinks = [
     dropdown: false,
     sub: [
       { label: "Budget Details", link: "/budget/budget-details" },
+      { label: "Budget Goals", link: "/budget/budget-goals" },
       { label: "Checklist", link: "/budget/checklist" },
       { label: "Extra Funds Tracker", link: "/budget/extra-funds-tracker" },
     ],

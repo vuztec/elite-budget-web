@@ -139,161 +139,96 @@ export const AddIncome = ({ open, setOpen, recordData, chatUsers }) => {
             as="h2"
             className="text-base font-bold leading-6 text-gray-900 mb-4"
           >
-            {recordData ? "UPDATE PROJECT" : "ADD NEW PROJECT"}
+            {recordData ? "UPDATE INCOME RECORD" : "ADD NEW INCOME RECORD"}
           </Dialog.Title>
           <div className="mt-2 flex flex-col gap-6 overflow-y-scroll bg-scroll">
-            <div className="flex flex-col gap-6 sm:flex-row w-full">
+            <div className="flex flex-col gap-6 w-full">
               <Textbox
-                placeholder="Enter Portfolio"
+                placeholder=""
                 type="text"
-                name="Portfolio"
-                label="Portfolio/Company"
+                name="IncomeSource"
+                label="Income Source"
+                disabled={true}
                 className="w-full rounded"
-                register={register("Portfolio", {
-                  //required: "Description is required!",
+                register={register("IncomeSource", {
+                  required: "Income Source is required!",
                 })}
-                error={errors.Portfolio ? errors.Portfolio.message : ""}
+                error={errors.IncomeSource ? errors.IncomeSource.message : ""}
               />
+            </div>
+            <div className="flex flex-col gap-6 w-full">
               <Textbox
-                placeholder="Enter Programme"
+                placeholder="Enter a preferred name for income source"
                 type="text"
-                name="Programme"
-                label="Programme/Department"
+                name="NickName"
+                label="Nickname"
                 className="w-full rounded"
-                register={register("Programme", {
-                  //required: "Programme is required!",
+                register={register("NickName", {
+                  //required: "NickName is required!",
                 })}
-                error={errors.Programme ? errors.Programme.message : ""}
+                error={errors.NickName ? errors.NickName.message : ""}
               />
             </div>
-            <div className="flex flex-col gap-6 sm:flex-row w-full">
-              <div className="flex-2">
-                <Textbox
-                  placeholder="Enter Type"
-                  type="text"
-                  name="Type"
-                  label="Type"
-                  className="w-full rounded"
-                  register={register("Type", {
-                    //required: "Description is required!",
-                  })}
-                  error={errors.Type ? errors.Type.message : ""}
-                />
-              </div>
-              <div className="flex-1">
-                <Textbox
-                  placeholder="Type Project Name"
-                  type="text"
-                  name="Description"
-                  label="Project Name"
-                  className="w-full rounded"
-                  register={register("Description", {
-                    required: "Description is required!",
-                  })}
-                  error={errors.Description ? errors.Description.message : ""}
-                />
-              </div>
-            </div>
-            <div className="w-full">
-              <Controller
-                name="project_managers"
-                control={control}
-                render={({ field }) => (
-                  <CustomSelect
-                    {...field}
-                    options={resources}
-                    label="Project Manager"
-                  />
-                )}
+
+            <div className="flex flex-col gap-6 w-full">
+              <Select
+                name="Owner"
+                label="Name"
+                defaultValue="Self"
+                options={[
+                  { value: "Self", label: "Self" },
+                  { value: "Partner", label: "Partner" },
+                ]}
+                className="w-full rounded"
+                register={register("Owner", {
+                  required: "Name is required!",
+                })}
+                error={errors.Owner ? errors.Owner.message : ""}
+              />
+              <Select
+                name="Frequency"
+                label="Frequency"
+                defaultValue="Monthly"
+                options={[
+                  { value: "Weekly", label: "Weekly" },
+                  { value: "Bi-Weekly", label: "Bi-Weekly" },
+                  { value: "Semi-Monthly", label: "Semi-Monthly" },
+                  { value: "Monthly", label: "Monthly" },
+                  { value: "Yearly", label: "Yearly" },
+                ]}
+                className="w-full rounded"
+                register={register("Frequency", {
+                  required: "Frequency is required!",
+                })}
+                error={errors.Frequency ? errors.Frequency.message : ""}
               />
             </div>
-            <div className="w-full">
-              <Controller
-                name="project_admins"
-                control={control}
-                render={({ field }) => (
-                  <CustomSelect
-                    {...field}
-                    options={resources}
-                    label="Project Administrator"
-                  />
-                )}
-              />
-            </div>
-            <div className="w-full">
-              <Controller
-                name="project_stakeholders"
-                control={control}
-                render={({ field }) => (
-                  <CustomSelect
-                    {...field}
-                    options={resources}
-                    label="Project Stakeholders"
-                  />
-                )}
-              />
-            </div>
-            <div className="flex flex-col gap-6 sm:flex-row w-full">
-              <div className="flex-1">
-                <Select
-                  name="ProjectStage"
-                  label="Stage"
-                  defaultValue="Initiation"
-                  options={[
-                    { value: "Initiation", label: "Initiation" },
-                    { value: "Planning", label: "Planning" },
-                    { value: "Execution", label: "Execution" },
-                    { value: "On-Going", label: "On-Going" },
-                    { value: "Monitoring", label: "Monitoring" },
-                    { value: "Closing", label: "Closing" },
-                    { value: "On-Hold", label: "On-Hold" },
-                    { value: "Cancelled", label: "Cancelled" },
-                  ]}
-                  className="w-full rounded"
-                  register={register("ProjectStage", {
-                    required: "Stage is required!",
-                  })}
-                  error={errors.ProjectStage ? errors.ProjectStage.message : ""}
-                />
-              </div>
-              {hasFin && (
-                <div className="flex-1">
-                  <Textbox // minimum value = 0
-                    placeholder="0"
-                    type="number"
-                    name="Budget"
-                    label="Project Budget"
-                    className="w-full rounded"
-                    register={register("Budget", {
-                      valueAsNumber: true,
-                    })}
-                    error={errors.Budget ? errors.Budget.message : ""}
-                  />
-                </div>
-              )}
-            </div>
-            <div className="flex flex-col gap-6 sm:flex-row w-full">
+            <div className="flex flex-col gap-6 w-full">
               <Textbox
-                placeholder="Select Date"
-                type="date"
-                name="StartDate"
-                label="Start Date"
+                placeholder="Enter Amount"
+                type="number"
+                name="GrossAmount"
+                label="Gross Amount"
                 className="w-full rounded"
-                register={register("StartDate", {
-                  valueAsDate: true,
+                register={register("GrossAmount", {
+                  valueAsNumber: true,
+                  validate: (value) =>
+                    value > 0 || "Amount must be greater than zero or positive",
                 })}
-                error={errors.StartDate ? errors.StartDate.message : ""}
+                error={errors.GrossAmount ? errors.GrossAmount.message : ""}
               />
               <Textbox
-                placeholder="Select Date"
-                type="date"
-                name="EndDate"
-                label="Due Date"
+                placeholder="Enter Amount"
+                type="number"
+                name="NetAmount"
+                label="Net Amount"
                 className="w-full rounded"
-                register={register("EndDate", {
-                  valueAsDate: true,
+                register={register("NetAmount", {
+                  valueAsNumber: true,
+                  validate: (value) =>
+                    value > 0 || "Amount must be greater than zero or positive",
                 })}
-                error={errors.EndDate ? errors.EndDate.message : ""}
+                error={errors.NetAmount ? errors.NetAmount.message : ""}
               />
             </div>
           </div>

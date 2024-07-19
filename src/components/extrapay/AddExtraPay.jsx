@@ -18,12 +18,9 @@ import { handleAxiosResponseError } from "../../utils/handleResponseError";
 
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
-export const AddExtraFund = ({ open, setOpen, recordData, chatUsers }) => {
+export const AddExtraPay = ({ open, setOpen, recordData, chatUsers }) => {
   const queryClient = useQueryClient();
   const { user } = useUserStore();
-  const hasFin = getFinancialPermission(user);
-
-  const resources = [];
 
   let defaultValues = recordData ? {} : {};
 
@@ -139,161 +136,44 @@ export const AddExtraFund = ({ open, setOpen, recordData, chatUsers }) => {
             as="h2"
             className="text-base font-bold leading-6 text-gray-900 mb-4"
           >
-            {recordData ? "UPDATE PROJECT" : "ADD NEW PROJECT"}
+            {recordData ? "UPDATE EXTRA PAYCHECK" : "ADD NEW EXTRA PAYCHECK"}
           </Dialog.Title>
           <div className="mt-2 flex flex-col gap-6 overflow-y-scroll bg-scroll">
-            <div className="flex flex-col gap-6 sm:flex-row w-full">
-              <Textbox
-                placeholder="Enter Portfolio"
-                type="text"
-                name="Portfolio"
-                label="Portfolio/Company"
-                className="w-full rounded"
-                register={register("Portfolio", {
-                  //required: "Description is required!",
-                })}
-                error={errors.Portfolio ? errors.Portfolio.message : ""}
-              />
-              <Textbox
-                placeholder="Enter Programme"
-                type="text"
-                name="Programme"
-                label="Programme/Department"
-                className="w-full rounded"
-                register={register("Programme", {
-                  //required: "Programme is required!",
-                })}
-                error={errors.Programme ? errors.Programme.message : ""}
-              />
-            </div>
-            <div className="flex flex-col gap-6 sm:flex-row w-full">
-              <div className="flex-2">
-                <Textbox
-                  placeholder="Enter Type"
-                  type="text"
-                  name="Type"
-                  label="Type"
-                  className="w-full rounded"
-                  register={register("Type", {
-                    //required: "Description is required!",
-                  })}
-                  error={errors.Type ? errors.Type.message : ""}
-                />
-              </div>
-              <div className="flex-1">
-                <Textbox
-                  placeholder="Type Project Name"
-                  type="text"
-                  name="Description"
-                  label="Project Name"
-                  className="w-full rounded"
-                  register={register("Description", {
-                    required: "Description is required!",
-                  })}
-                  error={errors.Description ? errors.Description.message : ""}
-                />
-              </div>
-            </div>
-            <div className="w-full">
-              <Controller
-                name="project_managers"
-                control={control}
-                render={({ field }) => (
-                  <CustomSelect
-                    {...field}
-                    options={resources}
-                    label="Project Manager"
-                  />
-                )}
-              />
-            </div>
-            <div className="w-full">
-              <Controller
-                name="project_admins"
-                control={control}
-                render={({ field }) => (
-                  <CustomSelect
-                    {...field}
-                    options={resources}
-                    label="Project Administrator"
-                  />
-                )}
-              />
-            </div>
-            <div className="w-full">
-              <Controller
-                name="project_stakeholders"
-                control={control}
-                render={({ field }) => (
-                  <CustomSelect
-                    {...field}
-                    options={resources}
-                    label="Project Stakeholders"
-                  />
-                )}
-              />
-            </div>
-            <div className="flex flex-col gap-6 sm:flex-row w-full">
-              <div className="flex-1">
-                <Select
-                  name="ProjectStage"
-                  label="Stage"
-                  defaultValue="Initiation"
-                  options={[
-                    { value: "Initiation", label: "Initiation" },
-                    { value: "Planning", label: "Planning" },
-                    { value: "Execution", label: "Execution" },
-                    { value: "On-Going", label: "On-Going" },
-                    { value: "Monitoring", label: "Monitoring" },
-                    { value: "Closing", label: "Closing" },
-                    { value: "On-Hold", label: "On-Hold" },
-                    { value: "Cancelled", label: "Cancelled" },
-                  ]}
-                  className="w-full rounded"
-                  register={register("ProjectStage", {
-                    required: "Stage is required!",
-                  })}
-                  error={errors.ProjectStage ? errors.ProjectStage.message : ""}
-                />
-              </div>
-              {hasFin && (
-                <div className="flex-1">
-                  <Textbox // minimum value = 0
-                    placeholder="0"
-                    type="number"
-                    name="Budget"
-                    label="Project Budget"
-                    className="w-full rounded"
-                    register={register("Budget", {
-                      valueAsNumber: true,
-                    })}
-                    error={errors.Budget ? errors.Budget.message : ""}
-                  />
-                </div>
-              )}
-            </div>
-            <div className="flex flex-col gap-6 sm:flex-row w-full">
+            <div className="flex flex-col gap-6 w-full">
               <Textbox
                 placeholder="Select Date"
                 type="date"
-                name="StartDate"
-                label="Start Date"
+                name="Date"
+                label="Date"
                 className="w-full rounded"
-                register={register("StartDate", {
+                register={register("Date", {
                   valueAsDate: true,
                 })}
-                error={errors.StartDate ? errors.StartDate.message : ""}
+                error={errors.Date ? errors.Date.message : ""}
+              />
+            </div>
+            <div className="flex flex-col gap-6 w-full">
+              <Textbox
+                placeholder="Enter Amount"
+                type="number"
+                name="SelfAmount"
+                label="Self Amount"
+                className="w-full rounded"
+                register={register("SelfAmount", {
+                  valueAsNumber: true,
+                })}
+                error={errors.SelfAmount ? errors.SelfAmount.message : ""}
               />
               <Textbox
-                placeholder="Select Date"
-                type="date"
-                name="EndDate"
-                label="Due Date"
+                placeholder="Enter Amount"
+                type="number"
+                name="PartnerAmount"
+                label="Partner Amount"
                 className="w-full rounded"
-                register={register("EndDate", {
-                  valueAsDate: true,
+                register={register("PartnerAmount", {
+                  valueAsNumber: true,
                 })}
-                error={errors.EndDate ? errors.EndDate.message : ""}
+                error={errors.PartnerAmount ? errors.PartnerAmount.message : ""}
               />
             </div>
           </div>
@@ -326,4 +206,4 @@ export const AddExtraFund = ({ open, setOpen, recordData, chatUsers }) => {
   );
 };
 
-export default AddExtraFund;
+export default AddExtraPay;

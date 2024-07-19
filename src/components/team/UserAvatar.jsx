@@ -44,7 +44,9 @@ export const UserAvatar = () => {
         <Menu as="div" className="relative inline-block text-left">
           <div>
             <Menu.Button className="w-10 h-10 2xl:w-12 2xl:h-12 items-center justify-center rounded-full bg-black">
-              <span className="text-white font-semibold">{getInitials(user?.FullName)}</span>
+              <span className="text-white font-semibold">
+                {getInitials(user?.FullName)}
+              </span>
             </Menu.Button>
           </div>
 
@@ -107,25 +109,14 @@ export const UserAvatar = () => {
         recordData={selected}
         key={`CP${new Date().getTime().toString()}`}
       />
-      {user?.Type === "Root" && (
-        <AddRootUser
-          serverUrl={serverUrl}
-          setUser={setUser}
-          open={open}
-          setOpen={setOpen}
-          recordData={selected}
-          key={`UP${new Date().getTime().toString()}`}
-        />
-      )}
-      {user?.Type !== "Root" && (
-        <AddRegularUser
-          // setResourceData={setResourceData}
-          open={open}
-          setOpen={setOpen}
-          recordData={selected}
-          key={`AD${new Date().getTime().toString()}`}
-        />
-      )}
+      <AddRootUser
+        serverUrl={serverUrl}
+        setUser={setUser}
+        open={open}
+        setOpen={setOpen}
+        recordData={selected}
+        key={`UP${new Date().getTime().toString()}`}
+      />
     </>
   );
 };

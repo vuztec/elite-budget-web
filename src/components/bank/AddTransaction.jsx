@@ -15,13 +15,24 @@ import { TiCancel } from "react-icons/ti";
 import { getFinancialPermission } from "../../utils/permissions";
 import axios from "../../config/axios";
 import { handleAxiosResponseError } from "../../utils/handleResponseError";
+import { getBankAccountNames } from "../../config/api";
 
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
 export const AddTransaction = ({ open, setOpen, recordData, chatUsers }) => {
   const queryClient = useQueryClient();
   const { user } = useUserStore();
-  const hasFin = getFinancialPermission(user);
+
+  const { data: accountnames, status: isNamesLoaded } = useQuery({
+    queryKey: ["accountnames"],
+    queryFn: getBankAccountNames,
+    staleTime: 1000 * 60 * 60,
+  });
+
+  const bankAccountNames = accountnames.map((account) => ({
+    value: account.id,
+    label: account.Name,
+  }));
 
   const resources = [];
 
@@ -139,161 +150,93 @@ export const AddTransaction = ({ open, setOpen, recordData, chatUsers }) => {
             as="h2"
             className="text-base font-bold leading-6 text-gray-900 mb-4"
           >
-            {recordData ? "UPDATE PROJECT" : "ADD NEW PROJECT"}
+            {recordData ? "UPDATE TRANSACTION" : "ADD NEW TRANSACTION"}
           </Dialog.Title>
           <div className="mt-2 flex flex-col gap-6 overflow-y-scroll bg-scroll">
-            <div className="flex flex-col gap-6 sm:flex-row w-full">
+            <div className="flex flex-col gap-6 w-full">
+              <Select
+                name="BankName"
+                label="Bank Account Name"
+                options={bankAccountNames}
+                className="w-full rounded"
+                register={register("BankName", {
+                  required: "Name is required!",
+                })}
+                error={errors.BankName ? errors.BankName.message : ""}
+              />
+              <Select
+                name="Owner"
+                label="Transaction Owner"
+                defaultValue="Self"
+                options={[
+                  { value: "Self", label: "Self" },
+                  { value: "Partner", label: "Partner" },
+                  { value: "Joint", label: "Joint" },
+                ]}
+                className="w-full rounded"
+                register={register("Owner", {
+                  required: "Name is required!",
+                })}
+                error={errors.Owner ? errors.Owner.message : ""}
+              />
+            </div>
+            <div className="flex flex-col gap-6 w-full">
               <Textbox
-                placeholder="Enter Portfolio"
+                placeholder="Enter a transaction description"
                 type="text"
-                name="Portfolio"
-                label="Portfolio/Company"
+                name="Description"
+                label="Description"
                 className="w-full rounded"
-                register={register("Portfolio", {
-                  //required: "Description is required!",
+                register={register("Description", {
+                  required: "Description is required!",
                 })}
-                error={errors.Portfolio ? errors.Portfolio.message : ""}
+                error={errors.Description ? errors.Description.message : ""}
               />
+            </div>
+
+            <div className="flex flex-col gap-6 w-full">
+              <Select
+                name="Type"
+                label="Type"
+                defaultValue="Credit"
+                options={[
+                  { value: "Withdrawal", label: "Pmt, Fee, Withdrawal (-)" },
+                  { value: "Credit", label: "Deposit, Credit (+)" },
+                ]}
+                className="w-full rounded"
+                register={register("Type", {
+                  required: "Type is required!",
+                })}
+                error={errors.Type ? errors.Type.message : ""}
+              />
+            </div>
+            <div className="flex flex-col gap-6 w-full">
               <Textbox
-                placeholder="Enter Programme"
-                type="text"
-                name="Programme"
-                label="Programme/Department"
+                placeholder="Enter Amount"
+                type="number"
+                name="Amount"
+                label="Amount"
                 className="w-full rounded"
-                register={register("Programme", {
-                  //required: "Programme is required!",
+                register={register("Amount", {
+                  valueAsNumber: true,
+                  validate: (value) =>
+                    value > 0 || "Amount must be greater than zero or positive",
                 })}
-                error={errors.Programme ? errors.Programme.message : ""}
+                error={errors.Amount ? errors.Amount.message : ""}
               />
-            </div>
-            <div className="flex flex-col gap-6 sm:flex-row w-full">
-              <div className="flex-2">
-                <Textbox
-                  placeholder="Enter Type"
-                  type="text"
-                  name="Type"
-                  label="Type"
-                  className="w-full rounded"
-                  register={register("Type", {
-                    //required: "Description is required!",
-                  })}
-                  error={errors.Type ? errors.Type.message : ""}
-                />
-              </div>
-              <div className="flex-1">
-                <Textbox
-                  placeholder="Type Project Name"
-                  type="text"
-                  name="Description"
-                  label="Project Name"
-                  className="w-full rounded"
-                  register={register("Description", {
-                    required: "Description is required!",
-                  })}
-                  error={errors.Description ? errors.Description.message : ""}
-                />
-              </div>
-            </div>
-            <div className="w-full">
-              <Controller
-                name="project_managers"
-                control={control}
-                render={({ field }) => (
-                  <CustomSelect
-                    {...field}
-                    options={resources}
-                    label="Project Manager"
-                  />
-                )}
-              />
-            </div>
-            <div className="w-full">
-              <Controller
-                name="project_admins"
-                control={control}
-                render={({ field }) => (
-                  <CustomSelect
-                    {...field}
-                    options={resources}
-                    label="Project Administrator"
-                  />
-                )}
-              />
-            </div>
-            <div className="w-full">
-              <Controller
-                name="project_stakeholders"
-                control={control}
-                render={({ field }) => (
-                  <CustomSelect
-                    {...field}
-                    options={resources}
-                    label="Project Stakeholders"
-                  />
-                )}
-              />
-            </div>
-            <div className="flex flex-col gap-6 sm:flex-row w-full">
-              <div className="flex-1">
-                <Select
-                  name="ProjectStage"
-                  label="Stage"
-                  defaultValue="Initiation"
-                  options={[
-                    { value: "Initiation", label: "Initiation" },
-                    { value: "Planning", label: "Planning" },
-                    { value: "Execution", label: "Execution" },
-                    { value: "On-Going", label: "On-Going" },
-                    { value: "Monitoring", label: "Monitoring" },
-                    { value: "Closing", label: "Closing" },
-                    { value: "On-Hold", label: "On-Hold" },
-                    { value: "Cancelled", label: "Cancelled" },
-                  ]}
-                  className="w-full rounded"
-                  register={register("ProjectStage", {
-                    required: "Stage is required!",
-                  })}
-                  error={errors.ProjectStage ? errors.ProjectStage.message : ""}
-                />
-              </div>
-              {hasFin && (
-                <div className="flex-1">
-                  <Textbox // minimum value = 0
-                    placeholder="0"
-                    type="number"
-                    name="Budget"
-                    label="Project Budget"
-                    className="w-full rounded"
-                    register={register("Budget", {
-                      valueAsNumber: true,
-                    })}
-                    error={errors.Budget ? errors.Budget.message : ""}
-                  />
-                </div>
-              )}
-            </div>
-            <div className="flex flex-col gap-6 sm:flex-row w-full">
-              <Textbox
-                placeholder="Select Date"
-                type="date"
-                name="StartDate"
-                label="Start Date"
+              <Select
+                name="IsCleared"
+                label="Is Cleared?"
+                defaultValue="Yes"
+                options={[
+                  { value: "Yes", label: "Yes" },
+                  { value: "Yes", label: "No" },
+                ]}
                 className="w-full rounded"
-                register={register("StartDate", {
-                  valueAsDate: true,
+                register={register("IsCleared", {
+                  //required: "Type is required!",
                 })}
-                error={errors.StartDate ? errors.StartDate.message : ""}
-              />
-              <Textbox
-                placeholder="Select Date"
-                type="date"
-                name="EndDate"
-                label="Due Date"
-                className="w-full rounded"
-                register={register("EndDate", {
-                  valueAsDate: true,
-                })}
-                error={errors.EndDate ? errors.EndDate.message : ""}
+                error={errors.IsCleared ? errors.IsCleared.message : ""}
               />
             </div>
           </div>

@@ -14,25 +14,46 @@ import { dateFormatter } from "../../utils";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import useUserStore from "../../app/user";
+import { DateFormats } from "../../utils/budget.filter";
 
 export const AddRootUser = ({ open, setOpen, recordData, serverUrl }) => {
   const CountryData = Country.getAllCountries();
   const { setUser, user } = useUserStore();
 
-  const [countryCode, setCountryCode] = useState(
-    recordData ? CountryData.find((country) => country.name === recordData.Country)?.isoCode : ""
-  );
-  const [states, setStates] = useState(recordData && countryCode ? State.getStatesOfCountry(countryCode) : []);
+  const dateFormats = DateFormats.map((format) => ({
+    value: format.value,
+    label: format.label,
+  }));
 
-  const [stateCode, setStateCode] = useState(recordData ? states.find((state) => state.name === recordData.State)?.isoCode : "");
-  const [cities, setCities] = useState(recordData && countryCode && stateCode ? City.getCitiesOfState(countryCode, stateCode) : []);
+  const [countryCode, setCountryCode] = useState(
+    recordData
+      ? CountryData.find((country) => country.name === recordData.Country)
+          ?.isoCode
+      : ""
+  );
+  const [states, setStates] = useState(
+    recordData && countryCode ? State.getStatesOfCountry(countryCode) : []
+  );
+
+  const [stateCode, setStateCode] = useState(
+    recordData
+      ? states.find((state) => state.name === recordData.State)?.isoCode
+      : ""
+  );
+  const [cities, setCities] = useState(
+    recordData && countryCode && stateCode
+      ? City.getCitiesOfState(countryCode, stateCode)
+      : []
+  );
 
   const navigate = useNavigate();
 
   const defaultValues = recordData
     ? {
         ...recordData,
-        DateOfBirth: recordData?.DateOfBirth ? dateFormatter(recordData?.DateOfBirth) : "",
+        DateOfBirth: recordData?.DateOfBirth
+          ? dateFormatter(recordData?.DateOfBirth)
+          : "",
       }
     : {};
 
@@ -55,12 +76,16 @@ export const AddRootUser = ({ open, setOpen, recordData, serverUrl }) => {
       setValue("State", recordData.State);
       setValue("City", recordData.City);
 
-      const country = CountryData.find((country) => country.name === recordData?.Country)?.isoCode;
+      const country = CountryData.find(
+        (country) => country.name === recordData?.Country
+      )?.isoCode;
       setCountryCode(country);
 
       setStates(() => State.getStatesOfCountry(country));
 
-      setStateCode(() => states.find((state) => state.name === recordData.State)?.isoCode);
+      setStateCode(
+        () => states.find((state) => state.name === recordData.State)?.isoCode
+      );
     }
     return () => reset();
   }, [recordData?.id]);
@@ -72,7 +97,10 @@ export const AddRootUser = ({ open, setOpen, recordData, serverUrl }) => {
     try {
       if (recordData?.id) {
         delete data.id;
-        const response = await axios.put(`${serverUrl}/api/rootuser/${recordData?.id}`, data);
+        const response = await axios.put(
+          `${serverUrl}/api/rootuser/${recordData?.id}`,
+          data
+        );
         if (response.status === 201 || response.status === 203) {
           // Adjusted status code check
           // Handle success
@@ -121,7 +149,9 @@ export const AddRootUser = ({ open, setOpen, recordData, serverUrl }) => {
   const handleCountryChange = (e) => {
     if (e && e.target?.value) {
       const selCountry = e.target?.value;
-      const targetCountry = CountryData.find((item) => item?.isoCode === selCountry);
+      const targetCountry = CountryData.find(
+        (item) => item?.isoCode === selCountry
+      );
       setValue("Country", targetCountry.name);
       setValue("CountryCurrency", targetCountry.currency);
       const selCountryCode = targetCountry ? targetCountry.isoCode : "";
@@ -145,12 +175,15 @@ export const AddRootUser = ({ open, setOpen, recordData, serverUrl }) => {
     <>
       <ModalWrapper open={open} setOpen={setOpen}>
         <form onSubmit={handleSubmit(handleOnSubmit)} className="">
-          <Dialog.Title as="h2" className="text-base font-bold leading-6 text-gray-900 mb-4">
+          <Dialog.Title
+            as="h2"
+            className="text-base font-bold leading-6 text-gray-900 mb-4"
+          >
             {recordData ? "UPDATE USER PROFILE" : "CREATE NEW ACCOUNT"}
           </Dialog.Title>
           <div className="mt-2 flex flex-col gap-6 overflow-y-scroll bg-scroll">
-            <div className="flex flex-col gap-6 sm:flex-row w-full">
-              <div className="w-full sm:w-2/3">
+            <div className="flex flex-col gap-6 w-full">
+              <div className="w-full">
                 <Textbox
                   placeholder="Full name"
                   type="text"
@@ -163,22 +196,39 @@ export const AddRootUser = ({ open, setOpen, recordData, serverUrl }) => {
                   error={errors.FullName ? errors.FullName.message : ""}
                 />
               </div>
-              <div className="w-full sm:w-1/3">
+              <div className="w-full">
                 <Textbox
-                  placeholder="Select Date"
-                  type="date"
-                  name="DateOfBirth"
-                  label="Date of Birth"
+                  placeholder="Enter Amount"
+                  type="number"
+                  name="SelfAge"
+                  label="Self Age"
                   className="w-full rounded"
-                  register={register("DateOfBirth", {
-                    valueAsDate: true,
+                  register={register("SelfAge", {
+                    valueAsNumber: true,
+                    validate: (value) =>
+                      value >= 0 || "Age must be zero or positive",
                   })}
-                  error={errors.DateOfBirth ? errors.DateOfBirth.message : ""}
+                  error={errors.SelfAge ? errors.SelfAge.message : ""}
+                />
+              </div>
+              <div className="w-full">
+                <Textbox
+                  placeholder="Enter Amount"
+                  type="number"
+                  name="PartnerAge"
+                  label="Partner's Age"
+                  className="w-full rounded"
+                  register={register("PartnerAge", {
+                    valueAsNumber: true,
+                    validate: (value) =>
+                      value >= 0 || "Age must be zero or positive",
+                  })}
+                  error={errors.PartnerAge ? errors.PartnerAge.message : ""}
                 />
               </div>
             </div>
-            <div className="flex flex-col gap-6 sm:flex-row w-full">
-              <div className="w-full sm:w-1/3">
+            <div className="flex flex-col gap-6 w-full">
+              <div className="w-full">
                 <Select
                   placeholder="Select Country"
                   name="Country"
@@ -196,7 +246,7 @@ export const AddRootUser = ({ open, setOpen, recordData, serverUrl }) => {
                   error={errors.Country ? errors.Country.message : ""}
                 />
               </div>
-              <div className="w-full sm:w-2/3">
+              <div className="w-full">
                 <Textbox
                   placeholder="Email Address"
                   type="email"
@@ -211,7 +261,7 @@ export const AddRootUser = ({ open, setOpen, recordData, serverUrl }) => {
               </div>
             </div>
             {recordData?.length < 1 && (
-              <div className="flex flex-col gap-6 sm:flex-row w-full">
+              <div className="flex flex-col gap-6 w-full">
                 <Textbox
                   placeholder="Enter Password"
                   type="password"
@@ -232,69 +282,42 @@ export const AddRootUser = ({ open, setOpen, recordData, serverUrl }) => {
                   className="w-full rounded"
                   register={register("ConfirmPassword", {
                     required: "Confirm Password is required!",
-                    validate: (value) => value === Password || "Passwords do not match",
+                    validate: (value) =>
+                      value === Password || "Passwords do not match",
                   })}
-                  error={errors.ConfirmPassword ? errors.ConfirmPassword.message : ""}
+                  error={
+                    errors.ConfirmPassword ? errors.ConfirmPassword.message : ""
+                  }
                 />
               </div>
             )}
-            <div className="flex flex-col gap-6 sm:flex-row w-full">
-              <Select
-                placeholder="Select State"
-                name="State"
-                label="State"
-                onChange={handleStateChange}
-                defaultValue={stateCode}
-                options={states?.map((state) => ({
-                  value: state.isoCode,
-                  label: state.name,
-                }))} // Map State array to options
-                className="w-full rounded"
-                register={register("State", {
-                  //required: "User State is required!"
-                })}
-                error={errors.State ? errors.State.message : ""}
-              />
-              <Select
-                placeholder="Select City"
-                name="City"
-                label="City"
-                options={cities?.map((city) => ({
-                  value: city.isoCode,
-                  label: city.name,
-                }))} // Map city array to options
-                className="w-full rounded"
-                register={register("City", {
-                  //required: "User Type is required!"
-                })}
-                error={errors.City ? errors.City.message : ""}
-              />
-            </div>
-            <div className="flex flex-col gap-6 sm:flex-row w-full">
-              <div className="w-full sm:w-4/5">
-                <Textbox
-                  placeholder="enter address"
-                  type="text"
-                  name="HomeAddress"
-                  label="Home Address"
-                  className="w-full rounded"
-                  register={register("HomeAddress", {
-                    //required: "Home Address is required!",
-                  })}
-                  error={errors.HomeAddress ? errors.HomeAddress.message : ""}
-                />
-              </div>
-              <div className="w-full sm:w-1/5">
+
+            <div className="flex flex-col gap-6 w-full">
+              <div className="w-full">
                 <Textbox
                   placeholder="enter currency"
                   type="text"
                   name="Currency"
-                  label="Currency"
+                  label="Currency Symbol (e.g. $)"
                   className="w-full rounded"
                   register={register("Currency", {
                     required: "Currency is required!",
                   })}
                   error={errors.Currency ? errors.Currency.message : ""}
+                />
+              </div>
+
+              <div className="w-full">
+                <Select
+                  name="DateFormat"
+                  label="Date Format"
+                  defaultValue="yyyy-MM-dd"
+                  options={dateFormats}
+                  className="w-full rounded"
+                  register={register("DateFormat", {
+                    //required: "Name is required!",
+                  })}
+                  error={errors.DateFormat ? errors.DateFormat.message : ""}
                 />
               </div>
             </div>

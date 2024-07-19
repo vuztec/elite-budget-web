@@ -199,6 +199,10 @@ export const OtherDebts = () => {
           </div>
 
           <div className="w-full">
+            <DebtListView Data={gridData} category="Student Loan" />
+          </div>
+
+          <div className="w-full">
             <DebtListView Data={gridData} category="Other Debt" />
           </div>
 

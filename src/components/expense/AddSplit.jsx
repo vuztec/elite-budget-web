@@ -18,7 +18,7 @@ import { handleAxiosResponseError } from "../../utils/handleResponseError";
 
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
-export const AddBank = ({ open, setOpen, recordData, chatUsers }) => {
+export const AddSplit = ({ open, setOpen, recordData, chatUsers }) => {
   const queryClient = useQueryClient();
   const { user } = useUserStore();
   const hasFin = getFinancialPermission(user);
@@ -139,52 +139,34 @@ export const AddBank = ({ open, setOpen, recordData, chatUsers }) => {
             as="h2"
             className="text-base font-bold leading-6 text-gray-900 mb-4"
           >
-            {recordData ? "UPDATE BANK ACCOUNT" : "ADD NEW BANK ACCOUNT"}
+            {recordData ? "UPDATE CALC SPLIT" : "ADD NEW CALC SPLIT"}
           </Dialog.Title>
           <div className="mt-2 flex flex-col gap-6 overflow-y-scroll bg-scroll">
             <div className="flex flex-col gap-6 w-full">
-              <Select
-                name="Owner"
-                label="Owner"
-                defaultValue="Self"
-                options={[
-                  { value: "Self", label: "Self" },
-                  { value: "Partner", label: "Partner" },
-                  { value: "Joint", label: "Joint" },
-                ]}
-                className="w-full rounded"
-                register={register("Owner", {
-                  required: "Name is required!",
-                })}
-                error={errors.Owner ? errors.Owner.message : ""}
-              />
-            </div>
-            <div className="flex flex-col gap-6 w-full">
-              <Textbox
-                placeholder="Enter a Bank Account Name"
-                type="text"
-                name="Name"
-                label="Bank Account Name"
-                className="w-full rounded"
-                register={register("Name", {
-                  required: "Name is required!",
-                })}
-                error={errors.Name ? errors.Name.message : ""}
-              />
               <Textbox
                 placeholder="Enter Amount"
                 type="number"
-                name="OpeningBalance"
-                label="Opening Balance"
+                name="SelfAmount"
+                label="Self % Split"
                 className="w-full rounded"
-                register={register("OpeningBalance", {
+                register={register("SelfAmount", {
                   valueAsNumber: true,
                   validate: (value) =>
-                    value >= 0 || "Amount must be positive or zero.",
+                    (value >= 0 && value <= 100) ||
+                    "Amount must between 0 - 100.",
                 })}
-                error={
-                  errors.OpeningBalance ? errors.OpeningBalance.message : ""
-                }
+                error={errors.SelfAmount ? errors.SelfAmount.message : ""}
+              />
+              <Textbox
+                type="number"
+                name="Goal"
+                label="Partner % Split"
+                disabled={true}
+                className="w-full rounded"
+                register={register("100 - SelfAmount", {
+                  valueAsNumber: true,
+                })}
+                error={errors.Goal ? errors.Goal.message : ""}
               />
             </div>
           </div>
@@ -217,4 +199,4 @@ export const AddBank = ({ open, setOpen, recordData, chatUsers }) => {
   );
 };
 
-export default AddBank;
+export default AddSplit;

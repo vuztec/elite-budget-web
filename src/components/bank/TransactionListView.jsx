@@ -16,11 +16,28 @@ import {
   getLoanBalanceTotal,
   getMonthlyBudgetTotal,
   getYearlyBudgetTotal,
+  getFormattedDate,
+  getFormattedValueType,
+  getBankAccountTypeTotal,
 } from "../../utils/budget.calculation";
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
-export const TransactionListView = ({ gridData }) => {
+export const TransactionListView = ({ Data, bankName }) => {
   const { user } = useUserStore();
+  const [gridData, setGridData] = useState([]);
+  useEffect(() => {
+    const updatedData = Data.filter(
+      (item) => item.BankAccountName.id === bankName.id
+    );
+
+    const sortedData = updatedData.sort((a, b) => {
+      if (a.Owner === b.Owner) {
+        return a.Description.localeCompare(b.Description); // Ascending order for Description
+      }
+      return a.Owner < b.Owner ? 1 : -1; // Descending order for Owner
+    });
+    setGridData(sortedData);
+  }, [Data, bankName]);
 
   //----------------CRUD----------------//
   const queryClient = useQueryClient();
@@ -73,9 +90,9 @@ export const TransactionListView = ({ gridData }) => {
         <th className="border-l border-gray-300 p-2 text-xs xl:text-sm">
           Name
         </th>
-        <th className="border-l border-gray-300 p-2 text-xs xl:text-sm">
+        {/* <th className="border-l border-gray-300 p-2 text-xs xl:text-sm">
           Bank Name
-        </th>
+        </th> */}
         <th className="border-l border-gray-300 p-2 text-xs xl:text-sm">
           Date
         </th>
@@ -116,25 +133,25 @@ export const TransactionListView = ({ gridData }) => {
     <tr className="border border-gray-300 text-sm xl:text-[16px] hover:bg-gray-400/10 text-left">
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <span className="flex items-center justify-left gap-2 border-b border-gray-200 text-center mb-0 text-gray-900">
+          <span className="flex items-center justify-left gap-2 text-center mb-0 text-gray-900">
             {record?.Owner}
           </span>
         </div>
       </td>
 
-      <td className="max-w-[300px] whitespace-normal p-2 border-l border-gray-200">
+      {/* <td className="max-w-[300px] whitespace-normal p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p className="text-black">{record?.bankAccountNameId}</p>
+          <p className="text-black">{record?.BankAccountName?.Name}</p>
+        </div>
+      </td> */}
+
+      <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
+        <div className="flex flex-col items-start gap-1">
+          <p className="text-black">{getFormattedDate(user, record?.Date)}</p>
         </div>
       </td>
 
-      <td className="max-w-[300px] whitespace-normal p-2 border-l border-gray-200">
-        <div className="flex flex-col items-start gap-1">
-          <p className="text-black">{record?.Date}</p>
-        </div>
-      </td>
-
-      <td className="max-w-[300px] whitespace-normal p-2 border-l border-gray-200">
+      <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
           <p className="text-black">{record?.Description}</p>
         </div>
@@ -143,11 +160,11 @@ export const TransactionListView = ({ gridData }) => {
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
           <p className="text-black">
-            {getFormattedValue(
+            {getFormattedValueType(
               user,
               record?.Amount,
               record?.Type,
-              "withdrawal"
+              "Withdrawal"
             )}
           </p>
         </div>
@@ -156,14 +173,19 @@ export const TransactionListView = ({ gridData }) => {
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
           <p className="text-black">
-            {getFormattedValue(user, record?.Amount, record?.Type, "credit")}
+            {getFormattedValueType(
+              user,
+              record?.Amount,
+              record?.Type,
+              "Credit"
+            )}
           </p>
         </div>
       </td>
 
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p className="text-black">{record?.isCleared}</p>
+          <p className="text-black">{record?.IsCleared}</p>
         </div>
       </td>
 
@@ -201,7 +223,7 @@ export const TransactionListView = ({ gridData }) => {
     <tr className="border border-gray-300 text-sm xl:text-[18px] bg-[whitesmoke] text-gray-600 text-left font-bold">
       <td className="min-w-fit whitespace-nowrap p-3 border-gray-200"></td>
 
-      <td className="min-w-fit whitespace-nowrap p-3 border-gray-200"></td>
+      {/* <td className="min-w-fit whitespace-nowrap p-3 border-gray-200"></td> */}
 
       <td className="min-w-fit whitespace-nowrap p-3 border-gray-200"></td>
 
@@ -211,13 +233,13 @@ export const TransactionListView = ({ gridData }) => {
 
       <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p>{getMonthlyBudgetTotal(user, gridData)}</p>
+          <p>{getBankAccountTypeTotal(user, gridData, "Withdrawal")}</p>
         </div>
       </td>
 
       <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p>{getMonthlyBudgetTotal(user, gridData)}</p>
+          <p>{getBankAccountTypeTotal(user, gridData, "Credit")}</p>
         </div>
       </td>
 
@@ -235,7 +257,7 @@ export const TransactionListView = ({ gridData }) => {
 
   return (
     <>
-      {gridData.length > -1 && (
+      {gridData?.length > -1 && (
         <div className="w-full h-fit bg-white py-6 mt-4 shadow-md rounded">
           <div className="flex flex-col gap-5 w-full">
             <div className="w-full overflow-x-auto">
@@ -243,7 +265,7 @@ export const TransactionListView = ({ gridData }) => {
                 <thead>
                   <tr>
                     <th className="p-2 w-full uppercase bg-black text-white flex items-center justify-center">
-                      BANK REGISTER
+                      {bankName?.Name} REGISTER
                     </th>
                   </tr>
                 </thead>
