@@ -282,9 +282,7 @@ export const AddRootUser = ({ open, setOpen, recordData, serverUrl }) => {
                   defaultValue="yyyy-MM-dd"
                   options={dateFormats}
                   className="w-full rounded"
-                  register={register("DateFormat", {
-                    //required: "Name is required!",
-                  })}
+                  register={register("DateFormat")}
                   error={errors.DateFormat ? errors.DateFormat.message : ""}
                 />
               </div>
@@ -299,7 +297,7 @@ export const AddRootUser = ({ open, setOpen, recordData, serverUrl }) => {
             <div className="gap-3 p-3 mt-4 flex flex-row-reverse">
               <Button
                 type="submit"
-                className="w-fit flex flex-row-reverse items-center gap-1 text-white"
+                className="w-fit flex flex-row-reverse items-center gap-1 text-white bg-black"
                 label="Submit"
                 icon={<IoMdSend />}
               />

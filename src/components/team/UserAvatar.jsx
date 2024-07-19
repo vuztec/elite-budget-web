@@ -28,8 +28,9 @@ export const UserAvatar = () => {
   };
 
   const editClick = (el) => {
-    setSelected(el);
-    setOpen(true);
+    navigate("/profile");
+    // setSelected(el);
+    // setOpen(true);
   };
 
   const editPasswordClick = (el) => {
@@ -44,9 +45,7 @@ export const UserAvatar = () => {
         <Menu as="div" className="relative inline-block text-left">
           <div>
             <Menu.Button className="w-10 h-10 2xl:w-12 2xl:h-12 items-center justify-center rounded-full bg-black">
-              <span className="text-white font-semibold">
-                {getInitials(user?.FullName)}
-              </span>
+              <span className="text-white font-semibold">{getInitials(user?.FullName)}</span>
             </Menu.Button>
           </div>
 

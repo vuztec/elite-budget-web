@@ -45,18 +45,26 @@ const Sidebar = () => {
       (title === "home" && !path) || (title !== "home" && path && (path === el?.link?.split("/")[0] || location.pathname.includes(title)));
 
     return (
-      <div onClick={handleLink} className={clsx("w-full flex flex-col cursor-pointer ")}>
+      <div onClick={handleLink} className={clsx(" w-full flex flex-col cursor-pointer ")}>
         <div
           className={clsx(
-            "w-full flex justify-between gap-2 px-3 py-2 items-center rounded-full text-gray-800 text-base hover:bg-[#ffe99b]",
+            "group w-full flex justify-between gap-2 px-3 py-2 items-center rounded-full text-gray-800 text-base hover:bg-[#ffe99b]",
             isActive ? "bg-black " : ""
           )}
         >
-          <div className={`flex items-center gap-4 ${isActive ? "text-[#ffe99b] hover:text-black" : "text-black hover:text-gray-500"} `}>
+          <div
+            className={`flex items-center gap-4 ${
+              isActive ? "text-[#ffe99b] group-hover:text-black" : "text-black group-hover:text-gray-500"
+            } `}
+          >
             <div className="text-lg">{el.icon}</div>
             <span className="md:hidden lg:block">{el.label}</span>
           </div>
-          <div className={el.sub?.length ? (isActive ? "text-[#ffe99b] hover:text-black" : "text-black hover:text-gray-500") : "hidden"}>
+          <div
+            className={
+              el.sub?.length ? (isActive ? "text-[#ffe99b] group-hover:text-black" : "text-black group-hover:text-gray-500") : "hidden"
+            }
+          >
             <IoMdArrowDropright />
           </div>
         </div>
