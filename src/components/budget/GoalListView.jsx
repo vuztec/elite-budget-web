@@ -48,7 +48,7 @@ export const GoalListView = ({ gridData, goal }) => {
     setOpen(true);
   };
 
-  console.log(gridData);
+  console.log(gridData, goal);
 
   //----------------CRUD----------------//
 
@@ -121,7 +121,7 @@ export const GoalListView = ({ gridData, goal }) => {
           </div>
         </div>
       )}
-      <AddGoal open={open} setOpen={setOpen} recordData={selected} key={new Date().getTime().toString()} />
+      <AddGoal open={open} setOpen={setOpen} recordData={selected} key={new Date().getTime().toString()} type={goal} />
       <ConfirmationDialog isLoading={isLoading} open={openDialog} setOpen={setOpenDialog} onClick={() => deleteHandler(selected)} />
     </>
   );

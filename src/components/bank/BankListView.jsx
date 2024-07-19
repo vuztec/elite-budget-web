@@ -25,10 +25,10 @@ export const BankListView = ({ gridData }) => {
     setIsLoading(true);
 
     axios
-      .delete(`/api/project/${selected}`)
+      .delete(`/api/bank-accounts/name/${selected}`)
       .then(({ data }) => {
         console.log(data);
-        queryClient.setQueryData(["projects"], (prev) => prev.filter((project) => project.id !== selected));
+        queryClient.setQueryData(["accountnames"], (prev) => prev.filter((bank) => bank.id !== selected));
         setOpenDialog(false);
         setIsLoading(false);
       })

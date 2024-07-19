@@ -39,19 +39,32 @@ export const AddBank = ({ open, setOpen, recordData }) => {
     const numericSelectedID = Number(recordData.id);
     setIsLoading(() => true);
 
-    axios
-      .put("/api/project/" + numericSelectedID, data)
-      .then(({ data }) => {
-        queryClient.setQueryData(["projects"], (prev) =>
-          prev.map((project) => (project.id === numericSelectedID ? { ...project, ...data.items } : project))
-        );
-        setIsLoading(() => false);
-        setOpen(false);
-      })
-      .catch((err) => {
-        setIsLoading(() => false);
-        console.log(handleAxiosResponseError(err));
-      });
+    if (!recordData?.id)
+      axios
+        .post("/api/bank-accounts/name", data)
+        .then(({ data }) => {
+          queryClient.setQueryData(["accountnames"], (prev) => (prev ? [...prev, data] : [data]));
+          setIsLoading(() => false);
+          setOpen(false);
+        })
+        .catch((err) => {
+          setIsLoading(() => false);
+          console.log(handleAxiosResponseError(err));
+        });
+    else
+      axios
+        .patch("/api/bank-accounts/name/" + numericSelectedID, data)
+        .then(({ data }) => {
+          queryClient.setQueryData(["accountnames"], (prev) =>
+            prev.map((bank) => (bank.id === numericSelectedID ? { ...bank, ...data } : bank))
+          );
+          setIsLoading(() => false);
+          setOpen(false);
+        })
+        .catch((err) => {
+          setIsLoading(() => false);
+          console.log(handleAxiosResponseError(err));
+        });
   };
 
   return (

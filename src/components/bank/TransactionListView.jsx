@@ -43,10 +43,10 @@ export const TransactionListView = ({ Data, bankName }) => {
     setIsLoading(true);
 
     axios
-      .delete(`/api/project/${selected}`)
+      .delete(`/api/bank-accounts/transaction/${selected}`)
       .then(({ data }) => {
         console.log(data);
-        queryClient.setQueryData(["projects"], (prev) => prev.filter((project) => project.id !== selected));
+        queryClient.setQueryData(["banktransactions"], (prev) => prev.filter((transaction) => transaction.id !== selected));
         setOpenDialog(false);
         setIsLoading(false);
       })

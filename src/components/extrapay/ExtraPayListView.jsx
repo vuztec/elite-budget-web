@@ -10,6 +10,7 @@ import axios from "../../config/axios";
 import { handleAxiosResponseError } from "../../utils/handleResponseError";
 import { getMonthlyBudgetTotal, getYearlyBudgetTotal } from "../../utils/budget.calculation";
 import AddExtraPay from "./AddExtraPay";
+import { formatDate } from "../../utils";
 
 export const ExtraPayListView = ({ gridData }) => {
   const { user } = useUserStore();
@@ -25,10 +26,10 @@ export const ExtraPayListView = ({ gridData }) => {
     setIsLoading(true);
 
     axios
-      .delete(`/api/project/${selected}`)
+      .delete(`/api/extra-pay-checks/${selected}`)
       .then(({ data }) => {
         console.log(data);
-        queryClient.setQueryData(["projects"], (prev) => prev.filter((project) => project.id !== selected));
+        queryClient.setQueryData(["extrapaychecks"], (prev) => prev.filter((check) => check.id !== selected));
         setOpenDialog(false);
         setIsLoading(false);
       })
@@ -69,7 +70,7 @@ export const ExtraPayListView = ({ gridData }) => {
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
           <span className="flex items-center justify-left gap-2 text-center mb-0 text-gray-900">
-            {record?.Date ? record?.Date : "XX/XX/XXXX"}
+            {record?.Date ? formatDate(new Date(record?.Date)) : "XX/XX/XXXX"}
           </span>
         </div>
       </td>

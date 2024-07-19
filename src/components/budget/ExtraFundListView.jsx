@@ -10,6 +10,7 @@ import axios from "../../config/axios";
 import { handleAxiosResponseError } from "../../utils/handleResponseError";
 import { getFormattedValue, getMonthlyBudgetTotal, getYearlyBudgetTotal } from "../../utils/budget.calculation";
 import AddExtraFund from "./AddExtraFund";
+import { formatDate } from "../../utils";
 
 export const ExtraFundListView = ({ gridData }) => {
   const { user } = useUserStore();
@@ -25,10 +26,10 @@ export const ExtraFundListView = ({ gridData }) => {
     setIsLoading(true);
 
     axios
-      .delete(`/api/project/${selected}`)
+      .delete(`/api/extra-funds-tracker/${selected}`)
       .then(({ data }) => {
         console.log(data);
-        queryClient.setQueryData(["projects"], (prev) => prev.filter((project) => project.id !== selected));
+        queryClient.setQueryData(["extrafunds"], (prev) => prev.filter((fund) => fund.id !== selected));
         setOpenDialog(false);
         setIsLoading(false);
       })
@@ -80,7 +81,7 @@ export const ExtraFundListView = ({ gridData }) => {
 
       <td className="max-w-[300px] whitespace-normal p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p className="text-black">{record?.Date}</p>
+          <p className="text-black">{formatDate(new Date(record?.Date))}</p>
         </div>
       </td>
 

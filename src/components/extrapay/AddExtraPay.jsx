@@ -10,6 +10,7 @@ import { IoMdSend } from "react-icons/io";
 import { TiCancel } from "react-icons/ti";
 import axios from "../../config/axios";
 import { handleAxiosResponseError } from "../../utils/handleResponseError";
+import { formatDateForForm } from "../../utils";
 
 export const AddExtraPay = ({ open, setOpen, recordData }) => {
   const queryClient = useQueryClient();
@@ -26,7 +27,7 @@ export const AddExtraPay = ({ open, setOpen, recordData }) => {
 
   useEffect(() => {
     if (recordData?.id) {
-      setValue("Date", recordData.Date);
+      setValue("Date", formatDateForForm(new Date(recordData.Date)));
       setValue("SelfAmount", recordData.SelfAmount);
       setValue("PartnerAmount", recordData.PartnerAmount);
     }
@@ -40,10 +41,10 @@ export const AddExtraPay = ({ open, setOpen, recordData }) => {
     setIsLoading(() => true);
 
     axios
-      .put("/api/project/" + numericSelectedID, data)
+      .patch("/api/extra-pay-checks/" + numericSelectedID, data)
       .then(({ data }) => {
-        queryClient.setQueryData(["projects"], (prev) =>
-          prev.map((project) => (project.id === numericSelectedID ? { ...project, ...data.items } : project))
+        queryClient.setQueryData(["extrapaychecks"], (prev) =>
+          prev.map((check) => (check.id === numericSelectedID ? { ...check, ...data } : check))
         );
         setIsLoading(() => false);
         setOpen(false);

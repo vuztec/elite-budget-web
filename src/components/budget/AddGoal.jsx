@@ -11,7 +11,7 @@ import { TiCancel } from "react-icons/ti";
 import axios from "../../config/axios";
 import { handleAxiosResponseError } from "../../utils/handleResponseError";
 
-export const AddGoal = ({ open, setOpen, recordData }) => {
+export const AddGoal = ({ open, setOpen, recordData, type }) => {
   const queryClient = useQueryClient();
 
   const [isLoading, setIsLoading] = useState(false);
@@ -26,8 +26,8 @@ export const AddGoal = ({ open, setOpen, recordData }) => {
 
   useEffect(() => {
     if (recordData?.id) {
-      setValue("Goal", recordData.Goal);
-      setValue("Name", recordData.Name);
+      setValue("Percentage", recordData.Goal);
+      setValue("Category", recordData.Category);
     }
 
     return () => reset();
@@ -38,12 +38,15 @@ export const AddGoal = ({ open, setOpen, recordData }) => {
     const numericSelectedID = Number(recordData.id);
     setIsLoading(() => true);
 
+    let query = "maingoals";
+
+    if (type === "Expense") query = "expensegoals";
+    if (type === "Debt") query = "debtgoals";
+
     axios
-      .put("/api/project/" + numericSelectedID, data)
+      .patch("/api/goals/" + numericSelectedID, data)
       .then(({ data }) => {
-        queryClient.setQueryData(["projects"], (prev) =>
-          prev.map((project) => (project.id === numericSelectedID ? { ...project, ...data.items } : project))
-        );
+        queryClient.setQueryData([query], (prev) => prev.map((goal) => (goal.id === numericSelectedID ? { ...goal, ...data } : goal)));
         setIsLoading(() => false);
         setOpen(false);
       })
@@ -65,25 +68,23 @@ export const AddGoal = ({ open, setOpen, recordData }) => {
               <Textbox
                 type="text"
                 name="Category"
-                label="Bank Account Name"
+                label="Category"
                 className="w-full rounded"
                 disabled={true}
-                register={register("Name", {
-                  required: "Name is required!",
-                })}
-                error={errors.Name ? errors.Name.message : ""}
+                register={register("Category")}
+                error={errors.Category ? errors.Category.message : ""}
               />
               <Textbox
                 placeholder="Enter Amount"
                 type="number"
-                name="Goal"
+                name="Percentage"
                 label="Goal %"
                 className="w-full rounded"
-                register={register("Goal", {
+                register={register("Percentage", {
                   valueAsNumber: true,
                   validate: (value) => value >= 0 || "Amount must be positive or zero.",
                 })}
-                error={errors.Goal ? errors.Goal.message : ""}
+                error={errors.Percentage ? errors.Percentage.message : ""}
               />
             </div>
           </div>

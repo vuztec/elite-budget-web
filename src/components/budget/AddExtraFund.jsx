@@ -12,6 +12,7 @@ import { TiCancel } from "react-icons/ti";
 import axios from "../../config/axios";
 import { handleAxiosResponseError } from "../../utils/handleResponseError";
 import { getBankAccountNames } from "../../config/api";
+import { formatDateForForm } from "../../utils";
 
 export const AddExtraFund = ({ open, setOpen, recordData }) => {
   const queryClient = useQueryClient();
@@ -24,12 +25,12 @@ export const AddExtraFund = ({ open, setOpen, recordData }) => {
     setValue,
     reset,
     formState: { errors },
-  } = useForm({ defaultValues });
+  } = useForm();
 
   useEffect(() => {
     if (recordData?.id) {
       setValue("Owner", recordData.Owner);
-      setValue("Date", recordData.Date);
+      setValue("Date", formatDateForForm(new Date(recordData.Date)));
       setValue("Description", recordData.Description);
       setValue("Type", recordData.Type);
       setValue("Amount", recordData.Amount);
@@ -43,19 +44,32 @@ export const AddExtraFund = ({ open, setOpen, recordData }) => {
     const numericSelectedID = Number(recordData.id);
     setIsLoading(() => true);
 
-    axios
-      .put("/api/project/" + numericSelectedID, data)
-      .then(({ data }) => {
-        queryClient.setQueryData(["projects"], (prev) =>
-          prev.map((project) => (project.id === numericSelectedID ? { ...project, ...data.items } : project))
-        );
-        setIsLoading(() => false);
-        setOpen(false);
-      })
-      .catch((err) => {
-        setIsLoading(() => false);
-        console.log(handleAxiosResponseError(err));
-      });
+    if (!recordData?.id)
+      axios
+        .post("/api/extra-funds-tracker", data)
+        .then(({ data }) => {
+          queryClient.setQueryData(["extrafunds"], (prev) => (prev ? [...prev, data] : [data]));
+          setIsLoading(() => false);
+          setOpen(false);
+        })
+        .catch((err) => {
+          setIsLoading(() => false);
+          console.log(handleAxiosResponseError(err));
+        });
+    else
+      axios
+        .patch("/api/extra-funds-tracker/" + numericSelectedID, data)
+        .then(({ data }) => {
+          queryClient.setQueryData(["extrafunds"], (prev) =>
+            prev.map((fund) => (fund.id === numericSelectedID ? { ...fund, ...data.items } : fund))
+          );
+          setIsLoading(() => false);
+          setOpen(false);
+        })
+        .catch((err) => {
+          setIsLoading(() => false);
+          console.log(handleAxiosResponseError(err));
+        });
   };
 
   return (

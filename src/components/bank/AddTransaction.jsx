@@ -39,7 +39,7 @@ export const AddTransaction = ({ open, setOpen, recordData }) => {
 
   useEffect(() => {
     if (recordData?.id) {
-      setValue("BankName", recordData.BankName);
+      setValue("BankName", recordData.BankAccountName.id);
       setValue("Owner", recordData.Owner);
       setValue("Description", recordData.Description);
       setValue("Type", recordData.Type);
@@ -55,19 +55,32 @@ export const AddTransaction = ({ open, setOpen, recordData }) => {
     const numericSelectedID = Number(recordData.id);
     setIsLoading(() => true);
 
-    axios
-      .put("/api/project/" + numericSelectedID, data)
-      .then(({ data }) => {
-        queryClient.setQueryData(["projects"], (prev) =>
-          prev.map((project) => (project.id === numericSelectedID ? { ...project, ...data.items } : project))
-        );
-        setIsLoading(() => false);
-        setOpen(false);
-      })
-      .catch((err) => {
-        setIsLoading(() => false);
-        console.log(handleAxiosResponseError(err));
-      });
+    if (!recordData?.id)
+      axios
+        .post("/api/bank-accounts/transaction", data)
+        .then(({ data }) => {
+          queryClient.setQueryData(["banktransactions"], (prev) => (prev ? [...prev, data] : [data]));
+          setIsLoading(() => false);
+          setOpen(false);
+        })
+        .catch((err) => {
+          setIsLoading(() => false);
+          console.log(handleAxiosResponseError(err));
+        });
+    else
+      axios
+        .patch("/api/bank-accounts/transaction/" + numericSelectedID, data)
+        .then(({ data }) => {
+          queryClient.setQueryData(["banktransactions"], (prev) =>
+            prev.map((transaction) => (transaction.id === numericSelectedID ? { ...transaction, ...data } : transaction))
+          );
+          setIsLoading(() => false);
+          setOpen(false);
+        })
+        .catch((err) => {
+          setIsLoading(() => false);
+          console.log(handleAxiosResponseError(err));
+        });
   };
 
   return (
@@ -86,6 +99,7 @@ export const AddTransaction = ({ open, setOpen, recordData }) => {
                 className="w-full rounded"
                 register={register("BankName", {
                   required: "Name is required!",
+                  valueAsNumber: true,
                 })}
                 error={errors.BankName ? errors.BankName.message : ""}
               />
@@ -153,12 +167,12 @@ export const AddTransaction = ({ open, setOpen, recordData }) => {
                 label="Is Cleared?"
                 defaultValue="Yes"
                 options={[
-                  { value: 1, label: "Yes" },
-                  { value: 0, label: "No" },
+                  { value: true, label: "Yes" },
+                  { value: false, label: "No" },
                 ]}
                 className="w-full rounded"
                 register={register("IsCleared", {
-                  //required: "Type is required!",
+                  setValueAs: (value) => value === "true",
                 })}
                 error={errors.IsCleared ? errors.IsCleared.message : ""}
               />
