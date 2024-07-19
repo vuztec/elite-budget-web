@@ -44,8 +44,8 @@ export const AddExpense = ({ open, setOpen, recordData }) => {
       setValue("NickName", recordData.NickName);
       setValue("Owner", recordData.Owner);
       setValue("PaymentMethod", recordData.PaymentMethod);
-      setValue("MarketValue", recordData.MarketValue);
-      setValue("LoanBalance", recordData.LoanBalance);
+      setValue("MarketValue", Number(recordData.MarketValue));
+      setValue("LoanBalance", Number(recordData.LoanBalance));
       setValue("MonthlyBudget", recordData.MonthlyBudget);
       setValue("DueDate", recordData.DueDate);
     }
@@ -59,17 +59,17 @@ export const AddExpense = ({ open, setOpen, recordData }) => {
     setIsLoading(() => true);
 
     axios
-      .put("/api/project/" + numericSelectedID, data)
+      .patch("/api/expenses/" + numericSelectedID, data)
       .then(({ data }) => {
-        queryClient.setQueryData(["projects"], (prev) =>
-          prev.map((project) => (project.id === numericSelectedID ? { ...project, ...data.items } : project))
+        queryClient.setQueryData(["expenses"], (prev) =>
+          prev.map((expense) => (expense.id === numericSelectedID ? { ...expense, ...data } : expense))
         );
         setIsLoading(() => false);
         setOpen(false);
       })
       .catch((err) => {
         setIsLoading(() => false);
-        console.log(handleAxiosResponseError(err));
+        console.log(err);
       });
   };
 

@@ -25,10 +25,10 @@ export const SavingListView = ({ gridData }) => {
     setIsLoading(true);
 
     axios
-      .delete(`/api/project/${selected}`)
+      .delete(`/api/savings-retirements/${selected}`)
       .then(({ data }) => {
         console.log(data);
-        queryClient.setQueryData(["projects"], (prev) => prev.filter((project) => project.id !== selected));
+        queryClient.setQueryData(["savings"], (prev) => prev.filter((saving) => saving.id !== selected));
         setOpenDialog(false);
         setIsLoading(false);
       })

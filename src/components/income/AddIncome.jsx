@@ -40,14 +40,14 @@ export const AddIncome = ({ open, setOpen, recordData }) => {
 
   // Define handleOnSubmit function to handle form submission
   const handleOnSubmit = async (data) => {
-    const numericSelectedID = Number(recordData.id);
+    const numericSelectedID = Number(recordData?.id);
     setIsLoading(() => true);
 
     axios
-      .put("/api/project/" + numericSelectedID, data)
+      .patch("/api/income/" + numericSelectedID, data)
       .then(({ data }) => {
-        queryClient.setQueryData(["projects"], (prev) =>
-          prev.map((project) => (project.id === numericSelectedID ? { ...project, ...data.items } : project))
+        queryClient.setQueryData(["incomes"], (prev) =>
+          prev.map((income) => (income.id === numericSelectedID ? { ...income, ...data } : income))
         );
         setIsLoading(() => false);
         setOpen(false);

@@ -56,10 +56,10 @@ export const AddRetirement = ({ open, setOpen, recordData }) => {
     setIsLoading(() => true);
 
     axios
-      .put("/api/project/" + numericSelectedID, data)
+      .patch("/api/savings-retirements/" + numericSelectedID, data)
       .then(({ data }) => {
-        queryClient.setQueryData(["projects"], (prev) =>
-          prev.map((project) => (project.id === numericSelectedID ? { ...project, ...data.items } : project))
+        queryClient.setQueryData(["retirements"], (prev) =>
+          prev.map((retirement) => (retirement.id === numericSelectedID ? { ...retirement, ...data } : retirement))
         );
         setIsLoading(() => false);
         setOpen(false);

@@ -16,7 +16,6 @@ import {
   getMonthlyBudgetTotal,
   getYearlyBudgetTotal,
 } from "../../utils/budget.calculation";
-const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
 export const ExpenseListView = ({ Data, category, showColumn }) => {
   const { user } = useUserStore();
@@ -43,10 +42,9 @@ export const ExpenseListView = ({ Data, category, showColumn }) => {
   const deleteHandler = async (selected) => {
     setIsLoading(true);
     axios
-      .delete(`/api/project/${selected}`)
+      .delete(`/api/expenses/${selected}`)
       .then(({ data }) => {
-        console.log(data);
-        queryClient.setQueryData(["projects"], (prev) => prev.filter((project) => project.id !== selected));
+        queryClient.setQueryData(["expenses"], (prev) => prev.filter((income) => income.id !== selected));
         setOpenDialog(false);
         setIsLoading(false);
       })

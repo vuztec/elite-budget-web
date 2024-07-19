@@ -4,14 +4,7 @@ import Loading from "../../components/Loader";
 import { useQuery } from "react-query";
 import { getActiveAccount } from "../../utils/permissions";
 import Package from "../../package/Package";
-import {
-  getDebts,
-  getExpenses,
-  getIncomes,
-  getJointSplits,
-  getRetirements,
-  getSavings,
-} from "../../config/api";
+import { getDebts, getExpenses, getIncomes, getJointSplits, getRetirements, getSavings } from "../../config/api";
 import AddSplit from "../../components/expense/AddSplit";
 import ConfirmationDialog from "../../components/Dialogs";
 import useUserStore from "../../app/user";
@@ -37,13 +30,10 @@ export const JointContribution = () => {
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState(null);
-  const [selectedChatUsers, setSelectedChatUsers] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedSelfAmount, setSelectedSelfAmount] = useState("");
   const [totalJointExpense, setTotalJointExpense] = useState(0);
-  const selfPercentage = selectedSelfAmount.SelfAmount
-    ? Number(selectedSelfAmount.SelfAmount)
-    : "";
+  const selfPercentage = selectedSelfAmount.SelfAmount ? Number(selectedSelfAmount.SelfAmount) : "";
 
   const activeAccount = getActiveAccount(root);
 
@@ -119,28 +109,15 @@ export const JointContribution = () => {
       setIsDataLoaded(false);
       setTotalJointExpense(0);
     }
-  }, [
-    jointsplits,
-    isDebtLoaded,
-    isExpenseLoaded,
-    isIncomeLoaded,
-    isJointLoaded,
-    isRetLoaded,
-    isSavingLoaded,
-  ]);
+  }, [jointsplits, isDebtLoaded, isExpenseLoaded, isIncomeLoaded, isJointLoaded, isRetLoaded, isSavingLoaded]);
 
   const deleteHandler = async (selected) => {
     setIsLoading(true);
-    await axios.delete(
-      `${SERVER_URL}/api/attachment/delete-file?type=project_id&id=${selected}`
-    );
     axios
-      .delete(`${SERVER_URL}/api/project/${selected}`)
+      .delete(`/api/project/${selected}`)
       .then(({ data }) => {
         console.log(data);
-        queryClient.setQueryData(["projects"], (prev) =>
-          prev.filter((project) => project.id !== selected)
-        );
+        queryClient.setQueryData(["projects"], (prev) => prev.filter((project) => project.id !== selected));
         setOpenDialog(false);
         setIsLoading(false);
       })
@@ -160,8 +137,6 @@ export const JointContribution = () => {
   const editClick = (el) => {
     setSelected(el);
     setOpen(true);
-    const chatUsers = getProjectChatUsers(el, taskData, costData, el.id, user);
-    setSelectedChatUsers(() => chatUsers);
   };
 
   return activeAccount ? (
@@ -175,8 +150,7 @@ export const JointContribution = () => {
       {isDataLoaded && (
         <>
           <p className="text-xs px-5">
-            NOTE: Couples can contribute to joint expenses in proportion to
-            their respective gross income or override the calculated split.
+            NOTE: Couples can contribute to joint expenses in proportion to their respective gross income or override the calculated split.
           </p>
           <div className="w-full h-fit bg-white p-5 mt-4 shadow-md rounded text-xs md:text-sm">
             <div className="flex flex-col gap-5 xl:gap-10 w-full p-5">
@@ -184,48 +158,32 @@ export const JointContribution = () => {
                 <table className="w-[97%]">
                   <tbody className="border border-gray-300">
                     <tr className="border border-gray-300 bg-black text-white">
-                      <td className="min-w-fit whitespace-nowrap p-3 font-bold text-[#ffe99b]">
-                        HOUSEHOLD MONTHLY INCOME
-                      </td>
+                      <td className="min-w-fit whitespace-nowrap p-3 font-bold text-[#ffe99b]">HOUSEHOLD MONTHLY INCOME</td>
                       <td></td>
                       <td></td>
                     </tr>
 
                     <tr className="border border-gray-300">
-                      <td className="min-w-fit whitespace-nowrap p-2">
-                        Self Budgeted Gross Monthly Income
+                      <td className="min-w-fit whitespace-nowrap p-2">Self Budgeted Gross Monthly Income</td>
+                      <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">
+                        <span>{getOwnerGrossMonthlyTotal(user, incomes, "Self")}</span>
                       </td>
                       <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">
-                        <span>
-                          {getOwnerGrossMonthlyTotal(user, incomes, "Self")}
-                        </span>
-                      </td>
-                      <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">
-                        <span>
-                          {getOwnerGrossMonthlyPercentage(incomes, "Self")}%
-                        </span>
+                        <span>{getOwnerGrossMonthlyPercentage(incomes, "Self")}%</span>
                       </td>
                     </tr>
                     <tr className="border border-gray-300">
-                      <td className="min-w-fit whitespace-nowrap p-2">
-                        Partner Budgeted Gross Monthly Income
+                      <td className="min-w-fit whitespace-nowrap p-2">Partner Budgeted Gross Monthly Income</td>
+                      <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">
+                        <span>{getOwnerGrossMonthlyTotal(user, incomes, "Partner")}</span>
                       </td>
                       <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">
-                        <span>
-                          {getOwnerGrossMonthlyTotal(user, incomes, "Partner")}
-                        </span>
-                      </td>
-                      <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">
-                        <span>
-                          {getOwnerGrossMonthlyPercentage(incomes, "Partner")}%
-                        </span>
+                        <span>{getOwnerGrossMonthlyPercentage(incomes, "Partner")}%</span>
                       </td>
                     </tr>
 
                     <tr className="border border-gray-300 bg-[whitesmoke] text-gray-600">
-                      <td className="min-w-fit whitespace-nowrap p-2">
-                        Combined Budgeted Gross Monthly Income
-                      </td>
+                      <td className="min-w-fit whitespace-nowrap p-2">Combined Budgeted Gross Monthly Income</td>
                       <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">
                         <span>{getGrossMonthlyTotal(user, incomes)}</span>
                       </td>
@@ -265,70 +223,34 @@ export const JointContribution = () => {
                 <table className="w-[97%]">
                   <tbody className="border border-gray-300">
                     <tr className="border border-gray-300 bg-black text-white">
-                      <td className="min-w-fit whitespace-nowrap p-3 font-bold text-[#ffe99b]">
-                        TOTAL JOINT EXPENSES
-                      </td>
+                      <td className="min-w-fit whitespace-nowrap p-3 font-bold text-[#ffe99b]">TOTAL JOINT EXPENSES</td>
                       <td></td>
                       <td></td>
                     </tr>
 
                     <tr className="border border-gray-300">
-                      <td className="min-w-fit whitespace-nowrap p-2">
-                        Self Contribution
+                      <td className="min-w-fit whitespace-nowrap p-2">Self Contribution</td>
+                      <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">
+                        <span>{getSelfContributionTotal(user, selfPercentage, incomes, totalJointExpense)}</span>
                       </td>
                       <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">
-                        <span>
-                          {getSelfContributionTotal(
-                            user,
-                            selfPercentage,
-                            incomes,
-                            totalJointExpense
-                          )}
-                        </span>
-                      </td>
-                      <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">
-                        <span>
-                          {getSelfContributionPercentage(
-                            selfPercentage,
-                            incomes
-                          )}
-                          %
-                        </span>
+                        <span>{getSelfContributionPercentage(selfPercentage, incomes)}%</span>
                       </td>
                     </tr>
                     <tr className="border border-gray-300">
-                      <td className="min-w-fit whitespace-nowrap p-2">
-                        Partner Contribution
+                      <td className="min-w-fit whitespace-nowrap p-2">Partner Contribution</td>
+                      <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">
+                        <span>{getPartnerContributionTotal(user, selfPercentage, incomes, totalJointExpense)}</span>
                       </td>
                       <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">
-                        <span>
-                          {getPartnerContributionTotal(
-                            user,
-                            selfPercentage,
-                            incomes,
-                            totalJointExpense
-                          )}
-                        </span>
-                      </td>
-                      <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">
-                        <span>
-                          {getPartnerContributionPercentage(
-                            selfPercentage,
-                            incomes
-                          )}
-                          %
-                        </span>
+                        <span>{getPartnerContributionPercentage(selfPercentage, incomes)}%</span>
                       </td>
                     </tr>
 
                     <tr className="border border-gray-300 bg-[whitesmoke] text-gray-600">
-                      <td className="min-w-fit whitespace-nowrap p-2">
-                        Total Joint Expenses
-                      </td>
+                      <td className="min-w-fit whitespace-nowrap p-2">Total Joint Expenses</td>
                       <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">
-                        <span>
-                          {getFormattedValueTotal(user, totalJointExpense)}
-                        </span>
+                        <span>{getFormattedValueTotal(user, totalJointExpense)}</span>
                       </td>
                       <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">
                         <span>100%</span>
@@ -341,19 +263,8 @@ export const JointContribution = () => {
           </div>
         </>
       )}
-      <AddSplit
-        open={open}
-        setOpen={setOpen}
-        recordData={selected}
-        key={new Date().getTime().toString()}
-        chatUsers={selectedChatUsers}
-      />
-      <ConfirmationDialog
-        isLoading={isLoading}
-        open={openDialog}
-        setOpen={setOpenDialog}
-        onClick={() => deleteHandler(selected)}
-      />
+      <AddSplit open={open} setOpen={setOpen} recordData={selected} key={new Date().getTime().toString()} />
+      <ConfirmationDialog isLoading={isLoading} open={openDialog} setOpen={setOpenDialog} onClick={() => deleteHandler(selected)} />
     </>
   ) : (
     <Package />

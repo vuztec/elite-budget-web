@@ -56,10 +56,10 @@ export const AddSaving = ({ open, setOpen, recordData, chatUsers }) => {
     setIsLoading(() => true);
 
     axios
-      .put("/api/project/" + numericSelectedID, data)
+      .patch("/api/savings-retirements/" + numericSelectedID, data)
       .then(({ data }) => {
-        queryClient.setQueryData(["projects"], (prev) =>
-          prev.map((project) => (project.id === numericSelectedID ? { ...project, ...data.items } : project))
+        queryClient.setQueryData(["savings"], (prev) =>
+          prev.map((saving) => (saving.id === numericSelectedID ? { ...saving, ...data } : saving))
         );
         setIsLoading(() => false);
         setOpen(false);

@@ -37,10 +37,10 @@ export const DebtListView = ({ Data, category }) => {
     setIsLoading(true);
 
     axios
-      .delete(`/api/project/${selected}`)
+      .delete(`/api/debt/${selected}`)
       .then(({ data }) => {
         console.log(data);
-        queryClient.setQueryData(["projects"], (prev) => prev.filter((project) => project.id !== selected));
+        queryClient.setQueryData(["debts"], (prev) => prev.filter((debt) => debt.id !== selected));
         setOpenDialog(false);
         setIsLoading(false);
       })
