@@ -27,10 +27,8 @@ const Profile = () => {
   const [countryCode, setCountryCode] = useState(user ? CountryData.find((country) => country.name === user.Country)?.isoCode : "");
   const [states, setStates] = useState(countryCode ? State.getStatesOfCountry(countryCode) : []);
 
-  const [stateCode, setStateCode] = useState(states.find((state) => state.name === user.Province)?.isoCode);
+  const stateCode = useState(states.find((state) => state.name === user.Province)?.isoCode);
   const [cities, setCities] = useState(countryCode && stateCode ? City.getCitiesOfState(countryCode, stateCode) : []);
-
-  const [isLoading, setIsLoading] = useState(false);
 
   const {
     register,
@@ -270,18 +268,12 @@ const Profile = () => {
               </div>
 
               <div className="flex justify-end">
-                {isLoading ? (
-                  <div className="py-5">
-                    <Loading />
-                  </div>
-                ) : (
-                  <Button
-                    type="submit"
-                    className="w-fit flex flex-row-reverse items-center gap-1 text-white bg-black"
-                    label="Update"
-                    icon={<IoMdSend />}
-                  />
-                )}
+                <Button
+                  type="submit"
+                  className="w-fit flex flex-row-reverse items-center gap-1 text-white bg-black"
+                  label="Update"
+                  icon={<IoMdSend />}
+                />
               </div>
             </form>
           </div>
