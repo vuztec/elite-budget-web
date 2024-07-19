@@ -7,7 +7,6 @@ import useUserStore from "../../app/user";
 import { useQueryClient } from "react-query";
 import ConfirmationDialog from "../../components/Dialogs";
 import axios from "../../config/axios";
-import { getProjectChatUsers } from "../../utils/users";
 import { handleAxiosResponseError } from "../../utils/handleResponseError";
 import AddIncome from "./AddIncome";
 import {
@@ -17,6 +16,7 @@ import {
   getNetYearlyTotal,
   getFormattedValue,
 } from "../../utils/budget.calculation";
+
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
 export const IncomeListView = ({ gridData }) => {
@@ -27,21 +27,15 @@ export const IncomeListView = ({ gridData }) => {
   const [openDialog, setOpenDialog] = useState(false);
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState(null);
-  const [selectedChatUsers, setSelectedChatUsers] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const deleteHandler = async (selected) => {
     setIsLoading(true);
-    await axios.delete(
-      `${SERVER_URL}/api/attachment/delete-file?type=project_id&id=${selected}`
-    );
     axios
-      .delete(`${SERVER_URL}/api/project/${selected}`)
+      .delete(`/api/project/${selected}`)
       .then(({ data }) => {
         console.log(data);
-        queryClient.setQueryData(["projects"], (prev) =>
-          prev.filter((project) => project.id !== selected)
-        );
+        queryClient.setQueryData(["projects"], (prev) => prev.filter((project) => project.id !== selected));
         setOpenDialog(false);
         setIsLoading(false);
       })
@@ -59,8 +53,6 @@ export const IncomeListView = ({ gridData }) => {
   const editClick = (el) => {
     setSelected(el);
     setOpen(true);
-    const chatUsers = getProjectChatUsers(el, taskData, costData, el.id, user);
-    setSelectedChatUsers(() => chatUsers);
   };
 
   console.log(gridData);
@@ -70,15 +62,9 @@ export const IncomeListView = ({ gridData }) => {
   const TableHeader = () => (
     <thead>
       <tr className="font-bold bg-black text-white border border-gray-400 text-left text-xs xl:text-sm">
-        <th className="border-l border-gray-300 p-2 text-xs xl:text-sm">
-          Name
-        </th>
-        <th className="border-l border-gray-300 p-2 text-xs xl:text-sm">
-          Income Source
-        </th>
-        <th className="border-l border-gray-300 p-2 text-xs xl:text-sm">
-          Frequency
-        </th>
+        <th className="border-l border-gray-300 p-2 text-xs xl:text-sm">Name</th>
+        <th className="border-l border-gray-300 p-2 text-xs xl:text-sm">Income Source</th>
+        <th className="border-l border-gray-300 p-2 text-xs xl:text-sm">Frequency</th>
         <th className="border-l border-gray-300 p-1">
           <div className="flex flex-col">
             <span className="whitespace-nowrap text-left">Gross Pay</span>
@@ -134,9 +120,7 @@ export const IncomeListView = ({ gridData }) => {
           </div>
         </th> */}
 
-        <th className="p-2 border-l border-gray-300 text-xs xl:text-sm">
-          Actions
-        </th>
+        <th className="p-2 border-l border-gray-300 text-xs xl:text-sm">Actions</th>
       </tr>
     </thead>
   );
@@ -145,17 +129,13 @@ export const IncomeListView = ({ gridData }) => {
     <tr className="border border-gray-300 text-sm xl:text-[16px] hover:bg-gray-400/10 text-left">
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <span className="flex items-center justify-left gap-2 text-center mb-0 text-gray-900">
-            {record?.Owner}
-          </span>
+          <span className="flex items-center justify-left gap-2 text-center mb-0 text-gray-900">{record?.Owner}</span>
         </div>
       </td>
 
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p className="text-black">
-            {record?.NickName ? record?.NickName : record?.IncomeSource}
-          </p>
+          <p className="text-black">{record?.NickName ? record?.NickName : record?.IncomeSource}</p>
         </div>
       </td>
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
@@ -166,17 +146,13 @@ export const IncomeListView = ({ gridData }) => {
 
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p className="text-black">
-            {getFormattedValue(user, record?.GrossAmount)}
-          </p>
+          <p className="text-black">{getFormattedValue(user, record?.GrossAmount)}</p>
         </div>
       </td>
 
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p className="text-black">
-            {getFormattedValue(user, record?.NetAmount)}
-          </p>
+          <p className="text-black">{getFormattedValue(user, record?.NetAmount)}</p>
         </div>
       </td>
 
@@ -235,18 +211,12 @@ export const IncomeListView = ({ gridData }) => {
       <td className="min-w-max p-2 border-l border-r border-gray-200">
         <div className="flex items-center text-left gap-3 justify-start">
           <FaEdit
-            className={clsx(
-              `text-editcolor`,
-              "hover:text-orange-500 font-semibold cursor-pointer sm:px-0"
-            )}
+            className={clsx(`text-editcolor`, "hover:text-orange-500 font-semibold cursor-pointer sm:px-0")}
             onClick={() => editClick(record)}
           />
 
           <RiDeleteBin2Fill
-            className={clsx(
-              `text-deletecolor`,
-              "hover:text-red-500 font-semibold cursor-pointer sm:px-0"
-            )}
+            className={clsx(`text-deletecolor`, "hover:text-red-500 font-semibold cursor-pointer sm:px-0")}
             onClick={() => deleteClick(record.id)}
           />
         </div>
@@ -321,55 +291,32 @@ export const IncomeListView = ({ gridData }) => {
               </tr>
 
               <tr className="border border-gray-300">
-                <td className="min-w-fit whitespace-nowrap text-right p-2">
-                  Monthly Budgeted Gross Income:
-                </td>
+                <td className="min-w-fit whitespace-nowrap text-right p-2">Monthly Budgeted Gross Income:</td>
                 <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">
                   {getGrossMonthlyTotal(user, gridData)}
                 </td>
               </tr>
               <tr className="border border-gray-300">
-                <td className="text-right p-2 min-w-fit whitespace-nowrap">
-                  Monthly Budgeted Net Income:
-                </td>
-                <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">
-                  {getNetMonthlyTotal(user, gridData)}
-                </td>
+                <td className="text-right p-2 min-w-fit whitespace-nowrap">Monthly Budgeted Net Income:</td>
+                <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">{getNetMonthlyTotal(user, gridData)}</td>
               </tr>
               <tr className="border border-gray-300">
-                <td className="text-right p-2 min-w-fit whitespace-nowrap">
-                  Total Annual Gross Income:
-                </td>
+                <td className="text-right p-2 min-w-fit whitespace-nowrap">Total Annual Gross Income:</td>
                 <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">
                   {getGrossYearlyTotal(user, gridData)}
                 </td>
               </tr>
               <tr className="border border-gray-300">
-                <td className="min-w-fit whitespace-nowrap text-right p-2">
-                  Total Annual Net Income:
-                </td>
-                <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">
-                  {getNetYearlyTotal(user, gridData)}
-                </td>
+                <td className="min-w-fit whitespace-nowrap text-right p-2">Total Annual Net Income:</td>
+                <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">{getNetYearlyTotal(user, gridData)}</td>
               </tr>
             </tbody>
           </table>
         </div>
       </div>
 
-      <AddIncome
-        open={open}
-        setOpen={setOpen}
-        recordData={selected}
-        key={new Date().getTime().toString()}
-        chatUsers={selectedChatUsers}
-      />
-      <ConfirmationDialog
-        isLoading={isLoading}
-        open={openDialog}
-        setOpen={setOpenDialog}
-        onClick={() => deleteHandler(selected)}
-      />
+      <AddIncome open={open} setOpen={setOpen} recordData={selected} key={new Date().getTime().toString()} />
+      <ConfirmationDialog isLoading={isLoading} open={openDialog} setOpen={setOpenDialog} onClick={() => deleteHandler(selected)} />
     </div>
   );
 };

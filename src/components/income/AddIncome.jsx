@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import ModalWrapper from "../ModalWrapper";
 import { Dialog } from "@headlessui/react";
 import Textbox from "../Textbox";
@@ -7,138 +7,62 @@ import Select from "../Select";
 import Loading from "../Loader";
 import Button from "../Button";
 import { useQueryClient, useQuery } from "react-query";
-import CustomSelect from "../CustomSelect";
-import { dateFormatter } from "../../utils";
-import useUserStore from "../../app/user";
 import { IoMdSend } from "react-icons/io";
 import { TiCancel } from "react-icons/ti";
-import { getFinancialPermission } from "../../utils/permissions";
 import axios from "../../config/axios";
 import { handleAxiosResponseError } from "../../utils/handleResponseError";
 
-const SERVER_URL = import.meta.env.VITE_SERVER_URL;
-
-export const AddIncome = ({ open, setOpen, recordData, chatUsers }) => {
+export const AddIncome = ({ open, setOpen, recordData }) => {
   const queryClient = useQueryClient();
-  const { user } = useUserStore();
-  const hasFin = getFinancialPermission(user);
-
-  const resources = [];
-
-  let defaultValues = recordData ? {} : {};
 
   const [isLoading, setIsLoading] = useState(false);
 
   const {
     register,
     handleSubmit,
-    control,
+    setValue,
+    reset,
     formState: { errors },
-  } = useForm({ defaultValues });
+  } = useForm();
+
+  useEffect(() => {
+    if (recordData?.id) {
+      setValue("IncomeSource", recordData.IncomeSource);
+      setValue("NickName", recordData.NickName);
+      setValue("Owner", recordData.Owner);
+      setValue("Frequency", recordData.Frequency);
+      setValue("GrossAmount", recordData.GrossAmount);
+      setValue("NetAmount", recordData.NetAmount);
+    }
+
+    return () => reset();
+  }, [recordData]);
 
   // Define handleOnSubmit function to handle form submission
   const handleOnSubmit = async (data) => {
-    const numericSelectedID = parseInt(data.id);
+    const numericSelectedID = Number(recordData.id);
     setIsLoading(() => true);
 
-    if (!data.id) {
-      axios
-        .post(SERVER_URL + "/api/project", data)
-        .then(({ data }) => {
-          const project = data.items;
-          queryClient.setQueryData(["projects"], (prev) => {
-            const isTrue = prev?.find((proj) => proj.id === project.id);
-
-            if (!isTrue) return prev ? [project, ...prev] : [project];
-            else return prev;
-          });
-          setIsLoading(() => false);
-          setOpen(false);
-        })
-        .catch((err) => {
-          setIsLoading(() => false);
-          console.log(handleAxiosResponseError(err));
-        });
-    } else {
-      delete data.id;
-      delete data._count;
-      const newManagers = data.project_managers.filter(
-        (id) => !defaultValues.project_managers.includes(id)
-      );
-
-      // Find removed IDs
-      const removedManagers = defaultValues.project_managers.filter(
-        (id) => !data.project_managers.includes(id)
-      );
-
-      const newAdmins = data.project_admins.filter(
-        (id) => !defaultValues.project_admins.includes(id)
-      );
-
-      // Find removed IDs
-      const removedAdmin = defaultValues.project_admins.filter(
-        (id) => !data.project_admins.includes(id)
-      );
-
-      const newStakeholders = data.project_stakeholders.filter(
-        (id) => !defaultValues.project_stakeholders.includes(id)
-      );
-
-      // Find removed IDs
-      const removeStakeholder = defaultValues.project_stakeholders.filter(
-        (id) => !data.project_stakeholders.includes(id)
-      );
-
-      delete data.project_admins;
-      delete data.project_managers;
-      delete data.project_stakeholders;
-
-      axios
-        .put(SERVER_URL + "/api/project/" + numericSelectedID, {
-          project: {
-            ...data,
-            newManagers,
-            removedManagers,
-            newAdmins,
-            removedAdmin,
-            newStakeholders,
-            removeStakeholder,
-          },
-          chatUsers,
-          is_stage_change: recordData.ProjectStage !== data.ProjectStage,
-          is_due_date_change:
-            new Date(recordData.EndDate).toISOString() !==
-            new Date(data.EndDate).toISOString(),
-        })
-        .then(({ data }) => {
-          queryClient.setQueryData(["projects"], (prev) =>
-            prev.map((project) =>
-              project.id === numericSelectedID
-                ? { ...project, ...data.items }
-                : project
-            )
-          );
-          setIsLoading(() => false);
-          setOpen(false);
-        })
-        .catch((err) => {
-          setIsLoading(() => false);
-          console.log(handleAxiosResponseError(err));
-        });
-    }
+    axios
+      .put("/api/project/" + numericSelectedID, data)
+      .then(({ data }) => {
+        queryClient.setQueryData(["projects"], (prev) =>
+          prev.map((project) => (project.id === numericSelectedID ? { ...project, ...data.items } : project))
+        );
+        setIsLoading(() => false);
+        setOpen(false);
+      })
+      .catch((err) => {
+        setIsLoading(() => false);
+        console.log(handleAxiosResponseError(err));
+      });
   };
 
   return (
     <>
       <ModalWrapper open={open} setOpen={setOpen}>
-        <form
-          onSubmit={handleSubmit(handleOnSubmit)}
-          className="w-full h-[70%]"
-        >
-          <Dialog.Title
-            as="h2"
-            className="text-base font-bold leading-6 text-gray-900 mb-4"
-          >
+        <form onSubmit={handleSubmit(handleOnSubmit)} className="w-full h-[70%]">
+          <Dialog.Title as="h2" className="text-base font-bold leading-6 text-gray-900 mb-4">
             {recordData ? "UPDATE INCOME RECORD" : "ADD NEW INCOME RECORD"}
           </Dialog.Title>
           <div className="mt-2 flex flex-col gap-6 overflow-y-scroll bg-scroll">
@@ -150,10 +74,7 @@ export const AddIncome = ({ open, setOpen, recordData, chatUsers }) => {
                 label="Income Source"
                 disabled={true}
                 className="w-full rounded"
-                register={register("IncomeSource", {
-                  required: "Income Source is required!",
-                })}
-                error={errors.IncomeSource ? errors.IncomeSource.message : ""}
+                register={register("IncomeSource")}
               />
             </div>
             <div className="flex flex-col gap-6 w-full">
@@ -163,9 +84,7 @@ export const AddIncome = ({ open, setOpen, recordData, chatUsers }) => {
                 name="NickName"
                 label="Nickname"
                 className="w-full rounded"
-                register={register("NickName", {
-                  //required: "NickName is required!",
-                })}
+                register={register("NickName")}
                 error={errors.NickName ? errors.NickName.message : ""}
               />
             </div>
@@ -212,8 +131,7 @@ export const AddIncome = ({ open, setOpen, recordData, chatUsers }) => {
                 className="w-full rounded"
                 register={register("GrossAmount", {
                   valueAsNumber: true,
-                  validate: (value) =>
-                    value > 0 || "Amount must be greater than zero or positive",
+                  validate: (value) => value > 0 || "Amount must be greater than zero or positive",
                 })}
                 error={errors.GrossAmount ? errors.GrossAmount.message : ""}
               />
@@ -225,8 +143,7 @@ export const AddIncome = ({ open, setOpen, recordData, chatUsers }) => {
                 className="w-full rounded"
                 register={register("NetAmount", {
                   valueAsNumber: true,
-                  validate: (value) =>
-                    value > 0 || "Amount must be greater than zero or positive",
+                  validate: (value) => value > 0 || "Amount must be greater than zero or positive",
                 })}
                 error={errors.NetAmount ? errors.NetAmount.message : ""}
               />
@@ -241,7 +158,7 @@ export const AddIncome = ({ open, setOpen, recordData, chatUsers }) => {
             <div className="gap-3 p-3 mt-4 flex flex-row-reverse">
               <Button
                 type="submit"
-                className="w-fit flex flex-row-reverse items-center gap-1 text-white"
+                className="w-fit flex flex-row-reverse items-center gap-1 text-white bg-black"
                 label="Submit"
                 icon={<IoMdSend />}
               />

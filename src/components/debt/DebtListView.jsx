@@ -7,17 +7,9 @@ import useUserStore from "../../app/user";
 import { useQueryClient } from "react-query";
 import ConfirmationDialog from "../Dialogs";
 import axios from "../../config/axios";
-import { getProjectChatUsers } from "../../utils/users";
 import { handleAxiosResponseError } from "../../utils/handleResponseError";
 import AddDebt from "./AddDebt";
-import {
-  getFormattedValue,
-  getMarketValueTotal,
-  getLoanBalanceTotal,
-  getMonthlyBudgetTotal,
-  getYearlyBudgetTotal,
-} from "../../utils/budget.calculation";
-const SERVER_URL = import.meta.env.VITE_SERVER_URL;
+import { getFormattedValue, getLoanBalanceTotal, getMonthlyBudgetTotal, getYearlyBudgetTotal } from "../../utils/budget.calculation";
 
 export const DebtListView = ({ Data, category }) => {
   const { user } = useUserStore();
@@ -39,21 +31,16 @@ export const DebtListView = ({ Data, category }) => {
   const [openDialog, setOpenDialog] = useState(false);
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState(null);
-  const [selectedChatUsers, setSelectedChatUsers] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const deleteHandler = async (selected) => {
     setIsLoading(true);
-    await axios.delete(
-      `${SERVER_URL}/api/attachment/delete-file?type=project_id&id=${selected}`
-    );
+
     axios
-      .delete(`${SERVER_URL}/api/project/${selected}`)
+      .delete(`/api/project/${selected}`)
       .then(({ data }) => {
         console.log(data);
-        queryClient.setQueryData(["projects"], (prev) =>
-          prev.filter((project) => project.id !== selected)
-        );
+        queryClient.setQueryData(["projects"], (prev) => prev.filter((project) => project.id !== selected));
         setOpenDialog(false);
         setIsLoading(false);
       })
@@ -71,8 +58,6 @@ export const DebtListView = ({ Data, category }) => {
   const editClick = (el) => {
     setSelected(el);
     setOpen(true);
-    const chatUsers = getProjectChatUsers(el, taskData, costData, el.id, user);
-    setSelectedChatUsers(() => chatUsers);
   };
 
   console.log(gridData);
@@ -85,12 +70,8 @@ export const DebtListView = ({ Data, category }) => {
         {/* <th className="border-l border-gray-300 p-2 text-xs xl:text-sm">
           Category
         </th> */}
-        <th className="border-l border-gray-300 p-2 text-xs xl:text-sm">
-          Name
-        </th>
-        <th className="border-l border-gray-300 p-2 text-xs xl:text-sm">
-          Description
-        </th>
+        <th className="border-l border-gray-300 p-2 text-xs xl:text-sm">Name</th>
+        <th className="border-l border-gray-300 p-2 text-xs xl:text-sm">Description</th>
         {/* <th className="border-l border-gray-300 p-1">
           <div className="flex flex-col">
             <span className="whitespace-nowrap text-left">Market Value</span>
@@ -102,15 +83,10 @@ export const DebtListView = ({ Data, category }) => {
         <th className="border-l border-gray-300 p-1">
           <div className="flex flex-col">
             <span className="whitespace-nowrap text-left">Loan Balance</span>
-            <span className="whitespace-nowrap text-left">
-              {" "}
-              (For Net Worth Calc)
-            </span>
+            <span className="whitespace-nowrap text-left"> (For Net Worth Calc)</span>
           </div>
         </th>
-        <th className="border-l border-gray-300 p-2 text-xs xl:text-sm">
-          Day Due
-        </th>
+        <th className="border-l border-gray-300 p-2 text-xs xl:text-sm">Day Due</th>
         <th className="border-l border-gray-300 p-2 text-xs xl:text-sm">
           <div className="flex flex-col">
             <span className="whitespace-nowrap text-left">Payment</span>
@@ -128,9 +104,7 @@ export const DebtListView = ({ Data, category }) => {
           </div>
         </th>
 
-        <th className="p-2 border-l border-gray-300 text-xs xl:text-sm">
-          Actions
-        </th>
+        <th className="p-2 border-l border-gray-300 text-xs xl:text-sm">Actions</th>
       </tr>
     </thead>
   );
@@ -147,17 +121,13 @@ export const DebtListView = ({ Data, category }) => {
 
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <span className="flex items-center justify-left gap-2 text-center mb-0 text-gray-900">
-            {record?.Owner}
-          </span>
+          <span className="flex items-center justify-left gap-2 text-center mb-0 text-gray-900">{record?.Owner}</span>
         </div>
       </td>
 
       <td className="max-w-[300px] whitespace-normal p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p className="text-black">
-            {record?.NickName ? record?.NickName : record?.Description}
-          </p>
+          <p className="text-black">{record?.NickName ? record?.NickName : record?.Description}</p>
         </div>
       </td>
 
@@ -171,9 +141,7 @@ export const DebtListView = ({ Data, category }) => {
 
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p className="text-black">
-            {getFormattedValue(user, record?.LoanBalance)}
-          </p>
+          <p className="text-black">{getFormattedValue(user, record?.LoanBalance)}</p>
         </div>
       </td>
 
@@ -189,35 +157,25 @@ export const DebtListView = ({ Data, category }) => {
       </td>
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p className="text-black">
-            {getFormattedValue(user, record?.MonthlyBudget)}
-          </p>
+          <p className="text-black">{getFormattedValue(user, record?.MonthlyBudget)}</p>
         </div>
       </td>
 
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p className="text-black">
-            {getFormattedValue(user, 12 * record?.MonthlyBudget)}
-          </p>
+          <p className="text-black">{getFormattedValue(user, 12 * record?.MonthlyBudget)}</p>
         </div>
       </td>
 
       <td className="min-w-max p-2 border-l border-r border-gray-200">
         <div className="flex items-center text-left gap-3 justify-start">
           <FaEdit
-            className={clsx(
-              `text-editcolor`,
-              "hover:text-orange-500 font-semibold cursor-pointer sm:px-0"
-            )}
+            className={clsx(`text-editcolor`, "hover:text-orange-500 font-semibold cursor-pointer sm:px-0")}
             onClick={() => editClick(record)}
           />
 
           <RiDeleteBin2Fill
-            className={clsx(
-              `text-deletecolor`,
-              "hover:text-red-500 font-semibold cursor-pointer sm:px-0"
-            )}
+            className={clsx(`text-deletecolor`, "hover:text-red-500 font-semibold cursor-pointer sm:px-0")}
             onClick={() => deleteClick(record.id)}
           />
         </div>
@@ -276,9 +234,7 @@ export const DebtListView = ({ Data, category }) => {
               <table className="w-[97%] ml-5 -mb-5">
                 <thead>
                   <tr>
-                    <th className="p-2 w-full uppercase bg-black text-white flex items-center justify-center">
-                      {category}
-                    </th>
+                    <th className="p-2 w-full uppercase bg-black text-white flex items-center justify-center">{category}</th>
                   </tr>
                 </thead>
               </table>
@@ -295,19 +251,8 @@ export const DebtListView = ({ Data, category }) => {
           </div>
         </div>
       )}
-      <AddDebt
-        open={open}
-        setOpen={setOpen}
-        recordData={selected}
-        key={new Date().getTime().toString()}
-        chatUsers={selectedChatUsers}
-      />
-      <ConfirmationDialog
-        isLoading={isLoading}
-        open={openDialog}
-        setOpen={setOpenDialog}
-        onClick={() => deleteHandler(selected)}
-      />
+      <AddDebt open={open} setOpen={setOpen} recordData={selected} key={new Date().getTime().toString()} />
+      <ConfirmationDialog isLoading={isLoading} open={openDialog} setOpen={setOpenDialog} onClick={() => deleteHandler(selected)} />
     </>
   );
 };

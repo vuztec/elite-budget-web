@@ -7,17 +7,9 @@ import useUserStore from "../../app/user";
 import { useQueryClient } from "react-query";
 import ConfirmationDialog from "../Dialogs";
 import axios from "../../config/axios";
-import { getProjectChatUsers } from "../../utils/users";
 import { handleAxiosResponseError } from "../../utils/handleResponseError";
-import {
-  getFormattedValue,
-  getMarketValueTotal,
-  getLoanBalanceTotal,
-  getMonthlyBudgetTotal,
-  getYearlyBudgetTotal,
-} from "../../utils/budget.calculation";
+import { getMonthlyBudgetTotal, getYearlyBudgetTotal } from "../../utils/budget.calculation";
 import AddExtraPay from "./AddExtraPay";
-const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
 export const ExtraPayListView = ({ gridData }) => {
   const { user } = useUserStore();
@@ -27,21 +19,16 @@ export const ExtraPayListView = ({ gridData }) => {
   const [openDialog, setOpenDialog] = useState(false);
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState(null);
-  const [selectedChatUsers, setSelectedChatUsers] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const deleteHandler = async (selected) => {
     setIsLoading(true);
-    await axios.delete(
-      `${SERVER_URL}/api/attachment/delete-file?type=project_id&id=${selected}`
-    );
+
     axios
-      .delete(`${SERVER_URL}/api/project/${selected}`)
+      .delete(`/api/project/${selected}`)
       .then(({ data }) => {
         console.log(data);
-        queryClient.setQueryData(["projects"], (prev) =>
-          prev.filter((project) => project.id !== selected)
-        );
+        queryClient.setQueryData(["projects"], (prev) => prev.filter((project) => project.id !== selected));
         setOpenDialog(false);
         setIsLoading(false);
       })
@@ -59,8 +46,6 @@ export const ExtraPayListView = ({ gridData }) => {
   const editClick = (el) => {
     setSelected(el);
     setOpen(true);
-    const chatUsers = getProjectChatUsers(el, taskData, costData, el.id, user);
-    setSelectedChatUsers(() => chatUsers);
   };
 
   console.log(gridData);
@@ -70,19 +55,11 @@ export const ExtraPayListView = ({ gridData }) => {
   const TableHeader = () => (
     <thead>
       <tr className="font-bold bg-black text-white border border-gray-400 text-left text-xs xl:text-sm">
-        <th className="border-l border-gray-300 p-2 text-xs xl:text-sm">
-          Extra Pay Date
-        </th>
-        <th className="border-l border-gray-300 p-2 text-xs xl:text-sm">
-          Self
-        </th>
-        <th className="border-l border-gray-300 p-2 text-xs xl:text-sm">
-          Partner
-        </th>
+        <th className="border-l border-gray-300 p-2 text-xs xl:text-sm">Extra Pay Date</th>
+        <th className="border-l border-gray-300 p-2 text-xs xl:text-sm">Self</th>
+        <th className="border-l border-gray-300 p-2 text-xs xl:text-sm">Partner</th>
 
-        <th className="p-2 border-l border-gray-300 text-xs xl:text-sm">
-          Actions
-        </th>
+        <th className="p-2 border-l border-gray-300 text-xs xl:text-sm">Actions</th>
       </tr>
     </thead>
   );
@@ -112,18 +89,12 @@ export const ExtraPayListView = ({ gridData }) => {
       <td className="min-w-max p-2 border-l border-r border-gray-200">
         <div className="flex items-center text-left gap-3 justify-start">
           <FaEdit
-            className={clsx(
-              `text-editcolor`,
-              "hover:text-orange-500 font-semibold cursor-pointer sm:px-0"
-            )}
+            className={clsx(`text-editcolor`, "hover:text-orange-500 font-semibold cursor-pointer sm:px-0")}
             onClick={() => editClick(record)}
           />
 
           <RiDeleteBin2Fill
-            className={clsx(
-              `text-deletecolor`,
-              "hover:text-red-500 font-semibold cursor-pointer sm:px-0"
-            )}
+            className={clsx(`text-deletecolor`, "hover:text-red-500 font-semibold cursor-pointer sm:px-0")}
             onClick={() => deleteClick(record.id)}
           />
         </div>
@@ -159,9 +130,7 @@ export const ExtraPayListView = ({ gridData }) => {
             <table className="w-[97%] ml-5 -mb-5">
               <thead>
                 <tr>
-                  <th className="p-2 w-full uppercase bg-black text-white flex items-center justify-center">
-                    EXTRA PAY CHECKS
-                  </th>
+                  <th className="p-2 w-full uppercase bg-black text-white flex items-center justify-center">EXTRA PAY CHECKS</th>
                 </tr>
               </thead>
             </table>
@@ -178,19 +147,8 @@ export const ExtraPayListView = ({ gridData }) => {
         </div>
       </div>
 
-      <AddExtraPay
-        open={open}
-        setOpen={setOpen}
-        recordData={selected}
-        key={new Date().getTime().toString()}
-        chatUsers={selectedChatUsers}
-      />
-      <ConfirmationDialog
-        isLoading={isLoading}
-        open={openDialog}
-        setOpen={setOpenDialog}
-        onClick={() => deleteHandler(selected)}
-      />
+      <AddExtraPay open={open} setOpen={setOpen} recordData={selected} key={new Date().getTime().toString()} />
+      <ConfirmationDialog isLoading={isLoading} open={openDialog} setOpen={setOpenDialog} onClick={() => deleteHandler(selected)} />
     </>
   );
 };
