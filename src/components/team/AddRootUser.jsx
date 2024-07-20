@@ -74,6 +74,7 @@ export const AddRootUser = ({ open, setOpen }) => {
         .then(({ data }) => {
           setUser(data);
           setIsLoading(() => false);
+          setOpen(false);
           toast.update(id, {
             render: "Profile Updated Successfully",
             type: "success",
@@ -103,7 +104,7 @@ export const AddRootUser = ({ open, setOpen }) => {
             autoClose: 3000,
           });
           setIsLoading(() => false);
-
+          setOpen(false);
           navigate("/login");
         })
         .catch((err) => {
