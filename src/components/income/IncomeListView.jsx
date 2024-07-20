@@ -30,10 +30,10 @@ export const IncomeListView = ({ gridData }) => {
   const deleteHandler = async (selected) => {
     setIsLoading(true);
     axios
-      .delete(`/api/icome/${selected}`)
+      .delete(`/api/income/${selected}`)
       .then(({ data }) => {
         console.log(data);
-        queryClient.setQueryData(["incomes"], (prev) => prev.filter((income) => income.id !== selected));
+        queryClient.setQueryData(["incomes"], (prev) => prev.map((income) => (income.id === selected ? { ...income, ...data } : income)));
         setOpenDialog(false);
         setIsLoading(false);
       })

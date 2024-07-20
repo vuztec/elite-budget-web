@@ -143,7 +143,7 @@ export const TransactionListView = ({ Data, bankName }) => {
 
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p className="text-black">{record?.IsCleared}</p>
+          <p className="text-black">{record?.IsCleared ? "Yes" : "No"}</p>
         </div>
       </td>
 

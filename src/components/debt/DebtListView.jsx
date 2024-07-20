@@ -40,7 +40,7 @@ export const DebtListView = ({ Data, category }) => {
       .delete(`/api/debt/${selected}`)
       .then(({ data }) => {
         console.log(data);
-        queryClient.setQueryData(["debts"], (prev) => prev.filter((debt) => debt.id !== selected));
+        queryClient.setQueryData(["debts"], (prev) => prev.map((debt) => (debt.id === selected ? { ...debt, ...data } : debt)));
         setOpenDialog(false);
         setIsLoading(false);
       })

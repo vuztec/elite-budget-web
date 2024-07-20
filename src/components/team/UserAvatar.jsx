@@ -26,9 +26,9 @@ export const UserAvatar = () => {
   };
 
   const editClick = (el) => {
-    navigate("/profile");
-    // setSelected(el);
-    // setOpen(true);
+    // navigate("/profile");
+    setSelected(el);
+    setOpen(true);
   };
 
   const editPasswordClick = (el) => {

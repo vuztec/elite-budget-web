@@ -44,7 +44,7 @@ export const ExpenseListView = ({ Data, category, showColumn }) => {
     axios
       .delete(`/api/expenses/${selected}`)
       .then(({ data }) => {
-        queryClient.setQueryData(["expenses"], (prev) => prev.filter((income) => income.id !== selected));
+        queryClient.setQueryData(["expenses"], (prev) => prev.map((item) => (item.id === selected ? { ...item, ...data } : item)));
         setOpenDialog(false);
         setIsLoading(false);
       })

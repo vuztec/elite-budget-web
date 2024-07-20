@@ -28,7 +28,9 @@ export const RetirementListView = ({ gridData }) => {
       .delete(`/api/savings-retirements/${selected}`)
       .then(({ data }) => {
         console.log(data);
-        queryClient.setQueryData(["retirements"], (prev) => prev.filter((retirement) => retirement.id !== selected));
+        queryClient.setQueryData(["retirements"], (prev) =>
+          prev.map((retirement) => (retirement.id === selected ? { ...retirement, ...data } : retirement))
+        );
         setOpenDialog(false);
         setIsLoading(false);
       })

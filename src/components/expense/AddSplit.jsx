@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import ModalWrapper from "../ModalWrapper";
 import { Dialog } from "@headlessui/react";
 import Textbox from "../Textbox";
@@ -23,27 +23,50 @@ export const AddSplit = ({ open, setOpen, recordData }) => {
     register,
     handleSubmit,
     control,
+    setValue,
     formState: { errors },
   } = useForm({ defaultValues });
+
+  const self = useWatch({ control, name: "SelfAmount" });
+
+  useEffect(() => {
+    if (self) setValue("PartnerAmount", 100 - self);
+    else setValue("PartnerAmount", 100);
+  }, [self]);
 
   // Define handleOnSubmit function to handle form submission
   const handleOnSubmit = async (data) => {
     const numericSelectedID = Number(recordData.id);
     setIsLoading(() => true);
 
-    axios
-      .put("/api/project/" + numericSelectedID, data)
-      .then(({ data }) => {
-        queryClient.setQueryData(["projects"], (prev) =>
-          prev.map((project) => (project.id === numericSelectedID ? { ...project, ...data.items } : project))
-        );
-        setIsLoading(() => false);
-        setOpen(false);
-      })
-      .catch((err) => {
-        setIsLoading(() => false);
-        console.log(handleAxiosResponseError(err));
-      });
+    if (!recordData?.id)
+      axios
+        .post("/api/joint-split/" + numericSelectedID, data)
+        .then(({ data }) => {
+          queryClient.setQueryData(["jointsplits"], (prev) =>
+            prev.map((item) => (item.id === numericSelectedID ? { ...item, ...data } : item))
+          );
+          setIsLoading(() => false);
+          setOpen(false);
+        })
+        .catch((err) => {
+          setIsLoading(() => false);
+          console.log(handleAxiosResponseError(err));
+        });
+    else
+      axios
+        .patch("/api/joint-split/" + numericSelectedID, data)
+        .then(({ data }) => {
+          queryClient.setQueryData(["jointsplits"], (prev) =>
+            prev.map((item) => (item.id === numericSelectedID ? { ...item, ...data } : item))
+          );
+          setIsLoading(() => false);
+          setOpen(false);
+        })
+        .catch((err) => {
+          setIsLoading(() => false);
+          console.log(handleAxiosResponseError(err));
+        });
   };
 
   return (
@@ -69,14 +92,11 @@ export const AddSplit = ({ open, setOpen, recordData }) => {
               />
               <Textbox
                 type="number"
-                name="Goal"
+                name="PartnerAmount"
                 label="Partner % Split"
                 disabled={true}
                 className="w-full rounded"
-                register={register("100 - SelfAmount", {
-                  valueAsNumber: true,
-                })}
-                error={errors.Goal ? errors.Goal.message : ""}
+                register={register("PartnerAmount")}
               />
             </div>
           </div>
@@ -89,7 +109,7 @@ export const AddSplit = ({ open, setOpen, recordData }) => {
             <div className="gap-3 p-3 mt-4 flex flex-row-reverse">
               <Button
                 type="submit"
-                className="w-fit flex flex-row-reverse items-center gap-1 text-white"
+                className="w-fit flex flex-row-reverse items-center gap-1 text-white bg-black"
                 label="Submit"
                 icon={<IoMdSend />}
               />

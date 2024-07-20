@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Country, State, City } from "country-state-city";
+import { Country } from "country-state-city";
 import { useForm, useWatch } from "react-hook-form";
 import ModalWrapper from "../ModalWrapper";
 import { Dialog } from "@headlessui/react";
@@ -10,13 +10,13 @@ import Button from "../Button";
 import axios from "../../config/axios";
 import { IoMdSend } from "react-icons/io";
 import { TiCancel } from "react-icons/ti";
-import { dateFormatter } from "../../utils";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import useUserStore from "../../app/user";
 import { DateFormats } from "../../utils/budget.filter";
+import { handleAxiosResponseError } from "../../utils/handleResponseError";
 
-export const AddRootUser = ({ open, setOpen, recordData }) => {
+export const AddRootUser = ({ open, setOpen }) => {
   const CountryData = Country.getAllCountries();
   const { setUser, user } = useUserStore();
 
@@ -25,22 +25,9 @@ export const AddRootUser = ({ open, setOpen, recordData }) => {
     label: format.label,
   }));
 
-  const [countryCode, setCountryCode] = useState(
-    recordData ? CountryData.find((country) => country.name === recordData.Country)?.isoCode : ""
-  );
-  const [states, setStates] = useState(recordData && countryCode ? State.getStatesOfCountry(countryCode) : []);
-
-  const [stateCode, setStateCode] = useState(recordData ? states.find((state) => state.name === recordData.State)?.isoCode : "");
-  const [cities, setCities] = useState(recordData && countryCode && stateCode ? City.getCitiesOfState(countryCode, stateCode) : []);
+  const [countryCode, setCountryCode] = useState(user ? CountryData.find((country) => country.name === user.Country)?.isoCode : "");
 
   const navigate = useNavigate();
-
-  const defaultValues = recordData
-    ? {
-        ...recordData,
-        DateOfBirth: recordData?.DateOfBirth ? dateFormatter(recordData?.DateOfBirth) : "",
-      }
-    : {};
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -51,76 +38,85 @@ export const AddRootUser = ({ open, setOpen, recordData }) => {
     setValue,
     reset,
     formState: { errors },
-  } = useForm({ defaultValues });
+  } = useForm();
 
   const Password = useWatch({ control, name: "Password" });
 
   useEffect(() => {
-    if (recordData?.id) {
-      setValue("Country", recordData.Country);
-      setValue("State", recordData.State);
-      setValue("City", recordData.City);
+    if (user?.id) {
+      setValue("FullName", user.FullName);
+      setValue("Email", user.Email);
+      setValue("Contact", user.Contact);
+      setValue("Currency", user.Currency);
+      setValue("PartnerAge", user.PartnerAge);
+      setValue("SelfAge", user.SelfAge);
+      setValue("Country", user.Country);
 
-      const country = CountryData.find((country) => country.name === recordData?.Country)?.isoCode;
+      const country = CountryData.find((country) => country.name === user?.Country)?.isoCode;
       setCountryCode(country);
-
-      setStates(() => State.getStatesOfCountry(country));
-
-      setStateCode(() => states.find((state) => state.name === recordData.State)?.isoCode);
     }
+
     return () => reset();
-  }, [recordData?.id]);
+  }, [user?.id, countryCode]);
 
   // Define handleOnSubmit function to handle form submission
   const handleOnSubmit = async (data) => {
     setIsLoading(() => true);
+
+    const id = toast.loading("Loading....");
     delete data.ConfirmPassword;
-    try {
-      if (recordData?.id) {
-        delete data.id;
-        const response = await axios.put(`/api/rootuser/${recordData?.id}`, data);
-        if (response.status === 201 || response.status === 203) {
-          // Adjusted status code check
-          // Handle success
+
+    if (user?.id) {
+      delete data.Password;
+      console.log(data);
+      axios
+        .patch("/api/rootusers/" + user.id, data)
+        .then(({ data }) => {
+          setUser(data);
+          setIsLoading(() => false);
+          toast.update(id, {
+            render: "Profile Updated Successfully",
+            type: "success",
+            isLoading: false,
+            autoClose: 3000,
+          });
+        })
+        .catch((err) => {
+          console.log("Error : ", err);
           setIsLoading(() => false);
 
-          toast.success("Profile Updated Successfully");
-          // data.id = recordData.id;
-          if (user?.id === recordData?.id) {
-            setUser(response.data.items, response.data.items);
-          }
-          setOpen(false);
-        } else {
-          // Handle error
+          toast.update(id, {
+            render: handleAxiosResponseError(err),
+            type: "error",
+            isLoading: false,
+            autoClose: 3000,
+          });
+        });
+    } else {
+      axios
+        .post("/api/rootusers", data)
+        .then(({ data }) => {
+          toast.update(id, {
+            render: "Please login to continue",
+            type: "success",
+            isLoading: false,
+            autoClose: 3000,
+          });
           setIsLoading(() => false);
 
-          console.error("Failed to update profile");
-        }
-      } else {
-        const response = await axios.post(`/api/rootuser`, data);
-        if (response.status === 201 || response.status === 203) {
-          // Adjusted status code check
-          // Handle success
+          navigate("/login");
+        })
+        .catch((err) => {
+          console.log("Error : ", err);
           setIsLoading(() => false);
 
-          toast.success("Please login to continue");
-          navigate("/login/admin");
-          // data.id = recordData.id;
-          if (user?.id === recordData?.id) {
-            setUser(response.data.items, response.data.items);
-          }
-          setOpen(false);
-        } else {
-          // Handle error
-          setIsLoading(() => false);
-
-          console.error("Failed to update profile");
-        }
-      }
-    } catch (error) {
-      setIsLoading(() => false);
-
-      console.error("Error:", error);
+          toast.update(id, {
+            render: handleAxiosResponseError(err),
+            type: "error",
+            isLoading: false,
+            autoClose: 3000,
+          });
+        });
     }
   };
 
@@ -134,17 +130,7 @@ export const AddRootUser = ({ open, setOpen, recordData }) => {
       setCountryCode(selCountryCode);
 
       setValue("Separator", "en-" + selCountryCode);
-      const states = State.getStatesOfCountry(selCountryCode);
-      setStates(() => states);
     }
-  };
-
-  const handleStateChange = (e) => {
-    const isoCode = e.target.value;
-    const state = State.getStateByCodeAndCountry(isoCode, countryCode);
-    setValue("State", state.name);
-    const cities = City.getCitiesOfState(countryCode, state.isoCode);
-    setCities(() => cities);
   };
 
   return (
@@ -152,7 +138,7 @@ export const AddRootUser = ({ open, setOpen, recordData }) => {
       <ModalWrapper open={open} setOpen={setOpen}>
         <form onSubmit={handleSubmit(handleOnSubmit)} className="">
           <Dialog.Title as="h2" className="text-base font-bold leading-6 text-gray-900 mb-4">
-            {recordData ? "UPDATE USER PROFILE" : "CREATE NEW ACCOUNT"}
+            {user ? "UPDATE USER PROFILE" : "CREATE NEW ACCOUNT"}
           </Dialog.Title>
           <div className="mt-2 flex flex-col gap-6 overflow-y-scroll bg-scroll">
             <div className="flex flex-col gap-6 w-full">
@@ -231,7 +217,7 @@ export const AddRootUser = ({ open, setOpen, recordData }) => {
                 />
               </div>
             </div>
-            {recordData?.length < 1 && (
+            {user?.length < 1 && (
               <div className="flex flex-col gap-6 w-full">
                 <Textbox
                   placeholder="Enter Password"

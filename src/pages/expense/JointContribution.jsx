@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import Loading from "../../components/Loader";
-import { useQuery } from "react-query";
+import { useQuery, useQueryClient } from "react-query";
 import { getActiveAccount } from "../../utils/permissions";
 import Package from "../../package/Package";
 import { getDebts, getExpenses, getIncomes, getJointSplits, getRetirements, getSavings } from "../../config/api";
@@ -23,6 +23,8 @@ import {
   getUnformattedMonthlyBudgetTotal,
 } from "../../utils/budget.calculation";
 import { FaEdit, FaRegThumbsUp } from "react-icons/fa";
+import axios from "../../config/axios";
+import { handleAxiosResponseError } from "../../utils/handleResponseError";
 
 export const JointContribution = () => {
   const { user } = useUserStore();
@@ -34,6 +36,7 @@ export const JointContribution = () => {
   const [selectedSelfAmount, setSelectedSelfAmount] = useState("");
   const [totalJointExpense, setTotalJointExpense] = useState(0);
   const selfPercentage = selectedSelfAmount.SelfAmount ? Number(selectedSelfAmount.SelfAmount) : "";
+  const queryClient = useQueryClient();
 
   const activeAccount = getActiveAccount(root);
 
@@ -114,10 +117,10 @@ export const JointContribution = () => {
   const deleteHandler = async (selected) => {
     setIsLoading(true);
     axios
-      .delete(`/api/project/${selected}`)
+      .delete(`/api/joint-split/${selected}`)
       .then(({ data }) => {
         console.log(data);
-        queryClient.setQueryData(["projects"], (prev) => prev.filter((project) => project.id !== selected));
+        queryClient.setQueryData(["jointsplits"], (prev) => prev.filter((joint) => joint.id !== selected));
         setOpenDialog(false);
         setIsLoading(false);
       })

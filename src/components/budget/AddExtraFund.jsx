@@ -61,7 +61,7 @@ export const AddExtraFund = ({ open, setOpen, recordData }) => {
         .patch("/api/extra-funds-tracker/" + numericSelectedID, data)
         .then(({ data }) => {
           queryClient.setQueryData(["extrafunds"], (prev) =>
-            prev.map((fund) => (fund.id === numericSelectedID ? { ...fund, ...data.items } : fund))
+            prev.map((fund) => (fund.id === numericSelectedID ? { ...fund, ...data } : fund))
           );
           setIsLoading(() => false);
           setOpen(false);

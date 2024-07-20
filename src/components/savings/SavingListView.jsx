@@ -28,7 +28,7 @@ export const SavingListView = ({ gridData }) => {
       .delete(`/api/savings-retirements/${selected}`)
       .then(({ data }) => {
         console.log(data);
-        queryClient.setQueryData(["savings"], (prev) => prev.filter((saving) => saving.id !== selected));
+        queryClient.setQueryData(["savings"], (prev) => prev.map((saving) => (saving.id === selected ? { ...saving, ...data } : saving)));
         setOpenDialog(false);
         setIsLoading(false);
       })
