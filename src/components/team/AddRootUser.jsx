@@ -25,7 +25,11 @@ export const AddRootUser = ({ open, setOpen }) => {
     label: format.label,
   }));
 
-  const [countryCode, setCountryCode] = useState(user ? CountryData.find((country) => country.name === user.Country)?.isoCode : "");
+  const [countryCode, setCountryCode] = useState(
+    user
+      ? CountryData.find((country) => country.name === user.Country)?.isoCode
+      : ""
+  );
 
   const navigate = useNavigate();
 
@@ -52,7 +56,9 @@ export const AddRootUser = ({ open, setOpen }) => {
       setValue("SelfAge", user.SelfAge);
       setValue("Country", user.Country);
 
-      const country = CountryData.find((country) => country.name === user?.Country)?.isoCode;
+      const country = CountryData.find(
+        (country) => country.name === user?.Country
+      )?.isoCode;
       setCountryCode(country);
     }
 
@@ -123,7 +129,9 @@ export const AddRootUser = ({ open, setOpen }) => {
   const handleCountryChange = (e) => {
     if (e && e.target?.value) {
       const selCountry = e.target?.value;
-      const targetCountry = CountryData.find((item) => item?.isoCode === selCountry);
+      const targetCountry = CountryData.find(
+        (item) => item?.isoCode === selCountry
+      );
       setValue("Country", targetCountry.name);
       setValue("CountryCurrency", targetCountry.currency);
       const selCountryCode = targetCountry ? targetCountry.isoCode : "";
@@ -137,7 +145,10 @@ export const AddRootUser = ({ open, setOpen }) => {
     <>
       <ModalWrapper open={open} setOpen={setOpen}>
         <form onSubmit={handleSubmit(handleOnSubmit)} className="">
-          <Dialog.Title as="h2" className="text-base font-bold leading-6 text-gray-900 mb-4">
+          <Dialog.Title
+            as="h2"
+            className="text-base font-bold leading-6 text-gray-900 mb-4"
+          >
             {user ? "UPDATE USER PROFILE" : "CREATE NEW ACCOUNT"}
           </Dialog.Title>
           <div className="mt-2 flex flex-col gap-6 overflow-y-scroll bg-scroll">
@@ -155,6 +166,11 @@ export const AddRootUser = ({ open, setOpen }) => {
                   error={errors.FullName ? errors.FullName.message : ""}
                 />
               </div>
+              <p className="text-[11px] text-gray-500">
+                NOTE: Can deduct the years from your age if you didn't start
+                working until you completed an advanced degree, served in the
+                military or were disabled.
+              </p>
               <div className="w-full">
                 <Textbox
                   placeholder="Enter Amount"
@@ -164,7 +180,8 @@ export const AddRootUser = ({ open, setOpen }) => {
                   className="w-full rounded"
                   register={register("SelfAge", {
                     valueAsNumber: true,
-                    validate: (value) => value >= 0 || "Age must be zero or positive",
+                    validate: (value) =>
+                      value >= 0 || "Age must be zero or positive",
                   })}
                   error={errors.SelfAge ? errors.SelfAge.message : ""}
                 />
@@ -178,7 +195,8 @@ export const AddRootUser = ({ open, setOpen }) => {
                   className="w-full rounded"
                   register={register("PartnerAge", {
                     valueAsNumber: true,
-                    validate: (value) => value >= 0 || "Age must be zero or positive",
+                    validate: (value) =>
+                      value >= 0 || "Age must be zero or positive",
                   })}
                   error={errors.PartnerAge ? errors.PartnerAge.message : ""}
                 />
@@ -239,9 +257,12 @@ export const AddRootUser = ({ open, setOpen }) => {
                   className="w-full rounded"
                   register={register("ConfirmPassword", {
                     required: "Confirm Password is required!",
-                    validate: (value) => value === Password || "Passwords do not match",
+                    validate: (value) =>
+                      value === Password || "Passwords do not match",
                   })}
-                  error={errors.ConfirmPassword ? errors.ConfirmPassword.message : ""}
+                  error={
+                    errors.ConfirmPassword ? errors.ConfirmPassword.message : ""
+                  }
                 />
               </div>
             )}
