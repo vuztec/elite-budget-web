@@ -62,8 +62,8 @@ export const SidebarLinks = [
     icon: <FaCashRegister />,
     dropdown: false,
     sub: [
-      { label: "Bank Transactions", link: "/bank/bank-transactions" },
       { label: "Bank Accounts", link: "/bank/bank-account" },
+      { label: "Bank Transactions", link: "/bank/bank-transactions" },
     ],
   },
   {
@@ -73,8 +73,8 @@ export const SidebarLinks = [
     icon: <MdAreaChart />,
     dropdown: false,
     sub: [
-      { label: "Budget Details", link: "/budget/budget-details" },
       { label: "Budget Goals", link: "/budget/budget-goals" },
+      { label: "Budget Details", link: "/budget/budget-details" },
       { label: "Checklist", link: "/budget/checklist" },
       { label: "Extra Funds Tracker", link: "/budget/extra-funds-tracker" },
     ],

@@ -63,8 +63,14 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="//income/income-records" element={<IncomeRecords />} />
           <Route path="/income/extra-pay-dates" element={<ExtraPayDates />} />
-          <Route path="/expenses/expense-records" element={<ExpenseRecords />} />
-          <Route path="/expenses/joint-contribution" element={<JointContribution />} />
+          <Route
+            path="/expenses/expense-records"
+            element={<ExpenseRecords />}
+          />
+          <Route
+            path="/expenses/joint-contribution"
+            element={<JointContribution />}
+          />
           <Route path="/debts" element={<OtherDebts />} />
           <Route path="/retirement" element={<Retirement />} />
           <Route path="/savings" element={<Savings />} />
@@ -73,7 +79,10 @@ function App() {
           <Route path="/budget/budget-details" element={<BudgetDetails />} />
           <Route path="/budget/budget-goals" element={<BudgetGoals />} />
           <Route path="/budget/checklist" element={<Checklist />} />
-          <Route path="/budget/extra-funds-tracker" element={<ExtraFundsTracker />} />
+          <Route
+            path="/budget/extra-funds-tracker"
+            element={<ExtraFundsTracker />}
+          />
           <Route path="/net-worth" element={<Networth />} />
           <Route path="/profile" element={<Profile />} />
         </Route>

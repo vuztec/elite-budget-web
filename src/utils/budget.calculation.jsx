@@ -1,4 +1,5 @@
 import { format } from "date-fns";
+import { FaThumbsDown, FaThumbsUp } from "react-icons/fa";
 
 export const getFormattedDate = (user, date) => {
   const formattedDate = date ? format(new Date(date), user.DateFormat) : "";
@@ -292,7 +293,7 @@ export const getNetYearlyTotal = (user, data) => {
 };
 
 export const getMarketValueTotal = (user, data) => {
-  const Amount = data.reduce((accumulator, record) => {
+  const Amount = data?.reduce((accumulator, record) => {
     const amount = record?.MarketValue || 0;
     return accumulator + Number(amount);
   }, 0);
@@ -301,7 +302,7 @@ export const getMarketValueTotal = (user, data) => {
 };
 
 export const getLoanBalanceTotal = (user, data) => {
-  const Amount = data.reduce((accumulator, record) => {
+  const Amount = data?.reduce((accumulator, record) => {
     const amount = record?.LoanBalance || 0;
     return accumulator + Number(amount);
   }, 0);
@@ -310,7 +311,7 @@ export const getLoanBalanceTotal = (user, data) => {
 };
 
 export const getMonthlyBudgetTotal = (user, data) => {
-  const Amount = data.reduce((accumulator, record) => {
+  const Amount = data?.reduce((accumulator, record) => {
     const amount = record?.MonthlyBudget || 0;
     return accumulator + Number(amount);
   }, 0);
@@ -321,7 +322,7 @@ export const getMonthlyBudgetTotal = (user, data) => {
 export const getYearlyBudgetTotal = (user, data) => {
   const Amount =
     12 *
-    data.reduce((accumulator, record) => {
+    data?.reduce((accumulator, record) => {
       const amount = record?.MonthlyBudget || 0;
       return accumulator + Number(amount);
     }, 0);
@@ -550,4 +551,264 @@ export const getPartnerContributionPercentage = (selfPerc, incomes) => {
   }
   const formattedAmount = 100 - Number(percentage);
   return formattedAmount.toFixed(0);
+};
+
+///***************************FINAL BUDGET***************************** */
+
+export const getNegativeFormattedValue = (user, Amount) => {
+  const usedCurrency = user?.Currency ? user?.Currency : "$";
+  const separator = user?.Separator ? user?.Separator : "en-us";
+
+  let formattedAmount = "";
+  if (Amount !== "") {
+    formattedAmount =
+      usedCurrency +
+      new Intl.NumberFormat(separator, {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      }).format(Amount);
+  }
+
+  return formattedAmount;
+};
+
+export const getBudgetGoal = (goals, category) => {
+  const goal = goals.find((g) => g.Category === category);
+  const perc = goal?.Percentage;
+  return Number(perc).toFixed(2);
+};
+
+export const getUnformattedGrossYearlyTotal = (data) => {
+  const Amount = data.reduce((accumulator, record) => {
+    const income = record?.GrossAmount || 0;
+    const payFrequency = record?.Frequency || "";
+
+    let yearlyIncome = 0;
+
+    switch (payFrequency) {
+      case "Yearly":
+        yearlyIncome = income;
+        break;
+      case "Monthly":
+        yearlyIncome = income * 12;
+        break;
+      case "Semi-Monthly":
+        yearlyIncome = income * 24;
+        break;
+      case "Weekly":
+        yearlyIncome = income * 52;
+        break;
+      case "Bi-Weekly":
+        yearlyIncome = income * 26;
+        break;
+      default:
+        yearlyIncome = 0;
+    }
+
+    return accumulator + Number(yearlyIncome);
+  }, 0);
+  return Amount;
+};
+
+export const getUnformattedNetYearlyTotal = (data) => {
+  const Amount = data.reduce((accumulator, record) => {
+    const income = record?.NetAmount || 0;
+    const payFrequency = record?.Frequency || "";
+
+    let yearlyIncome = 0;
+
+    switch (payFrequency) {
+      case "Yearly":
+        yearlyIncome = income;
+        break;
+      case "Monthly":
+        yearlyIncome = income * 12;
+        break;
+      case "Semi-Monthly":
+        yearlyIncome = income * 24;
+        break;
+      case "Weekly":
+        yearlyIncome = income * 52;
+        break;
+      case "Bi-Weekly":
+        yearlyIncome = income * 26;
+        break;
+      default:
+        yearlyIncome = 0;
+    }
+
+    return accumulator + Number(yearlyIncome);
+  }, 0);
+  return Amount;
+};
+
+export const getUnformattedYearlyBudgetTotal = (data) => {
+  const Amount =
+    12 *
+    data.reduce((accumulator, record) => {
+      const amount = record?.MonthlyBudget || 0;
+      return accumulator + Number(amount);
+    }, 0);
+  return Amount;
+};
+
+export const getActualGoal = (incomeData, budgetData, category) => {
+  const budget = getUnformattedYearlyBudgetTotal(budgetData);
+  let income = getUnformattedNetYearlyTotal(incomeData);
+  if (category === "Retirement") {
+    income = getUnformattedGrossYearlyTotal(incomeData);
+  }
+  const perc = (Number(budget) / Number(income)) * 100;
+  return Number(perc).toFixed(2);
+};
+
+export const getCatActualGoal = (incomeData, budgetData, category) => {
+  const filteredData = budgetData.filter((data) => data.Category === category);
+  const budget = getUnformattedYearlyBudgetTotal(filteredData);
+  const income = getUnformattedNetYearlyTotal(incomeData);
+
+  const perc = (Number(budget) / Number(income)) * 100;
+  return Number(perc).toFixed(2);
+};
+
+export const getIcon = (incomeData, budgetData, category, goals) => {
+  const budget = getUnformattedYearlyBudgetTotal(budgetData);
+  let income = getUnformattedNetYearlyTotal(incomeData);
+  if (category === "Retirement") {
+    income = getUnformattedGrossYearlyTotal(incomeData);
+  }
+  const actualPerc = (Number(budget) / Number(income)) * 100;
+  const goalPerc = getBudgetGoal(goals, category);
+  let icon = "";
+  if (category === "Retirement" || category === "Savings") {
+    if (actualPerc >= goalPerc) {
+      icon = <FaThumbsUp className="text-green-500 text-xl" />;
+    } else {
+      icon = <FaThumbsDown className="text-red-500 text-xl" />;
+    }
+  } else if (category === "Debts" || category === "Expenses") {
+    if (actualPerc >= goalPerc) {
+      icon = <FaThumbsDown className="text-red-500 text-xl" />;
+    } else {
+      icon = <FaThumbsUp className="text-green-500 text-xl" />;
+    }
+  }
+  return icon;
+};
+
+export const getCatIcon = (incomeData, budgetData, category, goals) => {
+  const filteredData = budgetData.filter((data) => data.Category === category);
+  const budget = getUnformattedYearlyBudgetTotal(filteredData);
+  let income = getUnformattedNetYearlyTotal(incomeData);
+
+  const actualPerc = (Number(budget) / Number(income)) * 100;
+  const goalPerc = getBudgetGoal(goals, category);
+  console.log(category, goalPerc);
+  let icon = "";
+  if (actualPerc >= goalPerc && goalPerc > 0) {
+    icon = <FaThumbsDown className="text-red-500 text-xl" />;
+  } else if (actualPerc < goalPerc && goalPerc > 0) {
+    icon = <FaThumbsUp className="text-green-500 text-xl" />;
+  }
+  return icon;
+};
+
+export const getLabel = (incomeData, budgetData, category, goals) => {
+  const budget = getUnformattedYearlyBudgetTotal(budgetData);
+  let income = getUnformattedNetYearlyTotal(incomeData);
+  if (category === "Retirement") {
+    income = getUnformattedGrossYearlyTotal(incomeData);
+  }
+  const actualPerc = (Number(budget) / Number(income)) * 100;
+  const goalPerc = getBudgetGoal(goals, category);
+  let label = "Over/(Under) by";
+  if (category === "Retirement" || category === "Savings") {
+    if (actualPerc >= goalPerc) {
+      label = "Over by";
+    } else {
+      label = "Under by";
+    }
+  } else if (category === "Debts" || category === "Expenses") {
+    if (actualPerc >= goalPerc) {
+      label = "Under by";
+    } else {
+      label = "Over by";
+    }
+  }
+  return label;
+};
+
+export const getTotalLabel = (diff) => {
+  let label = "Over/Under Bubget by";
+  if (diff < 0) {
+    label = "Over Budget by";
+  } else if (diff > 0) {
+    label = "Under Budget by";
+  }
+  return label;
+};
+
+export const getDifference = (
+  incomeData,
+  budgetData,
+  category,
+  goals,
+  user
+) => {
+  const budget = getUnformattedYearlyBudgetTotal(budgetData);
+  let income = getUnformattedNetYearlyTotal(incomeData);
+  if (category === "Retirement") {
+    income = getUnformattedGrossYearlyTotal(incomeData);
+  }
+  const actualPerc = Number(budget) / Number(income);
+  const goalPerc = getBudgetGoal(goals, category) / 100;
+  let Amount = 0;
+  if (category === "Retirement" || category === "Savings") {
+    // Amount = (Number(actualPerc) / Number(goalPerc)) * Number(budget);
+    Amount =
+      Number(actualPerc) * Number(income) - Number(goalPerc) * Number(income);
+  } else if (category === "Debts" || category === "Expenses") {
+    Amount =
+      Number(goalPerc) * Number(income) - Number(actualPerc) * Number(income);
+  }
+  const formattedAmount = getNegativeFormattedValue(user, Amount);
+  return formattedAmount;
+};
+
+// Function to find unique budget items and their sum
+export const getUniqueBudgetItemsWithSum = (data) => {
+  const uniqueBudgetItems = new Set();
+  const budgetItemValue = {};
+  data?.forEach((record) => {
+    const budgetItem = record?.Category || "";
+    const monthlyPayment = record?.MonthlyBudget || 0;
+    if (!uniqueBudgetItems.has(budgetItem)) {
+      uniqueBudgetItems.add(budgetItem);
+      budgetItemValue[budgetItem] = 0;
+    }
+    budgetItemValue[budgetItem] += Number(monthlyPayment);
+  });
+
+  return {
+    uniqueBudgetItems: Array.from(uniqueBudgetItems),
+    budgetItemValue,
+  };
+};
+
+// Function to get unique descriptions and their sum values for each unique budget item
+export const getUniqueDescriptionsWithSumForEachBudgetItem = (data) => {
+  const uniqueDescriptions = {};
+  data?.forEach((record) => {
+    const budgetItem = record?.Category || "";
+    const description = record?.Description || "";
+    const monthlyPayment = record?.MonthlyBudget || 0;
+    if (!uniqueDescriptions[budgetItem]) {
+      uniqueDescriptions[budgetItem] = {};
+    }
+    if (!uniqueDescriptions[budgetItem][description]) {
+      uniqueDescriptions[budgetItem][description] = 0;
+    }
+    uniqueDescriptions[budgetItem][description] += Number(monthlyPayment);
+  });
+  return uniqueDescriptions;
 };

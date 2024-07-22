@@ -1,6 +1,13 @@
-export const incomeOwners = ["Self", "Partner"];
+export const incomeOwners = ["Self", "Partner", "Joint"];
+export const retirementOwners = ["Self", "Partner"];
 export const expenseOwners = ["Self", "Partner", "Joint"];
-export const paymentMethods = ["Auto Debit", "Auto Transfer", "Bill Pay", "Check or Cash", "Debit/Credit"];
+export const paymentMethods = [
+  "Auto Debit",
+  "Auto Transfer",
+  "Bill Pay",
+  "Check or Cash",
+  "Debit/Credit",
+];
 export const daydues = [
   "N/A",
   "01",
@@ -99,7 +106,9 @@ export const getCatGridData = (data, owner, catFilter) => {
 
   let catFilteredData;
   if (catFilter !== "All" && parseInt(catFilter) !== 0) {
-    catFilteredData = ownerFilteredData?.filter((item) => item.Category === catFilter);
+    catFilteredData = ownerFilteredData?.filter(
+      (item) => item.Category === catFilter
+    );
   } else {
     catFilteredData = ownerFilteredData;
   }
