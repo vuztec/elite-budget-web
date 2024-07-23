@@ -47,7 +47,9 @@ export const AddIncome = ({ open, setOpen, recordData }) => {
       .patch("/api/income/" + numericSelectedID, data)
       .then(({ data }) => {
         queryClient.setQueryData(["incomes"], (prev) =>
-          prev.map((income) => (income.id === numericSelectedID ? { ...income, ...data } : income))
+          prev.map((income) =>
+            income.id === numericSelectedID ? { ...income, ...data } : income
+          )
         );
         setIsLoading(() => false);
         setOpen(false);
@@ -61,8 +63,14 @@ export const AddIncome = ({ open, setOpen, recordData }) => {
   return (
     <>
       <ModalWrapper open={open} setOpen={setOpen}>
-        <form onSubmit={handleSubmit(handleOnSubmit)} className="w-full h-[70%]">
-          <Dialog.Title as="h2" className="text-base font-bold leading-6 text-gray-900 mb-4">
+        <form
+          onSubmit={handleSubmit(handleOnSubmit)}
+          className="w-full h-[70%]"
+        >
+          <Dialog.Title
+            as="h2"
+            className="text-base font-bold leading-6 text-gray-900 mb-4"
+          >
             {recordData ? "UPDATE INCOME RECORD" : "ADD NEW INCOME RECORD"}
           </Dialog.Title>
           <div className="mt-2 flex flex-col gap-6 overflow-y-scroll bg-scroll">
@@ -97,6 +105,7 @@ export const AddIncome = ({ open, setOpen, recordData }) => {
                 options={[
                   { value: "Self", label: "Self" },
                   { value: "Partner", label: "Partner" },
+                  { value: "Joint", label: "Joint" },
                 ]}
                 className="w-full rounded"
                 register={register("Owner", {
@@ -131,7 +140,8 @@ export const AddIncome = ({ open, setOpen, recordData }) => {
                 className="w-full rounded"
                 register={register("GrossAmount", {
                   valueAsNumber: true,
-                  validate: (value) => value > 0 || "Amount must be greater than zero or positive",
+                  validate: (value) =>
+                    value > 0 || "Amount must be greater than zero or positive",
                 })}
                 error={errors.GrossAmount ? errors.GrossAmount.message : ""}
               />
@@ -143,7 +153,8 @@ export const AddIncome = ({ open, setOpen, recordData }) => {
                 className="w-full rounded"
                 register={register("NetAmount", {
                   valueAsNumber: true,
-                  validate: (value) => value > 0 || "Amount must be greater than zero or positive",
+                  validate: (value) =>
+                    value > 0 || "Amount must be greater than zero or positive",
                 })}
                 error={errors.NetAmount ? errors.NetAmount.message : ""}
               />

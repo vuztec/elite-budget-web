@@ -115,3 +115,87 @@ export const getCatGridData = (data, owner, catFilter) => {
 
   return catFilteredData;
 };
+
+///************************CHECKLIST*************************** */
+
+export const getCombineData = (savings, expenses, retirement, debts) => {
+  const combinedArray = [];
+  // Function to add data from a specific category
+  const addData = (data, category) => {
+    data.forEach((item) => {
+      combinedArray.push({
+        Category: category,
+        BudgetItem: item.Category || "",
+        Description: item.Description || "",
+        DueDate: item.DueDate || "",
+        MonthlyBudget: item.MonthlyBudget || 0,
+        PaymentMethod: item.PaymentMethod || "",
+        NickName: item.NickName || "",
+      });
+    });
+  };
+  // Add data from each category
+  addData(debts, "DEBT PAYMENTS");
+  addData(expenses, "EXPENSE PAYMENTS");
+  addData(retirement, "RETIREMENT SAVINGS PAYMENTS");
+  addData(savings, "SAVING & INVESTING PAYMENTS");
+
+  return combinedArray;
+};
+
+export const getUniqueCategories = (combinedData) => {
+  const uniqueCategories = new Set();
+  combinedData.forEach((item) => {
+    uniqueCategories.add(item.Category);
+  });
+  return Array.from(uniqueCategories);
+};
+
+export const getUniqueBudgetItemsByCategory = (combinedData) => {
+  const uniqueBudgetItemsByCategory = {};
+  combinedData.forEach((item) => {
+    const category = item.Category;
+    const budgetItem = item.BudgetItem;
+    if (!uniqueBudgetItemsByCategory[category]) {
+      uniqueBudgetItemsByCategory[category] = new Set();
+    }
+    uniqueBudgetItemsByCategory[category].add(budgetItem);
+  });
+  // Convert sets to arrays
+  for (const category in uniqueBudgetItemsByCategory) {
+    uniqueBudgetItemsByCategory[category] = Array.from(
+      uniqueBudgetItemsByCategory[category]
+    );
+  }
+  return uniqueBudgetItemsByCategory;
+};
+
+export const getUniqueDescriptionsByCategory = (combinedData) => {
+  const uniqueDescriptionsByCategory = {};
+  combinedData.forEach((item) => {
+    const category = item.Category;
+    const budgetItem = item.BudgetItem;
+    const description = item.Description;
+    const DueDate = item.DueDate;
+    const paymentMethod = item.PaymentMethod;
+    const MonthlyBudget = item.MonthlyBudget;
+    const NickName = item.NickName;
+    if (!uniqueDescriptionsByCategory[category]) {
+      uniqueDescriptionsByCategory[category] = {};
+    }
+
+    if (!uniqueDescriptionsByCategory[category][budgetItem]) {
+      uniqueDescriptionsByCategory[category][budgetItem] = {};
+    }
+    if (!uniqueDescriptionsByCategory[category][budgetItem][description]) {
+      uniqueDescriptionsByCategory[category][budgetItem][description] = {
+        DueDate: DueDate,
+        PaymentMethod: paymentMethod,
+        MonthlyBudget: MonthlyBudget,
+        NickName: NickName,
+      };
+    }
+  });
+
+  return uniqueDescriptionsByCategory;
+};

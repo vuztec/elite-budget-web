@@ -11,7 +11,7 @@ import Select from "../../components/Select";
 import { getActiveAccount } from "../../utils/permissions";
 import Package from "../../package/Package";
 import { getRetirements } from "../../config/api";
-import { incomeOwners, getOwnerGridData } from "../../utils/budget.filter";
+import { getOwnerGridData, retirementOwners } from "../../utils/budget.filter";
 import { RetirementListView } from "../../components/retirement/RetirementListView";
 import { hasRecords } from "../../utils/budget.calculation";
 
@@ -37,7 +37,7 @@ export const Retirement = () => {
   console.log("data: ", gridData);
 
   ///-------------Filters Data Source --------------------------------///
-  const owners = incomeOwners.map((owner) => ({
+  const owners = retirementOwners.map((owner) => ({
     value: owner,
     label: owner,
   }));
