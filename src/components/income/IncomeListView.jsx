@@ -65,21 +65,33 @@ export const IncomeListView = ({ gridData }) => {
     setOpen(true);
   };
 
+  const sortDefaultClick = () => {
+    setIsSorting(false);
+  };
+  const sortUpClick = () => {
+    setIsSorting(true);
+    setOrder("asc");
+  };
+  const sortDownClick = () => {
+    setIsSorting(true);
+    setOrder("desc");
+  };
+
   //----------------CRUD----------------//
 
   const TableHeader = () => (
     <thead>
       <tr className="font-bold bg-[whitesmoke] text-black border border-gray-300 text-left">
         <th className="border-l border-gray-300 p-2">
-          <div className="flex justify-between">
+          <div className="flex justify-between items-center gap-2">
             <p>Owner</p>
             <div>
               {!isSorting ? (
-                <LiaSortSolid />
+                <LiaSortSolid onClick={() => sortDefaultClick()} />
               ) : order === "asc" ? (
-                <LiaSortUpSolid />
+                <LiaSortUpSolid onClick={() => sortUpClick()} />
               ) : (
-                <LiaSortDownSolid />
+                <LiaSortDownSolid onClick={() => sortDownClick()} />
               )}
             </div>
           </div>
