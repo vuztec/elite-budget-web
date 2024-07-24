@@ -17,6 +17,11 @@ import {
   getFormattedValue,
 } from "../../utils/budget.calculation";
 import ToolTip from "../tooltip";
+import {
+  LiaSortDownSolid,
+  LiaSortSolid,
+  LiaSortUpSolid,
+} from "react-icons/lia";
 
 export const IncomeListView = ({ gridData }) => {
   const { user } = useUserStore();
@@ -27,6 +32,8 @@ export const IncomeListView = ({ gridData }) => {
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isSorting, setIsSorting] = useState(false);
+  const [order, setOrder] = useState("");
 
   const deleteHandler = async (selected) => {
     setIsLoading(true);
@@ -63,7 +70,21 @@ export const IncomeListView = ({ gridData }) => {
   const TableHeader = () => (
     <thead>
       <tr className="font-bold bg-[whitesmoke] text-black border border-gray-300 text-left">
-        <th className="border-l border-gray-300 p-2">Owner</th>
+        <th className="border-l border-gray-300 p-2">
+          <div className="flex justify-between">
+            <p>Owner</p>
+            <div>
+              {!isSorting ? (
+                <LiaSortSolid />
+              ) : order === "asc" ? (
+                <LiaSortUpSolid />
+              ) : (
+                <LiaSortDownSolid />
+              )}
+            </div>
+          </div>
+        </th>
+
         <th className="border-l border-gray-300 p-2">Income Source</th>
         <th className="border-l border-gray-300 p-2">Frequency</th>
         <th className="border-l border-gray-300 p-1">

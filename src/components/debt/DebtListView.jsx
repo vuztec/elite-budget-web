@@ -82,7 +82,7 @@ export const DebtListView = ({ Data, category }) => {
   const TableHeader = () => (
     <thead>
       <tr className="font-bold bg-[whitesmoke] text-black border border-gray-300 text-left text-sm xl:text-[16px]">
-        <th className="border-l border-gray-300 p-2">Name</th>
+        <th className="border-l border-gray-300 p-2">Owner</th>
         <th className="border-l border-gray-300 p-2">Description</th>
         <th className="border-l border-gray-300 p-2">
           <div className="flex flex-col">
