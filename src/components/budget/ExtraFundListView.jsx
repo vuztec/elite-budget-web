@@ -12,11 +12,10 @@ import {
   getBankAccountTypeTotal,
   getFormattedValue,
   getFormattedValueType,
-  getMonthlyBudgetTotal,
-  getYearlyBudgetTotal,
 } from "../../utils/budget.calculation";
 import AddExtraFund from "./AddExtraFund";
 import { formatDate } from "../../utils";
+import ToolTip from "../tooltip";
 
 export const ExtraFundListView = ({ gridData }) => {
   const { user } = useUserStore();
@@ -134,21 +133,27 @@ export const ExtraFundListView = ({ gridData }) => {
 
       <td className="min-w-max p-2 border-l border-r border-gray-200">
         <div className="flex items-center text-left gap-3 justify-start">
-          <FaEdit
-            className={clsx(
-              `text-editcolor`,
-              "hover:text-orange-500 font-semibold cursor-pointer sm:px-0"
-            )}
-            onClick={() => editClick(record)}
-          />
+          <div className="group flex relative">
+            <FaEdit
+              className={clsx(
+                `text-editcolor`,
+                "hover:text-orange-500 font-semibold cursor-pointer sm:px-0"
+              )}
+              onClick={() => editClick(record)}
+            />
+            <ToolTip text={"Edit"} />
+          </div>
 
-          <RiDeleteBin2Fill
-            className={clsx(
-              `text-deletecolor`,
-              "hover:text-red-500 font-semibold cursor-pointer sm:px-0"
-            )}
-            onClick={() => deleteClick(record.id)}
-          />
+          <div className="group flex relative">
+            <RiDeleteBin2Fill
+              className={clsx(
+                `text-deletecolor`,
+                "hover:text-red-500 font-semibold cursor-pointer sm:px-0"
+              )}
+              onClick={() => deleteClick(record.id)}
+            />
+            <ToolTip text={"Delete"} />
+          </div>
         </div>
       </td>
     </tr>
@@ -194,7 +199,7 @@ export const ExtraFundListView = ({ gridData }) => {
             <table className="w-[97%] ml-5 -mb-5">
               <thead>
                 <tr>
-                  <th className="p-2 w-full uppercase bg-[whitesmoke] text-black  border-l border-t border-r border-gray-300 flex items-center justify-center">
+                  <th className="p-2 w-full uppercase bg-black text-white flex items-center justify-center">
                     EXTRA FUND TRACKER
                   </th>
                 </tr>

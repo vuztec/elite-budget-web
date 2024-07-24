@@ -15,6 +15,7 @@ import {
   getMonthlyBudgetTotal,
   getYearlyBudgetTotal,
 } from "../../utils/budget.calculation";
+import ToolTip from "../tooltip";
 
 export const RetirementListView = ({ gridData }) => {
   const { user } = useUserStore();
@@ -150,21 +151,28 @@ export const RetirementListView = ({ gridData }) => {
 
       <td className="min-w-max p-2 border-l border-r border-gray-200">
         <div className="flex items-center text-left gap-3 justify-start">
-          <FaEdit
-            className={clsx(
-              `text-editcolor`,
-              "hover:text-orange-500 font-semibold cursor-pointer sm:px-0"
-            )}
-            onClick={() => editClick(record)}
-          />
+          <div className="group flex relative">
+            <FaEdit
+              className={clsx(
+                `text-editcolor`,
+                "hover:text-orange-500 font-semibold cursor-pointer sm:px-0"
+              )}
+              onClick={() => editClick(record)}
+            />
 
-          <RiDeleteBin2Fill
-            className={clsx(
-              `text-deletecolor`,
-              "hover:text-red-500 font-semibold cursor-pointer sm:px-0"
-            )}
-            onClick={() => deleteClick(record.id)}
-          />
+            <ToolTip text={"Edit"} />
+          </div>
+
+          <div className="group flex relative">
+            <RiDeleteBin2Fill
+              className={clsx(
+                `text-deletecolor`,
+                "hover:text-red-500 font-semibold cursor-pointer sm:px-0"
+              )}
+              onClick={() => deleteClick(record.id)}
+            />
+            <ToolTip text={"Delete"} />
+          </div>
         </div>
       </td>
     </tr>
