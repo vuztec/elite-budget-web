@@ -199,3 +199,17 @@ export const getUniqueDescriptionsByCategory = (combinedData) => {
 
   return uniqueDescriptionsByCategory;
 };
+
+export const generateMonthHeaders = () => {
+  const lastTwoDigitsOfYear = getCurrentYear();
+  let newMonths = months;
+  if (monthsName.length > 1)
+    newMonths = monthsName
+      .filter((item) => item !== "Filter Months")
+      .sort((a, b) => months.indexOf(a) - months.indexOf(b));
+  const monthHeaders = newMonths?.map(
+    (month) => `${month}-${lastTwoDigitsOfYear}`
+  );
+
+  return monthHeaders;
+};

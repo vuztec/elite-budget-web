@@ -168,20 +168,13 @@ export const IncomeRecords = () => {
 
       {isDataLoaded && (
         <div className="w-full">
-          <div className="pt-4 w-full">
+          <div className="w-full">
             <IncomeListView gridData={gridData} />
           </div>
 
           <div className="w-full">
             <ExtraPayListView gridData={extrapaychecks} />
           </div>
-
-          {/* <AddIncome
-            open={open}
-            setOpen={setOpen}
-            recordData={""}
-            key={new Date().getTime().toString()}
-          /> */}
         </div>
       )}
     </>

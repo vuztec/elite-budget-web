@@ -28,7 +28,9 @@ export const BankListView = ({ gridData }) => {
       .delete(`/api/bank-accounts/name/${selected}`)
       .then(({ data }) => {
         console.log(data);
-        queryClient.setQueryData(["accountnames"], (prev) => prev.filter((bank) => bank.id !== selected));
+        queryClient.setQueryData(["accountnames"], (prev) =>
+          prev.filter((bank) => bank.id !== selected)
+        );
         setOpenDialog(false);
         setIsLoading(false);
       })
@@ -54,12 +56,12 @@ export const BankListView = ({ gridData }) => {
 
   const TableHeader = () => (
     <thead>
-      <tr className="font-bold bg-black text-white border border-gray-400 text-left text-xs xl:text-sm">
-        <th className="border-l border-gray-300 p-2 text-xs xl:text-sm">Name</th>
-        <th className="border-l border-gray-300 p-2 text-xs xl:text-sm">Bank Account Name</th>
-        <th className="border-l border-gray-300 p-2 text-xs xl:text-sm">Opening Balance</th>
+      <tr className="font-bold bg-[whitesmoke] text-black border border-gray-300 text-left text-sm xl:text-[16px]">
+        <th className="border-l border-gray-300 p-2">Name</th>
+        <th className="border-l border-gray-300 p-2">Bank Account Name</th>
+        <th className="border-l border-gray-300 p-2">Opening Balance</th>
 
-        <th className="p-2 border-l border-gray-300 text-xs xl:text-sm">Actions</th>
+        <th className="p-2 border-l border-gray-300">Actions</th>
       </tr>
     </thead>
   );
@@ -68,7 +70,9 @@ export const BankListView = ({ gridData }) => {
     <tr className="border border-gray-300 text-sm xl:text-[16px] hover:bg-gray-400/10 text-left">
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <span className="flex items-center justify-left gap-2 text-center mb-0 text-gray-900">{record?.Owner}</span>
+          <span className="flex items-center justify-left gap-2 text-center mb-0 text-gray-900">
+            {record?.Owner}
+          </span>
         </div>
       </td>
 
@@ -80,19 +84,27 @@ export const BankListView = ({ gridData }) => {
 
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p className="text-black">{getFormattedValue(user, record?.OpeningBalance)}</p>
+          <p className="text-black">
+            {getFormattedValue(user, record?.OpeningBalance)}
+          </p>
         </div>
       </td>
 
       <td className="min-w-max p-2 border-l border-r border-gray-200">
         <div className="flex items-center text-left gap-3 justify-start">
           <FaEdit
-            className={clsx(`text-editcolor`, "hover:text-orange-500 font-semibold cursor-pointer sm:px-0")}
+            className={clsx(
+              `text-editcolor`,
+              "hover:text-orange-500 font-semibold cursor-pointer sm:px-0"
+            )}
             onClick={() => editClick(record)}
           />
 
           <RiDeleteBin2Fill
-            className={clsx(`text-deletecolor`, "hover:text-red-500 font-semibold cursor-pointer sm:px-0")}
+            className={clsx(
+              `text-deletecolor`,
+              "hover:text-red-500 font-semibold cursor-pointer sm:px-0"
+            )}
             onClick={() => deleteClick(record.id)}
           />
         </div>
@@ -109,7 +121,9 @@ export const BankListView = ({ gridData }) => {
               <table className="w-[97%] ml-5 -mb-5">
                 <thead>
                   <tr>
-                    <th className="p-2 w-full uppercase bg-black text-white flex items-center justify-center">LIST OF BANK ACCOUNTS</th>
+                    <th className="p-2 w-full uppercase bg-[whitesmoke] text-black  border-l border-t border-r border-gray-300 flex items-center justify-center">
+                      LIST OF BANK ACCOUNTS
+                    </th>
                   </tr>
                 </thead>
               </table>
@@ -125,8 +139,18 @@ export const BankListView = ({ gridData }) => {
           </div>
         </div>
       )}
-      <AddBank open={open} setOpen={setOpen} recordData={selected} key={new Date().getTime().toString()} />
-      <ConfirmationDialog isLoading={isLoading} open={openDialog} setOpen={setOpenDialog} onClick={() => deleteHandler(selected)} />
+      <AddBank
+        open={open}
+        setOpen={setOpen}
+        recordData={selected}
+        key={new Date().getTime().toString()}
+      />
+      <ConfirmationDialog
+        isLoading={isLoading}
+        open={openDialog}
+        setOpen={setOpenDialog}
+        onClick={() => deleteHandler(selected)}
+      />
     </>
   );
 };

@@ -24,11 +24,18 @@ export const ExpenseListView = ({ Data, category, showColumn }) => {
     const updatedData = Data.filter((item) => item.Category === category);
 
     const sortedData = updatedData.sort((a, b) => {
+      // Determine the display names for both records
+      const aDisplayName = a.NickName || a.Description;
+      const bDisplayName = b.NickName || b.Description;
+
+      // Sort by Owner in descending order
       if (a.Owner === b.Owner) {
-        return a.Description.localeCompare(b.Description); // Ascending order for Description
+        // If Owners are equal, sort by display name (NickName or Description) in ascending order
+        return aDisplayName.localeCompare(bDisplayName);
       }
-      return a.Owner < b.Owner ? 1 : -1; // Descending order for Owner
+      return a.Owner < b.Owner ? 1 : -1;
     });
+
     setGridData(sortedData);
   }, [Data]);
 
@@ -44,7 +51,11 @@ export const ExpenseListView = ({ Data, category, showColumn }) => {
     axios
       .delete(`/api/expenses/${selected}`)
       .then(({ data }) => {
-        queryClient.setQueryData(["expenses"], (prev) => prev.map((item) => (item.id === selected ? { ...item, ...data } : item)));
+        queryClient.setQueryData(["expenses"], (prev) =>
+          prev.map((item) =>
+            item.id === selected ? { ...item, ...data } : item
+          )
+        );
         setOpenDialog(false);
         setIsLoading(false);
       })
@@ -70,83 +81,82 @@ export const ExpenseListView = ({ Data, category, showColumn }) => {
 
   const TableHeader = () => (
     <thead>
-      <tr className="font-bold bg-black text-white border border-gray-400 text-left text-xs xl:text-sm">
-        {/* <th className="border-l border-gray-300 p-2 text-xs xl:text-sm">
-          Category
-        </th> */}
-        <th className="border-l border-gray-300 p-2 text-xs xl:text-sm">Name</th>
-        <th className="border-l border-gray-300 p-2 text-xs xl:text-sm">Description</th>
+      <tr className="font-bold bg-[whitesmoke] text-black border border-gray-300 text-left">
+        <th className="border-l border-gray-300 p-2">Owner</th>
+        <th className="border-l border-gray-300 p-2">Description</th>
         {showColumn && (
           <>
             <th className="border-l border-gray-300 p-1">
               <div className="flex flex-col">
-                <span className="whitespace-nowrap text-left">Market Value</span>
-                <span className="whitespace-nowrap text-left">(For Net Worth Calc)</span>
+                <span className="text-left">Market Value</span>
+                <span className="text-left text-xs">(For Net Worth Calc)</span>
               </div>
             </th>
-            <th className="border-l border-gray-300 p-1">
+            <th className="border-l border-gray-300 p-2">
               <div className="flex flex-col">
-                <span className="whitespace-nowrap text-left">Loan Balance</span>
-                <span className="whitespace-nowrap text-left"> (For Net Worth Calc)</span>
+                <span className="text-left">Loan Balance</span>
+                <span className="text-left text-xs"> (For Net Worth Calc)</span>
               </div>
             </th>
           </>
         )}
-        <th className="border-l border-gray-300 p-2 text-xs xl:text-sm">Day Due</th>
-        <th className="border-l border-gray-300 p-2 text-xs xl:text-sm">
+        <th className="border-l border-gray-300 p-2">Day Due</th>
+        <th className="border-l border-gray-300 p-2">
           <div className="flex flex-col">
-            <span className="whitespace-nowrap text-left">Payment</span>
-            <span className="whitespace-nowrap text-left">Method</span>
+            <span className="text-left">Payment</span>
+            <span className="text-left">Method</span>
           </div>
         </th>
         <th className="border-l border-gray-300 p-1">
           <div className="flex flex-col">
-            <span className="whitespace-nowrap text-left">Monthly Expense</span>
+            <span className="text-left">Monthly</span>
+            <span className="text-left">Expense</span>
           </div>
         </th>
         <th className="border-l border-gray-300 p-1">
           <div className="flex flex-col">
-            <span className="whitespace-nowrap text-left">Annual Cost</span>
+            <span className="text-left">Annual</span>
+            <span className="text-left">Cost</span>
           </div>
         </th>
 
-        <th className="p-2 border-l border-gray-300 text-xs xl:text-sm">Actions</th>
+        <th className="p-2 border-l border-gray-300">Actions</th>
       </tr>
     </thead>
   );
 
   const TableRow = ({ record }) => (
     <tr className="border border-gray-300 text-sm xl:text-[16px] hover:bg-gray-400/10 text-left">
-      {/* <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
-        <div className="flex flex-col items-start gap-1">
-          <span className="flex items-center justify-left gap-2 border-b border-gray-200 text-center mb-0 text-gray-900">
-            {record?.Category}
-          </span>
-        </div>
-      </td> */}
-
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <span className="flex items-center justify-left gap-2 text-center mb-0 text-gray-900">{record?.Owner}</span>
+          <span className="flex items-center justify-left gap-2 text-center mb-0 text-gray-900">
+            {record?.Owner}
+          </span>
         </div>
       </td>
 
       <td className="max-w-[300px] whitespace-normal p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p className="text-black">{record?.NickName ? record?.NickName : record?.Description}</p>
+          <p className="text-black">
+            {record?.NickName ? record?.NickName : record?.Description}
+          </p>
         </div>
       </td>
       {showColumn && (
         <>
           <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
             <div className="flex flex-col items-start gap-1">
-              <p className="text-black">{getFormattedValue(user, record?.MarketValue)}</p>
+              <p className="text-black">
+                {getFormattedValue(user, record?.MarketValue)}
+              </p>
             </div>
           </td>
 
           <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
             <div className="flex flex-col items-start gap-1">
-              <p className="text-black">{getFormattedValue(user, record?.LoanBalance)}</p>
+              <p className="text-black">
+                {getFormattedValue(user, record?.LoanBalance)}
+              </p>
             </div>
           </td>
         </>
@@ -163,25 +173,35 @@ export const ExpenseListView = ({ Data, category, showColumn }) => {
       </td>
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p className="text-black">{getFormattedValue(user, record?.MonthlyBudget)}</p>
+          <p className="text-black">
+            {getFormattedValue(user, record?.MonthlyBudget)}
+          </p>
         </div>
       </td>
 
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p className="text-black">{getFormattedValue(user, 12 * record?.MonthlyBudget)}</p>
+          <p className="text-black">
+            {getFormattedValue(user, 12 * record?.MonthlyBudget)}
+          </p>
         </div>
       </td>
 
       <td className="min-w-max p-2 border-l border-r border-gray-200">
         <div className="flex items-center text-left gap-3 justify-start">
           <FaEdit
-            className={clsx(`text-editcolor`, "hover:text-orange-500 font-semibold cursor-pointer sm:px-0")}
+            className={clsx(
+              `text-editcolor`,
+              "hover:text-orange-500 font-semibold cursor-pointer sm:px-0"
+            )}
             onClick={() => editClick(record)}
           />
 
           <RiDeleteBin2Fill
-            className={clsx(`text-deletecolor`, "hover:text-red-500 font-semibold cursor-pointer sm:px-0")}
+            className={clsx(
+              `text-deletecolor`,
+              "hover:text-red-500 font-semibold cursor-pointer sm:px-0"
+            )}
             onClick={() => deleteClick(record.id)}
           />
         </div>
@@ -190,7 +210,7 @@ export const ExpenseListView = ({ Data, category, showColumn }) => {
   );
 
   const TableTotal = ({ gridData }) => (
-    <tr className="border border-gray-300 text-sm xl:text-[18px] bg-[whitesmoke] text-gray-600 text-left font-bold">
+    <tr className="border border-gray-300 bg-[whitesmoke] text-gray-600 text-left font-bold">
       <td className="min-w-fit whitespace-nowrap p-3 border-gray-200"></td>
 
       <td className="min-w-fit whitespace-nowrap p-3 border-gray-200">
@@ -236,13 +256,15 @@ export const ExpenseListView = ({ Data, category, showColumn }) => {
   return (
     <>
       {gridData?.length > 0 && (
-        <div className="w-full h-fit bg-white py-6 mt-4 shadow-md rounded">
+        <div className="w-full h-fit bg-white py-6 mt-4 shadow-md rounded text-sm xl:text-[16px]">
           <div className="flex flex-col gap-5 w-full">
             <div className="w-full overflow-x-auto">
               <table className="w-[97%] ml-5 -mb-5">
                 <thead>
                   <tr>
-                    <th className="p-2 w-full uppercase bg-black text-white flex items-center justify-center">{category}</th>
+                    <th className="p-2 w-full uppercase bg-[whitesmoke] text-black  border-l border-t border-r border-gray-300 flex items-center justify-center">
+                      {category}
+                    </th>
                   </tr>
                 </thead>
               </table>
@@ -259,8 +281,18 @@ export const ExpenseListView = ({ Data, category, showColumn }) => {
           </div>
         </div>
       )}
-      <AddExpense open={open} setOpen={setOpen} recordData={selected} key={new Date().getTime().toString()} />
-      <ConfirmationDialog isLoading={isLoading} open={openDialog} setOpen={setOpenDialog} onClick={() => deleteHandler(selected)} />
+      <AddExpense
+        open={open}
+        setOpen={setOpen}
+        recordData={selected}
+        key={new Date().getTime().toString()}
+      />
+      <ConfirmationDialog
+        isLoading={isLoading}
+        open={openDialog}
+        setOpen={setOpenDialog}
+        onClick={() => deleteHandler(selected)}
+      />
     </>
   );
 };

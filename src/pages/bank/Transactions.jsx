@@ -64,10 +64,11 @@ export const Transactions = () => {
       // Sort the data by Owner property
       const sortedData = transData.sort((a, b) => {
         if (a.Owner === b.Owner) {
-          return a.Name < b.Name ? 1 : -1; // Descending order for Owner
+          return a.Description < b.Description ? 1 : -1; // Descending order for Owner
         }
         return a.Owner > b.Owner ? 1 : -1; // Ascending order for Category
       });
+
       setGridData(sortedData);
       setIsDataLoaded(true);
     } else {

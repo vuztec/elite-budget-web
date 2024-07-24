@@ -60,13 +60,20 @@ export const Retirement = () => {
             item.MonthlyBudget > 0
         );
       }
-      // Sort the data by Owner property
+
       const sortedData = updatedData.sort((a, b) => {
-        if (a.Category === b.Category) {
-          return a.Owner < b.Owner ? 1 : -1; // Descending order for Owner
+        // Determine the display names for both records
+        const aDisplayName = a.NickName || a.Description;
+        const bDisplayName = b.NickName || b.Description;
+
+        // Sort by Owner in descending order
+        if (a.Owner === b.Owner) {
+          // If Owners are equal, sort by display name (NickName or Description) in ascending order
+          return aDisplayName.localeCompare(bDisplayName);
         }
-        return a.Category > b.Category ? 1 : -1; // Ascending order for Category
+        return a.Owner < b.Owner ? 1 : -1;
       });
+
       setGridData(sortedData);
       setIsDataLoaded(true);
     } else {

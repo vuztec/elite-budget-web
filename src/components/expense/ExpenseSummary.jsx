@@ -20,21 +20,19 @@ export const ExpenseSummary = ({ gridData }) => {
 
   const TableHeader = () => (
     <thead>
-      <tr className="border border-gray-300 bg-black text-white text-xs xl:text-sm">
-        <td className="min-w-fit whitespace-nowrap p-3 font-bold border-l border-gray-300">
-          CATEGORY
+      <tr className="border border-gray-300 bg-[whitesmoke] text-black">
+        <td className="p-3 font-bold border-l border-gray-300">Category</td>
+        <td className="p-3 font-bold border-l border-gray-300">
+          Total Market Value
         </td>
-        <td className="min-w-fit whitespace-nowrap p-3 font-bold border-l border-gray-300">
-          TOTAL MARKET VALUE
+        <td className="p-3 font-bold border-l border-gray-300">
+          Total Loan Balance
         </td>
-        <td className="min-w-fit whitespace-nowrap p-3 font-bold border-l border-gray-300">
-          TOTAL LOAN BALANCE
+        <td className="p-3 font-bold border-l border-gray-300">
+          Total Monthly Budget
         </td>
-        <td className="min-w-fit whitespace-nowrap p-3 font-bold border-l border-gray-300">
-          TOTAL MONTHLY BUDGET
-        </td>
-        <td className="min-w-fit whitespace-nowrap p-3 font-bold border-l border-gray-300">
-          TOTAL YEARLY COST
+        <td className="p-3 font-bold border-l border-gray-300">
+          Total Yearly Cost
         </td>
       </tr>
     </thead>
@@ -59,7 +57,7 @@ export const ExpenseSummary = ({ gridData }) => {
   );
 
   const TableTotal = ({ gridData }) => (
-    <tr className="border border-gray-300 bg-[whitesmoke] text-gray-600 text-sm xl:text-[18px]">
+    <tr className="border border-gray-300 bg-[whitesmoke] text-gray-600">
       <td className="min-w-fit whitespace-nowrap text-right p-2 font-bold">
         Total
       </td>
@@ -79,13 +77,13 @@ export const ExpenseSummary = ({ gridData }) => {
   );
 
   return (
-    <div className="w-full h-fit bg-white py-6 mt-4 shadow-md rounded">
-      <div className="flex flex-col gap-5 w-fit">
+    <div className="w-full h-fit bg-white py-6 mt-4 shadow-md rounded text-sm xl:text-[16px]">
+      <div className="flex flex-col gap-5 w-full xl:w-fit">
         <div className="w-full overflow-x-auto">
           <table className="w-[97%] ml-5 -mb-5">
             <thead>
               <tr>
-                <th className="p-2 w-full uppercase bg-black text-white flex items-center justify-center">
+                <th className="p-2 w-full uppercase bg-[whitesmoke] text-black  border-l border-t border-r border-gray-300 flex items-center justify-center">
                   EXPENSE SUMMARY
                 </th>
               </tr>

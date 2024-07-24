@@ -795,20 +795,48 @@ export const getUniqueBudgetItemsWithSum = (data) => {
   };
 };
 
+// // Function to get unique descriptions and their sum values for each unique budget item
+// export const getUniqueDescriptionsWithSumForEachBudgetItem = (data) => {
+//   const uniqueDescriptions = {};
+//   data?.forEach((record) => {
+//     const budgetItem = record?.Category || "";
+//     const description = record?.Description || "";
+//     const nickName = record?.NickName || "";
+//     const monthlyPayment = record?.MonthlyBudget || 0;
+//     if (!uniqueDescriptions[budgetItem]) {
+//       uniqueDescriptions[budgetItem] = {};
+//     }
+//     if (!uniqueDescriptions[budgetItem][description]) {
+//       uniqueDescriptions[budgetItem][description] = 0;
+//     }
+//     uniqueDescriptions[budgetItem][description] += Number(monthlyPayment);
+//   });
+//   return uniqueDescriptions;
+// };
+
 // Function to get unique descriptions and their sum values for each unique budget item
 export const getUniqueDescriptionsWithSumForEachBudgetItem = (data) => {
   const uniqueDescriptions = {};
+
   data?.forEach((record) => {
     const budgetItem = record?.Category || "";
     const description = record?.Description || "";
+    const nickName = record?.NickName || "";
     const monthlyPayment = record?.MonthlyBudget || 0;
+
+    // Use NickName if it's not blank, otherwise use Description
+    const displayName = nickName || description;
+
     if (!uniqueDescriptions[budgetItem]) {
       uniqueDescriptions[budgetItem] = {};
     }
-    if (!uniqueDescriptions[budgetItem][description]) {
-      uniqueDescriptions[budgetItem][description] = 0;
+
+    if (!uniqueDescriptions[budgetItem][displayName]) {
+      uniqueDescriptions[budgetItem][displayName] = 0;
     }
-    uniqueDescriptions[budgetItem][description] += Number(monthlyPayment);
+
+    uniqueDescriptions[budgetItem][displayName] += Number(monthlyPayment);
   });
+
   return uniqueDescriptions;
 };

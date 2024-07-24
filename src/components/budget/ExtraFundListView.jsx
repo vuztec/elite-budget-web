@@ -9,6 +9,7 @@ import ConfirmationDialog from "../Dialogs";
 import axios from "../../config/axios";
 import { handleAxiosResponseError } from "../../utils/handleResponseError";
 import {
+  getBankAccountTypeTotal,
   getFormattedValue,
   getFormattedValueType,
   getMonthlyBudgetTotal,
@@ -56,44 +57,28 @@ export const ExtraFundListView = ({ gridData }) => {
     setOpen(true);
   };
 
-  console.log(gridData);
-
   //----------------CRUD----------------//
 
   const TableHeader = () => (
     <thead>
-      <tr className="font-bold bg-black text-white border border-gray-400 text-left text-xs xl:text-sm">
-        <th className="border-l border-gray-300 p-2 text-xs xl:text-sm">
-          Name
-        </th>
-        <th className="border-l border-gray-300 p-2 text-xs xl:text-sm">
-          Date
-        </th>
-        <th className="border-l border-gray-300 p-2 text-xs xl:text-sm">
-          Description
-        </th>
+      <tr className="font-bold bg-[whitesmoke] text-black border border-gray-300 text-left">
+        <th className="border-l border-gray-300 p-2">Owner</th>
+        <th className="border-l border-gray-300 p-2">Date</th>
+        <th className="border-l border-gray-300 p-2">Description</th>
 
-        <th className="border-l border-gray-300 p-2 text-xs xl:text-sm">
-          Withdrawal (-)
-        </th>
+        <th className="border-l border-gray-300 p-2">Withdrawal (-)</th>
 
-        <th className="border-l border-gray-300 p-2 text-xs xl:text-sm">
-          Credit (+)
-        </th>
+        <th className="border-l border-gray-300 p-2">Credit (+)</th>
 
-        <th className="border-l border-gray-300 p-2 text-xs xl:text-sm">
-          Balance
-        </th>
+        <th className="border-l border-gray-300 p-2">Balance</th>
 
-        <th className="p-2 border-l border-gray-300 text-xs xl:text-sm">
-          Actions
-        </th>
+        <th className="p-2 border-l border-gray-300">Actions</th>
       </tr>
     </thead>
   );
 
   const TableRow = ({ record }) => (
-    <tr className="border border-gray-300 text-sm xl:text-[16px] hover:bg-gray-400/10 text-left">
+    <tr className="border border-gray-300 hover:bg-gray-400/10 text-left">
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
           <span className="flex items-center justify-left gap-2 text-center mb-0 text-gray-900">
@@ -170,7 +155,7 @@ export const ExtraFundListView = ({ gridData }) => {
   );
 
   const TableTotal = ({ gridData }) => (
-    <tr className="border border-gray-300 text-sm xl:text-[18px] bg-[whitesmoke] text-gray-600 text-left font-bold">
+    <tr className="border border-gray-300 bg-[whitesmoke] text-gray-600 text-left font-bold">
       <td className="min-w-fit whitespace-nowrap p-3 border-gray-200"></td>
 
       <td className="min-w-fit whitespace-nowrap p-3 border-gray-200"></td>
@@ -181,19 +166,19 @@ export const ExtraFundListView = ({ gridData }) => {
 
       <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p>{getMonthlyBudgetTotal(user, gridData)}</p>
+          <p>{getBankAccountTypeTotal(user, gridData, "Withdrawal")}</p>
         </div>
       </td>
 
       <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p>{getMonthlyBudgetTotal(user, gridData)}</p>
+          <p>{getBankAccountTypeTotal(user, gridData, "Credit")}</p>
         </div>
       </td>
 
       <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p>{getYearlyBudgetTotal(user, gridData)}</p>
+          <p></p>
         </div>
       </td>
 
@@ -203,13 +188,13 @@ export const ExtraFundListView = ({ gridData }) => {
 
   return (
     <>
-      <div className="w-full h-fit bg-white py-6 mt-4 shadow-md rounded">
+      <div className="w-full h-fit bg-white py-6 mt-4 shadow-md rounded text-sm xl:text-[16px]">
         <div className="flex flex-col gap-5 w-full">
           <div className="overflow-x-auto">
             <table className="w-[97%] ml-5 -mb-5">
               <thead>
                 <tr>
-                  <th className="p-2 w-full uppercase bg-black text-white flex items-center justify-center">
+                  <th className="p-2 w-full uppercase bg-[whitesmoke] text-black  border-l border-t border-r border-gray-300 flex items-center justify-center">
                     EXTRA FUND TRACKER
                   </th>
                 </tr>

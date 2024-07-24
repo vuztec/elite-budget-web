@@ -17,9 +17,9 @@ const MonthlyRetirement = ({
 }) => {
   const { user } = useUserStore();
   return (
-    <div className="w-full flex flex-col gap-5 text-sm xl:text-[14px]">
+    <div className="w-full flex flex-col gap-5 text-sm xl:text-[16px]">
       <div className="w-full xl:w-full flex flex-col gap-2">
-        <div className="w-full bg-black text-[#ffe99b] flex text-left px-2 py-1 rounded-md font-bold">
+        <div className="w-full bg-[whitesmoke] text-black border border-gray-300 flex text-left px-2 py-1 rounded-md font-bold">
           <table className="w-full">
             <tbody>
               <tr className="text-left font-bold">
@@ -28,10 +28,10 @@ const MonthlyRetirement = ({
                 </td>
                 <td className="px:0 lg:px-2 text-black">
                   <div className="flex w-full gap-1">
-                    <p className="p-2 bg-[#ffe99b] w-full lg:w-2/3">
+                    <p className="p-2 bg-white border border-gray-300 w-full lg:w-2/3">
                       {getMonthlyBudgetTotal(user, retirementGridData)}
                     </p>
-                    <p className="p-2 bg-[#ffe99b] w-1/5 hidden lg:block">
+                    <p className="p-2 bg-white border border-gray-300 w-1/5 hidden lg:block">
                       {getActualGoal(
                         incomeGridData,
                         retirementGridData,
@@ -53,21 +53,21 @@ const MonthlyRetirement = ({
             </tbody>
           </table>
         </div>
-        <table className="w-[99%] bg-gray-400/10">
+        <table className="w-[99%">
           <tbody>
-            <tr className="border border-gray-300 text-left p-2 font-bold">
+            <tr className="border border-gray-300 text-left p-2">
               <td className="px-2 py-2 border-r w-2/3 border-gray-300">
                 Total annual retirement savings (Incl work ded)
               </td>
-              <td className="px-2 bg-[#ffe99b]">
+              <td className="px-2 font-bold">
                 {getYearlyBudgetTotal(user, retirementGridData)}
               </td>
             </tr>
-            <tr className="border border-gray-300 text-left p-2 font-bold">
+            <tr className="border border-gray-300 text-left p-2">
               <td className="px-2 py-2 border-r w-2/3 border-gray-300">
                 Percentage of Annual Gross Income
               </td>
-              <td className="px-2 bg-[#ffe99b]">
+              <td className="px-2 font-bold">
                 {getActualGoal(
                   incomeGridData,
                   retirementGridData,
@@ -76,13 +76,13 @@ const MonthlyRetirement = ({
                 %
               </td>
             </tr>
-            <tr className="border border-gray-300 text-left p-2 font-bold">
+            <tr className="border border-gray-300 text-left p-2">
               <td className="px-2 py-2 border-r w-2/3 border-gray-300">Goal</td>
-              <td className="px-2 bg-[#ffe99b]">
+              <td className="px-2 font-bold">
                 {getBudgetGoal(maingoals, "Retirement")}%
               </td>
             </tr>
-            <tr className="border border-gray-300 text-left p-2 font-bold">
+            <tr className="border border-gray-300 text-left p-2">
               <td className="px-2 py-2 border-r w-2/3 border-gray-300">
                 {getLabel(
                   incomeGridData,
@@ -91,7 +91,7 @@ const MonthlyRetirement = ({
                   maingoals
                 )}
               </td>
-              <td className="px-2 bg-[#ffe99b]">
+              <td className="px-2 font-bold">
                 {getDifference(
                   incomeGridData,
                   retirementGridData,

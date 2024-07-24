@@ -24,7 +24,7 @@ import clsx from "clsx";
 import Select from "../../components/Select";
 import { useMemo } from "react";
 import useUserStore from "../../app/user";
-import { getFormattedValueTotal } from "../../utils/budget.calculation";
+import { CheckListView } from "../../components/checklist/CheckListView";
 
 export const Checklist = () => {
   const { user } = useUserStore();
@@ -69,11 +69,6 @@ export const Checklist = () => {
     staleTime: 1000 * 60 * 60,
   });
 
-  console.log("combinedData: ", combinedData);
-  console.log("uniqueCategories: ", uniqueCategories);
-  console.log("uniqueBudgetItemsByCategory: ", uniqueBudgetItemsByCategory);
-  console.log("uniqueDescriptionsByCategory: ", uniqueDescriptionsByCategory);
-
   ///-------------Filters Data Source --------------------------------///
   const owners = expenseOwners.map((owner) => ({
     value: owner,
@@ -107,19 +102,27 @@ export const Checklist = () => {
       const filteredData = combinedData.filter(
         (data) => data.MonthlyBudget > 0
       );
-      filteredData.sort((a, b) => {
-        // Compare by Category
-        if (a.Category !== b.Category) {
-          return a.Category.localeCompare(b.Category);
-        }
-        // If Category is the same, compare by BudgetItem
-        if (a.BudgetItem !== b.BudgetItem) {
-          return a.BudgetItem.localeCompare(b.BudgetItem);
-        }
-        // If BudgetItem is also the same, compare by Description
-        return a.Description.localeCompare(b.Description);
+      const sortedData = filteredData.sort((a, b) => {
+        // Determine the display names for both records
+        const aDisplayName = a.NickName || a.Description;
+        const bDisplayName = b.NickName || b.Description;
+
+        // First sort by Category
+        if (a.Category < b.Category) return -1;
+        if (a.Category > b.Category) return 1;
+
+        // If Categories are equal, sort by BudgetItem
+        if (a.BudgetItem < b.BudgetItem) return -1;
+        if (a.BudgetItem > b.BudgetItem) return 1;
+
+        // If BudgetItems are equal, sort by display name (NickName or Description)
+        if (aDisplayName < bDisplayName) return -1;
+        if (aDisplayName > bDisplayName) return 1;
+
+        return 0;
       });
-      setCombinedData(filteredData);
+
+      setCombinedData(sortedData);
       setIsDataLoaded(true);
     } else {
       setIsDataLoaded(false);
@@ -279,153 +282,13 @@ export const Checklist = () => {
         </div>
       )}
       {isDataLoaded && (
-        <div className="w-full flex flex-col items-center gap-5 xl:gap-10 bg-white p-5 mt-4">
-          <div className="flex flex-col xl:flex-row w-full gap-5 xl:gap-10">
-            <table className="w-[97%] ml-5 -mb-5">
-              <thead>
-                <tr className="font-bold bg-gray-200 text-black border border-gray-400 text-left text-sm xl:text-lg">
-                  <th
-                    style={{
-                      border: "1px solid #ddd",
-                      textAlign: "left",
-                      padding: "8px",
-                    }}
-                  >
-                    Savings & Spending
-                  </th>
-                  <th style={{ border: "1px solid #ddd", padding: "5px" }}>
-                    Day Due
-                  </th>
-                  <th
-                    style={{
-                      whiteSpace: "nowrap",
-                      border: "1px solid #ddd",
-                      padding: "5px",
-                    }}
-                  >
-                    Monthly Budget
-                  </th>
-                  <th style={{ border: "1px solid #ddd", padding: "5px" }}>
-                    Payment Method
-                  </th>
-                  {monthHeaders.map((header, index) => (
-                    <th
-                      key={index}
-                      style={{
-                        whiteSpace: "nowrap",
-                        border: "1px solid #ddd",
-                        padding: "5px",
-                      }}
-                    >
-                      {header}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {uniqueCategories &&
-                  uniqueCategories.map((category, categoryIndex) => (
-                    <React.Fragment key={categoryIndex}>
-                      <tr>
-                        <td style={tableCategoryStyle}>{category}</td>{" "}
-                        {/* SAVINGS & SPENDING */}
-                        <td style={tableCategoryStyle}>
-                          {/* DAY DUE COLUMN */}
-                        </td>
-                        <td style={tableCategoryStyle}>
-                          {/* Monthly Budget column */}
-                        </td>
-                        <td style={tableCategoryStyle}>
-                          {/* PAYMENT METHOD column */}
-                        </td>
-                        {monthHeaders.map((header, index) => (
-                          <td key={index} style={tableCategoryStyle}>
-                            {/* Your content for each cell in the row */}
-                          </td>
-                        ))}
-                      </tr>
-                      {uniqueBudgetItemsByCategory[category] &&
-                        uniqueBudgetItemsByCategory[category].map(
-                          (budgetItem, budgetItemIndex) => (
-                            <React.Fragment
-                              key={`${category}_${budgetItemIndex}`}
-                            >
-                              <tr>
-                                <td style={tableBudgetItemStyle}>
-                                  {budgetItem}
-                                </td>{" "}
-                                {/* Each budget item under the category */}
-                                <td style={tableBudgetItemStyle}>
-                                  {/* DAY DUE COLUMN */}
-                                </td>
-                                <td style={tableBudgetItemStyle}>
-                                  {/* Monthly Budget column */}
-                                </td>
-                                <td style={tableBudgetItemStyle}>
-                                  {/* PAYMENT METHOD column */}
-                                </td>
-                                {monthHeaders.map((header, index) => (
-                                  <td key={index} style={tableBudgetItemStyle}>
-                                    {/* Your content for each cell in the row */}
-                                  </td>
-                                ))}
-                              </tr>
-                              {uniqueDescriptionsByCategory[category] &&
-                                uniqueDescriptionsByCategory[category][
-                                  budgetItem
-                                ] &&
-                                Object.entries(
-                                  uniqueDescriptionsByCategory[category][
-                                    budgetItem
-                                  ]
-                                ).map(
-                                  (
-                                    [description, details],
-                                    descriptionIndex
-                                  ) => (
-                                    <tr
-                                      key={`${category}_${budgetItem}_${descriptionIndex}`}
-                                    >
-                                      <td style={tableFirstDescriptionStyle}>
-                                        {details.NickName
-                                          ? details.NickName
-                                          : description}
-                                      </td>{" "}
-                                      {/* Description */}
-                                      <td style={tableDescriptionStyle}>
-                                        {details.DueDate}
-                                      </td>{" "}
-                                      {/* DAY DUE COLUMN */}
-                                      <td style={tableCurrencyStyle}>
-                                        {getFormattedValueTotal(
-                                          user,
-                                          details.MonthlyBudget
-                                        )}
-                                      </td>
-                                      {/* Monthly Budget column */}
-                                      <td style={tableDescriptionStyle}>
-                                        {details.PaymentMethod}
-                                      </td>{" "}
-                                      {/* PAYMENT METHOD column */}
-                                      {monthHeaders.map((header, index) => (
-                                        <td
-                                          key={index}
-                                          style={tableDescriptionStyle}
-                                        >
-                                          {/* Your content for each cell in the row */}
-                                        </td>
-                                      ))}
-                                    </tr>
-                                  )
-                                )}
-                            </React.Fragment>
-                          )
-                        )}
-                    </React.Fragment>
-                  ))}
-              </tbody>
-            </table>
-          </div>
+        <div className="w-full">
+          <CheckListView
+            uniqueCategories={uniqueCategories}
+            uniqueBudgetItemsByCategory={uniqueBudgetItemsByCategory}
+            uniqueDescriptionsByCategory={uniqueDescriptionsByCategory}
+            monthHeaders={monthHeaders}
+          />
         </div>
       )}
     </>

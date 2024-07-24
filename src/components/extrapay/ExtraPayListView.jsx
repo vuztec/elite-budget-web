@@ -8,7 +8,10 @@ import { useQueryClient } from "react-query";
 import ConfirmationDialog from "../Dialogs";
 import axios from "../../config/axios";
 import { handleAxiosResponseError } from "../../utils/handleResponseError";
-import { getMonthlyBudgetTotal, getYearlyBudgetTotal } from "../../utils/budget.calculation";
+import {
+  getMonthlyBudgetTotal,
+  getYearlyBudgetTotal,
+} from "../../utils/budget.calculation";
 import AddExtraPay from "./AddExtraPay";
 import { formatDate } from "../../utils";
 
@@ -29,7 +32,9 @@ export const ExtraPayListView = ({ gridData }) => {
       .delete(`/api/extra-pay-checks/${selected}`)
       .then(({ data }) => {
         console.log(data);
-        queryClient.setQueryData(["extrapaychecks"], (prev) => prev.filter((check) => check.id !== selected));
+        queryClient.setQueryData(["extrapaychecks"], (prev) =>
+          prev.filter((check) => check.id !== selected)
+        );
         setOpenDialog(false);
         setIsLoading(false);
       })
@@ -55,18 +60,18 @@ export const ExtraPayListView = ({ gridData }) => {
 
   const TableHeader = () => (
     <thead>
-      <tr className="font-bold bg-black text-white border border-gray-400 text-left text-xs xl:text-sm">
-        <th className="border-l border-gray-300 p-2 text-xs xl:text-sm">Extra Pay Date</th>
-        <th className="border-l border-gray-300 p-2 text-xs xl:text-sm">Self</th>
-        <th className="border-l border-gray-300 p-2 text-xs xl:text-sm">Partner</th>
+      <tr className="font-bold bg-[whitesmoke] text-black border border-gray-300 text-left">
+        <th className="border-l border-gray-300 p-2">Extra Pay Date</th>
+        <th className="border-l border-gray-300 p-2">Self</th>
+        <th className="border-l border-gray-300 p-2">Partner</th>
 
-        <th className="p-2 border-l border-gray-300 text-xs xl:text-sm">Actions</th>
+        <th className="p-2 border-l border-gray-300">Actions</th>
       </tr>
     </thead>
   );
 
   const TableRow = ({ record }) => (
-    <tr className="border border-gray-300 text-sm xl:text-[16px] hover:bg-gray-400/10 text-left">
+    <tr className="border border-gray-300 hover:bg-gray-400/10 text-left">
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
           <span className="flex items-center justify-left gap-2 text-center mb-0 text-gray-900">
@@ -90,12 +95,18 @@ export const ExtraPayListView = ({ gridData }) => {
       <td className="min-w-max p-2 border-l border-r border-gray-200">
         <div className="flex items-center text-left gap-3 justify-start">
           <FaEdit
-            className={clsx(`text-editcolor`, "hover:text-orange-500 font-semibold cursor-pointer sm:px-0")}
+            className={clsx(
+              `text-editcolor`,
+              "hover:text-orange-500 font-semibold cursor-pointer sm:px-0"
+            )}
             onClick={() => editClick(record)}
           />
 
           <RiDeleteBin2Fill
-            className={clsx(`text-deletecolor`, "hover:text-red-500 font-semibold cursor-pointer sm:px-0")}
+            className={clsx(
+              `text-deletecolor`,
+              "hover:text-red-500 font-semibold cursor-pointer sm:px-0"
+            )}
             onClick={() => deleteClick(record.id)}
           />
         </div>
@@ -104,7 +115,7 @@ export const ExtraPayListView = ({ gridData }) => {
   );
 
   const TableTotal = ({ gridData }) => (
-    <tr className="border border-gray-300 text-sm xl:text-[18px] bg-[whitesmoke] text-gray-600 text-left font-bold">
+    <tr className="border border-gray-300 bg-[whitesmoke] text-gray-600 text-left font-bold">
       <td className="min-w-fit whitespace-nowrap p-3 border-gray-200">Total</td>
 
       <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200">
@@ -125,31 +136,41 @@ export const ExtraPayListView = ({ gridData }) => {
 
   return (
     <>
-      <div className="w-full h-fit bg-white py-6 mt-4 shadow-md rounded">
-        <div className="flex flex-col gap-5 w-full">
-          <div className="overflow-x-auto">
-            <table className="w-[97%] ml-5 -mb-5">
-              <thead>
-                <tr>
-                  <th className="p-2 w-full uppercase bg-black text-white flex items-center justify-center">EXTRA PAY CHECKS</th>
-                </tr>
-              </thead>
-            </table>
-            <table className="w-[97%] m-5">
-              <TableHeader />
-              <tbody>
-                {gridData?.map((record, index) => (
-                  <TableRow key={index} record={record} />
-                ))}
-                <TableTotal gridData={gridData} />
-              </tbody>
-            </table>
-          </div>
+      <div className="w-full h-fit bg-white py-6 mt-4 shadow-md rounded  text-sm xl:text-[16px]">
+        <div className="flex flex-col gap-0 w-full xl:w-fit overflow-x-auto xl:overflow-hidden">
+          <table className="w-fit ml-5 -mb-5 overflow-x-auto">
+            <thead>
+              <tr>
+                <th className="p-2 w-full uppercase bg-[whitesmoke] text-black  border-l border-t border-r border-gray-300 flex items-center justify-center">
+                  EXTRA PAY CHECKS
+                </th>
+              </tr>
+            </thead>
+          </table>
+          <table className="w-fit m-5 overflow-x-auto">
+            <TableHeader />
+            <tbody>
+              {gridData?.map((record, index) => (
+                <TableRow key={index} record={record} />
+              ))}
+              <TableTotal gridData={gridData} />
+            </tbody>
+          </table>
         </div>
       </div>
 
-      <AddExtraPay open={open} setOpen={setOpen} recordData={selected} key={new Date().getTime().toString()} />
-      <ConfirmationDialog isLoading={isLoading} open={openDialog} setOpen={setOpenDialog} onClick={() => deleteHandler(selected)} />
+      <AddExtraPay
+        open={open}
+        setOpen={setOpen}
+        recordData={selected}
+        key={new Date().getTime().toString()}
+      />
+      <ConfirmationDialog
+        isLoading={isLoading}
+        open={openDialog}
+        setOpen={setOpenDialog}
+        onClick={() => deleteHandler(selected)}
+      />
     </>
   );
 };
