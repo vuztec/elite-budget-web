@@ -8,13 +8,11 @@ import { useQueryClient } from "react-query";
 import ConfirmationDialog from "../Dialogs";
 import axios from "../../config/axios";
 import { handleAxiosResponseError } from "../../utils/handleResponseError";
-import {
-  getMonthlyBudgetTotal,
-  getYearlyBudgetTotal,
-} from "../../utils/budget.calculation";
+import { getMonthlyBudgetTotal, getYearlyBudgetTotal } from "../../utils/budget.calculation";
 import AddExtraPay from "./AddExtraPay";
 import { formatDate } from "../../utils";
 import ToolTip from "../tooltip";
+import Sort from "../sort";
 
 export const ExtraPayListView = ({ gridData }) => {
   const { user } = useUserStore();
@@ -26,6 +24,13 @@ export const ExtraPayListView = ({ gridData }) => {
   const [selected, setSelected] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
+  const [order, setOrder] = useState(["default", "default", "default"]);
+  const [data, setData] = useState(gridData);
+
+  useEffect(() => {
+    setData(gridData);
+  }, [gridData]);
+
   const deleteHandler = async (selected) => {
     setIsLoading(true);
 
@@ -33,9 +38,7 @@ export const ExtraPayListView = ({ gridData }) => {
       .delete(`/api/extra-pay-checks/${selected}`)
       .then(({ data }) => {
         console.log(data);
-        queryClient.setQueryData(["extrapaychecks"], (prev) =>
-          prev.filter((check) => check.id !== selected)
-        );
+        queryClient.setQueryData(["extrapaychecks"], (prev) => prev.filter((check) => check.id !== selected));
         setOpenDialog(false);
         setIsLoading(false);
       })
@@ -55,16 +58,37 @@ export const ExtraPayListView = ({ gridData }) => {
     setOpen(true);
   };
 
-  console.log(gridData);
-
   //----------------CRUD----------------//
 
   const TableHeader = () => (
     <thead>
       <tr className="font-bold bg-[whitesmoke] text-black border border-gray-300 text-left">
-        <th className="border-l border-gray-300 p-2">Extra Pay Date</th>
-        <th className="border-l border-gray-300 p-2">Self</th>
-        <th className="border-l border-gray-300 p-2">Partner</th>
+        <th className="border-l border-gray-300 p-2">
+          <div className="flex justify-between items-center gap-2">
+            Extra Pay Date
+            <Sort order={order} setOrder={setOrder} column={1} name={"Date"} data={data} setData={setData} defaultData={gridData} />
+          </div>
+        </th>
+        <th className="border-l border-gray-300 p-2">
+          <div className="flex justify-between items-center gap-2">
+            Self
+            <Sort order={order} setOrder={setOrder} column={2} name={"SelfAmount"} data={data} setData={setData} defaultData={gridData} />
+          </div>
+        </th>
+        <th className="border-l border-gray-300 p-2">
+          <div className="flex justify-between items-center gap-2">
+            Partner
+            <Sort
+              order={order}
+              setOrder={setOrder}
+              column={3}
+              name={"PartnerAmount"}
+              data={data}
+              setData={setData}
+              defaultData={gridData}
+            />
+          </div>
+        </th>
 
         <th className="p-2 border-l border-gray-300">Actions</th>
       </tr>
@@ -97,10 +121,7 @@ export const ExtraPayListView = ({ gridData }) => {
         <div className="flex items-center text-left gap-3 justify-start">
           <div className="group flex relative">
             <FaEdit
-              className={clsx(
-                `text-editcolor`,
-                "hover:text-orange-500 font-semibold cursor-pointer sm:px-0"
-              )}
+              className={clsx(`text-editcolor`, "hover:text-orange-500 font-semibold cursor-pointer sm:px-0")}
               onClick={() => editClick(record)}
             />
             <ToolTip text={"Edit"} />
@@ -108,10 +129,7 @@ export const ExtraPayListView = ({ gridData }) => {
 
           <div className="group flex relative">
             <RiDeleteBin2Fill
-              className={clsx(
-                `text-deletecolor`,
-                "hover:text-red-500 font-semibold cursor-pointer sm:px-0"
-              )}
+              className={clsx(`text-deletecolor`, "hover:text-red-500 font-semibold cursor-pointer sm:px-0")}
               onClick={() => deleteClick(record.id)}
             />
             <ToolTip text={"Delete"} />
@@ -168,18 +186,8 @@ export const ExtraPayListView = ({ gridData }) => {
         </div>
       </div>
 
-      <AddExtraPay
-        open={open}
-        setOpen={setOpen}
-        recordData={selected}
-        key={new Date().getTime().toString()}
-      />
-      <ConfirmationDialog
-        isLoading={isLoading}
-        open={openDialog}
-        setOpen={setOpenDialog}
-        onClick={() => deleteHandler(selected)}
-      />
+      <AddExtraPay open={open} setOpen={setOpen} recordData={selected} key={new Date().getTime().toString()} />
+      <ConfirmationDialog isLoading={isLoading} open={openDialog} setOpen={setOpenDialog} onClick={() => deleteHandler(selected)} />
     </>
   );
 };

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
 import { MdFilterAlt, MdFilterAltOff } from "react-icons/md";
 import Button from "../../components/Button";
 import { IoMdAdd } from "react-icons/io";
@@ -13,6 +12,7 @@ import { getExtraFundsTrackers } from "../../config/api";
 import { getOwnerGridData, incomeOwners } from "../../utils/budget.filter";
 import { ExtraFundListView } from "../../components/budget/ExtraFundListView";
 import AddExtraFund from "../../components/budget/AddExtraFund";
+import { defaultFundSort } from "../../utils/budget.sort";
 
 export const ExtraFundsTracker = () => {
   const [showAll, setShowAll] = useState(false);
@@ -24,17 +24,11 @@ export const ExtraFundsTracker = () => {
   // Filters
   const [owner, setOwner] = useState("Household");
 
-  const [searchParams] = useSearchParams();
-  const name = searchParams.get("name");
-  const tab = searchParams.get("tab");
-
   const { data: extrafunds, status: isFundLoaded } = useQuery({
     queryKey: ["extrafunds"],
     queryFn: getExtraFundsTrackers,
     staleTime: 1000 * 60 * 60,
   });
-
-  console.log("extrafunds: ", extrafunds);
 
   ///-------------Filters Data Source --------------------------------///
   const owners = incomeOwners.map((owner) => ({
@@ -45,20 +39,11 @@ export const ExtraFundsTracker = () => {
   ///-------------END Filters Data Source --------------------------------///
 
   useEffect(() => {
-    if (name === "projects") setSelected(parseInt(tab));
-  }, [name, tab]);
-
-  useEffect(() => {
     if (isFundLoaded === "success") {
       const transData = getOwnerGridData(extrafunds, owner);
 
       // Sort the data by Owner property
-      const sortedData = transData.sort((a, b) => {
-        if (a.Owner === b.Owner) {
-          return a.Description < b.Description ? 1 : -1; // Descending order for Owner
-        }
-        return a.Owner > b.Owner ? 1 : -1; // Ascending order for Category
-      });
+      const sortedData = defaultFundSort(transData);
 
       setGridData(sortedData);
       setIsDataLoaded(true);
@@ -87,13 +72,7 @@ export const ExtraFundsTracker = () => {
             <div className="text-sm">
               <Button
                 label={!isShowing ? "Show Filters" : "Hide Filters"}
-                icon={
-                  !isShowing ? (
-                    <MdFilterAlt className="text-lg" />
-                  ) : (
-                    <MdFilterAltOff className="text-lg" />
-                  )
-                }
+                icon={!isShowing ? <MdFilterAlt className="text-lg" /> : <MdFilterAltOff className="text-lg" />}
                 className={clsx(
                   "flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:text-black hover:bg-viewcolor",
                   !isShowing ? "bg-green-800" : "bg-red-800"
@@ -145,12 +124,7 @@ export const ExtraFundsTracker = () => {
             <ExtraFundListView gridData={gridData} />
           </div>
 
-          <AddExtraFund
-            open={open}
-            setOpen={setOpen}
-            recordData={""}
-            key={new Date().getTime().toString()}
-          />
+          <AddExtraFund open={open} setOpen={setOpen} recordData={""} key={new Date().getTime().toString()} />
         </div>
       )}
     </>

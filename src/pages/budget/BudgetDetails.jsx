@@ -20,7 +20,6 @@ import {
   getSavings,
 } from "../../config/api";
 import { useQuery } from "react-query";
-import { useSearchParams } from "react-router-dom";
 import { getActiveAccount } from "../../utils/permissions";
 import { expenseOwners, getOwnerGridData } from "../../utils/budget.filter";
 import clsx from "clsx";
@@ -39,10 +38,6 @@ export const BudgetDetails = () => {
 
   // Filters
   const [owner, setOwner] = useState("Household");
-
-  const [searchParams] = useSearchParams();
-  const name = searchParams.get("name");
-  const tab = searchParams.get("tab");
 
   const { data: debts, status: isDebtLoaded } = useQuery({
     queryKey: ["debts"],
@@ -99,10 +94,6 @@ export const BudgetDetails = () => {
   }));
 
   ///-------------END Filters Data Source --------------------------------///
-
-  useEffect(() => {
-    if (name === "projects") setSelected(parseInt(tab));
-  }, [name, tab]);
 
   useEffect(() => {
     if (
@@ -168,13 +159,7 @@ export const BudgetDetails = () => {
             <div className="text-sm">
               <Button
                 label={!isShowing ? "Show Filters" : "Hide Filters"}
-                icon={
-                  !isShowing ? (
-                    <MdFilterAlt className="text-lg" />
-                  ) : (
-                    <MdFilterAltOff className="text-lg" />
-                  )
-                }
+                icon={!isShowing ? <MdFilterAlt className="text-lg" /> : <MdFilterAltOff className="text-lg" />}
                 className={clsx(
                   "flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:text-black",
                   !isShowing ? "bg-green-800" : "bg-red-800"
@@ -220,26 +205,13 @@ export const BudgetDetails = () => {
                   <MonthlyIncome incomeGridData={incomeGridData} />
                 </div>
                 <div className="w-full">
-                  <MonthlySavings
-                    savingsGridData={savingsGridData}
-                    incomeGridData={incomeGridData}
-                    maingoals={maingoals}
-                  />
+                  <MonthlySavings savingsGridData={savingsGridData} incomeGridData={incomeGridData} maingoals={maingoals} />
                 </div>
                 <div className="w-full">
-                  <MonthlyRetirement
-                    retirementGridData={retirementGridData}
-                    incomeGridData={incomeGridData}
-                    maingoals={maingoals}
-                  />
+                  <MonthlyRetirement retirementGridData={retirementGridData} incomeGridData={incomeGridData} maingoals={maingoals} />
                 </div>
                 <div className="w-full">
-                  <MonthlyDebt
-                    debtGridData={debtGridData}
-                    incomeGridData={incomeGridData}
-                    debtgoals={debtgoals}
-                    maingoals={maingoals}
-                  />
+                  <MonthlyDebt debtGridData={debtGridData} incomeGridData={incomeGridData} debtgoals={debtgoals} maingoals={maingoals} />
                 </div>
               </div>
               <div className="flex flex-col w-full">

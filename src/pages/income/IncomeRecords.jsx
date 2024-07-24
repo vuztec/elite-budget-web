@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
 import { MdFilterAlt, MdFilterAltOff } from "react-icons/md";
 import Button from "../../components/Button";
 import { IoMdAdd } from "react-icons/io";
@@ -17,16 +16,7 @@ import { getOwnerGridData, incomeOwners } from "../../utils/budget.filter";
 import { IncomeListView } from "../../components/income/IncomeListView";
 import { hasRecords } from "../../utils/budget.calculation";
 import { ExtraPayListView } from "../../components/extrapay/ExtraPayListView";
-
-const customList = [
-  "Main Job",
-  "Side Job",
-  "Interest/Dividends",
-  "Child Support",
-  "Bonus",
-  "Rental Income",
-  "Other",
-];
+import { defaultIncomeSort } from "../../utils/budget.sort";
 
 export const IncomeRecords = () => {
   const { user } = useUserStore();
@@ -38,10 +28,6 @@ export const IncomeRecords = () => {
 
   // Filters
   const [owner, setOwner] = useState("Household");
-
-  const [searchParams] = useSearchParams();
-  const name = searchParams.get("name");
-  const tab = searchParams.get("tab");
 
   const { data: incomes, status: isIncomeLoaded } = useQuery({
     queryKey: ["incomes"],
@@ -55,8 +41,6 @@ export const IncomeRecords = () => {
     staleTime: 1000 * 60 * 60,
   });
 
-  console.log("extrapaychecks: ", extrapaychecks);
-
   ///-------------Filters Data Source --------------------------------///
   const owners = incomeOwners.map((owner) => ({
     value: owner,
@@ -66,10 +50,6 @@ export const IncomeRecords = () => {
   ///-------------END Filters Data Source --------------------------------///
 
   useEffect(() => {
-    if (name === "projects") setSelected(parseInt(tab));
-  }, [name, tab]);
-
-  useEffect(() => {
     if (isIncomeLoaded === "success" && isPayChecksLoaded === "success") {
       const incomeData = getOwnerGridData(incomes, owner);
       let updatedData = incomeData;
@@ -77,14 +57,7 @@ export const IncomeRecords = () => {
         updatedData = incomeData.filter((item) => item.GrossAmount > 0);
       }
       // Sort the data by Owner property
-      const sortedData = updatedData.sort((a, b) => {
-        if (a.Owner < b.Owner) return 1;
-        if (a.Owner > b.Owner) return -1;
-        // If Owner is the same, sort by IncomeSource using customList
-        const aIndex = customList.indexOf(a.IncomeSource);
-        const bIndex = customList.indexOf(b.IncomeSource);
-        return aIndex - bIndex;
-      });
+      const sortedData = defaultIncomeSort(updatedData);
       setGridData(sortedData);
       setIsDataLoaded(true);
     } else {
@@ -108,13 +81,7 @@ export const IncomeRecords = () => {
             <div className="text-sm">
               <Button
                 label={!isShowing ? "Show Filters" : "Hide Filters"}
-                icon={
-                  !isShowing ? (
-                    <MdFilterAlt className="text-lg" />
-                  ) : (
-                    <MdFilterAltOff className="text-lg" />
-                  )
-                }
+                icon={!isShowing ? <MdFilterAlt className="text-lg" /> : <MdFilterAltOff className="text-lg" />}
                 className={clsx(
                   "flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:text-black hover:bg-viewcolor",
                   !isShowing ? "bg-green-800" : "bg-red-800"
@@ -126,13 +93,7 @@ export const IncomeRecords = () => {
           <div className="text-sm">
             <Button
               label={!showAll ? "Add New" : "Cancel Add"}
-              icon={
-                !showAll ? (
-                  <IoMdAdd className="text-lg" />
-                ) : (
-                  <HiMinusSm className="text-lg" />
-                )
-              }
+              icon={!showAll ? <IoMdAdd className="text-lg" /> : <HiMinusSm className="text-lg" />}
               className={clsx(
                 "flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:bg-viewcolor bg-black hover:text-black",
                 !showAll ? "bg-black" : "bg-red-800"

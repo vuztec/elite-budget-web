@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
 import { MdFilterAlt, MdFilterAltOff } from "react-icons/md";
 import Button from "../../components/Button";
 import { IoMdAdd } from "react-icons/io";
@@ -11,11 +10,7 @@ import Select from "../../components/Select";
 import { getActiveAccount } from "../../utils/permissions";
 import Package from "../../package/Package";
 import { getDebts } from "../../config/api";
-import {
-  debtCategories,
-  expenseOwners,
-  getCatGridData,
-} from "../../utils/budget.filter";
+import { debtCategories, expenseOwners, getCatGridData } from "../../utils/budget.filter";
 import { DebtListView } from "../../components/debt/DebtListView";
 import { DebtSummary } from "../../components/debt/DebtSummary";
 import { hasRecords } from "../../utils/budget.calculation";
@@ -30,17 +25,11 @@ export const OtherDebts = () => {
   const [owner, setOwner] = useState("Household");
   const [catFilter, setCatFilter] = useState("All");
 
-  const [searchParams] = useSearchParams();
-  const name = searchParams.get("name");
-  const tab = searchParams.get("tab");
-
   const { data: debts, status: isDebtLoaded } = useQuery({
     queryKey: ["debts"],
     queryFn: getDebts,
     staleTime: 1000 * 60 * 60,
   });
-
-  console.log("data: ", gridData);
 
   ///-------------Filters Data Source --------------------------------///
   const owners = expenseOwners.map((owner) => ({
@@ -56,20 +45,11 @@ export const OtherDebts = () => {
   ///-------------END Filters Data Source --------------------------------///
 
   useEffect(() => {
-    if (name === "projects") setSelected(parseInt(tab));
-  }, [name, tab]);
-
-  useEffect(() => {
     if (isDebtLoaded === "success") {
       const debtData = getCatGridData(debts, owner, catFilter);
       let updatedData = debtData;
       if (!showAll && hasRecords(debtData)) {
-        updatedData = debtData.filter(
-          (item) =>
-            item.MarketValue > 0 ||
-            item.LoanBalance > 0 ||
-            item.MonthlyBudget > 0
-        );
+        updatedData = debtData.filter((item) => item.MarketValue > 0 || item.LoanBalance > 0 || item.MonthlyBudget > 0);
       }
       // Sort the data by Owner property
       const sortedData = updatedData.sort((a, b) => {
@@ -107,13 +87,7 @@ export const OtherDebts = () => {
             <div className="text-sm">
               <Button
                 label={!isShowing ? "Show Filters" : "Hide Filters"}
-                icon={
-                  !isShowing ? (
-                    <MdFilterAlt className="text-lg" />
-                  ) : (
-                    <MdFilterAltOff className="text-lg" />
-                  )
-                }
+                icon={!isShowing ? <MdFilterAlt className="text-lg" /> : <MdFilterAltOff className="text-lg" />}
                 className={clsx(
                   "flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:text-black",
                   !isShowing ? "bg-green-800" : "bg-red-800"
@@ -125,13 +99,7 @@ export const OtherDebts = () => {
           <div className="text-sm">
             <Button
               label={!showAll ? "Add New" : "Cancel Add"}
-              icon={
-                !showAll ? (
-                  <IoMdAdd className="text-lg" />
-                ) : (
-                  <HiMinusSm className="text-lg" />
-                )
-              }
+              icon={!showAll ? <IoMdAdd className="text-lg" /> : <HiMinusSm className="text-lg" />}
               className={clsx(
                 "flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:bg-viewcolor bg-black hover:text-black",
                 !showAll ? "bg-black" : "bg-red-800"
@@ -179,31 +147,31 @@ export const OtherDebts = () => {
       {isDataLoaded && (
         <div className="w-full">
           <div className="w-full">
-            <DebtListView Data={gridData} category="Credit Card" />
+            <DebtListView Data={gridData.filter((item) => item.Category === "Credit Card")} category="Credit Card" />
           </div>
 
           <div className="w-full">
-            <DebtListView Data={gridData} category="Department Store" />
+            <DebtListView Data={gridData.filter((item) => item.Category === "Department Store")} category="Department Store" />
           </div>
 
           <div className="w-full">
-            <DebtListView Data={gridData} category="Family/Friend Loan" />
+            <DebtListView Data={gridData.filter((item) => item.Category === "Family/Friend Loan")} category="Family/Friend Loan" />
           </div>
 
           <div className="w-full">
-            <DebtListView Data={gridData} category="Medical Debt" />
+            <DebtListView Data={gridData.filter((item) => item.Category === "Medical Debt")} category="Medical Debt" />
           </div>
 
           <div className="w-full">
-            <DebtListView Data={gridData} category="Personal Loan" />
+            <DebtListView Data={gridData.filter((item) => item.Category === "Personal Loan")} category="Personal Loan" />
           </div>
 
           <div className="w-full">
-            <DebtListView Data={gridData} category="Student Loan" />
+            <DebtListView Data={gridData.filter((item) => item.Category === "Student Loan")} category="Student Loan" />
           </div>
 
           <div className="w-full">
-            <DebtListView Data={gridData} category="Other Debt" />
+            <DebtListView Data={gridData.filter((item) => item.Category === "Other Debt")} category="Other Debt" />
           </div>
 
           <div className="w-full">

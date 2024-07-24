@@ -12,15 +12,8 @@ import { ResourceGeneralDetails } from "../../components/team/ResourceGeneralDet
 
 export const UserDetails = () => {
   const { id } = useParams();
-  const { user } = useUserStore();
   const [selectedResource, setSelectedResource] = useState();
   const [customDateFormat, setCustomDateFormat] = useState("MMM dd, yyyy");
-  const [selectedChatUsers, setSelectedChatUsers] = useState(null);
-  const type = "resource_id";
-
-  const hasAdd = true;
-  const hasEdit = true;
-  const hasDel = true;
 
   const navigate = useNavigate();
   const viewAllClick = () => {

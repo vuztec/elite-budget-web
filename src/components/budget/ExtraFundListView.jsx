@@ -8,14 +8,11 @@ import { useQueryClient } from "react-query";
 import ConfirmationDialog from "../Dialogs";
 import axios from "../../config/axios";
 import { handleAxiosResponseError } from "../../utils/handleResponseError";
-import {
-  getBankAccountTypeTotal,
-  getFormattedValue,
-  getFormattedValueType,
-} from "../../utils/budget.calculation";
+import { getBankAccountTypeTotal, getFormattedValue, getFormattedValueType } from "../../utils/budget.calculation";
 import AddExtraFund from "./AddExtraFund";
 import { formatDate } from "../../utils";
 import ToolTip from "../tooltip";
+import Sort from "../sort";
 
 export const ExtraFundListView = ({ gridData }) => {
   const { user } = useUserStore();
@@ -27,6 +24,13 @@ export const ExtraFundListView = ({ gridData }) => {
   const [selected, setSelected] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
+  const [order, setOrder] = useState(["default", "default", "default", "default", "default", "default"]);
+  const [data, setData] = useState(gridData);
+
+  useEffect(() => {
+    setData(gridData);
+  }, [gridData]);
+
   const deleteHandler = async (selected) => {
     setIsLoading(true);
 
@@ -34,9 +38,7 @@ export const ExtraFundListView = ({ gridData }) => {
       .delete(`/api/extra-funds-tracker/${selected}`)
       .then(({ data }) => {
         console.log(data);
-        queryClient.setQueryData(["extrafunds"], (prev) =>
-          prev.filter((fund) => fund.id !== selected)
-        );
+        queryClient.setQueryData(["extrafunds"], (prev) => prev.filter((fund) => fund.id !== selected));
         setOpenDialog(false);
         setIsLoading(false);
       })
@@ -61,15 +63,99 @@ export const ExtraFundListView = ({ gridData }) => {
   const TableHeader = () => (
     <thead>
       <tr className="font-bold bg-[whitesmoke] text-black border border-gray-300 text-left">
-        <th className="border-l border-gray-300 p-2">Owner</th>
-        <th className="border-l border-gray-300 p-2">Date</th>
-        <th className="border-l border-gray-300 p-2">Description</th>
+        <th className="border-l border-gray-300 p-2">
+          <div className="flex justify-between items-center gap-2">
+            Owner
+            <Sort
+              tab={"fund"}
+              order={order}
+              setOrder={setOrder}
+              column={1}
+              name={"Owner"}
+              data={data}
+              setData={setData}
+              defaultData={gridData}
+            />
+          </div>
+        </th>
+        <th className="border-l border-gray-300 p-2">
+          <div className="flex justify-between items-center gap-2">
+            Date
+            <Sort
+              tab={"fund"}
+              order={order}
+              setOrder={setOrder}
+              column={2}
+              name={"Date"}
+              data={data}
+              setData={setData}
+              defaultData={gridData}
+            />
+          </div>
+        </th>
+        <th className="border-l border-gray-300 p-2">
+          <div className="flex justify-between items-center gap-2">
+            Description
+            <Sort
+              tab={"fund"}
+              order={order}
+              setOrder={setOrder}
+              column={3}
+              name={"Description"}
+              data={data}
+              setData={setData}
+              defaultData={gridData}
+            />
+          </div>
+        </th>
 
-        <th className="border-l border-gray-300 p-2">Withdrawal (-)</th>
+        <th className="border-l border-gray-300 p-2">
+          <div className="flex justify-between items-center gap-2">
+            Withdrawal (-)
+            <Sort
+              tab={"fund"}
+              order={order}
+              setOrder={setOrder}
+              column={4}
+              name={"Amount"}
+              data={data}
+              setData={setData}
+              defaultData={gridData}
+            />
+          </div>
+        </th>
 
-        <th className="border-l border-gray-300 p-2">Credit (+)</th>
+        <th className="border-l border-gray-300 p-2">
+          <div className="flex justify-between items-center gap-2">
+            Credit (+)
+            <Sort
+              tab={"fund"}
+              order={order}
+              setOrder={setOrder}
+              column={5}
+              name={"Amount"}
+              data={data}
+              setData={setData}
+              defaultData={gridData}
+            />
+          </div>
+        </th>
 
-        <th className="border-l border-gray-300 p-2">Balance</th>
+        <th className="border-l border-gray-300 p-2">
+          <div className="flex justify-between items-center gap-2">
+            Balance
+            <Sort
+              tab={"fund"}
+              order={order}
+              setOrder={setOrder}
+              column={6}
+              name={"MonthlyBudget"}
+              data={data}
+              setData={setData}
+              defaultData={gridData}
+            />
+          </div>
+        </th>
 
         <th className="p-2 border-l border-gray-300">Actions</th>
       </tr>
@@ -80,9 +166,7 @@ export const ExtraFundListView = ({ gridData }) => {
     <tr className="border border-gray-300 hover:bg-gray-400/10 text-left">
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <span className="flex items-center justify-left gap-2 text-center mb-0 text-gray-900">
-            {record?.Owner}
-          </span>
+          <span className="flex items-center justify-left gap-2 text-center mb-0 text-gray-900">{record?.Owner}</span>
         </div>
       </td>
 
@@ -100,34 +184,18 @@ export const ExtraFundListView = ({ gridData }) => {
 
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p className="text-black">
-            {getFormattedValueType(
-              user,
-              record?.Amount,
-              record?.Type,
-              "Withdrawal"
-            )}
-          </p>
+          <p className="text-black">{getFormattedValueType(user, record?.Amount, record?.Type, "Withdrawal")}</p>
         </div>
       </td>
 
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p className="text-black">
-            {getFormattedValueType(
-              user,
-              record?.Amount,
-              record?.Type,
-              "Credit"
-            )}
-          </p>
+          <p className="text-black">{getFormattedValueType(user, record?.Amount, record?.Type, "Credit")}</p>
         </div>
       </td>
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p className="text-black">
-            {getFormattedValue(user, record?.MonthlyBudget)}
-          </p>
+          <p className="text-black">{getFormattedValue(user, record?.MonthlyBudget)}</p>
         </div>
       </td>
 
@@ -135,10 +203,7 @@ export const ExtraFundListView = ({ gridData }) => {
         <div className="flex items-center text-left gap-3 justify-start">
           <div className="group flex relative">
             <FaEdit
-              className={clsx(
-                `text-editcolor`,
-                "hover:text-orange-500 font-semibold cursor-pointer sm:px-0"
-              )}
+              className={clsx(`text-editcolor`, "hover:text-orange-500 font-semibold cursor-pointer sm:px-0")}
               onClick={() => editClick(record)}
             />
             <ToolTip text={"Edit"} />
@@ -146,10 +211,7 @@ export const ExtraFundListView = ({ gridData }) => {
 
           <div className="group flex relative">
             <RiDeleteBin2Fill
-              className={clsx(
-                `text-deletecolor`,
-                "hover:text-red-500 font-semibold cursor-pointer sm:px-0"
-              )}
+              className={clsx(`text-deletecolor`, "hover:text-red-500 font-semibold cursor-pointer sm:px-0")}
               onClick={() => deleteClick(record.id)}
             />
             <ToolTip text={"Delete"} />
@@ -165,9 +227,7 @@ export const ExtraFundListView = ({ gridData }) => {
 
       <td className="min-w-fit whitespace-nowrap p-3 border-gray-200"></td>
 
-      <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200">
-        TOTAL
-      </td>
+      <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200">TOTAL</td>
 
       <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
@@ -199,9 +259,7 @@ export const ExtraFundListView = ({ gridData }) => {
             <table className="w-[97%] ml-5 -mb-5">
               <thead>
                 <tr>
-                  <th className="p-2 w-full uppercase bg-black text-white flex items-center justify-center">
-                    EXTRA FUND TRACKER
-                  </th>
+                  <th className="p-2 w-full uppercase bg-black text-white flex items-center justify-center">EXTRA FUND TRACKER</th>
                 </tr>
               </thead>
             </table>
@@ -218,18 +276,8 @@ export const ExtraFundListView = ({ gridData }) => {
         </div>
       </div>
 
-      <AddExtraFund
-        open={open}
-        setOpen={setOpen}
-        recordData={selected}
-        key={new Date().getTime().toString()}
-      />
-      <ConfirmationDialog
-        isLoading={isLoading}
-        open={openDialog}
-        setOpen={setOpenDialog}
-        onClick={() => deleteHandler(selected)}
-      />
+      <AddExtraFund open={open} setOpen={setOpen} recordData={selected} key={new Date().getTime().toString()} />
+      <ConfirmationDialog isLoading={isLoading} open={openDialog} setOpen={setOpenDialog} onClick={() => deleteHandler(selected)} />
     </>
   );
 };

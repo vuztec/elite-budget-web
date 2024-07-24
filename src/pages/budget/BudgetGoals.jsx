@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
 import Loading from "../../components/Loader";
 import { useQuery } from "react-query";
 import { getActiveAccount } from "../../utils/permissions";
@@ -10,10 +9,6 @@ import { GoalListView } from "../../components/budget/GoalListView";
 export const BudgetGoals = () => {
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const activeAccount = getActiveAccount(root);
-
-  const [searchParams] = useSearchParams();
-  const name = searchParams.get("name");
-  const tab = searchParams.get("tab");
 
   const { data: debtgoals, status: isDebtGoalsLoaded } = useQuery({
     queryKey: ["debtgoals"],
@@ -36,15 +31,7 @@ export const BudgetGoals = () => {
   ///-------------END Filters Data Source --------------------------------///
 
   useEffect(() => {
-    if (name === "projects") setSelected(parseInt(tab));
-  }, [name, tab]);
-
-  useEffect(() => {
-    if (
-      isDebtGoalsLoaded === "success" &&
-      isMainGoalsLoaded === "success" &&
-      isExpenseGoalsLoaded === "success"
-    ) {
+    if (isDebtGoalsLoaded === "success" && isMainGoalsLoaded === "success" && isExpenseGoalsLoaded === "success") {
       setIsDataLoaded(true);
     } else {
       setIsDataLoaded(false);

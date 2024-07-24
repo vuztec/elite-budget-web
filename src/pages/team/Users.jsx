@@ -28,11 +28,6 @@ export const Users = () => {
   const [openComments, setOpenComments] = useState(false);
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState(null);
-  const [hasAdd, setHasAdd] = useState(false);
-  const [hasEdit, setHasEdit] = useState(false);
-  const [hasDel, setHasDel] = useState(false);
-  const [selectedChatUsers, setSelectedChatUsers] = useState(null);
-  const { user: currentUser } = useUserStore();
   const current_subcription = {};
 
   const activeAccount = true;
@@ -74,15 +69,12 @@ export const Users = () => {
 
   const viewAttachClick = (el) => {
     setSelected(el);
-    const chatUsers = [];
-    setSelectedChatUsers(chatUsers);
+
     setOpenAttachments(true);
   };
 
   const viewCommentClick = (el) => {
     setSelected(el);
-    const chatUsers = [];
-    setSelectedChatUsers(chatUsers);
     setOpenComments(true);
   };
 

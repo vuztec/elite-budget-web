@@ -11,6 +11,7 @@ import { handleAxiosResponseError } from "../../utils/handleResponseError";
 import { getFormattedValue } from "../../utils/budget.calculation";
 import AddBank from "./AddBank";
 import ToolTip from "../tooltip";
+import Sort from "../sort";
 
 export const BankListView = ({ gridData }) => {
   const { user } = useUserStore();
@@ -22,6 +23,13 @@ export const BankListView = ({ gridData }) => {
   const [selected, setSelected] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
+  const [order, setOrder] = useState(["default", "default", "default"]);
+  const [data, setData] = useState(gridData);
+
+  useEffect(() => {
+    setData(gridData);
+  }, [gridData]);
+
   const deleteHandler = async (selected) => {
     setIsLoading(true);
 
@@ -29,9 +37,7 @@ export const BankListView = ({ gridData }) => {
       .delete(`/api/bank-accounts/name/${selected}`)
       .then(({ data }) => {
         console.log(data);
-        queryClient.setQueryData(["accountnames"], (prev) =>
-          prev.filter((bank) => bank.id !== selected)
-        );
+        queryClient.setQueryData(["accountnames"], (prev) => prev.filter((bank) => bank.id !== selected));
         setOpenDialog(false);
         setIsLoading(false);
       })
@@ -51,16 +57,56 @@ export const BankListView = ({ gridData }) => {
     setOpen(true);
   };
 
-  console.log(gridData);
-
   //----------------CRUD----------------//
 
   const TableHeader = () => (
     <thead>
       <tr className="font-bold bg-[whitesmoke] text-black border border-gray-300 text-left text-sm xl:text-[16px]">
-        <th className="border-l border-gray-300 p-2">Name</th>
-        <th className="border-l border-gray-300 p-2">Bank Account Name</th>
-        <th className="border-l border-gray-300 p-2">Opening Balance</th>
+        <th className="border-l border-gray-300 p-2">
+          <div className="flex justify-between items-center gap-2">
+            Owner
+            <Sort
+              tab={"bank"}
+              order={order}
+              setOrder={setOrder}
+              column={1}
+              name={"Owner"}
+              data={data}
+              setData={setData}
+              defaultData={gridData}
+            />
+          </div>
+        </th>
+        <th className="border-l border-gray-300 p-2">
+          <div className="flex justify-between items-center gap-2">
+            Bank Account Name
+            <Sort
+              tab={"bank"}
+              order={order}
+              setOrder={setOrder}
+              column={2}
+              name={"Name"}
+              data={data}
+              setData={setData}
+              defaultData={gridData}
+            />
+          </div>
+        </th>
+        <th className="border-l border-gray-300 p-2">
+          <div className="flex justify-between items-center gap-2">
+            Opening Balance
+            <Sort
+              tab={"bank"}
+              order={order}
+              setOrder={setOrder}
+              column={3}
+              name={"OpeningBalance"}
+              data={data}
+              setData={setData}
+              defaultData={gridData}
+            />
+          </div>
+        </th>
 
         <th className="p-2 border-l border-gray-300">Actions</th>
       </tr>
@@ -71,9 +117,7 @@ export const BankListView = ({ gridData }) => {
     <tr className="border border-gray-300 text-sm xl:text-[16px] hover:bg-gray-400/10 text-left">
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <span className="flex items-center justify-left gap-2 text-center mb-0 text-gray-900">
-            {record?.Owner}
-          </span>
+          <span className="flex items-center justify-left gap-2 text-center mb-0 text-gray-900">{record?.Owner}</span>
         </div>
       </td>
 
@@ -85,9 +129,7 @@ export const BankListView = ({ gridData }) => {
 
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p className="text-black">
-            {getFormattedValue(user, record?.OpeningBalance)}
-          </p>
+          <p className="text-black">{getFormattedValue(user, record?.OpeningBalance)}</p>
         </div>
       </td>
 
@@ -95,10 +137,7 @@ export const BankListView = ({ gridData }) => {
         <div className="flex items-center text-left gap-3 justify-start">
           <div className="group flex relative">
             <FaEdit
-              className={clsx(
-                `text-editcolor`,
-                "hover:text-orange-500 font-semibold cursor-pointer sm:px-0"
-              )}
+              className={clsx(`text-editcolor`, "hover:text-orange-500 font-semibold cursor-pointer sm:px-0")}
               onClick={() => editClick(record)}
             />
             <ToolTip text="Edit" />
@@ -106,10 +145,7 @@ export const BankListView = ({ gridData }) => {
 
           <div className="group flex relative">
             <RiDeleteBin2Fill
-              className={clsx(
-                `text-deletecolor`,
-                "hover:text-red-500 font-semibold cursor-pointer sm:px-0"
-              )}
+              className={clsx(`text-deletecolor`, "hover:text-red-500 font-semibold cursor-pointer sm:px-0")}
               onClick={() => deleteClick(record.id)}
             />
             <ToolTip text="Delete" />
@@ -146,18 +182,8 @@ export const BankListView = ({ gridData }) => {
           </div>
         </div>
       )}
-      <AddBank
-        open={open}
-        setOpen={setOpen}
-        recordData={selected}
-        key={new Date().getTime().toString()}
-      />
-      <ConfirmationDialog
-        isLoading={isLoading}
-        open={openDialog}
-        setOpen={setOpenDialog}
-        onClick={() => deleteHandler(selected)}
-      />
+      <AddBank open={open} setOpen={setOpen} recordData={selected} key={new Date().getTime().toString()} />
+      <ConfirmationDialog isLoading={isLoading} open={openDialog} setOpen={setOpenDialog} onClick={() => deleteHandler(selected)} />
     </>
   );
 };

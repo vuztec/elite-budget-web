@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
 import { MdFilterAlt, MdFilterAltOff } from "react-icons/md";
 import Button from "../../components/Button";
 import { IoMdAdd } from "react-icons/io";
@@ -9,10 +8,7 @@ import clsx from "clsx";
 import Select from "../../components/Select";
 import { getActiveAccount } from "../../utils/permissions";
 import Package from "../../package/Package";
-import {
-  getBankAccountNames,
-  getBankAccountTransactions,
-} from "../../config/api";
+import { getBankAccountNames, getBankAccountTransactions } from "../../config/api";
 import { getOwnerGridData, incomeOwners } from "../../utils/budget.filter";
 import { TransactionListView } from "../../components/bank/TransactionListView";
 import AddTransaction from "../../components/bank/AddTransaction";
@@ -27,10 +23,6 @@ export const Transactions = () => {
   // Filters
   const [owner, setOwner] = useState("Household");
 
-  const [searchParams] = useSearchParams();
-  const name = searchParams.get("name");
-  const tab = searchParams.get("tab");
-
   const { data: transactions, status: isTransactionLoaded } = useQuery({
     queryKey: ["banktransactions"],
     queryFn: getBankAccountTransactions,
@@ -43,8 +35,6 @@ export const Transactions = () => {
     staleTime: 1000 * 60 * 60,
   });
 
-  console.log("transactions: ", transactions);
-
   ///-------------Filters Data Source --------------------------------///
   const owners = incomeOwners.map((owner) => ({
     value: owner,
@@ -52,10 +42,6 @@ export const Transactions = () => {
   }));
 
   ///-------------END Filters Data Source --------------------------------///
-
-  useEffect(() => {
-    if (name === "projects") setSelected(parseInt(tab));
-  }, [name, tab]);
 
   useEffect(() => {
     if (isTransactionLoaded === "success" && isNamesLoaded === "success") {
@@ -96,13 +82,7 @@ export const Transactions = () => {
             <div className="text-sm">
               <Button
                 label={!isShowing ? "Show Filters" : "Hide Filters"}
-                icon={
-                  !isShowing ? (
-                    <MdFilterAlt className="text-lg" />
-                  ) : (
-                    <MdFilterAltOff className="text-lg" />
-                  )
-                }
+                icon={!isShowing ? <MdFilterAlt className="text-lg" /> : <MdFilterAltOff className="text-lg" />}
                 className={clsx(
                   "flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:text-black hover:bg-viewcolor",
                   !isShowing ? "bg-green-800" : "bg-red-800"
@@ -153,18 +133,13 @@ export const Transactions = () => {
           {accountnames?.map((bankName, index) => (
             <div className="w-full">
               <TransactionListView
-                Data={gridData}
+                Data={gridData.filter((item) => item.BankAccountName.id === bankName.id)}
                 key={index}
                 bankName={bankName}
               />
             </div>
           ))}
-          <AddTransaction
-            open={open}
-            setOpen={setOpen}
-            recordData={""}
-            key={new Date().getTime().toString()}
-          />
+          <AddTransaction open={open} setOpen={setOpen} recordData={""} key={new Date().getTime().toString()} />
         </div>
       )}
     </>

@@ -11,25 +11,16 @@ import { handleAxiosResponseError } from "../../utils/handleResponseError";
 import AddDebt from "./AddDebt";
 import { getFormattedValue, getLoanBalanceTotal, getMonthlyBudgetTotal, getYearlyBudgetTotal } from "../../utils/budget.calculation";
 import ToolTip from "../tooltip";
+import Sort from "../sort";
+import { defaultDebSort } from "../../utils/budget.sort";
 
 export const DebtListView = ({ Data, category }) => {
   const { user } = useUserStore();
   const [gridData, setGridData] = useState([]);
+  const [order, setOrder] = useState(["default", "default", "default", "default", "default", "default", "default"]);
+
   useEffect(() => {
-    const updatedData = Data.filter((item) => item.Category === category);
-
-    const sortedData = updatedData.sort((a, b) => {
-      // Determine the display names for both records
-      const aDisplayName = a.NickName || a.Description;
-      const bDisplayName = b.NickName || b.Description;
-
-      // Sort by Owner in descending order
-      if (a.Owner === b.Owner) {
-        // If Owners are equal, sort by display name (NickName or Description) in ascending order
-        return aDisplayName.localeCompare(bDisplayName);
-      }
-      return a.Owner < b.Owner ? 1 : -1;
-    });
+    const sortedData = defaultDebSort(Data);
     setGridData(sortedData);
   }, [Data]);
 
@@ -67,38 +58,129 @@ export const DebtListView = ({ Data, category }) => {
     setOpen(true);
   };
 
-  console.log(gridData);
-
   //----------------CRUD----------------//
 
   const TableHeader = () => (
     <thead>
       <tr className="font-bold bg-[whitesmoke] text-black border border-gray-300 text-left text-sm xl:text-[16px]">
-        <th className="border-l border-gray-300 p-2">Owner</th>
-        <th className="border-l border-gray-300 p-2">Description</th>
         <th className="border-l border-gray-300 p-2">
-          <div className="flex flex-col">
-            <span className="whitespace-nowrap text-left">Loan Balance</span>
-            <span className="text-left text-xs"> (For Net Worth Calc)</span>
+          <div className="flex justify-between items-center gap-2">
+            Owner
+            <Sort
+              tab={"debt"}
+              order={order}
+              setOrder={setOrder}
+              column={1}
+              name={"Owner"}
+              data={gridData}
+              setData={setGridData}
+              defaultData={Data}
+            />
           </div>
         </th>
-        <th className="border-l border-gray-300 p-2">Day Due</th>
         <th className="border-l border-gray-300 p-2">
-          <div className="flex flex-col">
-            <span className="text-left">Payment</span>
-            <span className="text-left">Method</span>
+          <div className="flex justify-between items-center gap-2">
+            Description
+            <Sort
+              tab={"debt"}
+              order={order}
+              setOrder={setOrder}
+              column={2}
+              name={"NickName"}
+              name2={"Description"}
+              data={gridData}
+              setData={setGridData}
+              defaultData={Data}
+            />
+          </div>
+        </th>
+        <th className="border-l border-gray-300 p-2">
+          <div className="flex justify-between items-center gap-2">
+            <div className="flex flex-col">
+              <span className="whitespace-nowrap text-left">Loan Balance</span>
+              <span className="text-left text-xs"> (For Net Worth Calc)</span>
+            </div>
+            <Sort
+              tab={"debt"}
+              order={order}
+              setOrder={setOrder}
+              column={3}
+              name={"LoanBalance"}
+              data={gridData}
+              setData={setGridData}
+              defaultData={Data}
+            />
+          </div>
+        </th>
+        <th className="border-l border-gray-300 p-2">
+          <div className="flex justify-between items-center gap-2">
+            Day Due
+            <Sort
+              tab={"debt"}
+              order={order}
+              setOrder={setOrder}
+              column={4}
+              name={"DueDate"}
+              data={gridData}
+              setData={setGridData}
+              defaultData={Data}
+            />
+          </div>
+        </th>
+        <th className="border-l border-gray-300 p-2">
+          <div className="flex justify-between items-center gap-2">
+            <div className="flex flex-col">
+              <span className="text-left">Payment</span>
+              <span className="text-left">Method</span>
+            </div>
+
+            <Sort
+              tab={"debt"}
+              order={order}
+              setOrder={setOrder}
+              column={5}
+              name={"PaymentMethod"}
+              data={gridData}
+              setData={setGridData}
+              defaultData={Data}
+            />
           </div>
         </th>
         <th className="border-l border-gray-300 p-1">
-          <div className="flex flex-col">
-            <span className="text-left">Monthly (Other)</span>
-            <span className="text-left">Debt Pmts</span>
+          <div className="flex justify-between items-center gap-2">
+            <div className="flex flex-col">
+              <span className="text-left">Monthly (Other)</span>
+              <span className="text-left">Debt Pmts</span>
+            </div>
+
+            <Sort
+              tab={"debt"}
+              order={order}
+              setOrder={setOrder}
+              column={6}
+              name={"MonthlyBudget"}
+              data={gridData}
+              setData={setGridData}
+              defaultData={Data}
+            />
           </div>
         </th>
         <th className="border-l border-gray-300 p-1">
-          <div className="flex flex-col">
-            <span className="text-left">Annual</span>
-            <span className="text-left">Debt Pmts</span>
+          <div className="flex justify-between items-center gap-2">
+            <div className="flex flex-col">
+              <span className="text-left">Annual</span>
+              <span className="text-left">Debt Pmts</span>
+            </div>
+            <Sort
+              tab={"debt"}
+              order={order}
+              setOrder={setOrder}
+              column={7}
+              name={"MonthlyBudget"}
+              data={gridData}
+              setData={setGridData}
+              defaultData={Data}
+            />
           </div>
         </th>
         <th className="p-2 border-l border-gray-300">Actions</th>

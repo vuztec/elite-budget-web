@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { RiDeleteBin2Fill } from "react-icons/ri";
 import { FaEdit } from "react-icons/fa";
 import clsx from "clsx";
@@ -17,11 +17,7 @@ import {
   getFormattedValue,
 } from "../../utils/budget.calculation";
 import ToolTip from "../tooltip";
-import {
-  LiaSortDownSolid,
-  LiaSortSolid,
-  LiaSortUpSolid,
-} from "react-icons/lia";
+import Sort from "../sort";
 
 export const IncomeListView = ({ gridData }) => {
   const { user } = useUserStore();
@@ -32,8 +28,12 @@ export const IncomeListView = ({ gridData }) => {
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [isSorting, setIsSorting] = useState(false);
-  const [order, setOrder] = useState("");
+  const [order, setOrder] = useState(["default", "default", "default", "default", "default"]);
+  const [data, setData] = useState(gridData);
+
+  useEffect(() => {
+    setData(gridData);
+  }, [gridData]);
 
   const deleteHandler = async (selected) => {
     setIsLoading(true);
@@ -41,11 +41,7 @@ export const IncomeListView = ({ gridData }) => {
       .delete(`/api/income/${selected}`)
       .then(({ data }) => {
         console.log(data);
-        queryClient.setQueryData(["incomes"], (prev) =>
-          prev.map((income) =>
-            income.id === selected ? { ...income, ...data } : income
-          )
-        );
+        queryClient.setQueryData(["incomes"], (prev) => prev.map((income) => (income.id === selected ? { ...income, ...data } : income)));
         setOpenDialog(false);
         setIsLoading(false);
       })
@@ -65,18 +61,6 @@ export const IncomeListView = ({ gridData }) => {
     setOpen(true);
   };
 
-  const sortDefaultClick = () => {
-    setIsSorting(false);
-  };
-  const sortUpClick = () => {
-    setIsSorting(true);
-    setOrder("asc");
-  };
-  const sortDownClick = () => {
-    setIsSorting(true);
-    setOrder("desc");
-  };
-
   //----------------CRUD----------------//
 
   const TableHeader = () => (
@@ -84,31 +68,85 @@ export const IncomeListView = ({ gridData }) => {
       <tr className="font-bold bg-[whitesmoke] text-black border border-gray-300 text-left">
         <th className="border-l border-gray-300 p-2">
           <div className="flex justify-between items-center gap-2">
-            <p>Owner</p>
-            <div>
-              {!isSorting ? (
-                <LiaSortSolid onClick={() => sortDefaultClick()} />
-              ) : order === "asc" ? (
-                <LiaSortUpSolid onClick={() => sortUpClick()} />
-              ) : (
-                <LiaSortDownSolid onClick={() => sortDownClick()} />
-              )}
-            </div>
+            Owner
+            <Sort
+              tab={"income"}
+              order={order}
+              setOrder={setOrder}
+              column={1}
+              name={"Owner"}
+              data={data}
+              setData={setData}
+              defaultData={gridData}
+            />
           </div>
         </th>
 
-        <th className="border-l border-gray-300 p-2">Income Source</th>
-        <th className="border-l border-gray-300 p-2">Frequency</th>
-        <th className="border-l border-gray-300 p-1">
-          <div className="flex flex-col">
-            <span className="whitespace-nowrap text-left">Gross Pay</span>
-            <span className="whitespace-nowrap text-left">(Before Taxes)</span>
+        <th className="border-l border-gray-300 p-2">
+          <div className="flex justify-between items-center gap-2">
+            Income Source
+            <Sort
+              tab={"income"}
+              order={order}
+              setOrder={setOrder}
+              column={2}
+              name={"NickName"}
+              name2={"IncomeSource"}
+              data={data}
+              setData={setData}
+              defaultData={gridData}
+            />
+          </div>
+        </th>
+        <th className="border-l border-gray-300 p-2">
+          <div className="flex justify-between items-center gap-2">
+            Frequency
+            <Sort
+              tab={"income"}
+              order={order}
+              setOrder={setOrder}
+              column={3}
+              name={"Frequency"}
+              data={data}
+              setData={setData}
+              defaultData={gridData}
+            />
           </div>
         </th>
         <th className="border-l border-gray-300 p-1">
-          <div className="flex flex-col">
-            <span className="whitespace-nowrap text-left">Net Pay</span>
-            <span className="whitespace-nowrap text-left">(Pay Rec'd)</span>
+          <div className="flex justify-between items-center gap-2">
+            <div className="flex flex-col">
+              <span className="whitespace-nowrap text-left">Gross Pay</span>
+              <span className="whitespace-nowrap text-left">(Before Taxes)</span>
+            </div>
+            <Sort
+              tab={"income"}
+              order={order}
+              setOrder={setOrder}
+              column={4}
+              name={"GrossAmount"}
+              data={data}
+              setData={setData}
+              defaultData={gridData}
+            />
+          </div>
+        </th>
+        <th className="border-l border-gray-300 p-1">
+          <div className="flex justify-between items-center gap-2">
+            <div className="flex flex-col">
+              <span className="whitespace-nowrap text-left">Net Pay</span>
+              <span className="whitespace-nowrap text-left">(Pay Rec'd)</span>
+            </div>
+            <Sort
+              tab={"income"}
+              order={order}
+              setOrder={setOrder}
+              column={5}
+              name={"NetAmount"}
+              data={data}
+              setData={setData}
+              defaultData={gridData}
+            />
           </div>
         </th>
 
@@ -121,17 +159,13 @@ export const IncomeListView = ({ gridData }) => {
     <tr className="border border-gray-300 hover:bg-gray-400/10 text-left">
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <span className="flex items-center justify-left gap-2 text-center mb-0 text-gray-900">
-            {record?.Owner}
-          </span>
+          <span className="flex items-center justify-left gap-2 text-center mb-0 text-gray-900">{record?.Owner}</span>
         </div>
       </td>
 
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p className="text-black">
-            {record?.NickName ? record?.NickName : record?.IncomeSource}
-          </p>
+          <p className="text-black">{record?.NickName ? record?.NickName : record?.IncomeSource}</p>
         </div>
       </td>
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
@@ -142,17 +176,13 @@ export const IncomeListView = ({ gridData }) => {
 
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p className="text-black">
-            {getFormattedValue(user, record?.GrossAmount)}
-          </p>
+          <p className="text-black">{getFormattedValue(user, record?.GrossAmount)}</p>
         </div>
       </td>
 
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p className="text-black">
-            {getFormattedValue(user, record?.NetAmount)}
-          </p>
+          <p className="text-black">{getFormattedValue(user, record?.NetAmount)}</p>
         </div>
       </td>
 
@@ -160,10 +190,7 @@ export const IncomeListView = ({ gridData }) => {
         <div className="flex items-center text-left gap-3 justify-start">
           <div className="group flex relative">
             <FaEdit
-              className={clsx(
-                `text-editcolor`,
-                "hover:text-orange-500 font-semibold cursor-pointer sm:px-0"
-              )}
+              className={clsx(`text-editcolor`, "hover:text-orange-500 font-semibold cursor-pointer sm:px-0")}
               onClick={() => editClick(record)}
             />
             <ToolTip text="Edit" />
@@ -171,10 +198,7 @@ export const IncomeListView = ({ gridData }) => {
 
           <div className="group flex relative">
             <RiDeleteBin2Fill
-              className={clsx(
-                `text-deletecolor`,
-                "hover:text-red-500 font-semibold cursor-pointer sm:px-0"
-              )}
+              className={clsx(`text-deletecolor`, "hover:text-red-500 font-semibold cursor-pointer sm:px-0")}
               onClick={() => deleteClick(record.id)}
             />
             <ToolTip text="Delete" />
@@ -191,7 +215,7 @@ export const IncomeListView = ({ gridData }) => {
           <table className="w-[97%] overflow-x-auto m-5">
             <TableHeader />
             <tbody>
-              {gridData?.map((record, index) => (
+              {data?.map((record, index) => (
                 <TableRow key={index} record={record} />
               ))}
             </tbody>
@@ -205,54 +229,32 @@ export const IncomeListView = ({ gridData }) => {
               </tr>
 
               <tr className="border border-gray-300">
-                <td className="min-w-fit whitespace-nowrap text-right p-2">
-                  Monthly Budgeted Gross Income:
-                </td>
+                <td className="min-w-fit whitespace-nowrap text-right p-2">Monthly Budgeted Gross Income:</td>
                 <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">
                   {getGrossMonthlyTotal(user, gridData)}
                 </td>
               </tr>
               <tr className="border border-gray-300">
-                <td className="text-right p-2 min-w-fit whitespace-nowrap">
-                  Monthly Budgeted Net Income:
-                </td>
-                <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">
-                  {getNetMonthlyTotal(user, gridData)}
-                </td>
+                <td className="text-right p-2 min-w-fit whitespace-nowrap">Monthly Budgeted Net Income:</td>
+                <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">{getNetMonthlyTotal(user, gridData)}</td>
               </tr>
               <tr className="border border-gray-300">
-                <td className="text-right p-2 min-w-fit whitespace-nowrap">
-                  Total Annual Gross Income:
-                </td>
+                <td className="text-right p-2 min-w-fit whitespace-nowrap">Total Annual Gross Income:</td>
                 <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">
                   {getGrossYearlyTotal(user, gridData)}
                 </td>
               </tr>
               <tr className="border border-gray-300">
-                <td className="min-w-fit whitespace-nowrap text-right p-2">
-                  Total Annual Net Income:
-                </td>
-                <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">
-                  {getNetYearlyTotal(user, gridData)}
-                </td>
+                <td className="min-w-fit whitespace-nowrap text-right p-2">Total Annual Net Income:</td>
+                <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">{getNetYearlyTotal(user, gridData)}</td>
               </tr>
             </tbody>
           </table>
         </div>
       </div>
 
-      <AddIncome
-        open={open}
-        setOpen={setOpen}
-        recordData={selected}
-        key={new Date().getTime().toString()}
-      />
-      <ConfirmationDialog
-        isLoading={isLoading}
-        open={openDialog}
-        setOpen={setOpenDialog}
-        onClick={() => deleteHandler(selected)}
-      />
+      <AddIncome open={open} setOpen={setOpen} recordData={selected} key={new Date().getTime().toString()} />
+      <ConfirmationDialog isLoading={isLoading} open={openDialog} setOpen={setOpenDialog} onClick={() => deleteHandler(selected)} />
     </div>
   );
 };

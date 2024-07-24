@@ -3,14 +3,8 @@ import Package from "../../package/Package";
 import Loading from "../../components/Loader";
 import { MdFilterAlt, MdFilterAltOff } from "react-icons/md";
 import Button from "../../components/Button";
-import {
-  getDebts,
-  getExpenses,
-  getRetirements,
-  getSavings,
-} from "../../config/api";
+import { getDebts, getExpenses, getRetirements, getSavings } from "../../config/api";
 import { useQuery } from "react-query";
-import { useSearchParams } from "react-router-dom";
 import { getActiveAccount } from "../../utils/permissions";
 import {
   expenseOwners,
@@ -36,14 +30,8 @@ export const Checklist = () => {
   // Filters
   const [owner, setOwner] = useState("Household");
   const uniqueCategories = getUniqueCategories(combinedData);
-  const uniqueBudgetItemsByCategory =
-    getUniqueBudgetItemsByCategory(combinedData);
-  const uniqueDescriptionsByCategory =
-    getUniqueDescriptionsByCategory(combinedData);
-
-  const [searchParams] = useSearchParams();
-  const name = searchParams.get("name");
-  const tab = searchParams.get("tab");
+  const uniqueBudgetItemsByCategory = getUniqueBudgetItemsByCategory(combinedData);
+  const uniqueDescriptionsByCategory = getUniqueDescriptionsByCategory(combinedData);
 
   const { data: debts, status: isDebtLoaded } = useQuery({
     queryKey: ["debts"],
@@ -78,30 +66,13 @@ export const Checklist = () => {
   ///-------------END Filters Data Source --------------------------------///
 
   useEffect(() => {
-    if (name === "projects") setSelected(parseInt(tab));
-  }, [name, tab]);
-
-  useEffect(() => {
-    if (
-      isSavingLoaded === "success" &&
-      isRetLoaded === "success" &&
-      isExpenseLoaded === "success" &&
-      isDebtLoaded === "success" &&
-      owner
-    ) {
+    if (isSavingLoaded === "success" && isRetLoaded === "success" && isExpenseLoaded === "success" && isDebtLoaded === "success" && owner) {
       const savingData = getOwnerGridData(savings, owner);
       const retirementData = getOwnerGridData(retirements, owner);
       const expenseData = getOwnerGridData(expenses, owner);
       const debtData = getOwnerGridData(debts, owner);
-      const combinedData = getCombineData(
-        savingData,
-        expenseData,
-        retirementData,
-        debtData
-      );
-      const filteredData = combinedData.filter(
-        (data) => data.MonthlyBudget > 0
-      );
+      const combinedData = getCombineData(savingData, expenseData, retirementData, debtData);
+      const filteredData = combinedData.filter((data) => data.MonthlyBudget > 0);
       const sortedData = filteredData.sort((a, b) => {
         // Determine the display names for both records
         const aDisplayName = a.NickName || a.Description;
@@ -127,17 +98,7 @@ export const Checklist = () => {
     } else {
       setIsDataLoaded(false);
     }
-  }, [
-    savings,
-    retirements,
-    debts,
-    expenses,
-    isSavingLoaded,
-    isExpenseLoaded,
-    isDebtLoaded,
-    isRetLoaded,
-    owner,
-  ]);
+  }, [savings, retirements, debts, expenses, isSavingLoaded, isExpenseLoaded, isDebtLoaded, isRetLoaded, owner]);
 
   const handleOwnerChange = (e) => {
     if (e && e.target?.value) {
@@ -161,37 +122,17 @@ export const Checklist = () => {
     );
   };
 
-  const months = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
-  ];
+  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   const generateMonthHeaders = () => {
     const lastTwoDigitsOfYear = getCurrentYear();
     let newMonths = months;
     if (monthsName.length > 1)
-      newMonths = monthsName
-        .filter((item) => item !== "Filter Months")
-        .sort((a, b) => months.indexOf(a) - months.indexOf(b));
-    const monthHeaders = newMonths?.map(
-      (month) => `${month}-${lastTwoDigitsOfYear}`
-    );
+      newMonths = monthsName.filter((item) => item !== "Filter Months").sort((a, b) => months.indexOf(a) - months.indexOf(b));
+    const monthHeaders = newMonths?.map((month) => `${month}-${lastTwoDigitsOfYear}`);
 
     return monthHeaders;
   };
-  const monthHeaders = useMemo(
-    () => generateMonthHeaders(),
-    [monthsName, generateMonthHeaders]
-  );
+  const monthHeaders = useMemo(() => generateMonthHeaders(), [monthsName, generateMonthHeaders]);
 
   const tableCategoryStyle = {
     padding: "8px",
@@ -241,13 +182,7 @@ export const Checklist = () => {
             <div className="text-sm">
               <Button
                 label={!isShowing ? "Show Filters" : "Hide Filters"}
-                icon={
-                  !isShowing ? (
-                    <MdFilterAlt className="text-lg" />
-                  ) : (
-                    <MdFilterAltOff className="text-lg" />
-                  )
-                }
+                icon={!isShowing ? <MdFilterAlt className="text-lg" /> : <MdFilterAltOff className="text-lg" />}
                 className={clsx(
                   "flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:text-black",
                   !isShowing ? "bg-green-800" : "bg-red-800"

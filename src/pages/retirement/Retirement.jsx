@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
 import { MdFilterAlt, MdFilterAltOff } from "react-icons/md";
 import Button from "../../components/Button";
 import { IoMdAdd } from "react-icons/io";
@@ -14,6 +13,7 @@ import { getRetirements } from "../../config/api";
 import { getOwnerGridData, retirementOwners } from "../../utils/budget.filter";
 import { RetirementListView } from "../../components/retirement/RetirementListView";
 import { hasRecords } from "../../utils/budget.calculation";
+import { defaultDebSort } from "../../utils/budget.sort";
 
 export const Retirement = () => {
   const [showAll, setShowAll] = useState(false);
@@ -24,17 +24,11 @@ export const Retirement = () => {
   // Filters
   const [owner, setOwner] = useState("Household");
 
-  const [searchParams] = useSearchParams();
-  const name = searchParams.get("name");
-  const tab = searchParams.get("tab");
-
   const { data: retirements, status: isRetirementLoaded } = useQuery({
     queryKey: ["retirements"],
     queryFn: getRetirements,
     staleTime: 1000 * 60 * 60,
   });
-
-  console.log("data: ", gridData);
 
   ///-------------Filters Data Source --------------------------------///
   const owners = retirementOwners.map((owner) => ({
@@ -45,34 +39,14 @@ export const Retirement = () => {
   ///-------------END Filters Data Source --------------------------------///
 
   useEffect(() => {
-    if (name === "projects") setSelected(parseInt(tab));
-  }, [name, tab]);
-
-  useEffect(() => {
     if (isRetirementLoaded === "success") {
       const retirementData = getOwnerGridData(retirements, owner);
       let updatedData = retirementData;
       if (!showAll && hasRecords(retirementData)) {
-        updatedData = retirementData.filter(
-          (item) =>
-            item.MarketValue > 0 ||
-            item.LoanBalance > 0 ||
-            item.MonthlyBudget > 0
-        );
+        updatedData = retirementData.filter((item) => item.MarketValue > 0 || item.LoanBalance > 0 || item.MonthlyBudget > 0);
       }
 
-      const sortedData = updatedData.sort((a, b) => {
-        // Determine the display names for both records
-        const aDisplayName = a.NickName || a.Description;
-        const bDisplayName = b.NickName || b.Description;
-
-        // Sort by Owner in descending order
-        if (a.Owner === b.Owner) {
-          // If Owners are equal, sort by display name (NickName or Description) in ascending order
-          return aDisplayName.localeCompare(bDisplayName);
-        }
-        return a.Owner < b.Owner ? 1 : -1;
-      });
+      const sortedData = defaultDebSort(updatedData);
 
       setGridData(sortedData);
       setIsDataLoaded(true);
@@ -97,13 +71,7 @@ export const Retirement = () => {
             <div className="text-sm">
               <Button
                 label={!isShowing ? "Show Filters" : "Hide Filters"}
-                icon={
-                  !isShowing ? (
-                    <MdFilterAlt className="text-lg" />
-                  ) : (
-                    <MdFilterAltOff className="text-lg" />
-                  )
-                }
+                icon={!isShowing ? <MdFilterAlt className="text-lg" /> : <MdFilterAltOff className="text-lg" />}
                 className={clsx(
                   "flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:text-black",
                   !isShowing ? "bg-green-800" : "bg-red-800"
@@ -115,13 +83,7 @@ export const Retirement = () => {
           <div className="text-sm">
             <Button
               label={!showAll ? "Add New" : "Cancel Add"}
-              icon={
-                !showAll ? (
-                  <IoMdAdd className="text-lg" />
-                ) : (
-                  <HiMinusSm className="text-lg" />
-                )
-              }
+              icon={!showAll ? <IoMdAdd className="text-lg" /> : <HiMinusSm className="text-lg" />}
               className={clsx(
                 "flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:bg-viewcolor bg-black hover:text-black",
                 !showAll ? "bg-black" : "bg-red-800"

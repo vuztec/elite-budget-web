@@ -18,7 +18,6 @@ import {
   getSavings,
 } from "../../config/api";
 import { useQuery } from "react-query";
-import { useSearchParams } from "react-router-dom";
 import { getActiveAccount } from "../../utils/permissions";
 import { expenseOwners, getOwnerGridData } from "../../utils/budget.filter";
 import clsx from "clsx";
@@ -36,10 +35,6 @@ export const Networth = () => {
 
   // Filters
   const [owner, setOwner] = useState("Household");
-
-  const [searchParams] = useSearchParams();
-  const name = searchParams.get("name");
-  const tab = searchParams.get("tab");
 
   const { data: debts, status: isDebtLoaded } = useQuery({
     queryKey: ["debts"],
@@ -96,10 +91,6 @@ export const Networth = () => {
   }));
 
   ///-------------END Filters Data Source --------------------------------///
-
-  useEffect(() => {
-    if (name === "projects") setSelected(parseInt(tab));
-  }, [name, tab]);
 
   useEffect(() => {
     if (
@@ -165,13 +156,7 @@ export const Networth = () => {
             <div className="text-sm">
               <Button
                 label={!isShowing ? "Show Filters" : "Hide Filters"}
-                icon={
-                  !isShowing ? (
-                    <MdFilterAlt className="text-lg" />
-                  ) : (
-                    <MdFilterAltOff className="text-lg" />
-                  )
-                }
+                icon={!isShowing ? <MdFilterAlt className="text-lg" /> : <MdFilterAltOff className="text-lg" />}
                 className={clsx(
                   "flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:text-black",
                   !isShowing ? "bg-green-800" : "bg-red-800"
