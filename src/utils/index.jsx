@@ -63,7 +63,7 @@ export const trackBarColor = "#C6EFCE";
 export const progressBarColor = "#006100";
 export const trackBarColorPlan = "#C4EFFF";
 export const progressBarColorPlan = "#004F6C";
-export const themeColors = ["#20409A", "#ffe99b"];
+export const themeColors = ["#20409A", "whitesmoke"];
 export const varyingColors = [
   "#1A4A5E",
   "#27708B",
