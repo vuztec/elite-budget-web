@@ -8,7 +8,7 @@ export default {
         startcolor: "#27708B",
         endcolor: "#1A4A5E",
 
-        viewcolor: "#ffe99b",
+        viewcolor: "whitesmoke",
         editcolor: "#1A4A5E",
         deletecolor: "#1A4A5E",
       },
