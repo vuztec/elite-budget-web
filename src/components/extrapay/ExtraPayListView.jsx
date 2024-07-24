@@ -144,25 +144,27 @@ export const ExtraPayListView = ({ gridData }) => {
   return (
     <>
       <div className="w-full h-fit bg-white py-6 mt-4 shadow-md rounded  text-sm xl:text-[16px]">
-        <div className="flex flex-col gap-0 w-full xl:w-fit overflow-x-auto xl:overflow-hidden">
-          <table className="w-fit ml-5 -mb-5 overflow-x-auto">
-            <thead>
-              <tr>
-                <th className="p-2 w-full uppercase bg-[whitesmoke] text-black  border-l border-t border-r border-gray-300 flex items-center justify-center">
-                  EXTRA PAY CHECKS
-                </th>
-              </tr>
-            </thead>
-          </table>
-          <table className="w-fit m-5 overflow-x-auto">
-            <TableHeader />
-            <tbody>
-              {gridData?.map((record, index) => (
-                <TableRow key={index} record={record} />
-              ))}
-              <TableTotal gridData={gridData} />
-            </tbody>
-          </table>
+        <div className="flex flex-col gap-0 w-full">
+          <div className="w-full overflow-x-auto">
+            <table className="w-[97%] ml-5 -mb-5 overflow-x-auto">
+              <thead>
+                <tr>
+                  <th className="p-2 w-full uppercase bg-[whitesmoke] text-black  border-l border-t border-r border-gray-300 flex items-center justify-center">
+                    EXTRA PAY CHECKS
+                  </th>
+                </tr>
+              </thead>
+            </table>
+            <table className="w-[97%] m-5 overflow-x-auto">
+              <TableHeader />
+              <tbody>
+                {gridData?.map((record, index) => (
+                  <TableRow key={index} record={record} />
+                ))}
+                <TableTotal gridData={gridData} />
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
 
