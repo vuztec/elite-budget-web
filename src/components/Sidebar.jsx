@@ -1,21 +1,40 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, NavLink, useNavigate } from "react-router-dom";
 import clsx from "clsx";
 import { IoMdArrowDropright } from "react-icons/io";
 import { SidebarLinks } from "../utils/sidebar.data";
-import Logo from "../assets/logo.png";
+import Logo from "../assets/logo.jpeg";
 import useUserStore from "../app/user";
 import { GrClose } from "react-icons/gr";
 
 const Sidebar = () => {
-  const { user } = useUserStore();
-
   const location = useLocation();
   const navigate = useNavigate();
   const [sidebarData, setSideBarData] = useState(SidebarLinks);
-  const { setSidebar } = useUserStore();
+  const { setSidebar, setDefaultSidebar, sidebar } = useUserStore();
 
   const path = location.pathname?.split("/")[1];
+
+  const [width, setWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup the event listener on component unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (width <= 760 && sidebar) {
+      setDefaultSidebar();
+    }
+  }, [width]);
 
   const NavLinks = ({ el }) => {
     const title = el.activename;
@@ -93,19 +112,19 @@ const Sidebar = () => {
 
   return (
     <div
-      className="w-72 bg-white h-screen md:h-auto overflow-y-auto md:w-full flex flex-col py-5 md:px-3 lg:px-5 overflow-auto"
+      className="w-72 bg-white h-screen md:h-auto overflow-y-auto md:w-full flex flex-col py-5 pt-0 md:px-3 lg:px-5 overflow-auto"
       onClick={(e) => e.stopPropagation()}
     >
       <div className="flex justify-between">
-        <h1 className="flex gap-1 items-center mb-3">
-          <img src={Logo} alt="logo" className="h-8 md:h-5 lg:h-8 px-3 md-px-0 lg:px-3" />
+        <h1 className="flex items-center">
+          <img src={Logo} alt="logo" className="h-8 md:h-16 lg:h-32" />
         </h1>
         <button className="md:hidden mr-4 p-2 h-min rounded-full hover:bg-[#2564ed15]" onClick={setSidebar}>
           <GrClose />
         </button>
       </div>
 
-      <div className="flex-1 flex flex-col gap-y-3 py-2">
+      <div className="flex-1 flex flex-col gap-y-3 py-2 mt-6 md:mt-0">
         {sidebarData.map((item, index) => (
           <NavLinks el={item} key={index} />
         ))}

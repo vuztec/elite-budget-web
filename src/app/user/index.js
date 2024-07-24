@@ -19,6 +19,8 @@ const useUserStore = create()(
 
       setSidebar: () => set((state) => ({ sidebar: !state.sidebar })),
 
+      setDefaultSidebar: () => set((state) => ({ sidebar: false })),
+
       setIsRefresh: (refresh) => set(() => ({ isRefresh: refresh })),
     }),
     {
