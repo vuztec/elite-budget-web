@@ -128,6 +128,7 @@ export const IncomeListView = ({ gridData }) => {
               data={data}
               setData={setData}
               defaultData={gridData}
+              isNumber
             />
           </div>
         </th>
@@ -146,6 +147,7 @@ export const IncomeListView = ({ gridData }) => {
               data={data}
               setData={setData}
               defaultData={gridData}
+              isNumber
             />
           </div>
         </th>

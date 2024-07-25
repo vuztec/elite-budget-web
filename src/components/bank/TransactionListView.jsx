@@ -135,6 +135,7 @@ export const TransactionListView = ({ Data, bankName }) => {
               data={gridData}
               setData={setGridData}
               defaultData={Data}
+              isNumber
             />
           </div>
         </th>
@@ -155,6 +156,7 @@ export const TransactionListView = ({ Data, bankName }) => {
               data={gridData}
               setData={setGridData}
               defaultData={Data}
+              isNumber
             />
           </div>
         </th>
@@ -187,6 +189,7 @@ export const TransactionListView = ({ Data, bankName }) => {
               data={gridData}
               setData={setGridData}
               defaultData={Data}
+              isNumber
             />
           </div>
         </th>

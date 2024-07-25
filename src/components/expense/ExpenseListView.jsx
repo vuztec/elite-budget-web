@@ -117,6 +117,7 @@ export const ExpenseListView = ({ Data, category, showColumn }) => {
                   data={gridData}
                   setData={setGridData}
                   defaultData={Data}
+                  isNumber
                 />
               </div>
             </th>
@@ -136,6 +137,7 @@ export const ExpenseListView = ({ Data, category, showColumn }) => {
                   data={gridData}
                   setData={setGridData}
                   defaultData={Data}
+                  isNumber
                 />
               </div>
             </th>
@@ -191,6 +193,7 @@ export const ExpenseListView = ({ Data, category, showColumn }) => {
               data={gridData}
               setData={setGridData}
               defaultData={Data}
+              isNumber
             />
           </div>
         </th>
@@ -209,6 +212,7 @@ export const ExpenseListView = ({ Data, category, showColumn }) => {
               data={gridData}
               setData={setGridData}
               defaultData={Data}
+              isNumber
             />
           </div>
         </th>

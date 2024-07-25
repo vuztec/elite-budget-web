@@ -108,6 +108,7 @@ export const SavingListView = ({ gridData }) => {
               data={data}
               setData={setData}
               defaultData={gridData}
+              isNumber
             />
           </div>
         </th>
@@ -161,6 +162,7 @@ export const SavingListView = ({ gridData }) => {
               data={data}
               setData={setData}
               defaultData={gridData}
+              isNumber
             />
           </div>
         </th>
@@ -180,6 +182,7 @@ export const SavingListView = ({ gridData }) => {
               data={data}
               setData={setData}
               defaultData={gridData}
+              isNumber
             />
           </div>
         </th>

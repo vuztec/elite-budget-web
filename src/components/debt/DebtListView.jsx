@@ -109,6 +109,7 @@ export const DebtListView = ({ Data, category }) => {
               data={gridData}
               setData={setGridData}
               defaultData={Data}
+              isNumber
             />
           </div>
         </th>
@@ -162,6 +163,7 @@ export const DebtListView = ({ Data, category }) => {
               data={gridData}
               setData={setGridData}
               defaultData={Data}
+              isNumber
             />
           </div>
         </th>
@@ -180,6 +182,7 @@ export const DebtListView = ({ Data, category }) => {
               data={gridData}
               setData={setGridData}
               defaultData={Data}
+              isNumber
             />
           </div>
         </th>

@@ -53,10 +53,15 @@ export const defaultDebSort = (data) => {
   });
 };
 
-export const ascendingSort = (data, sortBy, sortBy2) => {
+export const ascendingSort = (data, sortBy, sortBy2, isNumber) => {
   return data.sort((a, b) => {
-    const aDisplayName = a[sortBy] || a[sortBy2];
-    const bDisplayName = b[sortBy] || b[sortBy2];
+    let aDisplayName = a[sortBy] || a[sortBy2];
+    let bDisplayName = b[sortBy] || b[sortBy2];
+
+    if (isNumber) {
+      aDisplayName = Number(aDisplayName);
+      bDisplayName = Number(bDisplayName);
+    }
 
     if (aDisplayName < bDisplayName) return -1;
     if (aDisplayName > bDisplayName) return 1;
@@ -65,10 +70,15 @@ export const ascendingSort = (data, sortBy, sortBy2) => {
   });
 };
 
-export const descendingSort = (data, sortBy, sortBy2) => {
+export const descendingSort = (data, sortBy, sortBy2, isNumber) => {
   return data.sort((a, b) => {
-    const aDisplayName = a[sortBy] || a[sortBy2];
-    const bDisplayName = b[sortBy] || b[sortBy2];
+    let aDisplayName = a[sortBy] || a[sortBy2];
+    let bDisplayName = b[sortBy] || b[sortBy2];
+
+    if (isNumber) {
+      aDisplayName = Number(aDisplayName);
+      bDisplayName = Number(bDisplayName);
+    }
 
     if (aDisplayName < bDisplayName) return 1;
     if (aDisplayName > bDisplayName) return -1;

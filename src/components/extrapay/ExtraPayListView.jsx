@@ -72,7 +72,16 @@ export const ExtraPayListView = ({ gridData }) => {
         <th className="border-l border-gray-300 p-2">
           <div className="flex justify-between items-center gap-2">
             Self
-            <Sort order={order} setOrder={setOrder} column={2} name={"SelfAmount"} data={data} setData={setData} defaultData={gridData} />
+            <Sort
+              order={order}
+              setOrder={setOrder}
+              column={2}
+              name={"SelfAmount"}
+              data={data}
+              setData={setData}
+              defaultData={gridData}
+              isNumber
+            />
           </div>
         </th>
         <th className="border-l border-gray-300 p-2">
@@ -86,6 +95,7 @@ export const ExtraPayListView = ({ gridData }) => {
               data={data}
               setData={setData}
               defaultData={gridData}
+              isNumber
             />
           </div>
         </th>

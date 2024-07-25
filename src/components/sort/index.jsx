@@ -9,15 +9,15 @@ import {
   descendingSort,
 } from "../../utils/budget.sort";
 
-export default function Sort({ tab, order, setOrder, column, name, name2, data, setData, defaultData }) {
+export default function Sort({ tab, order, setOrder, column, name, name2, data, setData, defaultData, isNumber }) {
   const sortDefaultClick = () => {
     setOrder((prev) => prev.map((_, index) => (index + 1 === column ? "asc" : "default")));
 
-    setData(ascendingSort(data, name, name2));
+    setData(ascendingSort(data, name, name2, isNumber));
   };
   const sortUpClick = () => {
     setOrder((prev) => prev.map((_, index) => (index + 1 === column ? "desc" : "default")));
-    setData(descendingSort(data, name, name2));
+    setData(descendingSort(data, name, name2, isNumber));
   };
   const sortDownClick = () => {
     setOrder((prev) => prev.map((_, index) => (index + 1 === column ? "default" : "default")));
@@ -29,6 +29,7 @@ export default function Sort({ tab, order, setOrder, column, name, name2, data, 
     else if (tab === "debt" || tab === "expense" || tab === "retirement" || tab === "saving") setData(defaultDebSort(defaultData));
     else setData(defaultData);
   };
+
   return (
     <div className="cursor-pointer">
       {order[column - 1] === "default" ? (

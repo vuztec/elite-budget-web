@@ -109,6 +109,7 @@ export const RetirementListView = ({ gridData }) => {
               data={data}
               setData={setData}
               defaultData={gridData}
+              isNumber
             />
           </div>
         </th>
@@ -163,6 +164,7 @@ export const RetirementListView = ({ gridData }) => {
               data={data}
               setData={setData}
               defaultData={gridData}
+              isNumber
             />
           </div>
         </th>
@@ -182,6 +184,7 @@ export const RetirementListView = ({ gridData }) => {
               data={data}
               setData={setData}
               defaultData={gridData}
+              isNumber
             />
           </div>
         </th>
