@@ -227,16 +227,6 @@ export const Checklist = () => {
             className="bg-white w-full py-1"
           />
         </div>
-        <div className="w-full">
-          <Select
-            onChange={handleChange}
-            value={monthsName}
-            options={months}
-            placeholder="Household"
-            label="Months"
-            className="bg-white w-full py-1"
-          />
-        </div>
       </div>
 
       {!isDataLoaded && (
