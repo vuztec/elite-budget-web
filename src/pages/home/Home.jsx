@@ -1,52 +1,45 @@
 import React, { useEffect, useState } from "react";
+import MonthlyIncome from "../../components/budget/MonthlyIncome";
+import MonthlySavings from "../../components/budget/MonthlySavings";
+import MonthlyRetirement from "../../components/budget/MonthlyRetirement";
+import MonthlyDebt from "../../components/budget/MonthlyDebt";
+import MonthlyExpenses from "../../components/budget/MonthlyExpenses";
+import MonthlySummary from "../../components/budget/MonthlySummary";
+import Package from "../../package/Package";
 import Loading from "../../components/Loader";
-import useUserStore from "../../app/user";
+import { MdFilterAlt, MdFilterAltOff } from "react-icons/md";
+import Button from "../../components/Button";
 import {
-  LatestProjects,
-  LatestResources,
-  LatestTasks,
-} from "../../components/home";
-import { ProjectCostChart, StageChart } from "../../components/project";
-import {
-  getBankAccountNames,
-  getBankAccountTransactions,
   getDebtGoals,
   getDebts,
   getExpenseGoals,
   getExpenses,
-  getExtraFundsTrackers,
-  getExtraPayChecks,
   getIncomes,
-  getJointSplits,
   getMainGoals,
   getRetirements,
   getSavings,
 } from "../../config/api";
 import { useQuery } from "react-query";
-import Package from "../../package/Package";
+import { getActiveAccount } from "../../utils/permissions";
+import { expenseOwners, getOwnerGridData } from "../../utils/budget.filter";
+import clsx from "clsx";
+import Select from "../../components/Select";
+import YearlyIncome from "../../components/budget/YearlyIncome";
+import MonthlyExpenseHome from "../../components/budget/MonthlyExpenseHome";
+import MonthlyDebtHome from "../../components/budget/MonthlyDebtHome";
 
 export const Home = () => {
-  const { user } = useUserStore();
-  const usedCurrency = "$";
-  const customDateFormat = "MMM dd, yyyy";
-  const [isDataLoaded, setIsDataLoaded] = useState(true);
-  const [updatedProjectData, setUpdatedProjectData] = useState([]);
-  const [updatedCostData, setUpdatedCostData] = useState([]);
-  const [updatedTaskData, setUpdatedTaskData] = useState([]);
-  const [updatedAbsenteeData, setUpdatedAbsenteeData] = useState([]);
-  const activeAccount = true;
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
+  const [incomeGridData, setIncomeGridData] = useState([]);
+  const [savingsGridData, setSavingsGridData] = useState([]);
+  const [retirementGridData, setRetirementGridData] = useState([]);
+  const [expenseGridData, setExpenseGridData] = useState([]);
+  const [debtGridData, setDebtGridData] = useState([]);
 
-  const { data: accountnames, status: isNamesLoaded } = useQuery({
-    queryKey: ["accountnames"],
-    queryFn: getBankAccountNames,
-    staleTime: 1000 * 60 * 60,
-  });
+  const activeAccount = getActiveAccount(root);
 
-  const { data: transactions, status: isTransactionLoaded } = useQuery({
-    queryKey: ["banktransactions"],
-    queryFn: getBankAccountTransactions,
-    staleTime: 1000 * 60 * 60,
-  });
+  // Filters
+  const [owner, setOwner] = useState("Household");
 
   const { data: debts, status: isDebtLoaded } = useQuery({
     queryKey: ["debts"],
@@ -60,25 +53,13 @@ export const Home = () => {
     staleTime: 1000 * 60 * 60,
   });
 
-  const { data: extrafunds, status: isFundLoaded } = useQuery({
-    queryKey: ["extrafunds"],
-    queryFn: getExtraFundsTrackers,
-    staleTime: 1000 * 60 * 60,
-  });
-
   const { data: incomes, status: isIncomeLoaded } = useQuery({
     queryKey: ["incomes"],
     queryFn: getIncomes,
     staleTime: 1000 * 60 * 60,
   });
 
-  const { data: jointsplits, status: isJointLoaded } = useQuery({
-    queryKey: ["jointsplits"],
-    queryFn: getJointSplits,
-    staleTime: 1000 * 60 * 60,
-  });
-
-  const { data: savings, status: isSavingLoaed } = useQuery({
+  const { data: savings, status: isSavingLoaded } = useQuery({
     queryKey: ["savings"],
     queryFn: getSavings,
     staleTime: 1000 * 60 * 60,
@@ -108,56 +89,184 @@ export const Home = () => {
     staleTime: 1000 * 60 * 60,
   });
 
-  const { data: extrapaychecks, status: isPayChecksLoaded } = useQuery({
-    queryKey: ["extrapaychecks"],
-    queryFn: getExtraPayChecks,
-    staleTime: 1000 * 60 * 60,
-  });
+  ///-------------Filters Data Source --------------------------------///
+  const owners = expenseOwners.map((owner) => ({
+    value: owner,
+    label: owner,
+  }));
 
-  const uniqueProjectIDs = [];
+  ///-------------END Filters Data Source --------------------------------///
 
-  return !isDataLoaded ? (
-    <div className="py-10">
-      <Loading />
-    </div>
-  ) : (
+  useEffect(() => {
+    if (
+      isSavingLoaded === "success" &&
+      isRetLoaded === "success" &&
+      isExpenseLoaded === "success" &&
+      isDebtLoaded === "success" &&
+      isIncomeLoaded === "success" &&
+      isMainGoalsLoaded === "success" &&
+      isDebtGoalsLoaded === "success" &&
+      isExpenseGoalsLoaded === "success" &&
+      owner
+    ) {
+      const savingData = getOwnerGridData(savings, owner);
+      setSavingsGridData(savingData);
+
+      const retirementData = getOwnerGridData(retirements, owner);
+      setRetirementGridData(retirementData);
+
+      const expenseData = getOwnerGridData(expenses, owner);
+      setExpenseGridData(expenseData);
+
+      const debtData = getOwnerGridData(debts, owner);
+      setDebtGridData(debtData);
+
+      const incomeData = getOwnerGridData(incomes, owner);
+      setIncomeGridData(incomeData);
+
+      setIsDataLoaded(true);
+    } else {
+      setIsDataLoaded(false);
+    }
+  }, [
+    savings,
+    retirements,
+    debts,
+    incomes,
+    expenses,
+    isIncomeLoaded,
+    isSavingLoaded,
+    isExpenseLoaded,
+    isDebtLoaded,
+    isRetLoaded,
+    isMainGoalsLoaded,
+    isDebtGoalsLoaded,
+    isExpenseGoalsLoaded,
+    owner,
+  ]);
+
+  const handleOwnerChange = (e) => {
+    if (e && e.target?.value) {
+      setOwner(e.target?.value);
+    }
+  };
+
+  const [isShowing, setIsShowing] = useState(false);
+
+  return activeAccount ? (
     <>
-      {isDataLoaded &&
-        (activeAccount ? (
-          <div className="flex flex-col h-full py-5 gap-10">
-            <div className="w-full flex flex-col xl:flex-row gap-5">
-              <StageChart updatedProjectData={updatedProjectData} />
-              <ProjectCostChart
-                updatedProjectData={updatedProjectData}
-                updatedCostData={updatedCostData}
-                uniqueProjectIDs={uniqueProjectIDs}
-                usedCurrency={usedCurrency}
-              />
-            </div>
-
-            <div className="w-full flex flex-col xl:flex-row gap-5">
-              <LatestProjects
-                updatedProjectData={updatedProjectData}
-                usedCurrency={usedCurrency}
-                updatedCostData={updatedCostData}
-                updatedTaskData={updatedTaskData}
-                customDateFormat={customDateFormat}
-              />
-            </div>
-            <div className="w-full flex flex-col 2xl:flex-row gap-5">
-              <LatestResources resourceData={[]} />
-            </div>
-            <div className="w-full flex flex-col xl:flex-row gap-5">
-              <LatestTasks
-                updatedProjectData={updatedProjectData}
-                updatedTaskData={updatedTaskData}
-                resourceData={[]}
+      <div className="w-full flex item-center justify-end">
+        <div className="w-fit gap-4 h-10 md:h-12 px-2 rounded-full bg-white flex items-center">
+          <div>
+            <div className="text-sm">
+              <Button
+                label={!isShowing ? "Show Filters" : "Hide Filters"}
+                icon={
+                  !isShowing ? (
+                    <MdFilterAlt className="text-lg" />
+                  ) : (
+                    <MdFilterAltOff className="text-lg" />
+                  )
+                }
+                className={clsx(
+                  "flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:text-black",
+                  !isShowing ? "bg-green-800" : "bg-red-800"
+                )}
+                onClick={() => setIsShowing((old) => !old)}
               />
             </div>
           </div>
-        ) : (
-          <Package />
-        ))}
+        </div>
+      </div>
+      <div
+        className={clsx(
+          "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3 pb-5",
+          isShowing ? "block" : "hidden"
+        )}
+      >
+        <div className="w-full">
+          <Select
+            onChange={handleOwnerChange}
+            value={owner}
+            options={owners}
+            placeholder="Household"
+            label="Account Owner"
+            className="bg-white w-full py-1"
+          />
+        </div>
+      </div>
+
+      {!isDataLoaded && (
+        <div className="py-10">
+          <Loading />
+        </div>
+      )}
+      {isDataLoaded && (
+        <div className="w-full flex flex-col items-center gap-5 xl:gap-10 bg-white p-5 mt-4">
+          <div className="w-full 2xl:w-[90%] flex flex-col items-center justify-center gap-5">
+            <div className="flex flex-col xl:flex-row w-full gap-5 xl:gap-10">
+              <div className="w-full">
+                <YearlyIncome incomeGridData={incomeGridData} />
+              </div>
+              <div className="w-full">
+                <MonthlyIncome incomeGridData={incomeGridData} />
+              </div>
+            </div>
+            <div className="flex flex-col xl:flex-row w-full gap-5 xl:gap-10">
+              <div className="flex flex-col w-full gap-5">
+                <div className="w-full">
+                  <MonthlySavings
+                    savingsGridData={savingsGridData}
+                    incomeGridData={incomeGridData}
+                    maingoals={maingoals}
+                  />
+                </div>
+                <div className="w-full">
+                  <MonthlyRetirement
+                    retirementGridData={retirementGridData}
+                    incomeGridData={incomeGridData}
+                    maingoals={maingoals}
+                  />
+                </div>
+              </div>
+              <div className="flex flex-col w-full gap-5">
+                <div className="w-full">
+                  <MonthlyDebtHome
+                    debtGridData={debtGridData}
+                    incomeGridData={incomeGridData}
+                    maingoals={maingoals}
+                  />
+                </div>
+                <div className="w-full">
+                  <MonthlyExpenseHome
+                    expenseGridData={expenseGridData}
+                    incomeGridData={incomeGridData}
+                    maingoals={maingoals}
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="flex flex-col xl:flex-row w-full gap-5 mt-10 xl:gap-10">
+              <div className="hidden xl:block w-full"></div>
+              <div className="flex flex-col w-full">
+                <div className="w-full">
+                  <MonthlySummary
+                    incomeGridData={incomeGridData}
+                    savingsGridData={savingsGridData}
+                    retirementGridData={retirementGridData}
+                    debtGridData={debtGridData}
+                    expenseGridData={expenseGridData}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </>
+  ) : (
+    <Package />
   );
 };
+
+export default Home;

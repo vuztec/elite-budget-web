@@ -10,7 +10,11 @@ import Select from "../../components/Select";
 import { getActiveAccount } from "../../utils/permissions";
 import Package from "../../package/Package";
 import { getDebts } from "../../config/api";
-import { debtCategories, expenseOwners, getCatGridData } from "../../utils/budget.filter";
+import {
+  debtCategories,
+  expenseOwners,
+  getCatGridData,
+} from "../../utils/budget.filter";
 import { DebtListView } from "../../components/debt/DebtListView";
 import { DebtSummary } from "../../components/debt/DebtSummary";
 import { hasRecords } from "../../utils/budget.calculation";
@@ -49,7 +53,12 @@ export const OtherDebts = () => {
       const debtData = getCatGridData(debts, owner, catFilter);
       let updatedData = debtData;
       if (!showAll && hasRecords(debtData)) {
-        updatedData = debtData.filter((item) => item.MarketValue > 0 || item.LoanBalance > 0 || item.MonthlyBudget > 0);
+        updatedData = debtData.filter(
+          (item) =>
+            item.MarketValue > 0 ||
+            item.LoanBalance > 0 ||
+            item.MonthlyBudget > 0
+        );
       }
       // Sort the data by Owner property
       const sortedData = updatedData.sort((a, b) => {
@@ -81,32 +90,40 @@ export const OtherDebts = () => {
 
   return activeAccount ? (
     <>
-      <div className="w-full flex item-center justify-end">
-        <div className="w-fit gap-4 h-10 md:h-12 px-2 rounded-full bg-white flex items-center">
-          <div>
-            <div className="text-sm">
-              <Button
-                label={!isShowing ? "Show Filters" : "Hide Filters"}
-                icon={!isShowing ? <MdFilterAlt className="text-lg" /> : <MdFilterAltOff className="text-lg" />}
-                className={clsx(
-                  "flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:text-black",
-                  !isShowing ? "bg-green-800" : "bg-red-800"
-                )}
-                onClick={() => setIsShowing((old) => !old)}
-              />
-            </div>
-          </div>
-          <div className="text-sm">
-            <Button
-              label={!showAll ? "Add New" : "Cancel Add"}
-              icon={!showAll ? <IoMdAdd className="text-lg" /> : <HiMinusSm className="text-lg" />}
-              className={clsx(
-                "flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:bg-viewcolor bg-black hover:text-black",
-                !showAll ? "bg-black" : "bg-red-800"
-              )}
-              onClick={() => setShowAll((old) => !old)}
-            />
-          </div>
+      <div className="w-full gap-4 h-10 md:h-12 px-2 rounded-full bg-white flex items-center justify-between">
+        <div className="text-sm">
+          <Button
+            label={!showAll ? "Add New" : "Cancel Add"}
+            icon={
+              !showAll ? (
+                <IoMdAdd className="text-lg" />
+              ) : (
+                <HiMinusSm className="text-lg" />
+              )
+            }
+            className={clsx(
+              "flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:bg-viewcolor bg-black hover:text-black",
+              !showAll ? "bg-black" : "bg-red-800"
+            )}
+            onClick={() => setShowAll((old) => !old)}
+          />
+        </div>
+        <div className="text-sm">
+          <Button
+            label={!isShowing ? "Show Filters" : "Hide Filters"}
+            icon={
+              !isShowing ? (
+                <MdFilterAlt className="text-lg" />
+              ) : (
+                <MdFilterAltOff className="text-lg" />
+              )
+            }
+            className={clsx(
+              "flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:text-black hover:bg-viewcolor",
+              !isShowing ? "bg-green-800" : "bg-red-800"
+            )}
+            onClick={() => setIsShowing((old) => !old)}
+          />
         </div>
       </div>
       <div
@@ -147,31 +164,58 @@ export const OtherDebts = () => {
       {isDataLoaded && (
         <div className="w-full">
           <div className="w-full">
-            <DebtListView Data={gridData.filter((item) => item.Category === "Credit Card")} category="Credit Card" />
+            <DebtListView
+              Data={gridData.filter((item) => item.Category === "Credit Card")}
+              category="Credit Card"
+            />
           </div>
 
           <div className="w-full">
-            <DebtListView Data={gridData.filter((item) => item.Category === "Department Store")} category="Department Store" />
+            <DebtListView
+              Data={gridData.filter(
+                (item) => item.Category === "Department Store"
+              )}
+              category="Department Store"
+            />
           </div>
 
           <div className="w-full">
-            <DebtListView Data={gridData.filter((item) => item.Category === "Family/Friend Loan")} category="Family/Friend Loan" />
+            <DebtListView
+              Data={gridData.filter(
+                (item) => item.Category === "Family/Friend Loan"
+              )}
+              category="Family/Friend Loan"
+            />
           </div>
 
           <div className="w-full">
-            <DebtListView Data={gridData.filter((item) => item.Category === "Medical Debt")} category="Medical Debt" />
+            <DebtListView
+              Data={gridData.filter((item) => item.Category === "Medical Debt")}
+              category="Medical Debt"
+            />
           </div>
 
           <div className="w-full">
-            <DebtListView Data={gridData.filter((item) => item.Category === "Personal Loan")} category="Personal Loan" />
+            <DebtListView
+              Data={gridData.filter(
+                (item) => item.Category === "Personal Loan"
+              )}
+              category="Personal Loan"
+            />
           </div>
 
           <div className="w-full">
-            <DebtListView Data={gridData.filter((item) => item.Category === "Student Loan")} category="Student Loan" />
+            <DebtListView
+              Data={gridData.filter((item) => item.Category === "Student Loan")}
+              category="Student Loan"
+            />
           </div>
 
           <div className="w-full">
-            <DebtListView Data={gridData.filter((item) => item.Category === "Other Debt")} category="Other Debt" />
+            <DebtListView
+              Data={gridData.filter((item) => item.Category === "Other Debt")}
+              category="Other Debt"
+            />
           </div>
 
           <div className="w-full">

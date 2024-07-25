@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { RiDeleteBin2Fill } from "react-icons/ri";
 import { FaEdit } from "react-icons/fa";
 import clsx from "clsx";
@@ -37,7 +37,9 @@ export const BankListView = ({ gridData }) => {
       .delete(`/api/bank-accounts/name/${selected}`)
       .then(({ data }) => {
         console.log(data);
-        queryClient.setQueryData(["accountnames"], (prev) => prev.filter((bank) => bank.id !== selected));
+        queryClient.setQueryData(["accountnames"], (prev) =>
+          prev.filter((bank) => bank.id !== selected)
+        );
         setOpenDialog(false);
         setIsLoading(false);
       })
@@ -117,7 +119,9 @@ export const BankListView = ({ gridData }) => {
     <tr className="border border-gray-300 text-sm xl:text-[16px] hover:bg-gray-400/10 text-left">
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <span className="flex items-center justify-left gap-2 text-center mb-0 text-gray-900">{record?.Owner}</span>
+          <span className="flex items-center justify-left gap-2 text-center mb-0 text-gray-900">
+            {record?.Owner}
+          </span>
         </div>
       </td>
 
@@ -129,7 +133,9 @@ export const BankListView = ({ gridData }) => {
 
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p className="text-black">{getFormattedValue(user, record?.OpeningBalance)}</p>
+          <p className="text-black">
+            {getFormattedValue(user, record?.OpeningBalance)}
+          </p>
         </div>
       </td>
 
@@ -137,7 +143,10 @@ export const BankListView = ({ gridData }) => {
         <div className="flex items-center text-left gap-3 justify-start">
           <div className="group flex relative">
             <FaEdit
-              className={clsx(`text-editcolor`, "hover:text-orange-500 font-semibold cursor-pointer sm:px-0")}
+              className={clsx(
+                `text-editcolor`,
+                "hover:text-orange-500 font-semibold cursor-pointer sm:px-0"
+              )}
               onClick={() => editClick(record)}
             />
             <ToolTip text="Edit" />
@@ -145,7 +154,10 @@ export const BankListView = ({ gridData }) => {
 
           <div className="group flex relative">
             <RiDeleteBin2Fill
-              className={clsx(`text-deletecolor`, "hover:text-red-500 font-semibold cursor-pointer sm:px-0")}
+              className={clsx(
+                `text-deletecolor`,
+                "hover:text-red-500 font-semibold cursor-pointer sm:px-0"
+              )}
               onClick={() => deleteClick(record.id)}
             />
             <ToolTip text="Delete" />
@@ -182,8 +194,18 @@ export const BankListView = ({ gridData }) => {
           </div>
         </div>
       )}
-      <AddBank open={open} setOpen={setOpen} recordData={selected} key={new Date().getTime().toString()} />
-      <ConfirmationDialog isLoading={isLoading} open={openDialog} setOpen={setOpenDialog} onClick={() => deleteHandler(selected)} />
+      <AddBank
+        open={open}
+        setOpen={setOpen}
+        recordData={selected}
+        key={new Date().getTime().toString()}
+      />
+      <ConfirmationDialog
+        isLoading={isLoading}
+        open={openDialog}
+        setOpen={setOpenDialog}
+        onClick={() => deleteHandler(selected)}
+      />
     </>
   );
 };

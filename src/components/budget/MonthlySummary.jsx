@@ -49,7 +49,7 @@ const MonthlySummary = ({
       <div className="w-full xl:w-full">
         <table className="w-[99%]">
           <tbody>
-            <tr className="xl:border-t border-l border-r border-b border-gray-300 text-sm xl:text-[16px] text-left p-2 font-bold">
+            <tr className="border-t border-l border-r border-b border-gray-300 text-sm xl:text-[16px] text-left p-2 font-bold">
               <td className="px-2 py-2 border-r w-2/3 border-gray-300">
                 TOTAL MONTHLY EXPENSES
               </td>

@@ -43,7 +43,12 @@ export const Savings = () => {
       const savingData = getOwnerGridData(savings, owner);
       let updatedData = savingData;
       if (!showAll && hasRecords(savingData)) {
-        updatedData = savingData.filter((item) => item.MarketValue > 0 || item.LoanBalance > 0 || item.MonthlyBudget > 0);
+        updatedData = savingData.filter(
+          (item) =>
+            item.MarketValue > 0 ||
+            item.LoanBalance > 0 ||
+            item.MonthlyBudget > 0
+        );
       }
 
       const sortedData = defaultDebSort(updatedData);
@@ -65,32 +70,40 @@ export const Savings = () => {
 
   return activeAccount ? (
     <>
-      <div className="w-full flex item-center justify-end">
-        <div className="w-fit gap-4 h-10 md:h-12 px-2 rounded-full bg-white flex items-center">
-          <div>
-            <div className="text-sm">
-              <Button
-                label={!isShowing ? "Show Filters" : "Hide Filters"}
-                icon={!isShowing ? <MdFilterAlt className="text-lg" /> : <MdFilterAltOff className="text-lg" />}
-                className={clsx(
-                  "flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:text-black",
-                  !isShowing ? "bg-green-800" : "bg-red-800"
-                )}
-                onClick={() => setIsShowing((old) => !old)}
-              />
-            </div>
-          </div>
-          <div className="text-sm">
-            <Button
-              label={!showAll ? "Add New" : "Cancel Add"}
-              icon={!showAll ? <IoMdAdd className="text-lg" /> : <HiMinusSm className="text-lg" />}
-              className={clsx(
-                "flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:bg-viewcolor bg-black hover:text-black",
-                !showAll ? "bg-black" : "bg-red-800"
-              )}
-              onClick={() => setShowAll((old) => !old)}
-            />
-          </div>
+      <div className="w-full gap-4 h-10 md:h-12 px-2 rounded-full bg-white flex items-center justify-between">
+        <div className="text-sm">
+          <Button
+            label={!showAll ? "Add New" : "Cancel Add"}
+            icon={
+              !showAll ? (
+                <IoMdAdd className="text-lg" />
+              ) : (
+                <HiMinusSm className="text-lg" />
+              )
+            }
+            className={clsx(
+              "flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:bg-viewcolor bg-black hover:text-black",
+              !showAll ? "bg-black" : "bg-red-800"
+            )}
+            onClick={() => setShowAll((old) => !old)}
+          />
+        </div>
+        <div className="text-sm">
+          <Button
+            label={!isShowing ? "Show Filters" : "Hide Filters"}
+            icon={
+              !isShowing ? (
+                <MdFilterAlt className="text-lg" />
+              ) : (
+                <MdFilterAltOff className="text-lg" />
+              )
+            }
+            className={clsx(
+              "flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:text-black hover:bg-viewcolor",
+              !isShowing ? "bg-green-800" : "bg-red-800"
+            )}
+            onClick={() => setIsShowing((old) => !old)}
+          />
         </div>
       </div>
       <div

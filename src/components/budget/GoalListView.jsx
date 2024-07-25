@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaEdit } from "react-icons/fa";
 import clsx from "clsx";
 
@@ -32,7 +32,9 @@ export const GoalListView = ({ gridData, goal }) => {
       .delete(`/api/project/${selected}`)
       .then(({ data }) => {
         console.log(data);
-        queryClient.setQueryData(["projects"], (prev) => prev.filter((project) => project.id !== selected));
+        queryClient.setQueryData(["projects"], (prev) =>
+          prev.filter((project) => project.id !== selected)
+        );
         setOpenDialog(false);
         setIsLoading(false);
       })
@@ -55,13 +57,29 @@ export const GoalListView = ({ gridData, goal }) => {
         <th className="border-l border-gray-300 p-2">
           <div className="flex justify-between items-center gap-2">
             Name
-            <Sort order={order} setOrder={setOrder} column={1} name={"Category"} data={data} setData={setData} defaultData={gridData} />
+            <Sort
+              order={order}
+              setOrder={setOrder}
+              column={1}
+              name={"Category"}
+              data={data}
+              setData={setData}
+              defaultData={gridData}
+            />
           </div>
         </th>
         <th className="border-l border-gray-300 p-2">
           <div className="flex justify-between items-center gap-2">
             Goal
-            <Sort order={order} setOrder={setOrder} column={2} name={"Percentage"} data={data} setData={setData} defaultData={gridData} />
+            <Sort
+              order={order}
+              setOrder={setOrder}
+              column={2}
+              name={"Percentage"}
+              data={data}
+              setData={setData}
+              defaultData={gridData}
+            />
           </div>
         </th>
 
@@ -74,7 +92,9 @@ export const GoalListView = ({ gridData, goal }) => {
     <tr className="border border-gray-300 hover:bg-gray-400/10 text-left">
       <td className="xl:w-1/3 whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <span className="flex items-center justify-left gap-2 text-center mb-0 text-gray-900">{record?.Category}</span>
+          <span className="flex items-center justify-left gap-2 text-center mb-0 text-gray-900">
+            {record?.Category}
+          </span>
         </div>
       </td>
 
@@ -88,7 +108,10 @@ export const GoalListView = ({ gridData, goal }) => {
         <div className="flex items-center text-left gap-3 justify-start">
           <div className="group flex relative">
             <FaEdit
-              className={clsx(`text-editcolor`, "hover:text-orange-500 font-semibold cursor-pointer sm:px-0")}
+              className={clsx(
+                `text-editcolor`,
+                "hover:text-orange-500 font-semibold cursor-pointer sm:px-0"
+              )}
               onClick={() => editClick(record)}
             />
             <ToolTip text={"Edit"} />
@@ -125,8 +148,19 @@ export const GoalListView = ({ gridData, goal }) => {
           </div>
         </div>
       )}
-      <AddGoal open={open} setOpen={setOpen} recordData={selected} key={new Date().getTime().toString()} type={goal} />
-      <ConfirmationDialog isLoading={isLoading} open={openDialog} setOpen={setOpenDialog} onClick={() => deleteHandler(selected)} />
+      <AddGoal
+        open={open}
+        setOpen={setOpen}
+        recordData={selected}
+        key={new Date().getTime().toString()}
+        type={goal}
+      />
+      <ConfirmationDialog
+        isLoading={isLoading}
+        open={openDialog}
+        setOpen={setOpenDialog}
+        onClick={() => deleteHandler(selected)}
+      />
     </>
   );
 };

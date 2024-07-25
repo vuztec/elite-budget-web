@@ -159,7 +159,13 @@ export const BudgetDetails = () => {
             <div className="text-sm">
               <Button
                 label={!isShowing ? "Show Filters" : "Hide Filters"}
-                icon={!isShowing ? <MdFilterAlt className="text-lg" /> : <MdFilterAltOff className="text-lg" />}
+                icon={
+                  !isShowing ? (
+                    <MdFilterAlt className="text-lg" />
+                  ) : (
+                    <MdFilterAltOff className="text-lg" />
+                  )
+                }
                 className={clsx(
                   "flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:text-black",
                   !isShowing ? "bg-green-800" : "bg-red-800"
@@ -205,13 +211,26 @@ export const BudgetDetails = () => {
                   <MonthlyIncome incomeGridData={incomeGridData} />
                 </div>
                 <div className="w-full">
-                  <MonthlySavings savingsGridData={savingsGridData} incomeGridData={incomeGridData} maingoals={maingoals} />
+                  <MonthlySavings
+                    savingsGridData={savingsGridData}
+                    incomeGridData={incomeGridData}
+                    maingoals={maingoals}
+                  />
                 </div>
                 <div className="w-full">
-                  <MonthlyRetirement retirementGridData={retirementGridData} incomeGridData={incomeGridData} maingoals={maingoals} />
+                  <MonthlyRetirement
+                    retirementGridData={retirementGridData}
+                    incomeGridData={incomeGridData}
+                    maingoals={maingoals}
+                  />
                 </div>
                 <div className="w-full">
-                  <MonthlyDebt debtGridData={debtGridData} incomeGridData={incomeGridData} debtgoals={debtgoals} maingoals={maingoals} />
+                  <MonthlyDebt
+                    debtGridData={debtGridData}
+                    incomeGridData={incomeGridData}
+                    debtgoals={debtgoals}
+                    maingoals={maingoals}
+                  />
                 </div>
               </div>
               <div className="flex flex-col w-full">
@@ -225,7 +244,7 @@ export const BudgetDetails = () => {
                 </div>
               </div>
             </div>
-            <div className="flex flex-col xl:flex-row w-full gap-5 xl:gap-10">
+            <div className="flex flex-col xl:flex-row w-full gap-5 mt-10 xl:gap-10">
               <div className="hidden xl:block w-full"></div>
               <div className="flex flex-col w-full">
                 <div className="w-full">

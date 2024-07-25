@@ -143,6 +143,32 @@ export const getCombineData = (savings, expenses, retirement, debts) => {
   return combinedArray;
 };
 
+export const getCombineExpenseDebtData = (expenses, debts) => {
+  const combinedArray = [];
+  // Combine expenses
+  expenses.forEach((item) => {
+    combinedArray.push({
+      Category: item.Category || "",
+      Description: item.Description || "",
+      DueDate: item.DueDate || "",
+      LoanBalance: item.LoanBalance || 0,
+      MarketValue: item.MarketValue || 0,
+    });
+  });
+  // Combine debts
+  debts.forEach((item) => {
+    combinedArray.push({
+      Category: item.Category || "",
+      Description: item.Description || "",
+      DueDate: item.DueDate || "",
+      LoanBalance: item.LoanBalance || 0,
+      MarketValue: item.MarketValue || 0,
+    });
+  });
+
+  return combinedArray;
+};
+
 export const getUniqueCategories = (combinedData) => {
   const uniqueCategories = new Set();
   combinedData.forEach((item) => {

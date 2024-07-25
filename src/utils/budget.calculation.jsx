@@ -98,7 +98,7 @@ export const getIncomeAmount = (user, amount, frequency, column) => {
 
 export const getGrossWeeklyTotal = (user, data) => {
   const filteredData = data?.filter((item) => item.Frequency === "Weekly");
-  const Amount = filteredData.reduce((accumulator, record) => {
+  const Amount = filteredData?.reduce((accumulator, record) => {
     const amount = record?.GrossAmount || 0;
     return accumulator + Number(amount);
   }, 0);
@@ -108,7 +108,7 @@ export const getGrossWeeklyTotal = (user, data) => {
 
 export const getNetWeeklyTotal = (user, data) => {
   const filteredData = data?.filter((item) => item.Frequency === "Weekly");
-  const Amount = filteredData.reduce((accumulator, record) => {
+  const Amount = filteredData?.reduce((accumulator, record) => {
     const amount = record?.NetAmount || 0;
     return accumulator + Number(amount);
   }, 0);
@@ -118,7 +118,7 @@ export const getNetWeeklyTotal = (user, data) => {
 
 export const getGrossBiWeeklyTotal = (user, data) => {
   const filteredData = data?.filter((item) => item.Frequency === "Bi-Weekly");
-  const Amount = filteredData.reduce((accumulator, record) => {
+  const Amount = filteredData?.reduce((accumulator, record) => {
     const amount = record?.GrossAmount || 0;
     return accumulator + Number(amount);
   }, 0);
@@ -128,7 +128,7 @@ export const getGrossBiWeeklyTotal = (user, data) => {
 
 export const getNetBiWeeklyTotal = (user, data) => {
   const filteredData = data?.filter((item) => item.Frequency === "Bi-Weekly");
-  const Amount = filteredData.reduce((accumulator, record) => {
+  const Amount = filteredData?.reduce((accumulator, record) => {
     const amount = record?.NetAmount || 0;
     return accumulator + Number(amount);
   }, 0);
@@ -140,7 +140,7 @@ export const getGrossSemiMonthlyTotal = (user, data) => {
   const filteredData = data?.filter(
     (item) => item.Frequency === "Semi-Monthly"
   );
-  const Amount = filteredData.reduce((accumulator, record) => {
+  const Amount = filteredData?.reduce((accumulator, record) => {
     const amount = record?.GrossAmount || 0;
     return accumulator + Number(amount);
   }, 0);
@@ -194,7 +194,7 @@ export const getGrossMonthlyTotal = (user, data) => {
 };
 
 export const getNetMonthlyTotal = (user, data) => {
-  const Amount = data.reduce((accumulator, record) => {
+  const Amount = data?.reduce((accumulator, record) => {
     const income = record?.NetAmount || 0;
     const payFrequency = record?.Frequency || "";
 
@@ -227,7 +227,7 @@ export const getNetMonthlyTotal = (user, data) => {
 };
 
 export const getGrossYearlyTotal = (user, data) => {
-  const Amount = data.reduce((accumulator, record) => {
+  const Amount = data?.reduce((accumulator, record) => {
     const income = record?.GrossAmount || 0;
     const payFrequency = record?.Frequency || "";
 
@@ -260,7 +260,7 @@ export const getGrossYearlyTotal = (user, data) => {
 };
 
 export const getNetYearlyTotal = (user, data) => {
-  const Amount = data.reduce((accumulator, record) => {
+  const Amount = data?.reduce((accumulator, record) => {
     const income = record?.NetAmount || 0;
     const payFrequency = record?.Frequency || "";
 
@@ -394,7 +394,7 @@ export const getFormattedValueType = (user, Amount, type, column) => {
 
 export const getBankAccountTypeTotal = (user, data, column) => {
   const updatedData = data.filter((item) => item.Type === column);
-  const Amount = updatedData.reduce((accumulator, record) => {
+  const Amount = updatedData?.reduce((accumulator, record) => {
     const amount = record?.Amount || 0;
     return accumulator + Number(amount);
   }, 0);
@@ -494,7 +494,7 @@ export const getOwnerGrossMonthlyPercentage = (data, owner) => {
 
 export const getUnformattedMonthlyBudgetTotal = (data) => {
   const updatedData = data?.filter((data) => data.Owner === "Joint");
-  const Amount = updatedData.reduce((accumulator, record) => {
+  const Amount = updatedData?.reduce((accumulator, record) => {
     const amount = record?.MonthlyBudget || 0;
     return accumulator + Number(amount);
   }, 0);
@@ -579,7 +579,7 @@ export const getBudgetGoal = (goals, category) => {
 };
 
 export const getUnformattedGrossYearlyTotal = (data) => {
-  const Amount = data.reduce((accumulator, record) => {
+  const Amount = data?.reduce((accumulator, record) => {
     const income = record?.GrossAmount || 0;
     const payFrequency = record?.Frequency || "";
 
@@ -611,7 +611,7 @@ export const getUnformattedGrossYearlyTotal = (data) => {
 };
 
 export const getUnformattedNetYearlyTotal = (data) => {
-  const Amount = data.reduce((accumulator, record) => {
+  const Amount = data?.reduce((accumulator, record) => {
     const income = record?.NetAmount || 0;
     const payFrequency = record?.Frequency || "";
 
@@ -645,7 +645,7 @@ export const getUnformattedNetYearlyTotal = (data) => {
 export const getUnformattedYearlyBudgetTotal = (data) => {
   const Amount =
     12 *
-    data.reduce((accumulator, record) => {
+    data?.reduce((accumulator, record) => {
       const amount = record?.MonthlyBudget || 0;
       return accumulator + Number(amount);
     }, 0);
@@ -730,9 +730,9 @@ export const getLabel = (incomeData, budgetData, category, goals) => {
     }
   } else if (category === "Debts" || category === "Expenses") {
     if (actualPerc >= goalPerc) {
-      label = "Under by";
-    } else {
       label = "Over by";
+    } else {
+      label = "Under by";
     }
   }
   return label;
@@ -795,25 +795,6 @@ export const getUniqueBudgetItemsWithSum = (data) => {
   };
 };
 
-// // Function to get unique descriptions and their sum values for each unique budget item
-// export const getUniqueDescriptionsWithSumForEachBudgetItem = (data) => {
-//   const uniqueDescriptions = {};
-//   data?.forEach((record) => {
-//     const budgetItem = record?.Category || "";
-//     const description = record?.Description || "";
-//     const nickName = record?.NickName || "";
-//     const monthlyPayment = record?.MonthlyBudget || 0;
-//     if (!uniqueDescriptions[budgetItem]) {
-//       uniqueDescriptions[budgetItem] = {};
-//     }
-//     if (!uniqueDescriptions[budgetItem][description]) {
-//       uniqueDescriptions[budgetItem][description] = 0;
-//     }
-//     uniqueDescriptions[budgetItem][description] += Number(monthlyPayment);
-//   });
-//   return uniqueDescriptions;
-// };
-
 // Function to get unique descriptions and their sum values for each unique budget item
 export const getUniqueDescriptionsWithSumForEachBudgetItem = (data) => {
   const uniqueDescriptions = {};
@@ -839,4 +820,136 @@ export const getUniqueDescriptionsWithSumForEachBudgetItem = (data) => {
   });
 
   return uniqueDescriptions;
+};
+
+//****************************NETWORTH****************************/
+
+export const getRealEstateMarketValueTotal = (user, data, cat1, cat2) => {
+  const updatedData = data.filter(
+    (item) => item.Category === cat1 || item.Category === cat2
+  );
+  const formattedAmount = getMarketValueTotal(user, updatedData);
+  return formattedAmount;
+};
+
+export const getVehicleMarketValueTotal = (user, data, cat1) => {
+  const updatedData = data.filter((item) => item.Category === cat1);
+  const formattedAmount = getMarketValueTotal(user, updatedData);
+  return formattedAmount;
+};
+
+export const getHouseHoldMarketValueTotal = (user, data, cat1, cat2) => {
+  const updatedData = data.filter(
+    (item) => item.Category === cat1 || item.Category === cat2
+  );
+  const formattedAmount = getMarketValueTotal(user, updatedData);
+  return formattedAmount;
+};
+
+export const getOtherAssetMarketValueTotal = (user, data, cat1) => {
+  const updatedData = data.filter((item) => item.Category === cat1);
+  const formattedAmount = getMarketValueTotal(user, updatedData);
+  return formattedAmount;
+};
+
+export const getUnformattedMarketValueTotal = (data) => {
+  const Amount = data?.reduce((accumulator, record) => {
+    const amount = record?.MarketValue || 0;
+    return accumulator + Number(amount);
+  }, 0);
+  return Amount;
+};
+
+export const getUnformattedLoanBalanceTotal = (data) => {
+  const Amount = data?.reduce((accumulator, record) => {
+    const amount = record?.LoanBalance || 0;
+    return accumulator + Number(amount);
+  }, 0);
+  return Amount;
+};
+
+export const getUnformattedOpeningBalanceTotal = (data) => {
+  const Amount = data?.reduce((accumulator, record) => {
+    const amount = record?.OpeningBalance || 0;
+    return accumulator + Number(amount);
+  }, 0);
+  return Amount;
+};
+
+export const getUnformattedBankBalanceTotal = (data) => {
+  const Amount = data?.reduce((accumulator, record) => {
+    const type = record?.Type;
+    let amount = record?.Amount || 0;
+    if (type === "Withdrawal") {
+      amount = -amount;
+    }
+    return accumulator + Number(amount);
+  }, 0);
+  return Amount;
+};
+
+export const getCreditCardLoanBalanceTotal = (user, data, cat1, cat2) => {
+  const updatedData = data.filter(
+    (item) => item.Category === cat1 || item.Category === cat2
+  );
+  const formattedAmount = getLoanBalanceTotal(user, updatedData);
+  return formattedAmount;
+};
+
+export const getRealEstateLoanBalanceTotal = (user, data, cat1, cat2) => {
+  const updatedData = data.filter(
+    (item) => item.Category === cat1 || item.Category === cat2
+  );
+  const formattedAmount = getLoanBalanceTotal(user, updatedData);
+  return formattedAmount;
+};
+
+export const getVehicleLoanBalanceTotal = (user, data, cat1) => {
+  const updatedData = data.filter((item) => item.Category === cat1);
+  const formattedAmount = getLoanBalanceTotal(user, updatedData);
+  return formattedAmount;
+};
+
+export const getMedicalDebtBalanceTotal = (user, data, cat1) => {
+  const updatedData = data.filter((item) => item.Category === cat1);
+  const formattedAmount = getLoanBalanceTotal(user, updatedData);
+  return formattedAmount;
+};
+
+export const getLoanOtherLoanBalanceTotal = (user, data, cat1, cat2, cat3) => {
+  const updatedData = data.filter(
+    (item) =>
+      item.Category !== cat1 && item.Category !== cat2 && item.Category !== cat3
+  );
+  const formattedAmount = getLoanBalanceTotal(user, updatedData);
+  return formattedAmount;
+};
+
+export const getRealOtherDebtLoanBalanceTotal = (
+  user,
+  data,
+  cat1,
+  cat2,
+  cat3
+) => {
+  const updatedData = data.filter(
+    (item) =>
+      item.Category === cat1 || item.Category === cat2 || item.Category === cat3
+  );
+  const formattedAmount = getLoanBalanceTotal(user, updatedData);
+  return formattedAmount;
+};
+
+export const getAge = (user, owner) => {
+  const self = Number(user.SelfAge) || 0;
+  const partner = Number(user.PartnerAge) || 0;
+  let age = Math.max(self, partner);
+
+  if (owner === "Self") {
+    age = self;
+  } else if (owner === "Partner") {
+    age = partner;
+  }
+
+  return age.toFixed(0);
 };

@@ -1,6 +1,23 @@
 import React from "react";
+import {
+  getCreditCardLoanBalanceTotal,
+  getLoanBalanceTotal,
+  getLoanOtherLoanBalanceTotal,
+  getMedicalDebtBalanceTotal,
+  getRealEstateLoanBalanceTotal,
+  getRealOtherDebtLoanBalanceTotal,
+  getVehicleLoanBalanceTotal,
+} from "../../utils/budget.calculation";
+import useUserStore from "../../app/user";
+import { getCombineExpenseDebtData } from "../../utils/budget.filter";
 
-export const Liabilities = () => {
+export const Liabilities = ({ expenseGridData, debtGridData }) => {
+  const { user } = useUserStore();
+  const combinedLiabilityData = getCombineExpenseDebtData(
+    expenseGridData,
+    debtGridData
+  );
+
   return (
     <div className="w-full flex flex-col">
       <div className="w-full px-2 py-1 flex flex-col xl:flex-row gap-0 xl:gap-5">
@@ -11,19 +28,40 @@ export const Liabilities = () => {
                 <td className="px-2 py-2 border-r w-2/3 border-gray-300 font-normal">
                   Credit Cards
                 </td>
-                <td className="px-2">Amount</td>
+                <td className="px-2">
+                  {getCreditCardLoanBalanceTotal(
+                    user,
+                    debtGridData,
+                    "Credit Card",
+                    "Department Store"
+                  )}
+                </td>
               </tr>
               <tr className="border border-gray-300 text-sm xl:text-[16px]  text-left p-2 font-bold">
                 <td className="px-2 py-2 border-r w-2/3 border-gray-300 font-normal">
                   Medical Debt
                 </td>
-                <td className="px-2">Amount</td>
+                <td className="px-2">
+                  {getMedicalDebtBalanceTotal(
+                    user,
+                    debtGridData,
+                    "Medical Debt"
+                  )}
+                </td>
               </tr>
               <tr className="border border-gray-300 text-sm xl:text-[16px]  text-left  p-2 font-bold">
                 <td className="px-2 py-2 border-r w-2/3 border-gray-300 font-normal">
-                  Other Debt
+                  Other Debt: Recreation: Boats, Jetskis, RV, etc.
                 </td>
-                <td className="px-2">Amount</td>
+                <td className="px-2">
+                  {getRealOtherDebtLoanBalanceTotal(
+                    user,
+                    expenseGridData,
+                    "Household, Personal Care & Gifts",
+                    "Recreation",
+                    "Children"
+                  )}
+                </td>
               </tr>
             </tbody>
           </table>
@@ -33,21 +71,42 @@ export const Liabilities = () => {
             <tbody>
               <tr className="xl:border-t border-l border-r border-b border-gray-300 text-sm xl:text-[16px]  text-left p-2 font-bold">
                 <td className="px-2 py-2 border-r w-2/3 border-gray-300 font-normal">
-                  Other Loans
+                  Loans (Other)
                 </td>
-                <td className="px-2">Amount</td>
+                <td className="px-2">
+                  {getLoanOtherLoanBalanceTotal(
+                    user,
+                    debtGridData,
+                    "Medical Debt",
+                    "Credit Card",
+                    "Department Store"
+                  )}
+                </td>
               </tr>
               <tr className="border border-gray-300 text-sm xl:text-[16px]  text-left p-2 font-bold">
                 <td className="px-2 py-2 border-r w-2/3 border-gray-300 font-normal">
                   Real Estate Loans
                 </td>
-                <td className="px-2">Amount</td>
+                <td className="px-2">
+                  {getRealEstateLoanBalanceTotal(
+                    user,
+                    expenseGridData,
+                    "Housing",
+                    "Rental Property"
+                  )}
+                </td>
               </tr>
               <tr className="border border-gray-300 text-sm xl:text-[16px]  text-left  p-2 font-bold">
                 <td className="px-2 py-2 border-r w-2/3 border-gray-300 font-normal">
                   Vehicle Loans
                 </td>
-                <td className="px-2">Amount</td>
+                <td className="px-2">
+                  {getVehicleLoanBalanceTotal(
+                    user,
+                    expenseGridData,
+                    "Transportation"
+                  )}
+                </td>
               </tr>
             </tbody>
           </table>
@@ -64,7 +123,9 @@ export const Liabilities = () => {
                 <td className="px-2 py-2 border-r w-2/3 border-gray-300 font-normal">
                   Total Liabilities
                 </td>
-                <td className="px-2">Amount</td>
+                <td className="px-2">
+                  {getLoanBalanceTotal(user, combinedLiabilityData)}
+                </td>
               </tr>
             </tbody>
           </table>

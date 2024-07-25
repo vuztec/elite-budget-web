@@ -1,6 +1,31 @@
 import React from "react";
+import {
+  getFormattedValueTotal,
+  getUnformattedBankBalanceTotal,
+  getUnformattedLoanBalanceTotal,
+  getUnformattedMarketValueTotal,
+  getUnformattedOpeningBalanceTotal,
+} from "../../utils/budget.calculation";
+import useUserStore from "../../app/user";
 
-export const CurrentNetworth = () => {
+export const CurrentNetworth = ({
+  debtGridData,
+  savingsGridData,
+  retirementGridData,
+  expenseGridData,
+  transactionGridData,
+  bankGridData,
+}) => {
+  const { user } = useUserStore();
+  const totalSavMarketValue = getUnformattedMarketValueTotal(savingsGridData);
+  const totalRetMarketValue =
+    getUnformattedMarketValueTotal(retirementGridData);
+  const totalExpMarketValue = getUnformattedMarketValueTotal(expenseGridData);
+  const totalOpeningBalance = getUnformattedOpeningBalanceTotal(bankGridData);
+  const totalBankBalance = getUnformattedBankBalanceTotal(transactionGridData);
+  const totalDebLoanBalance = getUnformattedLoanBalanceTotal(debtGridData);
+  const totalExpLoanBalance = getUnformattedLoanBalanceTotal(expenseGridData);
+
   return (
     <div className="w-full flex flex-col">
       <div className="w-full px-2 py-1 flex flex-col xl:flex-row gap-0 xl:gap-5">
@@ -14,7 +39,18 @@ export const CurrentNetworth = () => {
                 <td className="px-2 py-2 border-r w-2/3 border-gray-300 font-normal">
                   Net Worth
                 </td>
-                <td className="px-2">Amount</td>
+                <td className="px-2">
+                  {getFormattedValueTotal(
+                    user,
+                    Number(totalSavMarketValue) +
+                      Number(totalOpeningBalance) +
+                      Number(totalBankBalance) +
+                      Number(totalRetMarketValue) +
+                      Number(totalExpMarketValue) -
+                      Number(totalDebLoanBalance) -
+                      Number(totalExpLoanBalance)
+                  )}
+                </td>
               </tr>
             </tbody>
           </table>
