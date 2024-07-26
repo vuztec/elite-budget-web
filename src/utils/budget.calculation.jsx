@@ -742,7 +742,7 @@ export const getDifference = (incomeData, budgetData, category, goals, user) => 
   if (category === "Retirement") {
     income = getUnformattedGrossYearlyTotal(incomeData);
   }
-  const actualPerc = Number(budget) / Number(income);
+  const actualPerc = income > 0 ? Number(budget) / Number(income) : 0;
   const goalPerc = getBudgetGoal(goals, category) / 100;
   let Amount = 0;
   if (category === "Retirement" || category === "Savings") {
