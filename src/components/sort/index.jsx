@@ -1,4 +1,8 @@
-import { LiaSortDownSolid, LiaSortSolid, LiaSortUpSolid } from "react-icons/lia";
+import {
+  LiaSortDownSolid,
+  LiaSortSolid,
+  LiaSortUpSolid,
+} from "react-icons/lia";
 import {
   ascendingSort,
   defaultBankSort,
@@ -9,24 +13,48 @@ import {
   descendingSort,
 } from "../../utils/budget.sort";
 
-export default function Sort({ tab, order, setOrder, column, name, name2, data, setData, defaultData, isNumber }) {
+export default function Sort({
+  tab,
+  order,
+  setOrder,
+  column,
+  name,
+  name2,
+  data,
+  setData,
+  defaultData,
+  isNumber,
+}) {
   const sortDefaultClick = () => {
-    setOrder((prev) => prev.map((_, index) => (index + 1 === column ? "asc" : "default")));
+    setOrder((prev) =>
+      prev.map((_, index) => (index + 1 === column ? "asc" : "default"))
+    );
 
     setData(ascendingSort(data, name, name2, isNumber));
   };
   const sortUpClick = () => {
-    setOrder((prev) => prev.map((_, index) => (index + 1 === column ? "desc" : "default")));
+    setOrder((prev) =>
+      prev.map((_, index) => (index + 1 === column ? "desc" : "default"))
+    );
     setData(descendingSort(data, name, name2, isNumber));
   };
   const sortDownClick = () => {
-    setOrder((prev) => prev.map((_, index) => (index + 1 === column ? "default" : "default")));
+    setOrder((prev) =>
+      prev.map((_, index) => (index + 1 === column ? "default" : "default"))
+    );
 
     if (tab === "income") setData(defaultIncomeSort(defaultData));
-    else if (tab === "transaction") setData(defaultTransactionSort(defaultData));
+    else if (tab === "transaction")
+      setData(defaultTransactionSort(defaultData));
     else if (tab === "bank") setData(defaultBankSort(defaultData));
     else if (tab === "fund") setData(defaultFundSort(defaultData));
-    else if (tab === "debt" || tab === "expense" || tab === "retirement" || tab === "saving") setData(defaultDebSort(defaultData));
+    else if (
+      tab === "debt" ||
+      tab === "expense" ||
+      tab === "retirement" ||
+      tab === "saving"
+    )
+      setData(defaultDebSort(defaultData));
     else setData(defaultData);
   };
 

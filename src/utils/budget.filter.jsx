@@ -252,3 +252,18 @@ export const generateMonthHeaders = () => {
 
   return monthHeaders;
 };
+
+///**************************BANK BALANCE************** */
+export const calculateBalances = (data, opening) => {
+  let runningBalance = opening;
+  return data.map((record) => {
+    const amount = Number(record.Amount) || 0;
+    const transactionAmount = record.Type === "Withdrawal" ? -amount : amount;
+    runningBalance += transactionAmount;
+
+    return {
+      ...record,
+      Balance: runningBalance,
+    };
+  });
+};

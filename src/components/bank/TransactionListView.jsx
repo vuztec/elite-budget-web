@@ -10,7 +10,6 @@ import axios from "../../config/axios";
 import { handleAxiosResponseError } from "../../utils/handleResponseError";
 import AddTransaction from "./AddTransaction";
 import {
-  getFormattedValue,
   getFormattedDate,
   getFormattedValueType,
   getBankAccountTypeTotal,
@@ -22,11 +21,13 @@ import Sort from "../sort";
 import { defaultTransactionSort } from "../../utils/budget.sort";
 import { FiCheckSquare } from "react-icons/fi";
 import { MdOutlineSquare } from "react-icons/md";
+import { calculateBalances } from "../../utils/budget.filter";
 
 export const TransactionListView = ({ Data, bankName }) => {
   const { user } = useUserStore();
   const [gridData, setGridData] = useState([]);
   const totalBankBalance = getUnformattedBankBalanceTotal(gridData);
+  const openingBalance = 0;
 
   const [order, setOrder] = useState([
     "default",
@@ -40,8 +41,9 @@ export const TransactionListView = ({ Data, bankName }) => {
 
   useEffect(() => {
     const sortedData = defaultTransactionSort(Data);
-    setGridData(sortedData);
-  }, [Data, bankName]);
+    const dataWithBalances = calculateBalances(sortedData, openingBalance);
+    setGridData(dataWithBalances);
+  }, [Data, bankName, openingBalance]);
 
   //----------------CRUD----------------//
   const queryClient = useQueryClient();
@@ -278,7 +280,7 @@ export const TransactionListView = ({ Data, bankName }) => {
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
           <p className="text-black">
-            {getFormattedValue(user, record?.MonthlyBudget)}
+            {getFormattedValueTotal(user, record?.Balance)}
           </p>
         </div>
       </td>

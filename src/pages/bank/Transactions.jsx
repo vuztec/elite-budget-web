@@ -26,6 +26,9 @@ export const Transactions = () => {
 
   // Filters
   const [owner, setOwner] = useState("Household");
+  const [bank, setBank] = useState("All");
+  const [year, setYear] = useState("All");
+  const [month, setMonth] = useState("All");
 
   const { data: transactions, status: isTransactionLoaded } = useQuery({
     queryKey: ["banktransactions"],
@@ -69,6 +72,24 @@ export const Transactions = () => {
   const handleOwnerChange = (e) => {
     if (e && e.target?.value) {
       setOwner(e.target?.value);
+    }
+  };
+
+  const handleBankChange = (e) => {
+    if (e && e.target?.value) {
+      setBank(e.target?.value);
+    }
+  };
+
+  const handleYearChange = (e) => {
+    if (e && e.target?.value) {
+      setYear(e.target?.value);
+    }
+  };
+
+  const handleMonthChange = (e) => {
+    if (e && e.target?.value) {
+      setMonth(e.target?.value);
     }
   };
 
@@ -123,6 +144,36 @@ export const Transactions = () => {
             options={owners}
             placeholder="Household"
             label="Account Owner"
+            className="bg-white w-full py-1"
+          />
+        </div>
+        <div className="w-full">
+          <Select
+            onChange={handleBankChange}
+            value={bank}
+            options={owners}
+            placeholder="Household"
+            label="Bank Account"
+            className="bg-white w-full py-1"
+          />
+        </div>
+        <div className="w-full">
+          <Select
+            onChange={handleYearChange}
+            value={year}
+            options={owners}
+            placeholder="Household"
+            label="Year"
+            className="bg-white w-full py-1"
+          />
+        </div>
+        <div className="w-full">
+          <Select
+            onChange={handleMonthChange}
+            value={month}
+            options={owners}
+            placeholder="Household"
+            label="Month"
             className="bg-white w-full py-1"
           />
         </div>
