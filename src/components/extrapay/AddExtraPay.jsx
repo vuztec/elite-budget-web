@@ -43,9 +43,7 @@ export const AddExtraPay = ({ open, setOpen, recordData }) => {
     axios
       .patch("/api/extra-pay-checks/" + numericSelectedID, data)
       .then(({ data }) => {
-        queryClient.setQueryData(["extrapaychecks"], (prev) =>
-          prev.map((check) => (check.id === numericSelectedID ? { ...check, ...data } : check))
-        );
+        queryClient.setQueryData(["extrapaychecks"], (prev) => prev.map((check) => (check.id === data.id ? data : check)));
         setIsLoading(() => false);
         setOpen(false);
       })

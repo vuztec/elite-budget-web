@@ -4,7 +4,6 @@ import Textbox from "../../components/Textbox";
 import Button from "../../components/Button";
 import axios from "../../config/axios";
 import clsx from "clsx";
-import { themeColors } from "../../utils";
 import { toast } from "react-toastify";
 import { handleAxiosResponseError } from "../../utils/handleResponseError";
 import { useNavigate } from "react-router-dom";
@@ -70,11 +69,7 @@ const ForgetPassword = () => {
                   error={errors.email ? errors.email.message : ""}
                 />
 
-                <Button
-                  type="submit"
-                  label="Submit"
-                  className={clsx("w-full h-10 hover:bg-green-800 text-white rounded-full", `bg-[${themeColors[1]}]`)}
-                />
+                <Button type="submit" label="Submit" className={clsx("w-full h-10 hover:bg-green-800 text-white rounded-full bg-black")} />
               </div>
             </form>
           </div>

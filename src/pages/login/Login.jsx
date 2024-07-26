@@ -6,7 +6,6 @@ import Button from "../../components/Button";
 import useUserStore from "../../app/user";
 import axios from "../../config/axios";
 import clsx from "clsx";
-import { themeColors } from "../../utils";
 import { toast } from "react-toastify";
 import { handleAxiosResponseError } from "../../utils/handleResponseError";
 import { AddRootUser } from "../../components/team";
@@ -124,19 +123,12 @@ export const Login = () => {
                 />
 
                 <div className="flex justify-between">
-                  <a
-                    href="/forgetpassword"
-                    className={clsx("text-sm text-gray-500 hover:underline cursor-pointer", `hover:text-[${themeColors[1]}]`)}
-                  >
+                  <a href="/forgetpassword" className={clsx("text-sm text-gray-500 hover:underline cursor-pointer")}>
                     Forget Password?
                   </a>
                 </div>
 
-                <Button
-                  type="submit"
-                  label="Submit"
-                  className={clsx("w-full h-10 hover:bg-green-800 text-white rounded-full", `bg-[${themeColors[1]}]`)}
-                />
+                <Button type="submit" label="Submit" className={clsx("w-full h-10 hover:bg-green-800 text-white rounded-full bg-black")} />
                 {/* <span
                   onClick={() => addClick()}
                   className={clsx(
