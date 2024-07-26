@@ -34,7 +34,7 @@ export const Checklist = () => {
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [combinedData, setCombinedData] = useState([]);
   const [monthsName, setMonthsName] = useState([]);
-  const activeAccount = getActiveAccount(root);
+  const activeAccount = getActiveAccount(user);
 
   // Filters
   const [owner, setOwner] = useState("Household");

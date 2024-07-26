@@ -18,12 +18,14 @@ import {
 import { ExpenseListView } from "../../components/expense/ExpenseListView";
 import { ExpenseSummary } from "../../components/expense/ExpenseSummary";
 import { hasRecords } from "../../utils/budget.calculation";
+import useUserStore from "../../app/user";
 
 export const ExpenseRecords = () => {
+  const { user } = useUserStore();
   const [showAll, setShowAll] = useState(false);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [gridData, setGridData] = useState([]);
-  const activeAccount = getActiveAccount(root);
+  const activeAccount = getActiveAccount(user);
 
   // Filters
   const [owner, setOwner] = useState("Household");

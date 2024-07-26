@@ -3,6 +3,8 @@ import useUserStore from "../../app/user";
 import { usePDF } from "react-to-pdf";
 import Button from "../../components/Button";
 import { PiPrinter } from "react-icons/pi";
+import Package from "../../package/Package";
+import { getActiveAccount } from "../../utils/permissions";
 
 // color for each row in
 export const colors = [
@@ -16,6 +18,7 @@ export const colors = [
 export const ExtraPayDates = () => {
   const { user } = useUserStore();
   const { toPDF, targetRef } = usePDF({ filename: "extra-pay-dates.pdf" });
+  const activeAccount = getActiveAccount(user);
 
   function getFifthMondays() {
     const currentDate = new Date();
@@ -206,144 +209,148 @@ export const ExtraPayDates = () => {
     return fifthSundays;
   }
 
-  return (
-    <div className="flex flex-col" ref={targetRef}>
-      <div className="flex justify-between">
-        <div>
-          <p className="text-xs">
-            * Note 1: For someone paid weekly, pick your 4 correct Dates
-            corresponding to your pay days.
-          </p>
-          <p className="text-xs">
-            * Note 2: For someone paid bi-weekly, pick your 2 correct Dates
-            corresponding to your pay days.
-          </p>
-        </div>
+  return activeAccount ? (
+    <>
+      <div className="flex flex-col" ref={targetRef}>
+        <div className="flex justify-between">
+          <div>
+            <p className="text-xs">
+              * Note 1: For someone paid weekly, pick your 4 correct Dates
+              corresponding to your pay days.
+            </p>
+            <p className="text-xs">
+              * Note 2: For someone paid bi-weekly, pick your 2 correct Dates
+              corresponding to your pay days.
+            </p>
+          </div>
 
-        <Button
-          onClick={toPDF}
-          icon={<PiPrinter />}
-          label={"Print"}
-          className={
-            "flex flex-row-reverse justify-center items-center bg-black text-white text-lg gap-2 hover:bg-[whitesmoke] hover:text-black"
-          }
-        />
+          <Button
+            onClick={toPDF}
+            icon={<PiPrinter />}
+            label={"Print"}
+            className={
+              "flex flex-row-reverse justify-center items-center bg-black text-white text-lg gap-2 hover:bg-[whitesmoke] hover:text-black"
+            }
+          />
+        </div>
+        <div className="w-full bg-white my-4 p-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 3xl:grid-cols-5 gap-5 xl:gap-10 text-xs md:text-sm">
+          <div className="flex flex-col items-center mb-5">
+            <h1 className="w-full flex items-center justify-center font-bold p-1 rounded-t-lg bg-gray-200 text-sm md:text-lg ">
+              Mondays
+            </h1>
+            {getFifthMondays().map((date, index) => (
+              <p
+                className="w-full p-2 flex items-center justify-center"
+                key={index}
+                style={{
+                  backgroundColor: colors[index],
+                }}
+              >
+                {date}
+              </p>
+            ))}
+          </div>
+          <div className="flex flex-col items-center mb-5">
+            <h1 className="w-full flex items-center justify-center font-bold p-1 rounded-t-lg bg-gray-200 text-sm md:text-lg ">
+              Tuesdays
+            </h1>
+            {getFifthTuesdays().map((date, index) => (
+              <p
+                className="w-full p-2 flex items-center justify-center"
+                key={index}
+                style={{
+                  backgroundColor: colors[index],
+                }}
+              >
+                {date}
+              </p>
+            ))}
+          </div>
+          <div className="flex flex-col items-center mb-5">
+            <h1 className="w-full flex items-center justify-center font-bold p-1 rounded-t-lg bg-gray-200 text-sm md:text-lg ">
+              Wednesdays
+            </h1>
+            {getFifthWednesdays().map((date, index) => (
+              <p
+                className="w-full p-2 flex items-center justify-center"
+                key={index}
+                style={{
+                  backgroundColor: colors[index],
+                }}
+              >
+                {date}
+              </p>
+            ))}
+          </div>
+          <div className="flex flex-col items-center  mb-5">
+            <h1 className="w-full flex items-center justify-center font-bold p-1 rounded-t-lg bg-gray-200 text-sm md:text-lg ">
+              Thursdays
+            </h1>
+            {getFifthThursdays().map((date, index) => (
+              <p
+                className="w-full p-2 flex items-center justify-center"
+                key={index}
+                style={{
+                  backgroundColor: colors[index],
+                }}
+              >
+                {date}
+              </p>
+            ))}
+          </div>
+          <div className="flex flex-col items-center mb-5">
+            <h1 className="w-full flex items-center justify-center font-bold p-1 rounded-t-lg bg-gray-200 text-sm md:text-lg ">
+              Fridays
+            </h1>
+            {getFifthFridays().map((date, index) => (
+              <p
+                className="w-full p-2 flex items-center justify-center"
+                key={index}
+                style={{
+                  backgroundColor: colors[index],
+                }}
+              >
+                {date}
+              </p>
+            ))}
+          </div>
+          <div className="flex flex-col items-center  mb-5">
+            <h1 className="w-full flex items-center justify-center font-bold p-1 rounded-t-lg bg-gray-200 text-sm md:text-lg ">
+              Saturdays
+            </h1>
+            {getFifthSaturdays().map((date, index) => (
+              <p
+                className="w-full p-2 flex items-center justify-center"
+                key={index}
+                style={{
+                  backgroundColor: colors[index],
+                }}
+              >
+                {date}
+              </p>
+            ))}
+          </div>
+          <div className="flex flex-col items-center mb-5">
+            <h1 className="w-full flex items-center justify-center font-bold p-1 rounded-t-lg bg-gray-200 text-sm md:text-lg ">
+              Sundays
+            </h1>
+            {getFifthSundays().map((date, index) => (
+              <p
+                className="w-full p-2 flex items-center justify-center"
+                key={index}
+                style={{
+                  backgroundColor: colors[index],
+                }}
+              >
+                {date}
+              </p>
+            ))}
+          </div>
+        </div>
       </div>
-      <div className="w-full bg-white my-4 p-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 3xl:grid-cols-5 gap-5 xl:gap-10 text-xs md:text-sm">
-        <div className="flex flex-col items-center mb-5">
-          <h1 className="w-full flex items-center justify-center font-bold p-1 rounded-t-lg bg-gray-200 text-sm md:text-lg ">
-            Mondays
-          </h1>
-          {getFifthMondays().map((date, index) => (
-            <p
-              className="w-full p-2 flex items-center justify-center"
-              key={index}
-              style={{
-                backgroundColor: colors[index],
-              }}
-            >
-              {date}
-            </p>
-          ))}
-        </div>
-        <div className="flex flex-col items-center mb-5">
-          <h1 className="w-full flex items-center justify-center font-bold p-1 rounded-t-lg bg-gray-200 text-sm md:text-lg ">
-            Tuesdays
-          </h1>
-          {getFifthTuesdays().map((date, index) => (
-            <p
-              className="w-full p-2 flex items-center justify-center"
-              key={index}
-              style={{
-                backgroundColor: colors[index],
-              }}
-            >
-              {date}
-            </p>
-          ))}
-        </div>
-        <div className="flex flex-col items-center mb-5">
-          <h1 className="w-full flex items-center justify-center font-bold p-1 rounded-t-lg bg-gray-200 text-sm md:text-lg ">
-            Wednesdays
-          </h1>
-          {getFifthWednesdays().map((date, index) => (
-            <p
-              className="w-full p-2 flex items-center justify-center"
-              key={index}
-              style={{
-                backgroundColor: colors[index],
-              }}
-            >
-              {date}
-            </p>
-          ))}
-        </div>
-        <div className="flex flex-col items-center  mb-5">
-          <h1 className="w-full flex items-center justify-center font-bold p-1 rounded-t-lg bg-gray-200 text-sm md:text-lg ">
-            Thursdays
-          </h1>
-          {getFifthThursdays().map((date, index) => (
-            <p
-              className="w-full p-2 flex items-center justify-center"
-              key={index}
-              style={{
-                backgroundColor: colors[index],
-              }}
-            >
-              {date}
-            </p>
-          ))}
-        </div>
-        <div className="flex flex-col items-center mb-5">
-          <h1 className="w-full flex items-center justify-center font-bold p-1 rounded-t-lg bg-gray-200 text-sm md:text-lg ">
-            Fridays
-          </h1>
-          {getFifthFridays().map((date, index) => (
-            <p
-              className="w-full p-2 flex items-center justify-center"
-              key={index}
-              style={{
-                backgroundColor: colors[index],
-              }}
-            >
-              {date}
-            </p>
-          ))}
-        </div>
-        <div className="flex flex-col items-center  mb-5">
-          <h1 className="w-full flex items-center justify-center font-bold p-1 rounded-t-lg bg-gray-200 text-sm md:text-lg ">
-            Saturdays
-          </h1>
-          {getFifthSaturdays().map((date, index) => (
-            <p
-              className="w-full p-2 flex items-center justify-center"
-              key={index}
-              style={{
-                backgroundColor: colors[index],
-              }}
-            >
-              {date}
-            </p>
-          ))}
-        </div>
-        <div className="flex flex-col items-center mb-5">
-          <h1 className="w-full flex items-center justify-center font-bold p-1 rounded-t-lg bg-gray-200 text-sm md:text-lg ">
-            Sundays
-          </h1>
-          {getFifthSundays().map((date, index) => (
-            <p
-              className="w-full p-2 flex items-center justify-center"
-              key={index}
-              style={{
-                backgroundColor: colors[index],
-              }}
-            >
-              {date}
-            </p>
-          ))}
-        </div>
-      </div>
-    </div>
+    </>
+  ) : (
+    <Package />
   );
 };
 

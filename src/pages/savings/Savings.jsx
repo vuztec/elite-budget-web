@@ -14,12 +14,14 @@ import { expenseOwners, getOwnerGridData } from "../../utils/budget.filter";
 import { SavingListView } from "../../components/savings/SavingListView";
 import { hasRecords } from "../../utils/budget.calculation";
 import { defaultDebSort } from "../../utils/budget.sort";
+import useUserStore from "../../app/user";
 
 export const Savings = () => {
+  const { user } = useUserStore();
   const [showAll, setShowAll] = useState(false);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [gridData, setGridData] = useState([]);
-  const activeAccount = getActiveAccount(root);
+  const activeAccount = getActiveAccount(user);
 
   // Filters
   const [owner, setOwner] = useState("Household");

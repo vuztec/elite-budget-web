@@ -15,13 +15,14 @@ import {
 import { getOwnerGridData, incomeOwners } from "../../utils/budget.filter";
 import { TransactionListView } from "../../components/bank/TransactionListView";
 import AddTransaction from "../../components/bank/AddTransaction";
+import useUserStore from "../../app/user";
 
 export const Transactions = () => {
-  const [showAll, setShowAll] = useState(false);
+  const { user } = useUserStore();
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [gridData, setGridData] = useState([]);
   const [open, setOpen] = useState(false);
-  const activeAccount = getActiveAccount(root);
+  const activeAccount = getActiveAccount(user);
 
   // Filters
   const [owner, setOwner] = useState("Household");
@@ -63,7 +64,7 @@ export const Transactions = () => {
     } else {
       setIsDataLoaded(false);
     }
-  }, [transactions, isTransactionLoaded, isNamesLoaded, owner, showAll]);
+  }, [transactions, isTransactionLoaded, isNamesLoaded, owner]);
 
   const handleOwnerChange = (e) => {
     if (e && e.target?.value) {

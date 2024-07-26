@@ -15,6 +15,7 @@ import {
   ExtraFundsTracker,
   Networth,
   BudgetGoals,
+  Subscription,
 } from "./pages";
 
 import Navbar from "./components/Navbar";
@@ -84,6 +85,7 @@ function App() {
             element={<ExtraFundsTracker />}
           />
           <Route path="/net-worth" element={<Networth />} />
+          <Route path="/subscription" element={<Subscription />} />
           <Route path="/profile" element={<Profile />} />
         </Route>
         <Route path="/login" element={<Login />} />

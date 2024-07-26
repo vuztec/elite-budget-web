@@ -5,10 +5,12 @@ import { getActiveAccount } from "../../utils/permissions";
 import Package from "../../package/Package";
 import { getDebtGoals, getExpenseGoals, getMainGoals } from "../../config/api";
 import { GoalListView } from "../../components/budget/GoalListView";
+import useUserStore from "../../app/user";
 
 export const BudgetGoals = () => {
+  const { user } = useUserStore();
   const [isDataLoaded, setIsDataLoaded] = useState(false);
-  const activeAccount = getActiveAccount(root);
+  const activeAccount = getActiveAccount(user);
 
   const { data: debtgoals, status: isDebtGoalsLoaded } = useQuery({
     queryKey: ["debtgoals"],
@@ -31,7 +33,11 @@ export const BudgetGoals = () => {
   ///-------------END Filters Data Source --------------------------------///
 
   useEffect(() => {
-    if (isDebtGoalsLoaded === "success" && isMainGoalsLoaded === "success" && isExpenseGoalsLoaded === "success") {
+    if (
+      isDebtGoalsLoaded === "success" &&
+      isMainGoalsLoaded === "success" &&
+      isExpenseGoalsLoaded === "success"
+    ) {
       setIsDataLoaded(true);
     } else {
       setIsDataLoaded(false);

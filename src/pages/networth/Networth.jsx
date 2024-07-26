@@ -30,8 +30,10 @@ import clsx from "clsx";
 import Select from "../../components/Select";
 import { usePDF } from "react-to-pdf";
 import { PiPrinter } from "react-icons/pi";
+import useUserStore from "../../app/user";
 
 export const Networth = () => {
+  const { user } = useUserStore();
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [incomeGridData, setIncomeGridData] = useState([]);
   const [savingsGridData, setSavingsGridData] = useState([]);
@@ -42,7 +44,7 @@ export const Networth = () => {
   const [bankGridData, setBankGridData] = useState([]);
   const { toPDF, targetRef } = usePDF({ filename: "networth.pdf" });
 
-  const activeAccount = getActiveAccount(root);
+  const activeAccount = getActiveAccount(user);
 
   // Filters
   const [owner, setOwner] = useState("Household");

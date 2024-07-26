@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { MdFilterAlt, MdFilterAltOff } from "react-icons/md";
 import Button from "../../components/Button";
 import { IoMdAdd } from "react-icons/io";
-import { HiMinusSm } from "react-icons/hi";
 import Loading from "../../components/Loader";
 import { useQuery } from "react-query";
 import clsx from "clsx";
@@ -11,18 +10,17 @@ import { getActiveAccount } from "../../utils/permissions";
 import Package from "../../package/Package";
 import { getBankAccountNames } from "../../config/api";
 import { getOwnerGridData, incomeOwners } from "../../utils/budget.filter";
-import { hasRecords } from "../../utils/budget.calculation";
 import AddBank from "../../components/bank/AddBank";
 import { BankListView } from "../../components/bank/BankListView";
-import { themeColors } from "../../utils";
 import { defaultBankSort } from "../../utils/budget.sort";
+import useUserStore from "../../app/user";
 
 export const BankAccounts = () => {
-  const [showAll, setShowAll] = useState(false);
+  const { user } = useUserStore();
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [gridData, setGridData] = useState([]);
   const [open, setOpen] = useState(false);
-  const activeAccount = getActiveAccount(root);
+  const activeAccount = getActiveAccount(user);
 
   // Filters
   const [owner, setOwner] = useState("Household");
@@ -52,7 +50,7 @@ export const BankAccounts = () => {
     } else {
       setIsDataLoaded(false);
     }
-  }, [accountnames, isNamesLoaded, owner, showAll]);
+  }, [accountnames, isNamesLoaded, owner]);
 
   const handleOwnerChange = (e) => {
     if (e && e.target?.value) {

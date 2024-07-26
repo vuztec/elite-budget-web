@@ -15,6 +15,7 @@ import { BudgetGoals } from "./budget/BudgetGoals";
 import { Checklist } from "./budget/Checklist";
 import { ExtraFundsTracker } from "./budget/ExtraFundsTracker";
 import { Networth } from "./networth/Networth";
+import { Subscription } from "./subscription/Subscription";
 
 export {
   Home,
@@ -33,4 +34,5 @@ export {
   Checklist,
   ExtraFundsTracker,
   Networth,
+  Subscription,
 };

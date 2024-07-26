@@ -15,13 +15,15 @@ import { IncomeListView } from "../../components/income/IncomeListView";
 import { hasRecords } from "../../utils/budget.calculation";
 import { ExtraPayListView } from "../../components/extrapay/ExtraPayListView";
 import { defaultIncomeSort } from "../../utils/budget.sort";
+import useUserStore from "../../app/user";
 
 export const IncomeRecords = () => {
+  const { user } = useUserStore();
   const [showAll, setShowAll] = useState(false);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [gridData, setGridData] = useState([]);
   const [extraGridData, setExtraGridData] = useState([]);
-  const activeAccount = getActiveAccount(root);
+  const activeAccount = getActiveAccount(user);
 
   // Filters
   const [owner, setOwner] = useState("Household");

@@ -32,8 +32,10 @@ import YearlyIncome from "../../components/budget/YearlyIncome";
 import { PiPrinter } from "react-icons/pi";
 import { usePDF } from "react-to-pdf";
 import { getJointContribution } from "../../utils/budget.calculation";
+import useUserStore from "../../app/user";
 
 export const BudgetDetails = () => {
+  const { user } = useUserStore();
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [incomeGridData, setIncomeGridData] = useState([]);
   const [savingsGridData, setSavingsGridData] = useState([]);
@@ -44,7 +46,7 @@ export const BudgetDetails = () => {
   const [partnerContribution, setPartnerContribution] = useState(0);
   const { toPDF, targetRef } = usePDF({ filename: "budget-details.pdf" });
 
-  const activeAccount = getActiveAccount(root);
+  const activeAccount = getActiveAccount(user);
 
   // Filters
   const [owner, setOwner] = useState("Household");

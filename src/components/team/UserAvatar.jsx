@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { getInitials } from "../../utils";
 import useUserStore from "../../app/user";
 import AddRootUser from "./AddRootUser";
-import { AddRegularUser, ChangePassword } from "../team";
+import { ChangePassword } from "../team";
 import { useQueryClient } from "react-query";
 
 export const UserAvatar = () => {
@@ -43,7 +43,9 @@ export const UserAvatar = () => {
         <Menu as="div" className="relative inline-block text-left">
           <div>
             <Menu.Button className="w-10 h-10 2xl:w-12 2xl:h-12 items-center justify-center rounded-full bg-black">
-              <span className="text-white font-semibold">{getInitials(user?.FullName)}</span>
+              <span className="text-white font-semibold">
+                {getInitials(user?.FullName)}
+              </span>
             </Menu.Button>
           </div>
 
@@ -105,7 +107,13 @@ export const UserAvatar = () => {
         recordData={selected}
         key={`CP${new Date().getTime().toString()}`}
       />
-      <AddRootUser setUser={setUser} open={open} setOpen={setOpen} recordData={selected} key={`UP${new Date().getTime().toString()}`} />
+      <AddRootUser
+        setUser={setUser}
+        open={open}
+        setOpen={setOpen}
+        recordData={selected}
+        key={`UP${new Date().getTime().toString()}`}
+      />
     </>
   );
 };

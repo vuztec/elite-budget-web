@@ -3,6 +3,7 @@ import { AiFillDollarCircle } from "react-icons/ai";
 import { FaCashRegister, FaPiggyBank, FaShoppingCart } from "react-icons/fa";
 import { IoMdBriefcase } from "react-icons/io";
 import { IoHome } from "react-icons/io5";
+import { CiMoneyBill } from "react-icons/ci";
 
 export const SidebarLinks = [
   {
@@ -86,11 +87,11 @@ export const SidebarLinks = [
     icon: <IoMdBriefcase />,
     dropdown: false,
   },
-  // {
-  //   label: "Account",
-  //   link: null,
-  //   icon: <MdPeople />,
-  //   dropdown: false,
-  //   sub: [{ label: "Profile", link: "/team" }],
-  // },
+  {
+    label: "Subscription",
+    activename: "subscription",
+    link: "/subscription",
+    icon: <CiMoneyBill />,
+    dropdown: false,
+  },
 ];

@@ -46,7 +46,7 @@ export const JointContribution = () => {
     : "";
   const queryClient = useQueryClient();
 
-  const activeAccount = getActiveAccount(root);
+  const activeAccount = getActiveAccount(user);
 
   const { data: debts, status: isDebtLoaded } = useQuery({
     queryKey: ["debts"],

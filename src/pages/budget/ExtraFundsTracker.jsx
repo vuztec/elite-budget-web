@@ -13,13 +13,14 @@ import { getOwnerGridData, incomeOwners } from "../../utils/budget.filter";
 import { ExtraFundListView } from "../../components/budget/ExtraFundListView";
 import AddExtraFund from "../../components/budget/AddExtraFund";
 import { defaultFundSort } from "../../utils/budget.sort";
+import useUserStore from "../../app/user";
 
 export const ExtraFundsTracker = () => {
-  const [showAll, setShowAll] = useState(false);
+  const { user } = useUserStore();
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [gridData, setGridData] = useState([]);
   const [open, setOpen] = useState(false);
-  const activeAccount = getActiveAccount(root);
+  const activeAccount = getActiveAccount(user);
 
   // Filters
   const [owner, setOwner] = useState("Household");
@@ -50,7 +51,7 @@ export const ExtraFundsTracker = () => {
     } else {
       setIsDataLoaded(false);
     }
-  }, [extrafunds, isFundLoaded, owner, showAll]);
+  }, [extrafunds, isFundLoaded, owner]);
 
   const handleOwnerChange = (e) => {
     if (e && e.target?.value) {

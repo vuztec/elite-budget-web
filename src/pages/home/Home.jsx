@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import MonthlyIncome from "../../components/budget/MonthlyIncome";
 import MonthlySavings from "../../components/budget/MonthlySavings";
 import MonthlyRetirement from "../../components/budget/MonthlyRetirement";
-import MonthlyDebt from "../../components/budget/MonthlyDebt";
-import MonthlyExpenses from "../../components/budget/MonthlyExpenses";
 import MonthlySummary from "../../components/budget/MonthlySummary";
 import Package from "../../package/Package";
 import Loading from "../../components/Loader";
@@ -30,8 +28,10 @@ import YearlyIncome from "../../components/budget/YearlyIncome";
 import MonthlyExpenseHome from "../../components/budget/MonthlyExpenseHome";
 import MonthlyDebtHome from "../../components/budget/MonthlyDebtHome";
 import { getJointContribution } from "../../utils/budget.calculation";
+import useUserStore from "../../app/user";
 
 export const Home = () => {
+  const { user } = useUserStore();
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [incomeGridData, setIncomeGridData] = useState([]);
   const [savingsGridData, setSavingsGridData] = useState([]);
@@ -40,7 +40,7 @@ export const Home = () => {
   const [debtGridData, setDebtGridData] = useState([]);
   const [selfContribution, setSelfContribution] = useState(0);
   const [partnerContribution, setPartnerContribution] = useState(0);
-  const activeAccount = getActiveAccount(root);
+  const activeAccount = getActiveAccount(user);
 
   // Filters
   const [owner, setOwner] = useState("Household");
