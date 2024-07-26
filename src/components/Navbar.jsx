@@ -8,7 +8,7 @@ import { useQueryClient, useQuery } from "react-query";
 import axios from "../config/axios";
 
 const Navbar = () => {
-  const { setSidebar, isRefresh, setIsRefresh, setUser } = useUserStore();
+  const { setSidebar, isRefresh, setIsRefresh, setUser, user } = useUserStore();
   const location = useLocation();
   const [title, setTitle] = useState("");
   const [searchParams] = useSearchParams();
@@ -35,7 +35,9 @@ const Navbar = () => {
 
   useEffect(() => {
     const data = SidebarLinks.find((item) =>
-      item.link ? item.link === location.pathname : item.sub.find((sub_item) => sub_item.link === location.pathname)
+      item.link
+        ? item.link === location.pathname
+        : item.sub.find((sub_item) => sub_item.link === location.pathname)
     );
 
     setTitle(data?.label);
@@ -44,12 +46,20 @@ const Navbar = () => {
   return (
     <div className="flex justify-between items-center bg-white px-4 py-3 2xl:py-4 sticky top-0">
       <div className="w-full flex gap-4">
-        <button onClick={() => setSidebar()} className="text-2xl text-gray-500 block md:hidden">
+        <button
+          onClick={() => setSidebar()}
+          className="text-2xl text-gray-500 block md:hidden"
+        >
           ☰
         </button>
 
         <div className="w-full flex justify-center items-center py-2 px-3 gap-2 rounded-full">
-          <h1 className="font-bold">{title}</h1>
+          <h1 className="font-bold uppercase">
+            {" "}
+            {title === "Home"
+              ? title
+              : title + " for " + (user?.FullName || "")}
+          </h1>
         </div>
       </div>
 

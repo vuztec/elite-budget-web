@@ -9,6 +9,7 @@ export const SidebarLinks = [
   {
     label: "Home",
     link: "/",
+    title: "Home",
     icon: <IoHome />,
     dropdown: false,
     activename: "home",
@@ -20,8 +21,16 @@ export const SidebarLinks = [
     icon: <AiFillDollarCircle />,
     dropdown: false,
     sub: [
-      { label: "Income Records", link: "/income/income-records" },
-      { label: "Extra Pay Dates", link: "/income/extra-pay-dates" },
+      {
+        label: "Income Records",
+        title: "Income Sources",
+        link: "/income/income-records",
+      },
+      {
+        label: "Extra Pay Dates",
+        title: "Extra Pay Dates",
+        link: "/income/extra-pay-dates",
+      },
     ],
   },
   {
@@ -31,12 +40,21 @@ export const SidebarLinks = [
     icon: <FaShoppingCart />,
     dropdown: false,
     sub: [
-      { label: "Expense Records", link: "/expenses/expense-records" },
-      { label: "Joint Contribution", link: "/expenses/joint-contribution" },
+      {
+        label: "Expense Records",
+        title: "Expenses",
+        link: "/expenses/expense-records",
+      },
+      {
+        label: "Joint Contribution",
+        title: "Joint Contributions",
+        link: "/expenses/joint-contribution",
+      },
     ],
   },
   {
     label: "Other Debts",
+    title: "Other Debts",
     activename: "debts",
     link: "/debts",
     icon: <MdPayment />,
@@ -44,6 +62,7 @@ export const SidebarLinks = [
   },
   {
     label: "Retirement",
+    title: "Retirement Savings",
     activename: "retirement",
     link: "/retirement",
     icon: <FaPiggyBank />,
@@ -51,6 +70,7 @@ export const SidebarLinks = [
   },
   {
     label: "Savings",
+    title: "Normal Savings",
     activename: "savings",
     link: "/savings",
     icon: <MdSavings />,
@@ -63,8 +83,16 @@ export const SidebarLinks = [
     icon: <FaCashRegister />,
     dropdown: false,
     sub: [
-      { label: "Bank Accounts", link: "/bank/bank-account" },
-      { label: "Bank Transactions", link: "/bank/bank-transactions" },
+      {
+        label: "Bank Accounts",
+        title: "Bank Accounts",
+        link: "/bank/bank-account",
+      },
+      {
+        label: "Bank Transactions",
+        title: "Bank Register",
+        link: "/bank/bank-transactions",
+      },
     ],
   },
   {
@@ -74,14 +102,31 @@ export const SidebarLinks = [
     icon: <MdAreaChart />,
     dropdown: false,
     sub: [
-      { label: "Budget Goals", link: "/budget/budget-goals" },
-      { label: "Budget Details", link: "/budget/budget-details" },
-      { label: "Checklist", link: "/budget/checklist" },
-      { label: "Extra Funds Tracker", link: "/budget/extra-funds-tracker" },
+      {
+        label: "Budget Goals",
+        title: "Budget Goals",
+        link: "/budget/budget-goals",
+      },
+      {
+        label: "Budget Details",
+        title: "Budget Details",
+        link: "/budget/budget-details",
+      },
+      {
+        label: "Checklist",
+        title: "Budget Checklist",
+        link: "/budget/checklist",
+      },
+      {
+        label: "Extra Funds Tracker",
+        title: "Extra Funds Tracker",
+        link: "/budget/extra-funds-tracker",
+      },
     ],
   },
   {
     label: "Net Worth",
+    title: "Home",
     activename: "net-worth",
     link: "/net-worth",
     icon: <IoMdBriefcase />,
@@ -89,6 +134,7 @@ export const SidebarLinks = [
   },
   {
     label: "Subscription",
+    title: "Subscription",
     activename: "subscription",
     link: "/subscription",
     icon: <CiMoneyBill />,
