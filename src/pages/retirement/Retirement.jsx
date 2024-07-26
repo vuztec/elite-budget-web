@@ -133,7 +133,10 @@ export const Retirement = () => {
       {isDataLoaded && (
         <div className="w-full">
           <div className="w-full">
-            <RetirementListView gridData={gridData} />
+            <RetirementListView
+              gridData={gridData}
+              showDelete={!showAll && hasRecords(gridData)}
+            />
           </div>
         </div>
       )}

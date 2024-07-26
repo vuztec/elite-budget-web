@@ -101,6 +101,19 @@ export const getOwnerGridData = (data, owner) => {
   return ownerFilteredData;
 };
 
+export const getOwnerExpenseGridData = (data, owner) => {
+  let ownerFilteredData;
+  if (owner !== "Household" && owner !== "All" && parseInt(owner) !== 0) {
+    ownerFilteredData = data?.filter((item) => item.Owner === owner);
+  } else {
+    ownerFilteredData = data.filter(
+      (item) => item.Category !== "Joint Contribution"
+    );
+  }
+
+  return ownerFilteredData;
+};
+
 export const getCatGridData = (data, owner, catFilter) => {
   const ownerFilteredData = getOwnerGridData(data, owner);
 

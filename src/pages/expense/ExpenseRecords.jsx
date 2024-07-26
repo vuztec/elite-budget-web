@@ -168,6 +168,7 @@ export const ExpenseRecords = () => {
               Data={gridData.filter((item) => item.Category === "Charity")}
               category="Charity"
               showColumn={false}
+              showAll={showAll}
             />
           </div>
 
@@ -176,6 +177,7 @@ export const ExpenseRecords = () => {
               Data={gridData.filter((item) => item.Category === "Children")}
               category="Children"
               showColumn={true}
+              showAll={showAll}
             />
           </div>
 
@@ -186,6 +188,7 @@ export const ExpenseRecords = () => {
               )}
               category="Dues/Subscriptions"
               showColumn={false}
+              showAll={showAll}
             />
           </div>
 
@@ -196,6 +199,7 @@ export const ExpenseRecords = () => {
               )}
               category="Entertainment"
               showColumn={false}
+              showAll={showAll}
             />
           </div>
 
@@ -204,6 +208,7 @@ export const ExpenseRecords = () => {
               Data={gridData.filter((item) => item.Category === "Food")}
               category="Food"
               showColumn={false}
+              showAll={showAll}
             />
           </div>
 
@@ -214,6 +219,7 @@ export const ExpenseRecords = () => {
               )}
               category="Health / Medical"
               showColumn={false}
+              showAll={showAll}
             />
           </div>
 
@@ -224,6 +230,7 @@ export const ExpenseRecords = () => {
               )}
               category="Household, Personal Care & Gifts"
               showColumn={true}
+              showAll={showAll}
             />
           </div>
 
@@ -232,6 +239,18 @@ export const ExpenseRecords = () => {
               Data={gridData.filter((item) => item.Category === "Housing")}
               category="Housing"
               showColumn={true}
+              showAll={showAll}
+            />
+          </div>
+
+          <div className="w-full">
+            <ExpenseListView
+              Data={gridData.filter(
+                (item) => item.Category === "Joint Contribution"
+              )}
+              category="Joint Contribution"
+              showColumn={true}
+              showAll={showAll}
             />
           </div>
 
@@ -242,6 +261,7 @@ export const ExpenseRecords = () => {
               )}
               category="Other Insurance"
               showColumn={false}
+              showAll={showAll}
             />
           </div>
 
@@ -252,6 +272,7 @@ export const ExpenseRecords = () => {
               )}
               category="Parents/Elder Care"
               showColumn={false}
+              showAll={showAll}
             />
           </div>
 
@@ -260,6 +281,7 @@ export const ExpenseRecords = () => {
               Data={gridData.filter((item) => item.Category === "Pets/Animals")}
               category="Pets/Animals"
               showColumn={false}
+              showAll={showAll}
             />
           </div>
 
@@ -268,6 +290,7 @@ export const ExpenseRecords = () => {
               Data={gridData.filter((item) => item.Category === "Recreation")}
               category="Recreation"
               showColumn={true}
+              showAll={showAll}
             />
           </div>
 
@@ -278,6 +301,7 @@ export const ExpenseRecords = () => {
               )}
               category="Rental Property"
               showColumn={true}
+              showAll={showAll}
             />
           </div>
 
@@ -288,6 +312,7 @@ export const ExpenseRecords = () => {
               )}
               category="Transportation"
               showColumn={true}
+              showAll={showAll}
             />
           </div>
 
@@ -296,6 +321,7 @@ export const ExpenseRecords = () => {
               Data={gridData.filter((item) => item.Category === "Vacations")}
               category="Vacations"
               showColumn={false}
+              showAll={showAll}
             />
           </div>
 

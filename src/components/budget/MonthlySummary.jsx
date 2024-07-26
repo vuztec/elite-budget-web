@@ -14,6 +14,9 @@ const MonthlySummary = ({
   retirementGridData,
   debtGridData,
   expenseGridData,
+  owner,
+  selfContribution,
+  partnerContribution,
 }) => {
   const { user } = useUserStore();
   const [totalExpenses, setTotalExpenses] = useState(0);
@@ -29,7 +32,10 @@ const MonthlySummary = ({
     const formattedAmount = getFormattedValueTotal(user, Number(Expenses) / 12);
     setTotalExpenses(formattedAmount);
 
-    const income = getUnformattedNetYearlyTotal(incomeGridData);
+    const income =
+      owner === "Joint"
+        ? 12 * Number(selfContribution) + 12 * Number(partnerContribution)
+        : getUnformattedNetYearlyTotal(incomeGridData);
     const difference = Number(income) - Number(Expenses);
     const formattedDiif = getFormattedValueTotal(user, Number(difference) / 12);
     setTotalDifference(formattedDiif);
@@ -42,6 +48,9 @@ const MonthlySummary = ({
     expenseGridData,
     retirementGridData,
     incomeGridData,
+    owner,
+    selfContribution,
+    partnerContribution,
   ]);
 
   return (
@@ -51,7 +60,9 @@ const MonthlySummary = ({
           <tbody>
             <tr className="border-t border-l border-r border-b border-gray-300 text-sm xl:text-[16px] text-left p-2 font-bold">
               <td className="px-2 py-2 border-r w-2/3 border-gray-300">
-                TOTAL MONTHLY EXPENSES
+                {owner === "Joint"
+                  ? "TOTAL MONTHLY JOINT EXPENSES"
+                  : "TOTAL MONTHLY EXPENSES"}
               </td>
               <td className="px-2">{totalExpenses}</td>
             </tr>
@@ -63,15 +74,24 @@ const MonthlySummary = ({
           <tbody>
             <tr className="border border-gray-300 text-sm xl:text-[16px]  text-left p-2 font-bold">
               <td className="px-2 py-2 border-r w-2/3 border-gray-300">
-                MONTHLY INCOME
+                {owner === "Joint"
+                  ? "TOTAL JOINT CONTRIBUTION"
+                  : "MONTHLY INCOME"}
               </td>
               <td className="px-2">
-                {getNetMonthlyTotal(user, incomeGridData)}
+                {owner === "Joint"
+                  ? getFormattedValueTotal(
+                      user,
+                      Number(partnerContribution) + Number(selfContribution)
+                    )
+                  : getNetMonthlyTotal(user, incomeGridData)}
               </td>
             </tr>
             <tr className="border border-gray-300 text-sm xl:text-[16px]  text-left p-2 font-bold">
               <td className="px-2 py-2 border-r w-2/3 border-gray-300">
-                LESS MONTHLY EXPENSES
+                {owner === "Joint"
+                  ? "LESS TOTAL MONTHLY JOINT EXPENSES"
+                  : "LESS MONTHLY EXPENSES"}
               </td>
               <td className="px-2">{totalExpenses}</td>
             </tr>

@@ -10,7 +10,12 @@ import {
 } from "../../utils/budget.calculation";
 import useUserStore from "../../app/user";
 
-const MonthlySavings = ({ savingsGridData, incomeGridData, maingoals }) => {
+const MonthlySavings = ({
+  savingsGridData,
+  incomeGridData,
+  maingoals,
+  owner,
+}) => {
   const { user } = useUserStore();
 
   return (
@@ -27,20 +32,24 @@ const MonthlySavings = ({ savingsGridData, incomeGridData, maingoals }) => {
                       {getMonthlyBudgetTotal(user, savingsGridData)}
                     </p>
                     <p className="p-2 bg-white border border-gray-300 w-1/5 hidden lg:block">
-                      {getActualGoal(
-                        incomeGridData,
-                        savingsGridData,
-                        "Savings"
-                      )}
+                      {owner === "Joint"
+                        ? ""
+                        : getActualGoal(
+                            incomeGridData,
+                            savingsGridData,
+                            "Savings"
+                          )}
                       %
                     </p>
                     <p className="p-2 hidden lg:block">
-                      {getIcon(
-                        incomeGridData,
-                        savingsGridData,
-                        "Savings",
-                        maingoals
-                      )}
+                      {owner === "Joint"
+                        ? ""
+                        : getIcon(
+                            incomeGridData,
+                            savingsGridData,
+                            "Savings",
+                            maingoals
+                          )}
                     </p>
                   </div>
                 </td>
@@ -63,32 +72,39 @@ const MonthlySavings = ({ savingsGridData, incomeGridData, maingoals }) => {
                 Percentage of Annual Net Income
               </td>
               <td className="px-2  font-bold">
-                {getActualGoal(incomeGridData, savingsGridData, "Savings")}%
+                {owner === "Joint"
+                  ? ""
+                  : getActualGoal(incomeGridData, savingsGridData, "Savings")}
+                %
               </td>
             </tr>
             <tr className="border border-gray-300 text-left p-2">
               <td className="px-2 py-2 border-r w-2/3 border-gray-300">Goal</td>
               <td className="px-2 font-bold">
-                {getBudgetGoal(maingoals, "Savings")}%
+                {owner === "Joint" ? "" : getBudgetGoal(maingoals, "Savings")}%
               </td>
             </tr>
             <tr className="border border-gray-300 text-left p-2">
               <td className="px-2 py-2 border-r w-2/3 border-gray-300">
-                {getLabel(
-                  incomeGridData,
-                  savingsGridData,
-                  "Savings",
-                  maingoals
-                )}
+                {owner === "Joint"
+                  ? "Over/Under"
+                  : getLabel(
+                      incomeGridData,
+                      savingsGridData,
+                      "Savings",
+                      maingoals
+                    )}
               </td>
               <td className="px-2 font-bold">
-                {getDifference(
-                  incomeGridData,
-                  savingsGridData,
-                  "Savings",
-                  maingoals,
-                  user
-                )}
+                {owner === "Joint"
+                  ? ""
+                  : getDifference(
+                      incomeGridData,
+                      savingsGridData,
+                      "Savings",
+                      maingoals,
+                      user
+                    )}
               </td>
             </tr>
           </tbody>

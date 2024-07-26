@@ -21,7 +21,11 @@ import {
 } from "../../config/api";
 import { useQuery } from "react-query";
 import { getActiveAccount } from "../../utils/permissions";
-import { expenseOwners, getOwnerGridData } from "../../utils/budget.filter";
+import {
+  expenseOwners,
+  getOwnerExpenseGridData,
+  getOwnerGridData,
+} from "../../utils/budget.filter";
 import clsx from "clsx";
 import Select from "../../components/Select";
 import { usePDF } from "react-to-pdf";
@@ -110,7 +114,7 @@ export const Networth = () => {
       const retirementData = getOwnerGridData(retirements, owner);
       setRetirementGridData(retirementData);
 
-      const expenseData = getOwnerGridData(expenses, owner);
+      const expenseData = getOwnerExpenseGridData(expenses, owner);
       setExpenseGridData(expenseData);
 
       const debtData = getOwnerGridData(debts, owner);
@@ -161,7 +165,13 @@ export const Networth = () => {
             <div className="text-sm">
               <Button
                 label={!isShowing ? "Show Filters" : "Hide Filters"}
-                icon={!isShowing ? <MdFilterAlt className="text-lg" /> : <MdFilterAltOff className="text-lg" />}
+                icon={
+                  !isShowing ? (
+                    <MdFilterAlt className="text-lg" />
+                  ) : (
+                    <MdFilterAltOff className="text-lg" />
+                  )
+                }
                 className={clsx(
                   "flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:text-black",
                   !isShowing ? "bg-green-800" : "bg-red-800"
@@ -204,7 +214,10 @@ export const Networth = () => {
         </div>
       )}
       {isDataLoaded && (
-        <div className="w-full flex flex-col items-center gap-5 xl:gap-10 bg-white p-5 mt-4" ref={targetRef}>
+        <div
+          className="w-full flex flex-col items-center gap-5 xl:gap-10 bg-white p-5 mt-4"
+          ref={targetRef}
+        >
           <div className="w-full 2xl:w-[80%] flex flex-col items-center justify-center gap-5">
             <div className="flex flex-col w-full">
               <h1 className="w-full bg-[whitesmoke] text-black flex items-center justify-center p-2 rounded-md font-bold border border-gray-300">
@@ -225,7 +238,10 @@ export const Networth = () => {
                 LIABILITIES (How Much You Owe)
               </h1>
               <div>
-                <Liabilities expenseGridData={expenseGridData} debtGridData={debtGridData} />
+                <Liabilities
+                  expenseGridData={expenseGridData}
+                  debtGridData={debtGridData}
+                />
               </div>
             </div>
             <div className="flex flex-col w-full">
@@ -262,7 +278,8 @@ export const Networth = () => {
             </div>
             <div className="w-full pt-5 text-xs xl:text-sm text-left italic">
               <p>
-                *Source: Stanley, T, & Danko, W. (1996, 2010). The Millionaire Next Door, Page 13, Formula referenced in the section: How to
+                *Source: Stanley, T, & Danko, W. (1996, 2010). The Millionaire
+                Next Door, Page 13, Formula referenced in the section: How to
                 Determine If You're Wealthy. Taylor Trade Publishing, Maryland.
               </p>
             </div>

@@ -20,6 +20,7 @@ export const IncomeRecords = () => {
   const [showAll, setShowAll] = useState(false);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [gridData, setGridData] = useState([]);
+  const [extraGridData, setExtraGridData] = useState([]);
   const activeAccount = getActiveAccount(root);
 
   // Filters
@@ -49,12 +50,20 @@ export const IncomeRecords = () => {
     if (isIncomeLoaded === "success" && isPayChecksLoaded === "success") {
       const incomeData = getOwnerGridData(incomes, owner);
       let updatedData = incomeData;
+      let updatedExtraData = extrapaychecks;
       if (!showAll && hasRecords(incomeData)) {
         updatedData = incomeData.filter((item) => item.GrossAmount > 0);
       }
+      if (!showAll && hasRecords(extrapaychecks)) {
+        updatedExtraData = extrapaychecks.filter(
+          (item) => item.SelfAmount > 0 || item.PartnerAmount > 0
+        );
+      }
+
       // Sort the data by Owner property
       const sortedData = defaultIncomeSort(updatedData);
       setGridData(sortedData);
+      setExtraGridData(updatedExtraData);
       setIsDataLoaded(true);
     } else {
       setIsDataLoaded(false);
@@ -134,11 +143,17 @@ export const IncomeRecords = () => {
       {isDataLoaded && (
         <div className="w-full">
           <div className="w-full">
-            <IncomeListView gridData={gridData} />
+            <IncomeListView
+              gridData={gridData}
+              showDelete={!showAll && hasRecords(gridData)}
+            />
           </div>
 
           <div className="w-full">
-            <ExtraPayListView gridData={extrapaychecks} />
+            <ExtraPayListView
+              gridData={extraGridData}
+              showDelete={!showAll && hasRecords(extraGridData)}
+            />
           </div>
         </div>
       )}

@@ -16,6 +16,7 @@ const MonthlyDebt = ({
   incomeGridData,
   maingoals,
   debtgoals,
+  owner,
 }) => {
   const { user } = useUserStore();
   const [catData, setCatData] = useState({});
@@ -62,15 +63,24 @@ const MonthlyDebt = ({
                         {getMonthlyBudgetTotal(user, debtGridData)}
                       </p>
                       <p className="p-2 bg-white border border-gray-300 w-1/5 hidden lg:block">
-                        {getActualGoal(incomeGridData, debtGridData, "Debts")}%
+                        {owner === "Joint"
+                          ? ""
+                          : getActualGoal(
+                              incomeGridData,
+                              debtGridData,
+                              "Debts"
+                            )}
+                        %
                       </p>
                       <p className="p-2 hidden lg:block">
-                        {getIcon(
-                          incomeGridData,
-                          debtGridData,
-                          "Debts",
-                          maingoals
-                        )}
+                        {owner === "Joint"
+                          ? ""
+                          : getIcon(
+                              incomeGridData,
+                              debtGridData,
+                              "Debts",
+                              maingoals
+                            )}
                       </p>
                     </div>
                   </td>
@@ -98,20 +108,24 @@ const MonthlyDebt = ({
                           )}
                         </p>
                         <p className="p-2 bg-white border-l border-r border-gray-300 w-1/5 hidden lg:block">
-                          {getCatActualGoal(
-                            incomeGridData,
-                            debtGridData,
-                            budgetItem
-                          )}
+                          {owner === "Joint"
+                            ? ""
+                            : getCatActualGoal(
+                                incomeGridData,
+                                debtGridData,
+                                budgetItem
+                              )}
                           %
                         </p>
                         <p className="p-2 hidden lg:block">
-                          {getCatIcon(
-                            incomeGridData,
-                            debtGridData,
-                            budgetItem,
-                            debtgoals
-                          )}
+                          {owner === "Joint"
+                            ? ""
+                            : getCatIcon(
+                                incomeGridData,
+                                debtGridData,
+                                budgetItem,
+                                debtgoals
+                              )}
                         </p>
                       </div>
                     </td>

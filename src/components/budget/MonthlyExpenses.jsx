@@ -16,6 +16,7 @@ const MonthlyExpenses = ({
   incomeGridData,
   maingoals,
   expensegoals,
+  owner,
 }) => {
   const { user } = useUserStore();
   const [catData, setCatData] = useState({});
@@ -64,20 +65,24 @@ const MonthlyExpenses = ({
                         {getMonthlyBudgetTotal(user, expenseGridData)}
                       </p>
                       <p className="p-2 bg-white border border-gray-300 w-1/5 hidden lg:block">
-                        {getActualGoal(
-                          incomeGridData,
-                          expenseGridData,
-                          "Expenses"
-                        )}
+                        {owner === "Joint"
+                          ? ""
+                          : getActualGoal(
+                              incomeGridData,
+                              expenseGridData,
+                              "Expenses"
+                            )}
                         %
                       </p>
                       <p className="p-1 hidden lg:block">
-                        {getIcon(
-                          incomeGridData,
-                          expenseGridData,
-                          "Expenses",
-                          maingoals
-                        )}
+                        {owner === "Joint"
+                          ? ""
+                          : getIcon(
+                              incomeGridData,
+                              expenseGridData,
+                              "Expenses",
+                              maingoals
+                            )}
                       </p>
                     </div>
                   </td>
@@ -105,20 +110,24 @@ const MonthlyExpenses = ({
                           )}
                         </p>
                         <p className="p-2 bg-white border-l border-r border-gray-300 w-1/5 hidden lg:block">
-                          {getCatActualGoal(
-                            incomeGridData,
-                            expenseGridData,
-                            budgetItem
-                          )}
+                          {owner === "Joint"
+                            ? ""
+                            : getCatActualGoal(
+                                incomeGridData,
+                                expenseGridData,
+                                budgetItem
+                              )}
                           %
                         </p>
                         <p className="p-2 hidden lg:block">
-                          {getCatIcon(
-                            incomeGridData,
-                            expenseGridData,
-                            budgetItem,
-                            expensegoals
-                          )}
+                          {owner === "Joint"
+                            ? ""
+                            : getCatIcon(
+                                incomeGridData,
+                                expenseGridData,
+                                budgetItem,
+                                expensegoals
+                              )}
                         </p>
                       </div>
                     </td>

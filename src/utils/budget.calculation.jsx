@@ -363,6 +363,8 @@ export const hasRecords = (data) => {
       item.MarketValue > 0 ||
       item.LoanBalance > 0 ||
       item.MonthlyBudget > 0 ||
+      item.SelfAmount > 0 ||
+      item.PartnerAmount > 0 ||
       item.GrossAmount > 0
   );
   if (updatedData.length > 0) {
@@ -952,4 +954,18 @@ export const getAge = (user, owner) => {
   }
 
   return age.toFixed(0);
+};
+
+//*************************Joint Contribution*************************/
+
+export const getJointContribution = (data, owner) => {
+  const Amount = data.reduce((accumulator, record) => {
+    const amount = record?.MonthlyBudget || 0;
+    if (record.Category === "Joint Contribution" && record.Owner === owner) {
+      return accumulator + Number(amount);
+    }
+    return accumulator;
+  }, 0);
+
+  return Amount;
 };

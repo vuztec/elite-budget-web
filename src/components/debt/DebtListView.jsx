@@ -9,16 +9,30 @@ import ConfirmationDialog from "../Dialogs";
 import axios from "../../config/axios";
 import { handleAxiosResponseError } from "../../utils/handleResponseError";
 import AddDebt from "./AddDebt";
-import { getFormattedValue, getLoanBalanceTotal, getMonthlyBudgetTotal, getYearlyBudgetTotal } from "../../utils/budget.calculation";
+import {
+  getFormattedValue,
+  getLoanBalanceTotal,
+  getMonthlyBudgetTotal,
+  getYearlyBudgetTotal,
+  hasRecords,
+} from "../../utils/budget.calculation";
 import ToolTip from "../tooltip";
 import Sort from "../sort";
 import { defaultDebSort } from "../../utils/budget.sort";
 
-export const DebtListView = ({ Data, category }) => {
+export const DebtListView = ({ Data, category, showAll }) => {
   const { user } = useUserStore();
   const [gridData, setGridData] = useState([]);
-  const [order, setOrder] = useState(["default", "default", "default", "default", "default", "default", "default"]);
-
+  const [order, setOrder] = useState([
+    "default",
+    "default",
+    "default",
+    "default",
+    "default",
+    "default",
+    "default",
+  ]);
+  const showDelete = !showAll && hasRecords(Data);
   useEffect(() => {
     const sortedData = defaultDebSort(Data);
     setGridData(sortedData);
@@ -38,7 +52,11 @@ export const DebtListView = ({ Data, category }) => {
       .delete(`/api/debt/${selected}`)
       .then(({ data }) => {
         console.log(data);
-        queryClient.setQueryData(["debts"], (prev) => prev.map((debt) => (debt.id === selected ? { ...debt, ...data } : debt)));
+        queryClient.setQueryData(["debts"], (prev) =>
+          prev.map((debt) =>
+            debt.id === selected ? { ...debt, ...data } : debt
+          )
+        );
         setOpenDialog(false);
         setIsLoading(false);
       })
@@ -195,19 +213,25 @@ export const DebtListView = ({ Data, category }) => {
     <tr className="border border-gray-300 text-sm xl:text-[16px] hover:bg-gray-400/10 text-left">
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <span className="flex items-center justify-left gap-2 text-center mb-0 text-gray-900">{record?.Owner}</span>
+          <span className="flex items-center justify-left gap-2 text-center mb-0 text-gray-900">
+            {record?.Owner}
+          </span>
         </div>
       </td>
 
       <td className="max-w-[300px] whitespace-normal p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p className="text-black">{record?.NickName ? record?.NickName : record?.Description}</p>
+          <p className="text-black">
+            {record?.NickName ? record?.NickName : record?.Description}
+          </p>
         </div>
       </td>
 
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p className="text-black">{getFormattedValue(user, record?.LoanBalance)}</p>
+          <p className="text-black">
+            {getFormattedValue(user, record?.LoanBalance)}
+          </p>
         </div>
       </td>
 
@@ -223,13 +247,17 @@ export const DebtListView = ({ Data, category }) => {
       </td>
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p className="text-black">{getFormattedValue(user, record?.MonthlyBudget)}</p>
+          <p className="text-black">
+            {getFormattedValue(user, record?.MonthlyBudget)}
+          </p>
         </div>
       </td>
 
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p className="text-black">{getFormattedValue(user, 12 * record?.MonthlyBudget)}</p>
+          <p className="text-black">
+            {getFormattedValue(user, 12 * record?.MonthlyBudget)}
+          </p>
         </div>
       </td>
 
@@ -237,19 +265,26 @@ export const DebtListView = ({ Data, category }) => {
         <div className="flex items-center text-left gap-3 justify-start">
           <div className="group flex relative">
             <FaEdit
-              className={clsx(`text-editcolor`, "hover:text-orange-500 font-semibold cursor-pointer sm:px-0")}
+              className={clsx(
+                `text-editcolor`,
+                "hover:text-orange-500 font-semibold cursor-pointer sm:px-0"
+              )}
               onClick={() => editClick(record)}
             />
             <ToolTip text={"Edit"} />
           </div>
-
-          <div className="group flex relative">
-            <RiDeleteBin2Fill
-              className={clsx(`text-deletecolor`, "hover:text-red-500 font-semibold cursor-pointer sm:px-0")}
-              onClick={() => deleteClick(record.id)}
-            />
-            <ToolTip text={"Delete"} />
-          </div>
+          {showDelete && (
+            <div className="group flex relative">
+              <RiDeleteBin2Fill
+                className={clsx(
+                  `text-deletecolor`,
+                  "hover:text-red-500 font-semibold cursor-pointer sm:px-0"
+                )}
+                onClick={() => deleteClick(record.id)}
+              />
+              <ToolTip text={"Delete"} />
+            </div>
+          )}
         </div>
       </td>
     </tr>
@@ -319,8 +354,18 @@ export const DebtListView = ({ Data, category }) => {
           </div>
         </div>
       )}
-      <AddDebt open={open} setOpen={setOpen} recordData={selected} key={new Date().getTime().toString()} />
-      <ConfirmationDialog isLoading={isLoading} open={openDialog} setOpen={setOpenDialog} onClick={() => deleteHandler(selected)} />
+      <AddDebt
+        open={open}
+        setOpen={setOpen}
+        recordData={selected}
+        key={new Date().getTime().toString()}
+      />
+      <ConfirmationDialog
+        isLoading={isLoading}
+        open={openDialog}
+        setOpen={setOpenDialog}
+        onClick={() => deleteHandler(selected)}
+      />
     </>
   );
 };

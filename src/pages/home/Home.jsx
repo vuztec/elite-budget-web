@@ -10,9 +10,7 @@ import Loading from "../../components/Loader";
 import { MdFilterAlt, MdFilterAltOff } from "react-icons/md";
 import Button from "../../components/Button";
 import {
-  getDebtGoals,
   getDebts,
-  getExpenseGoals,
   getExpenses,
   getIncomes,
   getMainGoals,
@@ -21,12 +19,17 @@ import {
 } from "../../config/api";
 import { useQuery } from "react-query";
 import { getActiveAccount } from "../../utils/permissions";
-import { expenseOwners, getOwnerGridData } from "../../utils/budget.filter";
+import {
+  expenseOwners,
+  getOwnerExpenseGridData,
+  getOwnerGridData,
+} from "../../utils/budget.filter";
 import clsx from "clsx";
 import Select from "../../components/Select";
 import YearlyIncome from "../../components/budget/YearlyIncome";
 import MonthlyExpenseHome from "../../components/budget/MonthlyExpenseHome";
 import MonthlyDebtHome from "../../components/budget/MonthlyDebtHome";
+import { getJointContribution } from "../../utils/budget.calculation";
 
 export const Home = () => {
   const [isDataLoaded, setIsDataLoaded] = useState(false);
@@ -35,7 +38,8 @@ export const Home = () => {
   const [retirementGridData, setRetirementGridData] = useState([]);
   const [expenseGridData, setExpenseGridData] = useState([]);
   const [debtGridData, setDebtGridData] = useState([]);
-
+  const [selfContribution, setSelfContribution] = useState(0);
+  const [partnerContribution, setPartnerContribution] = useState(0);
   const activeAccount = getActiveAccount(root);
 
   // Filters
@@ -71,18 +75,6 @@ export const Home = () => {
     staleTime: 1000 * 60 * 60,
   });
 
-  const { data: debtgoals, status: isDebtGoalsLoaded } = useQuery({
-    queryKey: ["debtgoals"],
-    queryFn: getDebtGoals,
-    staleTime: 1000 * 60 * 60,
-  });
-
-  const { data: expensegoals, status: isExpenseGoalsLoaded } = useQuery({
-    queryKey: ["expensegoals"],
-    queryFn: getExpenseGoals,
-    staleTime: 1000 * 60 * 60,
-  });
-
   const { data: maingoals, status: isMainGoalsLoaded } = useQuery({
     queryKey: ["maingoals"],
     queryFn: getMainGoals,
@@ -105,8 +97,6 @@ export const Home = () => {
       isDebtLoaded === "success" &&
       isIncomeLoaded === "success" &&
       isMainGoalsLoaded === "success" &&
-      isDebtGoalsLoaded === "success" &&
-      isExpenseGoalsLoaded === "success" &&
       owner
     ) {
       const savingData = getOwnerGridData(savings, owner);
@@ -115,7 +105,7 @@ export const Home = () => {
       const retirementData = getOwnerGridData(retirements, owner);
       setRetirementGridData(retirementData);
 
-      const expenseData = getOwnerGridData(expenses, owner);
+      const expenseData = getOwnerExpenseGridData(expenses, owner);
       setExpenseGridData(expenseData);
 
       const debtData = getOwnerGridData(debts, owner);
@@ -123,6 +113,11 @@ export const Home = () => {
 
       const incomeData = getOwnerGridData(incomes, owner);
       setIncomeGridData(incomeData);
+
+      const selfAmount = getJointContribution(expenses, "Self");
+      setSelfContribution(selfAmount);
+      const partnerAmount = getJointContribution(expenses, "Partner");
+      setPartnerContribution(partnerAmount);
 
       setIsDataLoaded(true);
     } else {
@@ -140,8 +135,6 @@ export const Home = () => {
     isDebtLoaded,
     isRetLoaded,
     isMainGoalsLoaded,
-    isDebtGoalsLoaded,
-    isExpenseGoalsLoaded,
     owner,
   ]);
 
@@ -206,10 +199,20 @@ export const Home = () => {
           <div className="w-full 2xl:w-[90%] flex flex-col items-center justify-center gap-5">
             <div className="flex flex-col xl:flex-row w-full gap-5 xl:gap-10">
               <div className="w-full">
-                <YearlyIncome incomeGridData={incomeGridData} />
+                <YearlyIncome
+                  incomeGridData={incomeGridData}
+                  owner={owner}
+                  selfContribution={selfContribution}
+                  partnerContribution={partnerContribution}
+                />
               </div>
               <div className="w-full">
-                <MonthlyIncome incomeGridData={incomeGridData} />
+                <MonthlyIncome
+                  incomeGridData={incomeGridData}
+                  owner={owner}
+                  selfContribution={selfContribution}
+                  partnerContribution={partnerContribution}
+                />
               </div>
             </div>
             <div className="flex flex-col xl:flex-row w-full gap-5 xl:gap-10">
@@ -219,6 +222,7 @@ export const Home = () => {
                     savingsGridData={savingsGridData}
                     incomeGridData={incomeGridData}
                     maingoals={maingoals}
+                    owner={owner}
                   />
                 </div>
                 <div className="w-full">
@@ -226,6 +230,7 @@ export const Home = () => {
                     retirementGridData={retirementGridData}
                     incomeGridData={incomeGridData}
                     maingoals={maingoals}
+                    owner={owner}
                   />
                 </div>
               </div>
@@ -235,6 +240,7 @@ export const Home = () => {
                     debtGridData={debtGridData}
                     incomeGridData={incomeGridData}
                     maingoals={maingoals}
+                    owner={owner}
                   />
                 </div>
                 <div className="w-full">
@@ -242,6 +248,7 @@ export const Home = () => {
                     expenseGridData={expenseGridData}
                     incomeGridData={incomeGridData}
                     maingoals={maingoals}
+                    owner={owner}
                   />
                 </div>
               </div>
@@ -256,6 +263,9 @@ export const Home = () => {
                     retirementGridData={retirementGridData}
                     debtGridData={debtGridData}
                     expenseGridData={expenseGridData}
+                    owner={owner}
+                    selfContribution={selfContribution}
+                    partnerContribution={partnerContribution}
                   />
                 </div>
               </div>

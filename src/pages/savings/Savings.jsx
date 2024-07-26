@@ -133,7 +133,10 @@ export const Savings = () => {
       {isDataLoaded && (
         <div className="w-full">
           <div className="w-full">
-            <SavingListView gridData={gridData} />
+            <SavingListView
+              gridData={gridData}
+              showDelete={!showAll && hasRecords(gridData)}
+            />
           </div>
         </div>
       )}

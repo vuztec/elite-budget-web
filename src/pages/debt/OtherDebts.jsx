@@ -167,6 +167,7 @@ export const OtherDebts = () => {
             <DebtListView
               Data={gridData.filter((item) => item.Category === "Credit Card")}
               category="Credit Card"
+              showAll={showAll}
             />
           </div>
 
@@ -176,6 +177,7 @@ export const OtherDebts = () => {
                 (item) => item.Category === "Department Store"
               )}
               category="Department Store"
+              showAll={showAll}
             />
           </div>
 
@@ -185,6 +187,7 @@ export const OtherDebts = () => {
                 (item) => item.Category === "Family/Friend Loan"
               )}
               category="Family/Friend Loan"
+              showAll={showAll}
             />
           </div>
 
@@ -192,6 +195,7 @@ export const OtherDebts = () => {
             <DebtListView
               Data={gridData.filter((item) => item.Category === "Medical Debt")}
               category="Medical Debt"
+              showAll={showAll}
             />
           </div>
 
@@ -201,6 +205,7 @@ export const OtherDebts = () => {
                 (item) => item.Category === "Personal Loan"
               )}
               category="Personal Loan"
+              showAll={showAll}
             />
           </div>
 
@@ -208,6 +213,7 @@ export const OtherDebts = () => {
             <DebtListView
               Data={gridData.filter((item) => item.Category === "Student Loan")}
               category="Student Loan"
+              showAll={showAll}
             />
           </div>
 
@@ -215,6 +221,7 @@ export const OtherDebts = () => {
             <DebtListView
               Data={gridData.filter((item) => item.Category === "Other Debt")}
               category="Other Debt"
+              showAll={showAll}
             />
           </div>
 
