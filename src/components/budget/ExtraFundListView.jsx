@@ -10,7 +10,6 @@ import axios from "../../config/axios";
 import { handleAxiosResponseError } from "../../utils/handleResponseError";
 import {
   getBankAccountTypeTotal,
-  getFormattedValue,
   getFormattedValueTotal,
   getFormattedValueType,
   getUnformattedBankBalanceTotal,
@@ -30,15 +29,9 @@ export const ExtraFundListView = ({ gridData }) => {
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const openingBalance = 0;
 
-  const [order, setOrder] = useState([
-    "default",
-    "default",
-    "default",
-    "default",
-    "default",
-    "default",
-  ]);
+  const [order, setOrder] = useState(["default", "default", "default", "default", "default", "default"]);
   const [data, setData] = useState(gridData);
 
   useEffect(() => {
@@ -52,9 +45,7 @@ export const ExtraFundListView = ({ gridData }) => {
       .delete(`/api/extra-funds-tracker/${selected}`)
       .then(({ data }) => {
         console.log(data);
-        queryClient.setQueryData(["extrafunds"], (prev) =>
-          prev.filter((fund) => fund.id !== selected)
-        );
+        queryClient.setQueryData(["extrafunds"], (prev) => prev.filter((fund) => fund.id !== selected));
         setOpenDialog(false);
         setIsLoading(false);
       })
@@ -73,6 +64,8 @@ export const ExtraFundListView = ({ gridData }) => {
     setSelected(el);
     setOpen(true);
   };
+
+  console.log(data);
 
   //----------------CRUD----------------//
 
@@ -162,17 +155,17 @@ export const ExtraFundListView = ({ gridData }) => {
         <th className="border-l border-gray-300 p-2">
           <div className="flex justify-between items-center gap-2">
             Balance
-            <Sort
+            {/* <Sort
               tab={"fund"}
               order={order}
               setOrder={setOrder}
               column={6}
-              name={"MonthlyBudget"}
+              name={"Balance"}
               data={data}
               setData={setData}
               defaultData={gridData}
               isNumber
-            />
+            /> */}
           </div>
         </th>
 
@@ -185,9 +178,7 @@ export const ExtraFundListView = ({ gridData }) => {
     <tr className="border border-gray-300 hover:bg-gray-400/10 text-left">
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <span className="flex items-center justify-left gap-2 text-center mb-0 text-gray-900">
-            {record?.Owner}
-          </span>
+          <span className="flex items-center justify-left gap-2 text-center mb-0 text-gray-900">{record?.Owner}</span>
         </div>
       </td>
 
@@ -205,34 +196,18 @@ export const ExtraFundListView = ({ gridData }) => {
 
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p className="text-black">
-            {getFormattedValueType(
-              user,
-              record?.Amount,
-              record?.Type,
-              "Withdrawal"
-            )}
-          </p>
+          <p className="text-black">{getFormattedValueType(user, record?.Amount, record?.Type, "Withdrawal")}</p>
         </div>
       </td>
 
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p className="text-black">
-            {getFormattedValueType(
-              user,
-              record?.Amount,
-              record?.Type,
-              "Credit"
-            )}
-          </p>
+          <p className="text-black">{getFormattedValueType(user, record?.Amount, record?.Type, "Credit")}</p>
         </div>
       </td>
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p className="text-black">
-            {getFormattedValue(user, record?.MonthlyBudget)}
-          </p>
+          <p className="text-black">{getFormattedValueTotal(user, Number(record?.Balance) + Number(openingBalance))}</p>
         </div>
       </td>
 
@@ -240,10 +215,7 @@ export const ExtraFundListView = ({ gridData }) => {
         <div className="flex items-center text-left gap-3 justify-start">
           <div className="group flex relative">
             <FaEdit
-              className={clsx(
-                `text-editcolor`,
-                "hover:text-orange-500 font-semibold cursor-pointer sm:px-0"
-              )}
+              className={clsx(`text-editcolor`, "hover:text-orange-500 font-semibold cursor-pointer sm:px-0")}
               onClick={() => editClick(record)}
             />
             <ToolTip text={"Edit"} />
@@ -251,10 +223,7 @@ export const ExtraFundListView = ({ gridData }) => {
 
           <div className="group flex relative">
             <RiDeleteBin2Fill
-              className={clsx(
-                `text-deletecolor`,
-                "hover:text-red-500 font-semibold cursor-pointer sm:px-0"
-              )}
+              className={clsx(`text-deletecolor`, "hover:text-red-500 font-semibold cursor-pointer sm:px-0")}
               onClick={() => deleteClick(record.id)}
             />
             <ToolTip text={"Delete"} />
@@ -270,9 +239,7 @@ export const ExtraFundListView = ({ gridData }) => {
 
       <td className="min-w-fit whitespace-nowrap p-3 border-gray-200"></td>
 
-      <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200">
-        TOTAL
-      </td>
+      <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200">TOTAL</td>
 
       <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
@@ -313,7 +280,7 @@ export const ExtraFundListView = ({ gridData }) => {
             <table className="w-[97%] m-5">
               <TableHeader />
               <tbody>
-                {gridData?.map((record, index) => (
+                {data?.map((record, index) => (
                   <TableRow key={index} record={record} />
                 ))}
                 <TableTotal gridData={gridData} />
@@ -323,18 +290,8 @@ export const ExtraFundListView = ({ gridData }) => {
         </div>
       </div>
 
-      <AddExtraFund
-        open={open}
-        setOpen={setOpen}
-        recordData={selected}
-        key={new Date().getTime().toString()}
-      />
-      <ConfirmationDialog
-        isLoading={isLoading}
-        open={openDialog}
-        setOpen={setOpenDialog}
-        onClick={() => deleteHandler(selected)}
-      />
+      <AddExtraFund open={open} setOpen={setOpen} recordData={selected} key={new Date().getTime().toString()} />
+      <ConfirmationDialog isLoading={isLoading} open={openDialog} setOpen={setOpenDialog} onClick={() => deleteHandler(selected)} />
     </>
   );
 };

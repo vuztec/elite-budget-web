@@ -186,17 +186,17 @@ export const TransactionListView = ({ Data, bankName }) => {
         <th className="border-l border-gray-300 p-2">
           <div className="flex justify-between items-center gap-2">
             Balance
-            <Sort
+            {/* <Sort
               tab={"transaction"}
               order={order}
               setOrder={setOrder}
               column={7}
-              name={"MonthlyBudget"}
+              name={"Balance"}
               data={gridData}
               setData={setGridData}
               defaultData={Data}
               isNumber
-            />
+            /> */}
           </div>
         </th>
 

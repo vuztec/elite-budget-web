@@ -9,7 +9,7 @@ import Select from "../../components/Select";
 import { getActiveAccount } from "../../utils/permissions";
 import Package from "../../package/Package";
 import { getExtraFundsTrackers } from "../../config/api";
-import { getOwnerGridData, incomeOwners } from "../../utils/budget.filter";
+import { calculateBalances, getOwnerGridData, incomeOwners } from "../../utils/budget.filter";
 import { ExtraFundListView } from "../../components/budget/ExtraFundListView";
 import AddExtraFund from "../../components/budget/AddExtraFund";
 import { defaultFundSort } from "../../utils/budget.sort";
@@ -44,9 +44,12 @@ export const ExtraFundsTracker = () => {
       const transData = getOwnerGridData(extrafunds, owner);
 
       // Sort the data by Owner property
+
       const sortedData = defaultFundSort(transData);
 
-      setGridData(sortedData);
+      const dataWithBalances = calculateBalances(sortedData);
+
+      setGridData(dataWithBalances);
       setIsDataLoaded(true);
     } else {
       setIsDataLoaded(false);
@@ -82,13 +85,7 @@ export const ExtraFundsTracker = () => {
         <div className="text-sm">
           <Button
             label={!isShowing ? "Show Filters" : "Hide Filters"}
-            icon={
-              !isShowing ? (
-                <MdFilterAlt className="text-lg" />
-              ) : (
-                <MdFilterAltOff className="text-lg" />
-              )
-            }
+            icon={!isShowing ? <MdFilterAlt className="text-lg" /> : <MdFilterAltOff className="text-lg" />}
             className={clsx(
               "flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:text-black hover:bg-viewcolor",
               !isShowing ? "bg-green-800" : "bg-red-800"
@@ -127,12 +124,7 @@ export const ExtraFundsTracker = () => {
             <ExtraFundListView gridData={gridData} />
           </div>
 
-          <AddExtraFund
-            open={open}
-            setOpen={setOpen}
-            recordData={""}
-            key={new Date().getTime().toString()}
-          />
+          <AddExtraFund open={open} setOpen={setOpen} recordData={""} key={new Date().getTime().toString()} />
         </div>
       )}
     </>

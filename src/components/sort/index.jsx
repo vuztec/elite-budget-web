@@ -16,7 +16,9 @@ export default function Sort({ tab, order, setOrder, column, name, name2, data, 
 
     const sorteditems = ascendingSort(data, name, name2, isNumber);
 
-    if (tab === "transaction") {
+    console.log(sorteditems);
+
+    if (tab === "transaction" || tab === "fund") {
       setData(calculateBalances(sorteditems));
     } else setData(sorteditems);
   };
@@ -25,7 +27,7 @@ export default function Sort({ tab, order, setOrder, column, name, name2, data, 
 
     const sorteditems = descendingSort(data, name, name2, isNumber);
 
-    if (tab === "transaction") {
+    if (tab === "transaction" || tab === "fund") {
       setData(calculateBalances(sorteditems));
     } else setData(sorteditems);
   };
@@ -36,8 +38,9 @@ export default function Sort({ tab, order, setOrder, column, name, name2, data, 
     else if (tab === "transaction") {
       setData(calculateBalances(defaultTransactionSort(defaultData)));
     } else if (tab === "bank") setData(defaultBankSort(defaultData));
-    else if (tab === "fund") setData(defaultFundSort(defaultData));
-    else if (tab === "debt" || tab === "expense" || tab === "retirement" || tab === "saving") setData(defaultDebSort(defaultData));
+    else if (tab === "fund") {
+      setData(calculateBalances(defaultFundSort(defaultData)));
+    } else if (tab === "debt" || tab === "expense" || tab === "retirement" || tab === "saving") setData(defaultDebSort(defaultData));
     else setData(defaultData);
   };
 
