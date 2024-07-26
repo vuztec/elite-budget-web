@@ -646,7 +646,7 @@ export const getActualGoal = (incomeData, budgetData, category) => {
   if (category === "Retirement") {
     income = getUnformattedGrossYearlyTotal(incomeData);
   }
-  const perc = (Number(budget) / Number(income)) * 100;
+  const perc = income > 0 ? (Number(budget) / Number(income)) * 100 : 0;
   return Number(perc).toFixed(2);
 };
 
