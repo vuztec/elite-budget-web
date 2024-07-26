@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.7.18",
+    "@stripe/react-stripe-js": "^2.7.3",
+    "@stripe/stripe-js": "^4.1.0",
     "@syncfusion/ej2": "^22.2.5",
     "@syncfusion/ej2-react-charts": "^22.2.5",
     "@syncfusion/ej2-react-progressbar": "^22.2.5",

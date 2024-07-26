@@ -126,7 +126,7 @@ export const SidebarLinks = [
   },
   {
     label: "Net Worth",
-    title: "Home",
+    title: "Net Worth",
     activename: "net-worth",
     link: "/net-worth",
     icon: <IoMdBriefcase />,

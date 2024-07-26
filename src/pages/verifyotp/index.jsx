@@ -3,7 +3,6 @@ import { useForm } from "react-hook-form";
 import Button from "../../components/Button";
 import axios from "../../config/axios";
 import clsx from "clsx";
-import { themeColors } from "../../utils";
 import { toast } from "react-toastify";
 import { handleAxiosResponseError } from "../../utils/handleResponseError";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -119,7 +118,7 @@ const VerifyOtp = () => {
                 <Button
                   type="submit"
                   label="Verify"
-                  className={clsx("my-4 w-full h-10 hover:bg-green-800 text-white rounded-full", `bg-[${themeColors[1]}]`)}
+                  className={clsx("my-4 w-full h-10 hover:bg-green-800 text-white rounded-full bg-black")}
                 />
                 {/* <div className="flex justify-center text-center mt-5">
                   <a className="flex items-center text-blue-700 hover:text-blue-900 cursor-pointer">

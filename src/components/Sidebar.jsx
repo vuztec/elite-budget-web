@@ -95,7 +95,7 @@ const Sidebar = () => {
           {el.sub?.map((item, index) => (
             <div
               className={`w-full text-md leading-6 px-3 py-1 rounded-full hover:bg-[#2564ed15]  ${
-                item.link === location.pathname ? "text-black bg-[whitesmoke] " : "text-[#A7A7A7]"
+                item.link === location.pathname ? "text-black bg-gray-200 " : "text-[#A7A7A7]"
               }`}
               key={index}
               onClick={(e) => e.stopPropagation()}
