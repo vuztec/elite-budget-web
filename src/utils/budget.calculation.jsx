@@ -137,9 +137,7 @@ export const getNetBiWeeklyTotal = (user, data) => {
 };
 
 export const getGrossSemiMonthlyTotal = (user, data) => {
-  const filteredData = data?.filter(
-    (item) => item.Frequency === "Semi-Monthly"
-  );
+  const filteredData = data?.filter((item) => item.Frequency === "Semi-Monthly");
   const Amount = filteredData?.reduce((accumulator, record) => {
     const amount = record?.GrossAmount || 0;
     return accumulator + Number(amount);
@@ -149,9 +147,7 @@ export const getGrossSemiMonthlyTotal = (user, data) => {
 };
 
 export const getNetSemiMonthlyTotal = (user, data) => {
-  const filteredData = data?.filter(
-    (item) => item.Frequency === "Semi-Monthly"
-  );
+  const filteredData = data?.filter((item) => item.Frequency === "Semi-Monthly");
   const Amount = filteredData?.reduce((accumulator, record) => {
     const amount = record?.NetAmount || 0;
     return accumulator + Number(amount);
@@ -503,12 +499,7 @@ export const getUnformattedMonthlyBudgetTotal = (data) => {
   return Amount;
 };
 
-export const getSelfContributionTotal = (
-  user,
-  selfPerc,
-  incomes,
-  totalExpense
-) => {
+export const getSelfContributionTotal = (user, selfPerc, incomes, totalExpense) => {
   let percentage = selfPerc;
 
   if (selfPerc === "") {
@@ -519,12 +510,7 @@ export const getSelfContributionTotal = (
   return formattedAmount;
 };
 
-export const getPartnerContributionTotal = (
-  user,
-  selfPerc,
-  incomes,
-  totalExpense
-) => {
+export const getPartnerContributionTotal = (user, selfPerc, incomes, totalExpense) => {
   let percentage = selfPerc;
 
   if (selfPerc === "") {
@@ -669,7 +655,7 @@ export const getCatActualGoal = (incomeData, budgetData, category) => {
   const budget = getUnformattedYearlyBudgetTotal(filteredData);
   const income = getUnformattedNetYearlyTotal(incomeData);
 
-  const perc = (Number(budget) / Number(income)) * 100;
+  const perc = income > 0 ? (Number(budget) / Number(income)) * 100 : 0;
   return Number(perc).toFixed(2);
 };
 
@@ -750,13 +736,7 @@ export const getTotalLabel = (diff) => {
   return label;
 };
 
-export const getDifference = (
-  incomeData,
-  budgetData,
-  category,
-  goals,
-  user
-) => {
+export const getDifference = (incomeData, budgetData, category, goals, user) => {
   const budget = getUnformattedYearlyBudgetTotal(budgetData);
   let income = getUnformattedNetYearlyTotal(incomeData);
   if (category === "Retirement") {
@@ -767,11 +747,9 @@ export const getDifference = (
   let Amount = 0;
   if (category === "Retirement" || category === "Savings") {
     // Amount = (Number(actualPerc) / Number(goalPerc)) * Number(budget);
-    Amount =
-      Number(actualPerc) * Number(income) - Number(goalPerc) * Number(income);
+    Amount = Number(actualPerc) * Number(income) - Number(goalPerc) * Number(income);
   } else if (category === "Debts" || category === "Expenses") {
-    Amount =
-      Number(goalPerc) * Number(income) - Number(actualPerc) * Number(income);
+    Amount = Number(goalPerc) * Number(income) - Number(actualPerc) * Number(income);
   }
   const formattedAmount = getNegativeFormattedValue(user, Amount);
   return formattedAmount;
@@ -827,9 +805,7 @@ export const getUniqueDescriptionsWithSumForEachBudgetItem = (data) => {
 //****************************NETWORTH****************************/
 
 export const getRealEstateMarketValueTotal = (user, data, cat1, cat2) => {
-  const updatedData = data.filter(
-    (item) => item.Category === cat1 || item.Category === cat2
-  );
+  const updatedData = data.filter((item) => item.Category === cat1 || item.Category === cat2);
   const formattedAmount = getMarketValueTotal(user, updatedData);
   return formattedAmount;
 };
@@ -841,9 +817,7 @@ export const getVehicleMarketValueTotal = (user, data, cat1) => {
 };
 
 export const getHouseHoldMarketValueTotal = (user, data, cat1, cat2) => {
-  const updatedData = data.filter(
-    (item) => item.Category === cat1 || item.Category === cat2
-  );
+  const updatedData = data.filter((item) => item.Category === cat1 || item.Category === cat2);
   const formattedAmount = getMarketValueTotal(user, updatedData);
   return formattedAmount;
 };
@@ -891,17 +865,13 @@ export const getUnformattedBankBalanceTotal = (data) => {
 };
 
 export const getCreditCardLoanBalanceTotal = (user, data, cat1, cat2) => {
-  const updatedData = data.filter(
-    (item) => item.Category === cat1 || item.Category === cat2
-  );
+  const updatedData = data.filter((item) => item.Category === cat1 || item.Category === cat2);
   const formattedAmount = getLoanBalanceTotal(user, updatedData);
   return formattedAmount;
 };
 
 export const getRealEstateLoanBalanceTotal = (user, data, cat1, cat2) => {
-  const updatedData = data.filter(
-    (item) => item.Category === cat1 || item.Category === cat2
-  );
+  const updatedData = data.filter((item) => item.Category === cat1 || item.Category === cat2);
   const formattedAmount = getLoanBalanceTotal(user, updatedData);
   return formattedAmount;
 };
@@ -919,25 +889,13 @@ export const getMedicalDebtBalanceTotal = (user, data, cat1) => {
 };
 
 export const getLoanOtherLoanBalanceTotal = (user, data, cat1, cat2, cat3) => {
-  const updatedData = data.filter(
-    (item) =>
-      item.Category !== cat1 && item.Category !== cat2 && item.Category !== cat3
-  );
+  const updatedData = data.filter((item) => item.Category !== cat1 && item.Category !== cat2 && item.Category !== cat3);
   const formattedAmount = getLoanBalanceTotal(user, updatedData);
   return formattedAmount;
 };
 
-export const getRealOtherDebtLoanBalanceTotal = (
-  user,
-  data,
-  cat1,
-  cat2,
-  cat3
-) => {
-  const updatedData = data.filter(
-    (item) =>
-      item.Category === cat1 || item.Category === cat2 || item.Category === cat3
-  );
+export const getRealOtherDebtLoanBalanceTotal = (user, data, cat1, cat2, cat3) => {
+  const updatedData = data.filter((item) => item.Category === cat1 || item.Category === cat2 || item.Category === cat3);
   const formattedAmount = getLoanBalanceTotal(user, updatedData);
   return formattedAmount;
 };

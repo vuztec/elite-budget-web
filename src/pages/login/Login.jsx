@@ -129,15 +129,12 @@ export const Login = () => {
                 </div>
 
                 <Button type="submit" label="Submit" className={clsx("w-full h-10 hover:bg-green-800 text-white rounded-full bg-black")} />
-                {/* <span
+                <div
                   onClick={() => addClick()}
-                  className={clsx(
-                    "flex items-center justify-center text-sm text-gray-500 hover:underline cursor-pointer",
-                    `hover:text-[${themeColors[1]}]`
-                  )}
+                  className={clsx("flex items-center justify-center text-sm text-gray-500 hover:underline cursor-pointer")}
                 >
                   Create New Account?
-                </span> */}
+                </div>
               </div>
             </form>
           </div>
