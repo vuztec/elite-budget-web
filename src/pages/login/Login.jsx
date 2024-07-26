@@ -16,7 +16,6 @@ export const Login = () => {
   const setUser = useUserStore((state) => state.setUser);
   const setJwt = useUserStore((state) => state.setJwt);
   const [open, setOpen] = useState(false);
-  const [selected, setSelected] = useState(null);
   const {
     register,
     handleSubmit,
@@ -62,7 +61,6 @@ export const Login = () => {
   };
 
   const addClick = () => {
-    setSelected("");
     setOpen(true);
   };
 
@@ -141,7 +139,7 @@ export const Login = () => {
         </div>
       </div>
       <div>
-        <AddRootUser setUser={setUser} open={open} setOpen={setOpen} recordData={selected} key={`UP${new Date().getTime().toString()}`} />
+        <AddRootUser setUser={setUser} open={open} setOpen={setOpen} key={`UP${new Date().getTime().toString()}`} />
       </div>
     </>
   );

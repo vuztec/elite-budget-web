@@ -16,8 +16,6 @@ export default function Sort({ tab, order, setOrder, column, name, name2, data, 
 
     const sorteditems = ascendingSort(data, name, name2, isNumber);
 
-    console.log(sorteditems);
-
     if (tab === "transaction" || tab === "fund") {
       setData(calculateBalances(sorteditems));
     } else setData(sorteditems);
