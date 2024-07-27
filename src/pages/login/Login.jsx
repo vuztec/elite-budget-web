@@ -92,8 +92,12 @@ export const Login = () => {
               className="form-container w-full md:w-[400px] flex flex-col gap-y-8 bg-white px-10 pt-14 pb-14"
             >
               <div className="">
-                <p className="text-[#00ABBD] text-3xl font-bold text-center">Welcome back!</p>
-                <p className="text-center text-base text-gray-700 ">Keep all your credential safe.</p>
+                <p className="text-black text-3xl font-bold text-center">
+                  Welcome back!
+                </p>
+                <p className="text-center text-base text-gray-700 ">
+                  Keep all your credential safe.
+                </p>
               </div>
 
               <div className="flex flex-col gap-y-5">
@@ -121,12 +125,23 @@ export const Login = () => {
                 />
 
                 <div className="flex justify-between">
-                  <a href="/forgetpassword" className={clsx("text-sm text-gray-500 hover:underline cursor-pointer")}>
+                  <a
+                    href="/forgetpassword"
+                    className={clsx(
+                      "text-sm text-gray-500 hover:underline cursor-pointer"
+                    )}
+                  >
                     Forget Password?
                   </a>
                 </div>
 
-                <Button type="submit" label="Submit" className={clsx("w-full h-10 hover:bg-green-800 text-white rounded-full bg-black")} />
+                <Button
+                  type="submit"
+                  label="Submit"
+                  className={clsx(
+                    "w-full h-10 hover:bg-green-800 text-white rounded-full bg-black"
+                  )}
+                />
                 {/* <div
                   onClick={() => addClick()}
                   className={clsx("flex items-center justify-center text-sm text-gray-500 hover:underline cursor-pointer")}
@@ -139,7 +154,12 @@ export const Login = () => {
         </div>
       </div>
       <div>
-        <AddRootUser setUser={setUser} open={open} setOpen={setOpen} key={`UP${new Date().getTime().toString()}`} />
+        <AddRootUser
+          setUser={setUser}
+          open={open}
+          setOpen={setOpen}
+          key={`UP${new Date().getTime().toString()}`}
+        />
       </div>
     </>
   );
