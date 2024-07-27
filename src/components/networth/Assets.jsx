@@ -27,6 +27,8 @@ export const Assets = ({
   const totalOpeningBalance = getUnformattedOpeningBalanceTotal(bankGridData);
   const totalBankBalance = getUnformattedBankBalanceTotal(transactionGridData);
 
+  console.log("transactionGridData: ", transactionGridData);
+
   return (
     <div className="w-full flex flex-col">
       <div className="w-full px-2 py-1 flex flex-col xl:flex-row gap-0 xl:gap-5">

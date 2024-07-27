@@ -28,7 +28,13 @@ export const IncomeListView = ({ gridData, showDelete }) => {
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [order, setOrder] = useState(["default", "default", "default", "default", "default"]);
+  const [order, setOrder] = useState([
+    "default",
+    "default",
+    "default",
+    "default",
+    "default",
+  ]);
   const [data, setData] = useState(gridData);
 
   useEffect(() => {
@@ -40,7 +46,11 @@ export const IncomeListView = ({ gridData, showDelete }) => {
     axios
       .delete(`/api/income/${selected}`)
       .then(({ data }) => {
-        queryClient.setQueryData(["incomes"], (prev) => prev.map((income) => (income.id === selected ? { ...income, ...data } : income)));
+        queryClient.setQueryData(["incomes"], (prev) =>
+          prev.map((income) =>
+            income.id === selected ? { ...income, ...data } : income
+          )
+        );
         setOpenDialog(false);
         setIsLoading(false);
       })
@@ -116,7 +126,9 @@ export const IncomeListView = ({ gridData, showDelete }) => {
           <div className="flex justify-between items-center gap-2">
             <div className="flex flex-col">
               <span className="whitespace-nowrap text-left">Gross Pay</span>
-              <span className="whitespace-nowrap text-left">(Before Taxes)</span>
+              <span className="whitespace-nowrap text-left">
+                (Before Taxes)
+              </span>
             </div>
             <Sort
               tab={"income"}
@@ -160,13 +172,17 @@ export const IncomeListView = ({ gridData, showDelete }) => {
     <tr className="border border-gray-300 hover:bg-gray-400/10 text-left">
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <span className="flex items-center justify-left gap-2 text-center mb-0 text-gray-900">{record?.Owner}</span>
+          <span className="flex items-center justify-left gap-2 text-center mb-0 text-gray-900">
+            {record?.Owner}
+          </span>
         </div>
       </td>
 
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p className="text-black">{record?.NickName ? record?.NickName : record?.IncomeSource}</p>
+          <p className="text-black">
+            {record?.NickName ? record?.NickName : record?.IncomeSource}
+          </p>
         </div>
       </td>
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
@@ -177,13 +193,17 @@ export const IncomeListView = ({ gridData, showDelete }) => {
 
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p className="text-black">{getFormattedValue(user, record?.GrossAmount)}</p>
+          <p className="text-black">
+            {getFormattedValue(user, record?.GrossAmount)}
+          </p>
         </div>
       </td>
 
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p className="text-black">{getFormattedValue(user, record?.NetAmount)}</p>
+          <p className="text-black">
+            {getFormattedValue(user, record?.NetAmount)}
+          </p>
         </div>
       </td>
 
@@ -191,7 +211,10 @@ export const IncomeListView = ({ gridData, showDelete }) => {
         <div className="flex items-center text-left gap-3 justify-start">
           <div className="group flex relative">
             <FaEdit
-              className={clsx(`text-editcolor`, "hover:text-orange-500 font-semibold cursor-pointer sm:px-0")}
+              className={clsx(
+                `text-editcolor`,
+                "hover:text-orange-500 font-semibold cursor-pointer sm:px-0"
+              )}
               onClick={() => editClick(record)}
             />
             <ToolTip text="Edit" />
@@ -199,7 +222,10 @@ export const IncomeListView = ({ gridData, showDelete }) => {
           {showDelete && (
             <div className="group flex relative">
               <RiDeleteBin2Fill
-                className={clsx(`text-deletecolor`, "hover:text-red-500 font-semibold cursor-pointer sm:px-0")}
+                className={clsx(
+                  `text-deletecolor`,
+                  "hover:text-red-500 font-semibold cursor-pointer sm:px-0"
+                )}
                 onClick={() => deleteClick(record.id)}
               />
               <ToolTip text="Delete" />
@@ -231,32 +257,66 @@ export const IncomeListView = ({ gridData, showDelete }) => {
               </tr>
 
               <tr className="border border-gray-300">
-                <td className="min-w-fit whitespace-nowrap text-right p-2">Monthly Budgeted Gross Income:</td>
+                <td className="min-w-fit whitespace-nowrap text-right p-2">
+                  * Monthly Budgeted Gross Income:
+                </td>
                 <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">
                   {getGrossMonthlyTotal(user, gridData)}
                 </td>
               </tr>
               <tr className="border border-gray-300">
-                <td className="text-right p-2 min-w-fit whitespace-nowrap">Monthly Budgeted Net Income:</td>
-                <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">{getNetMonthlyTotal(user, gridData)}</td>
+                <td className="text-right p-2 min-w-fit whitespace-nowrap">
+                  * Monthly Budgeted Net Income:
+                </td>
+                <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">
+                  {getNetMonthlyTotal(user, gridData)}
+                </td>
               </tr>
               <tr className="border border-gray-300">
-                <td className="text-right p-2 min-w-fit whitespace-nowrap">Total Annual Gross Income:</td>
+                <td className="text-right p-2 min-w-fit whitespace-nowrap">
+                  Total Annual Gross Income:
+                </td>
                 <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">
                   {getGrossYearlyTotal(user, gridData)}
                 </td>
               </tr>
               <tr className="border border-gray-300">
-                <td className="min-w-fit whitespace-nowrap text-right p-2">Total Annual Net Income:</td>
-                <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">{getNetYearlyTotal(user, gridData)}</td>
+                <td className="min-w-fit whitespace-nowrap text-right p-2">
+                  Total Annual Net Income:
+                </td>
+                <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">
+                  {getNetYearlyTotal(user, gridData)}
+                </td>
               </tr>
             </tbody>
           </table>
+          <div className="w-full ml-5">
+            <p className="text-xs">
+              * Note 1: Budgeted net monthly income for someone paid weekly is
+              based on 4 pay periods per month (48 pay periods per year). The 4
+              Extra pays per year are directed towards savings.
+            </p>
+            <p className="text-xs">
+              * Note 2: Budgeted net monthly income for someone paid bi-weekly
+              is based on 2 pay periods per month (24 pay periods per year). The
+              2 Extra pays per year are directed towards savings.
+            </p>
+          </div>
         </div>
       </div>
 
-      <AddIncome open={open} setOpen={setOpen} recordData={selected} key={new Date().getTime().toString()} />
-      <ConfirmationDialog isLoading={isLoading} open={openDialog} setOpen={setOpenDialog} onClick={() => deleteHandler(selected)} />
+      <AddIncome
+        open={open}
+        setOpen={setOpen}
+        recordData={selected}
+        key={new Date().getTime().toString()}
+      />
+      <ConfirmationDialog
+        isLoading={isLoading}
+        open={openDialog}
+        setOpen={setOpenDialog}
+        onClick={() => deleteHandler(selected)}
+      />
     </div>
   );
 };

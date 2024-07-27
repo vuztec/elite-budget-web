@@ -100,7 +100,7 @@ export const AddIncome = ({ open, setOpen, recordData }) => {
             <div className="flex flex-col gap-6 w-full">
               <Select
                 name="Owner"
-                label="Name"
+                label="Owner"
                 defaultValue="Self"
                 options={[
                   { value: "Self", label: "Self" },

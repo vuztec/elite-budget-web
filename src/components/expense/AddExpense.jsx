@@ -62,7 +62,9 @@ export const AddExpense = ({ open, setOpen, recordData }) => {
       .patch("/api/expenses/" + numericSelectedID, data)
       .then(({ data }) => {
         queryClient.setQueryData(["expenses"], (prev) =>
-          prev.map((expense) => (expense.id === numericSelectedID ? { ...expense, ...data } : expense))
+          prev.map((expense) =>
+            expense.id === numericSelectedID ? { ...expense, ...data } : expense
+          )
         );
         setIsLoading(() => false);
         setOpen(false);
@@ -76,8 +78,14 @@ export const AddExpense = ({ open, setOpen, recordData }) => {
   return (
     <>
       <ModalWrapper open={open} setOpen={setOpen}>
-        <form onSubmit={handleSubmit(handleOnSubmit)} className="w-full h-[70%]">
-          <Dialog.Title as="h2" className="text-base font-bold leading-6 text-gray-900 mb-4">
+        <form
+          onSubmit={handleSubmit(handleOnSubmit)}
+          className="w-full h-[70%]"
+        >
+          <Dialog.Title
+            as="h2"
+            className="text-base font-bold leading-6 text-gray-900 mb-4"
+          >
             {recordData ? "UPDATE EXPENSE RECORD" : "ADD NEW EXPENSE RECORD"}
           </Dialog.Title>
           <div className="mt-2 flex flex-col gap-6 overflow-y-scroll bg-scroll">
@@ -106,8 +114,9 @@ export const AddExpense = ({ open, setOpen, recordData }) => {
             <div className="flex flex-col gap-6 w-full">
               <Select
                 name="Owner"
-                label="Name"
+                label="Owner"
                 defaultValue="Self"
+                disabled={recordData?.Category === "Joint Contribution"}
                 options={[
                   { value: "Self", label: "Self" },
                   { value: "Partner", label: "Partner" },
@@ -139,7 +148,8 @@ export const AddExpense = ({ open, setOpen, recordData }) => {
                   className="w-full rounded"
                   register={register("MarketValue", {
                     valueAsNumber: true,
-                    validate: (value) => value >= 0 || "Amount must be positive or zero.",
+                    validate: (value) =>
+                      value >= 0 || "Amount must be positive or zero.",
                   })}
                   error={errors.MarketValue ? errors.MarketValue.message : ""}
                 />
@@ -152,7 +162,8 @@ export const AddExpense = ({ open, setOpen, recordData }) => {
                     className="w-full rounded"
                     register={register("LoanBalance", {
                       valueAsNumber: true,
-                      validate: (value) => value >= 0 || "Amount must be positive or zero.",
+                      validate: (value) =>
+                        value >= 0 || "Amount must be positive or zero.",
                     })}
                     error={errors.LoanBalance ? errors.LoanBalance.message : ""}
                   />
@@ -168,7 +179,8 @@ export const AddExpense = ({ open, setOpen, recordData }) => {
                 className="w-full rounded"
                 register={register("MonthlyBudget", {
                   valueAsNumber: true,
-                  validate: (value) => value >= 0 || "Amount must be positive or zero.",
+                  validate: (value) =>
+                    value >= 0 || "Amount must be positive or zero.",
                 })}
                 error={errors.MonthlyBudget ? errors.MonthlyBudget.message : ""}
               />

@@ -39,11 +39,11 @@ export const JointContribution = () => {
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedSelfAmount, setSelectedSelfAmount] = useState("");
+  const [selectedSelfAmount, setSelectedSelfAmount] = useState(0);
   const [totalJointExpense, setTotalJointExpense] = useState(0);
   const selfPercentage = selectedSelfAmount.SelfAmount
     ? Number(selectedSelfAmount.SelfAmount)
-    : "";
+    : 0;
   const queryClient = useQueryClient();
 
   const activeAccount = getActiveAccount(user);

@@ -8,7 +8,10 @@ import { useQueryClient } from "react-query";
 import ConfirmationDialog from "../Dialogs";
 import axios from "../../config/axios";
 import { handleAxiosResponseError } from "../../utils/handleResponseError";
-import { getMonthlyBudgetTotal, getYearlyBudgetTotal } from "../../utils/budget.calculation";
+import {
+  getMonthlyBudgetTotal,
+  getYearlyBudgetTotal,
+} from "../../utils/budget.calculation";
 import AddExtraPay from "./AddExtraPay";
 import { formatDate } from "../../utils";
 import ToolTip from "../tooltip";
@@ -38,7 +41,9 @@ export const ExtraPayListView = ({ gridData, showDelete }) => {
       .delete(`/api/extra-pay-checks/${selected}`)
       .then(({ data }) => {
         queryClient.setQueryData(["extrapaychecks"], (prev) =>
-          prev.map((check) => (check.id === selected ? { ...check, ...data } : check))
+          prev.map((check) =>
+            check.id === selected ? { ...check, ...data } : check
+          )
         );
 
         setOpenDialog(false);
@@ -67,8 +72,16 @@ export const ExtraPayListView = ({ gridData, showDelete }) => {
       <tr className="font-bold bg-[whitesmoke] text-black border border-gray-300 text-left">
         <th className="border-l border-gray-300 p-2">
           <div className="flex justify-between items-center gap-2">
-            Extra Pay Date
-            <Sort order={order} setOrder={setOrder} column={1} name={"Date"} data={data} setData={setData} defaultData={gridData} />
+            * Extra Pay Date
+            <Sort
+              order={order}
+              setOrder={setOrder}
+              column={1}
+              name={"Date"}
+              data={data}
+              setData={setData}
+              defaultData={gridData}
+            />
           </div>
         </th>
         <th className="border-l border-gray-300 p-2">
@@ -133,7 +146,10 @@ export const ExtraPayListView = ({ gridData, showDelete }) => {
         <div className="flex items-center text-left gap-3 justify-start">
           <div className="group flex relative">
             <FaEdit
-              className={clsx(`text-editcolor`, "hover:text-orange-500 font-semibold cursor-pointer sm:px-0")}
+              className={clsx(
+                `text-editcolor`,
+                "hover:text-orange-500 font-semibold cursor-pointer sm:px-0"
+              )}
               onClick={() => editClick(record)}
             />
             <ToolTip text={"Edit"} />
@@ -141,7 +157,10 @@ export const ExtraPayListView = ({ gridData, showDelete }) => {
           {showDelete && (
             <div className="group flex relative">
               <RiDeleteBin2Fill
-                className={clsx(`text-deletecolor`, "hover:text-red-500 font-semibold cursor-pointer sm:px-0")}
+                className={clsx(
+                  `text-deletecolor`,
+                  "hover:text-red-500 font-semibold cursor-pointer sm:px-0"
+                )}
                 onClick={() => deleteClick(record.id)}
               />
               <ToolTip text={"Delete"} />
@@ -195,12 +214,27 @@ export const ExtraPayListView = ({ gridData, showDelete }) => {
                 <TableTotal gridData={gridData} />
               </tbody>
             </table>
+            <div className="w-full ml-5">
+              <p className="text-xs">
+                * Note: See Extra Pay Dates for more details.
+              </p>
+            </div>
           </div>
         </div>
       </div>
 
-      <AddExtraPay open={open} setOpen={setOpen} recordData={selected} key={new Date().getTime().toString()} />
-      <ConfirmationDialog isLoading={isLoading} open={openDialog} setOpen={setOpenDialog} onClick={() => deleteHandler(selected)} />
+      <AddExtraPay
+        open={open}
+        setOpen={setOpen}
+        recordData={selected}
+        key={new Date().getTime().toString()}
+      />
+      <ConfirmationDialog
+        isLoading={isLoading}
+        open={openDialog}
+        setOpen={setOpenDialog}
+        onClick={() => deleteHandler(selected)}
+      />
     </>
   );
 };
