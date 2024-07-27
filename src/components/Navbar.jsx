@@ -1,25 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
 import UserAvatar from "./team/UserAvatar";
 import useUserStore from "../app/user";
 import { useLocation } from "react-router-dom";
 import { SidebarLinks } from "../utils/sidebar.data";
-import { useQueryClient, useQuery } from "react-query";
 import axios from "../config/axios";
 
 const Navbar = () => {
-  const { setSidebar, isRefresh, setIsRefresh, setUser, user } = useUserStore();
+  const { setSidebar, setUser, user } = useUserStore();
   const location = useLocation();
   const [title, setTitle] = useState("");
-  const [searchParams] = useSearchParams();
-  const queryClient = useQueryClient();
-
-  useEffect(() => {
-    if (isRefresh) {
-      setIsRefresh(false);
-      window.location.reload();
-    }
-  }, [isRefresh]);
 
   useEffect(() => {
     axios

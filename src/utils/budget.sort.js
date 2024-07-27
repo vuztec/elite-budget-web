@@ -63,6 +63,11 @@ export const ascendingSort = (data, sortBy, sortBy2, isNumber) => {
       bDisplayName = Number(bDisplayName);
     }
 
+    if (typeof a[sortBy] === "boolean" || typeof b[sortBy] === "boolean") {
+      aDisplayName = a[sortBy];
+      bDisplayName = b[sortBy];
+    }
+
     if (aDisplayName < bDisplayName) return -1;
     if (aDisplayName > bDisplayName) return 1;
 
@@ -78,6 +83,11 @@ export const descendingSort = (data, sortBy, sortBy2, isNumber) => {
     if (isNumber) {
       aDisplayName = Number(aDisplayName);
       bDisplayName = Number(bDisplayName);
+    }
+
+    if (typeof a[sortBy] === "boolean" || typeof b[sortBy] === "boolean") {
+      aDisplayName = a[sortBy];
+      bDisplayName = b[sortBy];
     }
 
     if (aDisplayName < bDisplayName) return 1;

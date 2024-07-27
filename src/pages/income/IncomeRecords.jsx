@@ -57,9 +57,7 @@ export const IncomeRecords = () => {
         updatedData = incomeData.filter((item) => item.GrossAmount > 0);
       }
       if (!showAll && hasRecords(extrapaychecks)) {
-        updatedExtraData = extrapaychecks.filter(
-          (item) => item.SelfAmount > 0 || item.PartnerAmount > 0
-        );
+        updatedExtraData = extrapaychecks.filter((item) => item.SelfAmount > 0 || item.PartnerAmount > 0);
       }
 
       // Sort the data by Owner property
@@ -70,7 +68,7 @@ export const IncomeRecords = () => {
     } else {
       setIsDataLoaded(false);
     }
-  }, [incomes, isIncomeLoaded, isPayChecksLoaded, owner, showAll]);
+  }, [incomes, extrapaychecks, isIncomeLoaded, isPayChecksLoaded, owner, showAll]);
 
   const handleOwnerChange = (e) => {
     if (e && e.target?.value) {
@@ -86,13 +84,7 @@ export const IncomeRecords = () => {
         <div className="text-sm">
           <Button
             label={!showAll ? "Add New" : "Cancel Add"}
-            icon={
-              !showAll ? (
-                <IoMdAdd className="text-lg" />
-              ) : (
-                <HiMinusSm className="text-lg" />
-              )
-            }
+            icon={!showAll ? <IoMdAdd className="text-lg" /> : <HiMinusSm className="text-lg" />}
             className={clsx(
               "flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:bg-viewcolor bg-black hover:text-black",
               !showAll ? "bg-black" : "bg-red-800"
@@ -103,13 +95,7 @@ export const IncomeRecords = () => {
         <div className="text-sm">
           <Button
             label={!isShowing ? "Show Filters" : "Hide Filters"}
-            icon={
-              !isShowing ? (
-                <MdFilterAlt className="text-lg" />
-              ) : (
-                <MdFilterAltOff className="text-lg" />
-              )
-            }
+            icon={!isShowing ? <MdFilterAlt className="text-lg" /> : <MdFilterAltOff className="text-lg" />}
             className={clsx(
               "flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:text-black hover:bg-viewcolor",
               !isShowing ? "bg-green-800" : "bg-red-800"
@@ -145,17 +131,11 @@ export const IncomeRecords = () => {
       {isDataLoaded && (
         <div className="w-full">
           <div className="w-full">
-            <IncomeListView
-              gridData={gridData}
-              showDelete={!showAll && hasRecords(gridData)}
-            />
+            <IncomeListView gridData={gridData} showDelete={!showAll && hasRecords(gridData)} />
           </div>
 
           <div className="w-full">
-            <ExtraPayListView
-              gridData={extraGridData}
-              showDelete={!showAll && hasRecords(extraGridData)}
-            />
+            <ExtraPayListView gridData={extraGridData} showDelete={!showAll && hasRecords(extraGridData)} />
           </div>
         </div>
       )}
