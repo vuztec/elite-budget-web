@@ -13,14 +13,13 @@ export const UserAvatar = () => {
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState(null);
   const [openPassword, setOpenPassword] = useState(false);
-  const { user, setJwt, setUser, setIsRefresh } = useUserStore();
+  const { user, setJwt, setUser } = useUserStore();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
   const logoutHandler = () => {
     setUser(null, null);
     setJwt(null);
-    setIsRefresh(true);
     queryClient.clear();
     navigate("/login");
   };
@@ -43,9 +42,7 @@ export const UserAvatar = () => {
         <Menu as="div" className="relative inline-block text-left">
           <div>
             <Menu.Button className="w-10 h-10 2xl:w-12 2xl:h-12 items-center justify-center rounded-full bg-black">
-              <span className="text-white font-semibold">
-                {getInitials(user?.FullName)}
-              </span>
+              <span className="text-white font-semibold">{getInitials(user?.FullName)}</span>
             </Menu.Button>
           </div>
 
@@ -107,13 +104,7 @@ export const UserAvatar = () => {
         recordData={selected}
         key={`CP${new Date().getTime().toString()}`}
       />
-      <AddRootUser
-        setUser={setUser}
-        open={open}
-        setOpen={setOpen}
-        recordData={selected}
-        key={`UP${new Date().getTime().toString()}`}
-      />
+      <AddRootUser setUser={setUser} open={open} setOpen={setOpen} recordData={selected} key={`UP${new Date().getTime().toString()}`} />
     </>
   );
 };
