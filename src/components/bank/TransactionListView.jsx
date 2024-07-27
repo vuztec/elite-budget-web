@@ -28,6 +28,7 @@ export const TransactionListView = ({ Data, bankName }) => {
   const [gridData, setGridData] = useState([]);
   const totalBankBalance = getUnformattedBankBalanceTotal(gridData);
   const openingBalance = bankName.OpeningBalance;
+  console.log("transactionGridData: ", Data);
 
   const [order, setOrder] = useState([
     "default",
