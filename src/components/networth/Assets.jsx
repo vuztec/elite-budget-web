@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  getFormattedValue,
   getFormattedValueTotal,
   getHouseHoldMarketValueTotal,
   getMarketValueTotal,
@@ -40,7 +41,7 @@ export const Assets = ({
                   Checking, Savings & Investment Accounts
                 </td>
                 <td className="px-2">
-                  {getFormattedValueTotal(
+                  {getFormattedValue(
                     user,
                     Number(totalSavMarketValue) +
                       Number(totalOpeningBalance) +

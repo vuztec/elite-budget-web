@@ -59,8 +59,6 @@ export const Transactions = () => {
 
   ///-------------END Filters Data Source --------------------------------///
 
-  console.log("bank: ", bank, typeof bank);
-
   useEffect(() => {
     if (isTransactionLoaded === "success" && isNamesLoaded === "success") {
       const transData = getBankGridData(transactions, owner, bank);
