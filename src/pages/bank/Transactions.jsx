@@ -12,7 +12,11 @@ import {
   getBankAccountNames,
   getBankAccountTransactions,
 } from "../../config/api";
-import { getOwnerGridData, incomeOwners } from "../../utils/budget.filter";
+import {
+  getBankGridData,
+  getOwnerGridData,
+  incomeOwners,
+} from "../../utils/budget.filter";
 import { TransactionListView } from "../../components/bank/TransactionListView";
 import AddTransaction from "../../components/bank/AddTransaction";
 import useUserStore from "../../app/user";
@@ -48,11 +52,18 @@ export const Transactions = () => {
     label: owner,
   }));
 
+  const banks = accountnames?.map((bank) => ({
+    value: bank.id,
+    label: bank.Name,
+  }));
+
   ///-------------END Filters Data Source --------------------------------///
+
+  console.log("bank: ", bank, typeof bank);
 
   useEffect(() => {
     if (isTransactionLoaded === "success" && isNamesLoaded === "success") {
-      const transData = getOwnerGridData(transactions, owner);
+      const transData = getBankGridData(transactions, owner, bank);
 
       // Sort the data by Owner property
       const sortedData = transData.sort((a, b) => {
@@ -67,7 +78,7 @@ export const Transactions = () => {
     } else {
       setIsDataLoaded(false);
     }
-  }, [transactions, isTransactionLoaded, isNamesLoaded, owner]);
+  }, [transactions, isTransactionLoaded, isNamesLoaded, owner, bank]);
 
   const handleOwnerChange = (e) => {
     if (e && e.target?.value) {
@@ -151,13 +162,13 @@ export const Transactions = () => {
           <Select
             onChange={handleBankChange}
             value={bank}
-            options={owners}
-            placeholder="Household"
+            options={banks}
+            placeholder="All"
             label="Bank Account"
             className="bg-white w-full py-1"
           />
         </div>
-        <div className="w-full">
+        {/* <div className="w-full">
           <Select
             onChange={handleYearChange}
             value={year}
@@ -176,7 +187,7 @@ export const Transactions = () => {
             label="Month"
             className="bg-white w-full py-1"
           />
-        </div>
+        </div> */}
       </div>
 
       {!isDataLoaded && (

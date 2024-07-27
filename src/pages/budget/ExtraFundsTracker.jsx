@@ -8,15 +8,35 @@ import clsx from "clsx";
 import Select from "../../components/Select";
 import { getActiveAccount } from "../../utils/permissions";
 import Package from "../../package/Package";
-import { getExtraFundsTrackers } from "../../config/api";
-import { calculateBalances, getOwnerGridData, incomeOwners } from "../../utils/budget.filter";
+import {
+  getDebts,
+  getExpenses,
+  getExtraFundsTrackers,
+  getIncomes,
+  getRetirements,
+  getSavings,
+} from "../../config/api";
+import {
+  calculateBalances,
+  getOwnerExpenseGridData,
+  getOwnerGridData,
+  incomeOwners,
+} from "../../utils/budget.filter";
 import { ExtraFundListView } from "../../components/budget/ExtraFundListView";
 import AddExtraFund from "../../components/budget/AddExtraFund";
 import { defaultFundSort } from "../../utils/budget.sort";
 import useUserStore from "../../app/user";
+import { getJointContribution } from "../../utils/budget.calculation";
 
 export const ExtraFundsTracker = () => {
   const { user } = useUserStore();
+  const [incomeGridData, setIncomeGridData] = useState([]);
+  const [savingsGridData, setSavingsGridData] = useState([]);
+  const [retirementGridData, setRetirementGridData] = useState([]);
+  const [expenseGridData, setExpenseGridData] = useState([]);
+  const [debtGridData, setDebtGridData] = useState([]);
+  const [selfContribution, setSelfContribution] = useState(0);
+  const [partnerContribution, setPartnerContribution] = useState(0);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [gridData, setGridData] = useState([]);
   const [open, setOpen] = useState(false);
@@ -31,6 +51,36 @@ export const ExtraFundsTracker = () => {
     staleTime: 1000 * 60 * 60,
   });
 
+  const { data: debts, status: isDebtLoaded } = useQuery({
+    queryKey: ["debts"],
+    queryFn: getDebts,
+    staleTime: 1000 * 60 * 60,
+  });
+
+  const { data: expenses, status: isExpenseLoaded } = useQuery({
+    queryKey: ["expenses"],
+    queryFn: getExpenses,
+    staleTime: 1000 * 60 * 60,
+  });
+
+  const { data: incomes, status: isIncomeLoaded } = useQuery({
+    queryKey: ["incomes"],
+    queryFn: getIncomes,
+    staleTime: 1000 * 60 * 60,
+  });
+
+  const { data: savings, status: isSavingLoaded } = useQuery({
+    queryKey: ["savings"],
+    queryFn: getSavings,
+    staleTime: 1000 * 60 * 60,
+  });
+
+  const { data: retirements, status: isRetLoaded } = useQuery({
+    queryKey: ["retirements"],
+    queryFn: getRetirements,
+    staleTime: 1000 * 60 * 60,
+  });
+
   ///-------------Filters Data Source --------------------------------///
   const owners = incomeOwners.map((owner) => ({
     value: owner,
@@ -40,7 +90,14 @@ export const ExtraFundsTracker = () => {
   ///-------------END Filters Data Source --------------------------------///
 
   useEffect(() => {
-    if (isFundLoaded === "success") {
+    if (
+      isSavingLoaded === "success" &&
+      isRetLoaded === "success" &&
+      isExpenseLoaded === "success" &&
+      isDebtLoaded === "success" &&
+      isIncomeLoaded === "success" &&
+      isFundLoaded === "success"
+    ) {
       const transData = getOwnerGridData(extrafunds, owner);
 
       // Sort the data by Owner property
@@ -50,11 +107,46 @@ export const ExtraFundsTracker = () => {
       const dataWithBalances = calculateBalances(sortedData);
 
       setGridData(dataWithBalances);
+
+      const savingData = getOwnerGridData(savings, owner);
+      setSavingsGridData(savingData);
+
+      const retirementData = getOwnerGridData(retirements, owner);
+      setRetirementGridData(retirementData);
+
+      const expenseData = getOwnerExpenseGridData(expenses, owner);
+      setExpenseGridData(expenseData);
+
+      const debtData = getOwnerGridData(debts, owner);
+      setDebtGridData(debtData);
+
+      const incomeData = getOwnerGridData(incomes, owner);
+      setIncomeGridData(incomeData);
+
+      const selfAmount = getJointContribution(expenses, "Self");
+      setSelfContribution(selfAmount);
+      const partnerAmount = getJointContribution(expenses, "Partner");
+      setPartnerContribution(partnerAmount);
+
       setIsDataLoaded(true);
     } else {
       setIsDataLoaded(false);
     }
-  }, [extrafunds, isFundLoaded, owner]);
+  }, [
+    savings,
+    retirements,
+    debts,
+    incomes,
+    expenses,
+    isIncomeLoaded,
+    isSavingLoaded,
+    isExpenseLoaded,
+    isDebtLoaded,
+    isRetLoaded,
+    extrafunds,
+    isFundLoaded,
+    owner,
+  ]);
 
   const handleOwnerChange = (e) => {
     if (e && e.target?.value) {
@@ -85,7 +177,13 @@ export const ExtraFundsTracker = () => {
         <div className="text-sm">
           <Button
             label={!isShowing ? "Show Filters" : "Hide Filters"}
-            icon={!isShowing ? <MdFilterAlt className="text-lg" /> : <MdFilterAltOff className="text-lg" />}
+            icon={
+              !isShowing ? (
+                <MdFilterAlt className="text-lg" />
+              ) : (
+                <MdFilterAltOff className="text-lg" />
+              )
+            }
             className={clsx(
               "flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:text-black hover:bg-viewcolor",
               !isShowing ? "bg-green-800" : "bg-red-800"
@@ -121,10 +219,25 @@ export const ExtraFundsTracker = () => {
       {isDataLoaded && (
         <div className="w-full">
           <div className="w-full">
-            <ExtraFundListView gridData={gridData} />
+            <ExtraFundListView
+              gridData={gridData}
+              incomeGridData={incomeGridData}
+              savingsGridData={savingsGridData}
+              retirementGridData={retirementGridData}
+              debtGridData={debtGridData}
+              expenseGridData={expenseGridData}
+              owner={owner}
+              selfContribution={selfContribution}
+              partnerContribution={partnerContribution}
+            />
           </div>
 
-          <AddExtraFund open={open} setOpen={setOpen} recordData={""} key={new Date().getTime().toString()} />
+          <AddExtraFund
+            open={open}
+            setOpen={setOpen}
+            recordData={""}
+            key={new Date().getTime().toString()}
+          />
         </div>
       )}
     </>

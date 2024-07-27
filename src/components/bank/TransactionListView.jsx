@@ -27,9 +27,17 @@ export const TransactionListView = ({ Data, bankName }) => {
   const { user } = useUserStore();
   const [gridData, setGridData] = useState([]);
   const totalBankBalance = getUnformattedBankBalanceTotal(gridData);
-  const openingBalance = 0;
+  const openingBalance = bankName.OpeningBalance;
 
-  const [order, setOrder] = useState(["default", "default", "default", "default", "default", "default", "default"]);
+  const [order, setOrder] = useState([
+    "default",
+    "default",
+    "default",
+    "default",
+    "default",
+    "default",
+    "default",
+  ]);
 
   useEffect(() => {
     const sortedData = defaultTransactionSort(Data);
@@ -51,7 +59,9 @@ export const TransactionListView = ({ Data, bankName }) => {
       .delete(`/api/bank-accounts/transaction/${selected}`)
       .then(({ data }) => {
         console.log(data);
-        queryClient.setQueryData(["banktransactions"], (prev) => prev.filter((transaction) => transaction.id !== selected));
+        queryClient.setQueryData(["banktransactions"], (prev) =>
+          prev.filter((transaction) => transaction.id !== selected)
+        );
         setOpenDialog(false);
         setIsLoading(false);
       })
@@ -129,7 +139,9 @@ export const TransactionListView = ({ Data, bankName }) => {
           <div className="flex justify-between items-center gap-2">
             <div className="flex flex-col">
               <span className="whitespace-nowrap text-left">Pmt, Fee,</span>
-              <span className="whitespace-nowrap text-left">Withdrawal (-)</span>
+              <span className="whitespace-nowrap text-left">
+                Withdrawal (-)
+              </span>
             </div>
 
             <Sort
@@ -209,7 +221,9 @@ export const TransactionListView = ({ Data, bankName }) => {
     <tr className="border border-gray-300 text-sm xl:text-[16px] hover:bg-gray-400/10 text-left">
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <span className="flex items-center justify-left gap-2 text-center mb-0 text-gray-900">{record?.Owner}</span>
+          <span className="flex items-center justify-left gap-2 text-center mb-0 text-gray-900">
+            {record?.Owner}
+          </span>
         </div>
       </td>
 
@@ -227,27 +241,50 @@ export const TransactionListView = ({ Data, bankName }) => {
 
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p className="text-black">{getFormattedValueType(user, record?.Amount, record?.Type, "Withdrawal")}</p>
-        </div>
-      </td>
-
-      <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
-        <div className="flex flex-col items-start gap-1">
-          <p className="text-black">{getFormattedValueType(user, record?.Amount, record?.Type, "Credit")}</p>
-        </div>
-      </td>
-
-      <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
-        <div className="flex flex-col items-start gap-1">
-          <p className="text-sm xl:text-lg">
-            {record?.IsCleared ? <FiCheckSquare className="text-green-500" /> : <MdOutlineSquare className="text-red-500" />}
+          <p className="text-black">
+            {getFormattedValueType(
+              user,
+              record?.Amount,
+              record?.Type,
+              "Withdrawal"
+            )}
           </p>
         </div>
       </td>
 
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p className="text-black">{getFormattedValueTotal(user, Number(record?.Balance) + Number(openingBalance))}</p>
+          <p className="text-black">
+            {getFormattedValueType(
+              user,
+              record?.Amount,
+              record?.Type,
+              "Credit"
+            )}
+          </p>
+        </div>
+      </td>
+
+      <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
+        <div className="flex flex-col items-start gap-1">
+          <p className="text-sm xl:text-lg">
+            {record?.IsCleared ? (
+              <FiCheckSquare className="text-green-500" />
+            ) : (
+              <MdOutlineSquare className="text-red-500" />
+            )}
+          </p>
+        </div>
+      </td>
+
+      <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
+        <div className="flex flex-col items-start gap-1">
+          <p className="text-black">
+            {getFormattedValueTotal(
+              user,
+              Number(record?.Balance) + Number(openingBalance)
+            )}
+          </p>
         </div>
       </td>
 
@@ -255,7 +292,10 @@ export const TransactionListView = ({ Data, bankName }) => {
         <div className="flex items-center text-left gap-3 justify-start">
           <div className="group flex relative">
             <FaEdit
-              className={clsx(`text-editcolor`, "hover:text-orange-500 font-semibold cursor-pointer sm:px-0")}
+              className={clsx(
+                `text-editcolor`,
+                "hover:text-orange-500 font-semibold cursor-pointer sm:px-0"
+              )}
               onClick={() => editClick(record)}
             />
             <ToolTip text={"Edit"} />
@@ -263,7 +303,10 @@ export const TransactionListView = ({ Data, bankName }) => {
 
           <div className="group flex relative">
             <RiDeleteBin2Fill
-              className={clsx(`text-deletecolor`, "hover:text-red-500 font-semibold cursor-pointer sm:px-0")}
+              className={clsx(
+                `text-deletecolor`,
+                "hover:text-red-500 font-semibold cursor-pointer sm:px-0"
+              )}
               onClick={() => deleteClick(record.id)}
             />
             <ToolTip text={"Delete"} />
@@ -279,7 +322,9 @@ export const TransactionListView = ({ Data, bankName }) => {
 
       <td className="min-w-fit whitespace-nowrap p-3 border-gray-200"></td>
 
-      <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200">TOTAL</td>
+      <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200">
+        TOTAL
+      </td>
 
       <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
@@ -297,7 +342,12 @@ export const TransactionListView = ({ Data, bankName }) => {
 
       <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p>{getFormattedValueTotal(user, totalBankBalance)}</p>
+          <p>
+            {getFormattedValueTotal(
+              user,
+              Number(totalBankBalance) + Number(openingBalance)
+            )}
+          </p>
         </div>
       </td>
 
@@ -307,19 +357,46 @@ export const TransactionListView = ({ Data, bankName }) => {
 
   return (
     <>
-      {gridData?.length > -1 && (
+      {gridData?.length > 0 && (
         <div className="w-full h-fit bg-white py-6 mt-4 shadow-md rounded">
-          <div className="flex flex-col gap-5 w-full">
+          <div className="flex flex-col gap-5 w-full items-end">
             <div className="w-full overflow-x-auto">
-              <table className="w-[97%] ml-5 -mb-5">
+              <table className="w-[97%] ml-5">
                 <thead>
                   <tr>
-                    <th className="p-2 w-full uppercase bg-[whitesmoke] text-black  border-l border-t border-r border-gray-300 flex items-center justify-center">
+                    <th
+                      className="p-2 w-full uppercase bg-[whitesmoke] text-black border border-gray-300 flex items-center justify-center"
+                      colSpan="8"
+                    >
                       {bankName?.Name} REGISTER
                     </th>
                   </tr>
                 </thead>
               </table>
+              <table className="w-[97%] md:w-fit ml-5 xl:ml-auto xl:mr-7 -mb-4 mt-1">
+                <tbody>
+                  <tr className="border border-gray-300 text-sm xl:text-[16px] text-left font-bold">
+                    <td className="min-w-fit whitespace-nowrap p-2 border-gray-200 font-normal">
+                      Bank Beginning Balance
+                    </td>
+                    <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
+                      {getFormattedValueTotal(user, openingBalance)}
+                    </td>
+                  </tr>
+                  <tr className="border border-gray-300 text-sm xl:text-[16px] text-left font-bold">
+                    <td className="min-w-fit whitespace-nowrap p-2 border-gray-200 font-normal">
+                      Bank Cash Current Balance
+                    </td>
+                    <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
+                      {getFormattedValueTotal(
+                        user,
+                        Number(totalBankBalance) + Number(openingBalance)
+                      )}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
               <table className="w-[97%] m-5">
                 <TableHeader />
                 <tbody>
@@ -333,8 +410,18 @@ export const TransactionListView = ({ Data, bankName }) => {
           </div>
         </div>
       )}
-      <AddTransaction open={open} setOpen={setOpen} recordData={selected} key={new Date().getTime().toString()} />
-      <ConfirmationDialog isLoading={isLoading} open={openDialog} setOpen={setOpenDialog} onClick={() => deleteHandler(selected)} />
+      <AddTransaction
+        open={open}
+        setOpen={setOpen}
+        recordData={selected}
+        key={new Date().getTime().toString()}
+      />
+      <ConfirmationDialog
+        isLoading={isLoading}
+        open={openDialog}
+        setOpen={setOpenDialog}
+        onClick={() => deleteHandler(selected)}
+      />
     </>
   );
 };

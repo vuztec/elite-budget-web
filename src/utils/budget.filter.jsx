@@ -1,7 +1,13 @@
 export const incomeOwners = ["Self", "Partner", "Joint"];
 export const retirementOwners = ["Self", "Partner"];
 export const expenseOwners = ["Self", "Partner", "Joint"];
-export const paymentMethods = ["Auto Debit", "Auto Transfer", "Bill Pay", "Check or Cash", "Debit/Credit"];
+export const paymentMethods = [
+  "Auto Debit",
+  "Auto Transfer",
+  "Bill Pay",
+  "Check or Cash",
+  "Debit/Credit",
+];
 export const daydues = [
   "N/A",
   "01",
@@ -100,10 +106,27 @@ export const getOwnerExpenseGridData = (data, owner) => {
   if (owner !== "Household" && owner !== "All" && parseInt(owner) !== 0) {
     ownerFilteredData = data?.filter((item) => item.Owner === owner);
   } else {
-    ownerFilteredData = data.filter((item) => item.Category !== "Joint Contribution");
+    ownerFilteredData = data.filter(
+      (item) => item.Category !== "Joint Contribution"
+    );
   }
 
   return ownerFilteredData;
+};
+
+export const getBankGridData = (data, owner, bank) => {
+  const ownerFilteredData = getOwnerGridData(data, owner);
+
+  let bankFilteredData;
+  if (bank !== "All" && parseInt(bank) !== 0) {
+    bankFilteredData = ownerFilteredData?.filter(
+      (item) => item.BankAccountName.id === parseInt(bank)
+    );
+  } else {
+    bankFilteredData = ownerFilteredData;
+  }
+
+  return bankFilteredData;
 };
 
 export const getCatGridData = (data, owner, catFilter) => {
@@ -111,7 +134,9 @@ export const getCatGridData = (data, owner, catFilter) => {
 
   let catFilteredData;
   if (catFilter !== "All" && parseInt(catFilter) !== 0) {
-    catFilteredData = ownerFilteredData?.filter((item) => item.Category === catFilter);
+    catFilteredData = ownerFilteredData?.filter(
+      (item) => item.Category === catFilter
+    );
   } else {
     catFilteredData = ownerFilteredData;
   }
@@ -192,7 +217,9 @@ export const getUniqueBudgetItemsByCategory = (combinedData) => {
   });
   // Convert sets to arrays
   for (const category in uniqueBudgetItemsByCategory) {
-    uniqueBudgetItemsByCategory[category] = Array.from(uniqueBudgetItemsByCategory[category]);
+    uniqueBudgetItemsByCategory[category] = Array.from(
+      uniqueBudgetItemsByCategory[category]
+    );
   }
   return uniqueBudgetItemsByCategory;
 };
@@ -231,8 +258,12 @@ export const generateMonthHeaders = () => {
   const lastTwoDigitsOfYear = getCurrentYear();
   let newMonths = months;
   if (monthsName.length > 1)
-    newMonths = monthsName.filter((item) => item !== "Filter Months").sort((a, b) => months.indexOf(a) - months.indexOf(b));
-  const monthHeaders = newMonths?.map((month) => `${month}-${lastTwoDigitsOfYear}`);
+    newMonths = monthsName
+      .filter((item) => item !== "Filter Months")
+      .sort((a, b) => months.indexOf(a) - months.indexOf(b));
+  const monthHeaders = newMonths?.map(
+    (month) => `${month}-${lastTwoDigitsOfYear}`
+  );
 
   return monthHeaders;
 };
