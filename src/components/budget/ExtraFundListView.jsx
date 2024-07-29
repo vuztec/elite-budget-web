@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { RiDeleteBin2Fill } from "react-icons/ri";
 import { FaEdit } from "react-icons/fa";
+import { AiFillEdit } from "react-icons/ai";
 import clsx from "clsx";
 
 import useUserStore from "../../app/user";
@@ -20,6 +21,7 @@ import AddExtraFund from "./AddExtraFund";
 import { formatDate } from "../../utils";
 import ToolTip from "../tooltip";
 import Sort from "../sort";
+import AddBalance from "./AddBalance";
 
 export const ExtraFundListView = ({
   gridData,
@@ -31,6 +33,7 @@ export const ExtraFundListView = ({
   owner,
   selfContribution,
   partnerContribution,
+  excessBal,
 }) => {
   const { user } = useUserStore();
   const totalExcessBalance = getUnformattedBankBalanceTotal(gridData);
@@ -39,8 +42,10 @@ export const ExtraFundListView = ({
   const [openDialog, setOpenDialog] = useState(false);
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState(null);
+  const [balOpen, setBalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [openingBalance, setOpeningBalance] = useState(0);
+  const prevBalance = excessBal?.Balance ? excessBal?.Balance : 0;
 
   const [order, setOrder] = useState([
     "default",
@@ -104,6 +109,10 @@ export const ExtraFundListView = ({
   const editClick = (el) => {
     setSelected(el);
     setOpen(true);
+  };
+
+  const editBalClick = () => {
+    setBalOpen(true);
   };
 
   console.log(data);
@@ -328,7 +337,9 @@ export const ExtraFundListView = ({
           <p>
             {getFormattedValueTotal(
               user,
-              Number(totalExcessBalance) + Number(openingBalance)
+              Number(totalExcessBalance) +
+                Number(openingBalance) +
+                Number(prevBalance)
             )}
           </p>
         </div>
@@ -355,10 +366,22 @@ export const ExtraFundListView = ({
                 </tr>
                 <tr className="border border-gray-300 text-sm xl:text-[16px] text-left font-bold">
                   <td className="min-w-fit whitespace-nowrap p-2 border-gray-200 font-normal">
-                    1st Month's Excess Funds Initial Beg. Bal.
+                    * Excess Balance from Previous Month
                   </td>
                   <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
-                    {getFormattedValueTotal(user, 0)}
+                    <div className="flex flex-row items-start gap-5">
+                      <p>{getFormattedValueTotal(user, prevBalance)}</p>
+                      <div className="group flex relative">
+                        <AiFillEdit
+                          className={clsx(
+                            `text-editcolor`,
+                            "hover:text-orange-500 font-semibold cursor-pointer sm:px-0"
+                          )}
+                          onClick={() => editBalClick()}
+                        />
+                        <ToolTip text={"Edit"} />
+                      </div>
+                    </div>
                   </td>
                 </tr>
                 <tr className="border border-gray-300 text-sm xl:text-[16px] text-left font-bold">
@@ -383,6 +406,10 @@ export const ExtraFundListView = ({
                 <TableTotal gridData={gridData} />
               </tbody>
             </table>
+            <p className="text-sm italic text-gray-500 ml-5">
+              * This is a total amount of excess funds not used in the previous
+              months
+            </p>
           </div>
         </div>
       </div>
@@ -391,6 +418,12 @@ export const ExtraFundListView = ({
         open={open}
         setOpen={setOpen}
         recordData={selected}
+        key={new Date().getTime().toString()}
+      />
+      <AddBalance
+        open={balOpen}
+        setOpen={setBalOpen}
+        recordData={excessBal}
         key={new Date().getTime().toString()}
       />
       <ConfirmationDialog
