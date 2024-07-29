@@ -26,8 +26,7 @@ export const AddBalance = ({ open, setOpen, recordData, type }) => {
 
   useEffect(() => {
     if (recordData?.id) {
-      setValue("Percentage", recordData.Goal);
-      setValue("Category", recordData.Category);
+      setValue("Balance", recordData.Balance);
     }
 
     return () => reset();
@@ -35,22 +34,13 @@ export const AddBalance = ({ open, setOpen, recordData, type }) => {
 
   // Define handleOnSubmit function to handle form submission
   const handleOnSubmit = async (data) => {
-    const numericSelectedID = Number(recordData.id);
     setIsLoading(() => true);
 
-    let query = "maingoals";
-
-    if (type === "Expense") query = "expensegoals";
-    if (type === "Debt") query = "debtgoals";
-
     axios
-      .patch("/api/goals/" + numericSelectedID, data)
+      .patch("/api/extra-funds-tracker/excess-balance", data)
       .then(({ data }) => {
-        queryClient.setQueryData([query], (prev) =>
-          prev.map((goal) =>
-            goal.id === numericSelectedID ? { ...goal, ...data } : goal
-          )
-        );
+        queryClient.setQueryData(["excessbalance"], () => data);
+
         setIsLoading(() => false);
         setOpen(false);
       })
@@ -63,14 +53,8 @@ export const AddBalance = ({ open, setOpen, recordData, type }) => {
   return (
     <>
       <ModalWrapper open={open} setOpen={setOpen}>
-        <form
-          onSubmit={handleSubmit(handleOnSubmit)}
-          className="w-full h-[70%]"
-        >
-          <Dialog.Title
-            as="h2"
-            className="text-base font-bold leading-6 text-gray-900 mb-4"
-          >
+        <form onSubmit={handleSubmit(handleOnSubmit)} className="w-full h-[70%]">
+          <Dialog.Title as="h2" className="text-base font-bold leading-6 text-gray-900 mb-4">
             {recordData ? "UPDATE PREVIOUS BALANCE" : "ADD PREVIOUS BALANCE"}
           </Dialog.Title>
           <div className="mt-2 flex flex-col gap-6 overflow-y-scroll bg-scroll">
@@ -83,15 +67,11 @@ export const AddBalance = ({ open, setOpen, recordData, type }) => {
                 className="w-full rounded"
                 register={register("Balance", {
                   valueAsNumber: true,
-                  validate: (value) =>
-                    value >= 0 || "Amount must be positive or zero.",
+                  validate: (value) => value >= 0 || "Amount must be positive or zero.",
                 })}
                 error={errors.Balance ? errors.Balance.message : ""}
               />
-              <p className="text-xs italic text-gray-400">
-                * This is a total amount of excess funds not used in the
-                previous months
-              </p>
+              <p className="text-xs italic text-gray-400">* This is a total amount of excess funds not used in the previous months</p>
             </div>
           </div>
 

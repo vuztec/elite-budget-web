@@ -8,20 +8,8 @@ import clsx from "clsx";
 import Select from "../../components/Select";
 import { getActiveAccount } from "../../utils/permissions";
 import Package from "../../package/Package";
-import {
-  getDebts,
-  getExpenses,
-  getExtraFundsTrackers,
-  getIncomes,
-  getRetirements,
-  getSavings,
-} from "../../config/api";
-import {
-  calculateBalances,
-  getOwnerExpenseGridData,
-  getOwnerGridData,
-  incomeOwners,
-} from "../../utils/budget.filter";
+import { getDebts, getExcessBalance, getExpenses, getExtraFundsTrackers, getIncomes, getRetirements, getSavings } from "../../config/api";
+import { calculateBalances, getOwnerExpenseGridData, getOwnerGridData, incomeOwners } from "../../utils/budget.filter";
 import { ExtraFundListView } from "../../components/budget/ExtraFundListView";
 import AddExtraFund from "../../components/budget/AddExtraFund";
 import { defaultFundSort } from "../../utils/budget.sort";
@@ -78,6 +66,12 @@ export const ExtraFundsTracker = () => {
   const { data: retirements, status: isRetLoaded } = useQuery({
     queryKey: ["retirements"],
     queryFn: getRetirements,
+    staleTime: 1000 * 60 * 60,
+  });
+
+  const { data: excessBal } = useQuery({
+    queryKey: ["excessbalance"],
+    queryFn: getExcessBalance,
     staleTime: 1000 * 60 * 60,
   });
 
@@ -177,13 +171,7 @@ export const ExtraFundsTracker = () => {
         <div className="text-sm">
           <Button
             label={!isShowing ? "Show Filters" : "Hide Filters"}
-            icon={
-              !isShowing ? (
-                <MdFilterAlt className="text-lg" />
-              ) : (
-                <MdFilterAltOff className="text-lg" />
-              )
-            }
+            icon={!isShowing ? <MdFilterAlt className="text-lg" /> : <MdFilterAltOff className="text-lg" />}
             className={clsx(
               "flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:text-black hover:bg-viewcolor",
               !isShowing ? "bg-green-800" : "bg-red-800"
@@ -229,15 +217,11 @@ export const ExtraFundsTracker = () => {
               owner={owner}
               selfContribution={selfContribution}
               partnerContribution={partnerContribution}
+              excessBal={excessBal}
             />
           </div>
 
-          <AddExtraFund
-            open={open}
-            setOpen={setOpen}
-            recordData={""}
-            key={new Date().getTime().toString()}
-          />
+          <AddExtraFund open={open} setOpen={setOpen} recordData={""} />
         </div>
       )}
     </>

@@ -76,3 +76,9 @@ export const getExtraPayChecks = async () => {
 
   return res.data;
 };
+
+export const getExcessBalance = async () => {
+  const res = await axios.get("/api/extra-funds-tracker/excess-balance");
+
+  return res.data;
+};

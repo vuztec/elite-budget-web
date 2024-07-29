@@ -47,14 +47,7 @@ export const ExtraFundListView = ({
   const [openingBalance, setOpeningBalance] = useState(0);
   const prevBalance = excessBal?.Balance ? excessBal?.Balance : 0;
 
-  const [order, setOrder] = useState([
-    "default",
-    "default",
-    "default",
-    "default",
-    "default",
-    "default",
-  ]);
+  const [order, setOrder] = useState(["default", "default", "default", "default", "default", "default"]);
   const [data, setData] = useState(gridData);
 
   useEffect(() => {
@@ -65,9 +58,7 @@ export const ExtraFundListView = ({
       getUnformattedYearlyBudgetTotal(expenseGridData) +
       getUnformattedYearlyBudgetTotal(retirementGridData);
     const income =
-      owner === "Joint"
-        ? 12 * Number(selfContribution) + 12 * Number(partnerContribution)
-        : getUnformattedNetYearlyTotal(incomeGridData);
+      owner === "Joint" ? 12 * Number(selfContribution) + 12 * Number(partnerContribution) : getUnformattedNetYearlyTotal(incomeGridData);
     const difference = (Number(income) - Number(Expenses)) / 12;
     setOpeningBalance(difference);
   }, [
@@ -88,10 +79,7 @@ export const ExtraFundListView = ({
     axios
       .delete(`/api/extra-funds-tracker/${selected}`)
       .then(({ data }) => {
-        console.log(data);
-        queryClient.setQueryData(["extrafunds"], (prev) =>
-          prev.filter((fund) => fund.id !== selected)
-        );
+        queryClient.setQueryData(["extrafunds"], (prev) => prev.filter((fund) => fund.id !== selected));
         setOpenDialog(false);
         setIsLoading(false);
       })
@@ -114,8 +102,6 @@ export const ExtraFundListView = ({
   const editBalClick = () => {
     setBalOpen(true);
   };
-
-  console.log(data);
 
   //----------------CRUD----------------//
 
@@ -228,9 +214,7 @@ export const ExtraFundListView = ({
     <tr className="border border-gray-300 hover:bg-gray-400/10 text-left">
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <span className="flex items-center justify-left gap-2 text-center mb-0 text-gray-900">
-            {record?.Owner}
-          </span>
+          <span className="flex items-center justify-left gap-2 text-center mb-0 text-gray-900">{record?.Owner}</span>
         </div>
       </td>
 
@@ -248,37 +232,18 @@ export const ExtraFundListView = ({
 
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p className="text-black">
-            {getFormattedValueType(
-              user,
-              record?.Amount,
-              record?.Type,
-              "Withdrawal"
-            )}
-          </p>
+          <p className="text-black">{getFormattedValueType(user, record?.Amount, record?.Type, "Withdrawal")}</p>
         </div>
       </td>
 
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p className="text-black">
-            {getFormattedValueType(
-              user,
-              record?.Amount,
-              record?.Type,
-              "Credit"
-            )}
-          </p>
+          <p className="text-black">{getFormattedValueType(user, record?.Amount, record?.Type, "Credit")}</p>
         </div>
       </td>
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p className="text-black">
-            {getFormattedValueTotal(
-              user,
-              Number(record?.Balance) + Number(openingBalance)
-            )}
-          </p>
+          <p className="text-black">{getFormattedValueTotal(user, Number(record?.Balance) + Number(openingBalance))}</p>
         </div>
       </td>
 
@@ -286,10 +251,7 @@ export const ExtraFundListView = ({
         <div className="flex items-center text-left gap-3 justify-start">
           <div className="group flex relative">
             <FaEdit
-              className={clsx(
-                `text-editcolor`,
-                "hover:text-orange-500 font-semibold cursor-pointer sm:px-0"
-              )}
+              className={clsx(`text-editcolor`, "hover:text-orange-500 font-semibold cursor-pointer sm:px-0")}
               onClick={() => editClick(record)}
             />
             <ToolTip text={"Edit"} />
@@ -297,10 +259,7 @@ export const ExtraFundListView = ({
 
           <div className="group flex relative">
             <RiDeleteBin2Fill
-              className={clsx(
-                `text-deletecolor`,
-                "hover:text-red-500 font-semibold cursor-pointer sm:px-0"
-              )}
+              className={clsx(`text-deletecolor`, "hover:text-red-500 font-semibold cursor-pointer sm:px-0")}
               onClick={() => deleteClick(record.id)}
             />
             <ToolTip text={"Delete"} />
@@ -316,9 +275,7 @@ export const ExtraFundListView = ({
 
       <td className="min-w-fit whitespace-nowrap p-3 border-gray-200"></td>
 
-      <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200">
-        TOTAL
-      </td>
+      <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200">TOTAL</td>
 
       <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
@@ -334,14 +291,7 @@ export const ExtraFundListView = ({
 
       <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p>
-            {getFormattedValueTotal(
-              user,
-              Number(totalExcessBalance) +
-                Number(openingBalance) +
-                Number(prevBalance)
-            )}
-          </p>
+          <p>{getFormattedValueTotal(user, Number(totalExcessBalance) + Number(openingBalance) + Number(prevBalance))}</p>
         </div>
       </td>
 
@@ -357,26 +307,19 @@ export const ExtraFundListView = ({
             <table className="w-[97%] md:w-fit ml-5 xl:ml-auto xl:mr-7 -mb-4">
               <tbody>
                 <tr className="border border-gray-300 text-sm xl:text-[16px] text-left font-bold">
-                  <td className="min-w-fit whitespace-nowrap p-2 border-gray-200 font-normal">
-                    Current Month's Excess Funds
-                  </td>
+                  <td className="min-w-fit whitespace-nowrap p-2 border-gray-200 font-normal">Current Month's Excess Funds</td>
                   <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
                     {getFormattedValueTotal(user, openingBalance)}
                   </td>
                 </tr>
                 <tr className="border border-gray-300 text-sm xl:text-[16px] text-left font-bold">
-                  <td className="min-w-fit whitespace-nowrap p-2 border-gray-200 font-normal">
-                    * Excess Balance from Previous Month
-                  </td>
+                  <td className="min-w-fit whitespace-nowrap p-2 border-gray-200 font-normal">* Excess Balance from Previous Month</td>
                   <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
                     <div className="flex flex-row items-start gap-5">
                       <p>{getFormattedValueTotal(user, prevBalance)}</p>
                       <div className="group flex relative">
                         <AiFillEdit
-                          className={clsx(
-                            `text-editcolor`,
-                            "hover:text-orange-500 font-semibold cursor-pointer sm:px-0"
-                          )}
+                          className={clsx(`text-editcolor`, "hover:text-orange-500 font-semibold cursor-pointer sm:px-0")}
                           onClick={() => editBalClick()}
                         />
                         <ToolTip text={"Edit"} />
@@ -385,14 +328,9 @@ export const ExtraFundListView = ({
                   </td>
                 </tr>
                 <tr className="border border-gray-300 text-sm xl:text-[16px] text-left font-bold">
-                  <td className="min-w-fit whitespace-nowrap p-2 border-gray-200 font-normal">
-                    Excess Funds Current Balance
-                  </td>
+                  <td className="min-w-fit whitespace-nowrap p-2 border-gray-200 font-normal">Excess Funds Current Balance</td>
                   <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
-                    {getFormattedValueTotal(
-                      user,
-                      Number(totalExcessBalance) + Number(openingBalance)
-                    )}
+                    {getFormattedValueTotal(user, Number(totalExcessBalance) + Number(openingBalance))}
                   </td>
                 </tr>
               </tbody>
@@ -406,32 +344,14 @@ export const ExtraFundListView = ({
                 <TableTotal gridData={gridData} />
               </tbody>
             </table>
-            <p className="text-sm italic text-gray-500 ml-5">
-              * This is a total amount of excess funds not used in the previous
-              months
-            </p>
+            <p className="text-sm italic text-gray-500 ml-5">* This is a total amount of excess funds not used in the previous months</p>
           </div>
         </div>
       </div>
 
-      <AddExtraFund
-        open={open}
-        setOpen={setOpen}
-        recordData={selected}
-        key={new Date().getTime().toString()}
-      />
-      <AddBalance
-        open={balOpen}
-        setOpen={setBalOpen}
-        recordData={excessBal}
-        key={new Date().getTime().toString()}
-      />
-      <ConfirmationDialog
-        isLoading={isLoading}
-        open={openDialog}
-        setOpen={setOpenDialog}
-        onClick={() => deleteHandler(selected)}
-      />
+      <AddExtraFund open={open} setOpen={setOpen} recordData={selected} />
+      <AddBalance open={balOpen} setOpen={setBalOpen} recordData={excessBal} />
+      <ConfirmationDialog isLoading={isLoading} open={openDialog} setOpen={setOpenDialog} onClick={() => deleteHandler(selected)} />
     </>
   );
 };
