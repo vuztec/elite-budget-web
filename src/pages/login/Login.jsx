@@ -96,7 +96,7 @@ export const Login = () => {
                   Welcome back!
                 </p>
                 <p className="text-center text-base text-gray-700 ">
-                  Keep all your credential safe.
+                  Keep your login credentials safe.
                 </p>
               </div>
 

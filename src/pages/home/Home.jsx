@@ -144,7 +144,7 @@ export const Home = () => {
     }
   };
 
-  const [isShowing, setIsShowing] = useState(false);
+  const [isShowing, setIsShowing] = useState(true);
 
   return activeAccount ? (
     <>
@@ -197,7 +197,7 @@ export const Home = () => {
       {isDataLoaded && (
         <div className="w-full flex flex-col items-center gap-5 xl:gap-10 bg-white p-5 mt-4">
           <div className="w-full 2xl:w-[90%] flex flex-col items-center justify-center gap-5">
-            <div className="flex flex-col xl:flex-row w-full gap-5 xl:gap-10">
+            <div className="flex flex-col xl:flex-row w-full gap-5 xl:gap-10 xl:mb-10">
               <div className="w-full">
                 <YearlyIncome
                   incomeGridData={incomeGridData}

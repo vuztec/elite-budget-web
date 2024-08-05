@@ -181,7 +181,7 @@ export const Checklist = () => {
     [monthsName, generateMonthHeaders]
   );
 
-  const [isShowing, setIsShowing] = useState(false);
+  const [isShowing, setIsShowing] = useState(true);
 
   return activeAccount ? (
     <>

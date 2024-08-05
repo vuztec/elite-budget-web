@@ -76,7 +76,7 @@ const MonthlySummary = ({
               <td className="px-2 py-2 border-r w-2/3 border-gray-300">
                 {owner === "Joint"
                   ? "TOTAL JOINT CONTRIBUTION"
-                  : "MONTHLY INCOME"}
+                  : "MONTHLY NET INCOME"}
               </td>
               <td className="px-2">
                 {owner === "Joint"

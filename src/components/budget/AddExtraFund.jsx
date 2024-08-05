@@ -48,7 +48,9 @@ export const AddExtraFund = ({ open, setOpen, recordData }) => {
       axios
         .post("/api/extra-funds-tracker", data)
         .then(({ data }) => {
-          queryClient.setQueryData(["extrafunds"], (prev) => (prev ? [...prev, data] : [data]));
+          queryClient.setQueryData(["extrafunds"], (prev) =>
+            prev ? [...prev, data] : [data]
+          );
           setIsLoading(() => false);
           setOpen(false);
         })
@@ -61,7 +63,9 @@ export const AddExtraFund = ({ open, setOpen, recordData }) => {
         .patch("/api/extra-funds-tracker/" + numericSelectedID, data)
         .then(({ data }) => {
           queryClient.setQueryData(["extrafunds"], (prev) =>
-            prev.map((fund) => (fund.id === numericSelectedID ? { ...fund, ...data } : fund))
+            prev.map((fund) =>
+              fund.id === numericSelectedID ? { ...fund, ...data } : fund
+            )
           );
           setIsLoading(() => false);
           setOpen(false);
@@ -75,9 +79,17 @@ export const AddExtraFund = ({ open, setOpen, recordData }) => {
   return (
     <>
       <ModalWrapper open={open} setOpen={setOpen}>
-        <form onSubmit={handleSubmit(handleOnSubmit)} className="w-full h-[70%]">
-          <Dialog.Title as="h2" className="text-base font-bold leading-6 text-gray-900 mb-4">
-            {recordData ? "UPDATE EXTRA FUND RECORD" : "ADD NEW EXTRA FUND RECORD"}
+        <form
+          onSubmit={handleSubmit(handleOnSubmit)}
+          className="w-full h-[70%]"
+        >
+          <Dialog.Title
+            as="h2"
+            className="text-base font-bold leading-6 text-gray-900 mb-4"
+          >
+            {recordData
+              ? "UPDATE EXTRA FUND RECORD"
+              : "ADD NEW EXTRA FUND RECORD"}
           </Dialog.Title>
           <div className="mt-2 flex flex-col gap-6 overflow-y-scroll bg-scroll">
             <div className="flex flex-col gap-6 w-full">
@@ -148,7 +160,8 @@ export const AddExtraFund = ({ open, setOpen, recordData }) => {
                 className="w-full rounded"
                 register={register("Amount", {
                   valueAsNumber: true,
-                  validate: (value) => value > 0 || "Amount must be greater than zero or positive",
+                  validate: (value) =>
+                    value > 0 || "Amount must be greater than zero or positive",
                 })}
                 error={errors.Amount ? errors.Amount.message : ""}
               />
@@ -164,13 +177,13 @@ export const AddExtraFund = ({ open, setOpen, recordData }) => {
               <Button
                 type="submit"
                 className="w-fit flex flex-row-reverse items-center gap-1 text-white bg-black"
-                label="Submit"
+                label="Enter"
                 icon={<IoMdSend />}
               />
 
               <Button
                 type="button"
-                className="bg-pink-200 flex flex-row-reverse items-center gap-1 text-gray-900"
+                className="bg-gray-300 flex flex-row-reverse items-center gap-1 text-black"
                 onClick={() => setOpen(false)}
                 label="Cancel"
                 icon={<TiCancel />}

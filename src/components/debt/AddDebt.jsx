@@ -185,13 +185,13 @@ export const AddDebt = ({ open, setOpen, recordData }) => {
               <Button
                 type="submit"
                 className="w-fit flex flex-row-reverse items-center gap-1 text-white bg-black"
-                label="Submit"
+                label="Enter"
                 icon={<IoMdSend />}
               />
 
               <Button
                 type="button"
-                className="bg-pink-200 flex flex-row-reverse items-center gap-1 text-gray-900"
+                className="bg-gray-300 flex flex-row-reverse items-center gap-1 text-black"
                 onClick={() => setOpen(false)}
                 label="Cancel"
                 icon={<TiCancel />}

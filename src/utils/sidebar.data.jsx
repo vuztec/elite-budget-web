@@ -9,7 +9,7 @@ export const SidebarLinks = [
   {
     label: "Home",
     link: "/",
-    title: "Home",
+    title: "Budget Summary",
     icon: <IoHome />,
     dropdown: false,
     activename: "home",

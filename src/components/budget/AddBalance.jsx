@@ -53,8 +53,14 @@ export const AddBalance = ({ open, setOpen, recordData, type }) => {
   return (
     <>
       <ModalWrapper open={open} setOpen={setOpen}>
-        <form onSubmit={handleSubmit(handleOnSubmit)} className="w-full h-[70%]">
-          <Dialog.Title as="h2" className="text-base font-bold leading-6 text-gray-900 mb-4">
+        <form
+          onSubmit={handleSubmit(handleOnSubmit)}
+          className="w-full h-[70%]"
+        >
+          <Dialog.Title
+            as="h2"
+            className="text-base font-bold leading-6 text-gray-900 mb-4"
+          >
             {recordData ? "UPDATE PREVIOUS BALANCE" : "ADD PREVIOUS BALANCE"}
           </Dialog.Title>
           <div className="mt-2 flex flex-col gap-6 overflow-y-scroll bg-scroll">
@@ -67,11 +73,15 @@ export const AddBalance = ({ open, setOpen, recordData, type }) => {
                 className="w-full rounded"
                 register={register("Balance", {
                   valueAsNumber: true,
-                  validate: (value) => value >= 0 || "Amount must be positive or zero.",
+                  validate: (value) =>
+                    value >= 0 || "Amount must be positive or zero.",
                 })}
                 error={errors.Balance ? errors.Balance.message : ""}
               />
-              <p className="text-xs italic text-gray-400">* This is a total amount of excess funds not used in the previous months</p>
+              <p className="text-xs italic text-gray-400">
+                * This is a total amount of excess funds not used in the
+                previous months
+              </p>
             </div>
           </div>
 
@@ -84,13 +94,13 @@ export const AddBalance = ({ open, setOpen, recordData, type }) => {
               <Button
                 type="submit"
                 className="w-fit flex flex-row-reverse items-center gap-1 text-white bg-black"
-                label="Submit"
+                label="Enter"
                 icon={<IoMdSend />}
               />
 
               <Button
                 type="button"
-                className="bg-pink-200 flex flex-row-reverse items-center gap-1 text-gray-900"
+                className="bg-gray-300 flex flex-row-reverse items-center gap-1 text-black"
                 onClick={() => setOpen(false)}
                 label="Cancel"
                 icon={<TiCancel />}

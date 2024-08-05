@@ -68,7 +68,7 @@ export const Savings = () => {
     }
   };
 
-  const [isShowing, setIsShowing] = useState(false);
+  const [isShowing, setIsShowing] = useState(true);
 
   return activeAccount ? (
     <>

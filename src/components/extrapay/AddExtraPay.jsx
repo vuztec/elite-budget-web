@@ -43,7 +43,9 @@ export const AddExtraPay = ({ open, setOpen, recordData }) => {
     axios
       .patch("/api/extra-pay-checks/" + numericSelectedID, data)
       .then(({ data }) => {
-        queryClient.setQueryData(["extrapaychecks"], (prev) => prev.map((check) => (check.id === data.id ? data : check)));
+        queryClient.setQueryData(["extrapaychecks"], (prev) =>
+          prev.map((check) => (check.id === data.id ? data : check))
+        );
         setIsLoading(() => false);
         setOpen(false);
       })
@@ -56,8 +58,14 @@ export const AddExtraPay = ({ open, setOpen, recordData }) => {
   return (
     <>
       <ModalWrapper open={open} setOpen={setOpen}>
-        <form onSubmit={handleSubmit(handleOnSubmit)} className="w-full h-[70%]">
-          <Dialog.Title as="h2" className="text-base font-bold leading-6 text-gray-900 mb-4">
+        <form
+          onSubmit={handleSubmit(handleOnSubmit)}
+          className="w-full h-[70%]"
+        >
+          <Dialog.Title
+            as="h2"
+            className="text-base font-bold leading-6 text-gray-900 mb-4"
+          >
             {recordData ? "UPDATE EXTRA PAYCHECK" : "ADD NEW EXTRA PAYCHECK"}
           </Dialog.Title>
           <div className="mt-2 flex flex-col gap-6 overflow-y-scroll bg-scroll">
@@ -109,13 +117,13 @@ export const AddExtraPay = ({ open, setOpen, recordData }) => {
               <Button
                 type="submit"
                 className="w-fit flex flex-row-reverse items-center gap-1 text-white bg-black"
-                label="Submit"
+                label="Enter"
                 icon={<IoMdSend />}
               />
 
               <Button
                 type="button"
-                className="bg-pink-200 flex flex-row-reverse items-center gap-1 text-gray-900"
+                className="bg-gray-300 flex flex-row-reverse items-center gap-1 text-black"
                 onClick={() => setOpen(false)}
                 label="Cancel"
                 icon={<TiCancel />}
