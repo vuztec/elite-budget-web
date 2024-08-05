@@ -7,21 +7,12 @@ import Package from "../../package/Package";
 import Loading from "../../components/Loader";
 import { MdFilterAlt, MdFilterAltOff } from "react-icons/md";
 import Button from "../../components/Button";
-import {
-  getDebts,
-  getExpenses,
-  getIncomes,
-  getMainGoals,
-  getRetirements,
-  getSavings,
-} from "../../config/api";
+import { getDebts, getExpenses, getIncomes, getMainGoals, getRetirements, getSavings } from "../../config/api";
 import { useQuery } from "react-query";
+import { usePDF } from "react-to-pdf";
+import { PiPrinter } from "react-icons/pi";
 import { getActiveAccount } from "../../utils/permissions";
-import {
-  expenseOwners,
-  getOwnerExpenseGridData,
-  getOwnerGridData,
-} from "../../utils/budget.filter";
+import { expenseOwners, getOwnerExpenseGridData, getOwnerGridData } from "../../utils/budget.filter";
 import clsx from "clsx";
 import Select from "../../components/Select";
 import YearlyIncome from "../../components/budget/YearlyIncome";
@@ -32,6 +23,8 @@ import useUserStore from "../../app/user";
 
 export const Home = () => {
   const { user } = useUserStore();
+  const { toPDF, targetRef } = usePDF({ filename: "home.pdf" });
+
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [incomeGridData, setIncomeGridData] = useState([]);
   const [savingsGridData, setSavingsGridData] = useState([]);
@@ -150,24 +143,24 @@ export const Home = () => {
     <>
       <div className="w-full flex item-center justify-end">
         <div className="w-fit gap-4 h-10 md:h-12 px-2 rounded-full bg-white flex items-center">
-          <div>
-            <div className="text-sm">
-              <Button
-                label={!isShowing ? "Show Filters" : "Hide Filters"}
-                icon={
-                  !isShowing ? (
-                    <MdFilterAlt className="text-lg" />
-                  ) : (
-                    <MdFilterAltOff className="text-lg" />
-                  )
-                }
-                className={clsx(
-                  "flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:text-black",
-                  !isShowing ? "bg-green-800" : "bg-red-800"
-                )}
-                onClick={() => setIsShowing((old) => !old)}
-              />
-            </div>
+          <div className="text-sm flex gap-2">
+            <Button
+              label={!isShowing ? "Show Filters" : "Hide Filters"}
+              icon={!isShowing ? <MdFilterAlt className="text-lg" /> : <MdFilterAltOff className="text-lg" />}
+              className={clsx(
+                "flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:text-black",
+                !isShowing ? "bg-green-800" : "bg-red-800"
+              )}
+              onClick={() => setIsShowing((old) => !old)}
+            />
+            <Button
+              onClick={toPDF}
+              icon={<PiPrinter />}
+              label={"Print"}
+              className={
+                "flex flex-row-reverse justify-center items-center bg-black text-white text-lg gap-2 hover:bg-[whitesmoke] hover:text-black"
+              }
+            />
           </div>
         </div>
       </div>
@@ -195,7 +188,7 @@ export const Home = () => {
         </div>
       )}
       {isDataLoaded && (
-        <div className="w-full flex flex-col items-center gap-5 xl:gap-10 bg-white p-5 mt-4">
+        <div className="w-full flex flex-col items-center gap-5 xl:gap-10 bg-white p-5 mt-4" ref={targetRef}>
           <div className="w-full 2xl:w-[90%] flex flex-col items-center justify-center gap-5">
             <div className="flex flex-col xl:flex-row w-full gap-5 xl:gap-10 xl:mb-10">
               <div className="w-full">
@@ -218,12 +211,7 @@ export const Home = () => {
             <div className="flex flex-col xl:flex-row w-full gap-5 xl:gap-10">
               <div className="flex flex-col w-full gap-5">
                 <div className="w-full">
-                  <MonthlySavings
-                    savingsGridData={savingsGridData}
-                    incomeGridData={incomeGridData}
-                    maingoals={maingoals}
-                    owner={owner}
-                  />
+                  <MonthlySavings savingsGridData={savingsGridData} incomeGridData={incomeGridData} maingoals={maingoals} owner={owner} />
                 </div>
                 <div className="w-full">
                   <MonthlyRetirement
@@ -236,12 +224,7 @@ export const Home = () => {
               </div>
               <div className="flex flex-col w-full gap-5">
                 <div className="w-full">
-                  <MonthlyDebtHome
-                    debtGridData={debtGridData}
-                    incomeGridData={incomeGridData}
-                    maingoals={maingoals}
-                    owner={owner}
-                  />
+                  <MonthlyDebtHome debtGridData={debtGridData} incomeGridData={incomeGridData} maingoals={maingoals} owner={owner} />
                 </div>
                 <div className="w-full">
                   <MonthlyExpenseHome
