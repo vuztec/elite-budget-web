@@ -37,6 +37,7 @@ export const ExpenseRecords = () => {
     staleTime: 1000 * 60 * 60,
   });
 
+  console.log(expenses, "expenses");
   ///-------------Filters Data Source --------------------------------///
   const owners = expenseOwners.map((owner) => ({
     value: owner,
@@ -217,9 +218,9 @@ export const ExpenseRecords = () => {
           <div className="w-full">
             <ExpenseListView
               Data={gridData.filter(
-                (item) => item.Category === "Health / Medical"
+                (item) => item.Category === "Health/Medical"
               )}
-              category="Health / Medical"
+              category="Health/Medical"
               showColumn={false}
               showAll={showAll}
             />

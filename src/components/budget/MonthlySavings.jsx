@@ -61,7 +61,7 @@ const MonthlySavings = ({
           <tbody>
             <tr className="border border-gray-300 text-left p-2">
               <td className="px-2 py-2 border-r w-2/3 border-gray-300">
-                Total annual savings
+                Total Annual Savings
               </td>
               <td className="px-2 font-bold">
                 {getYearlyBudgetTotal(user, savingsGridData)}

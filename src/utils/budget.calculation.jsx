@@ -168,9 +168,9 @@ export const getGrossMonthlyTotal = (user, data) => {
     let monthlyIncome = 0;
 
     switch (payFrequency) {
-      case "Yearly":
-        monthlyIncome = income / 12;
-        break;
+      // case "Yearly":
+      //   monthlyIncome = income / 12;
+      //   break;
       case "Monthly":
         monthlyIncome = income;
         break;
@@ -201,9 +201,9 @@ export const getNetMonthlyTotal = (user, data) => {
     let monthlyIncome = 0;
 
     switch (payFrequency) {
-      case "Yearly":
-        monthlyIncome = income / 12;
-        break;
+      // case "Yearly":
+      //   monthlyIncome = income / 12;
+      //   break;
       case "Monthly":
         monthlyIncome = income;
         break;
@@ -462,9 +462,9 @@ export const getUnformattedGrossMonthlyTotal = (data) => {
     let monthlyIncome = 0;
 
     switch (payFrequency) {
-      case "Yearly":
-        monthlyIncome = income / 12;
-        break;
+      // case "Yearly":
+      //   monthlyIncome = income / 12;
+      //   break;
       case "Monthly":
         monthlyIncome = income;
         break;
