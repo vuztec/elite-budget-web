@@ -9,7 +9,7 @@ import { MdFilterAlt, MdFilterAltOff } from "react-icons/md";
 import Button from "../../components/Button";
 import { getDebts, getExpenses, getIncomes, getMainGoals, getRetirements, getSavings } from "../../config/api";
 import { useQuery } from "react-query";
-import { usePDF } from "react-to-pdf";
+import generatePDF, { Margin } from "react-to-pdf";
 import { PiPrinter } from "react-icons/pi";
 import { getActiveAccount } from "../../utils/permissions";
 import { expenseOwners, getOwnerExpenseGridData, getOwnerGridData } from "../../utils/budget.filter";
@@ -23,7 +23,6 @@ import useUserStore from "../../app/user";
 
 export const Home = () => {
   const { user } = useUserStore();
-  const { toPDF, targetRef } = usePDF({ filename: "home.pdf" });
 
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [incomeGridData, setIncomeGridData] = useState([]);
@@ -138,11 +137,12 @@ export const Home = () => {
   };
 
   const [isShowing, setIsShowing] = useState(true);
+  const element = () => document.getElementById("print-container");
 
   return activeAccount ? (
     <>
       <div className="w-full flex item-center justify-end">
-        <div className="w-fit gap-4 h-10 md:h-12 px-2 rounded-full bg-white flex items-center">
+        <div className="w-fit gap-4 h-10 md:h-12 px-2 rounded-full bg-white flex items-center ">
           <div className="text-sm flex gap-2">
             <Button
               label={!isShowing ? "Show Filters" : "Hide Filters"}
@@ -154,7 +154,7 @@ export const Home = () => {
               onClick={() => setIsShowing((old) => !old)}
             />
             <Button
-              onClick={toPDF}
+              onClick={() => generatePDF(element, { filename: "home.pdf", page: { margin: Margin.MEDIUM } })}
               icon={<PiPrinter />}
               label={"Print"}
               className={
@@ -177,18 +177,17 @@ export const Home = () => {
             options={owners}
             placeholder="Household"
             label="Account Owner"
-            className="bg-white w-full py-1"
+            className="bg-white w-full py-1 lg:text-base"
           />
         </div>
       </div>
-
       {!isDataLoaded && (
         <div className="py-10">
           <Loading />
         </div>
       )}
       {isDataLoaded && (
-        <div className="w-full flex flex-col items-center gap-5 xl:gap-10 bg-white p-5 mt-4" ref={targetRef}>
+        <div className="w-full flex flex-col items-center gap-5 xl:gap-10 bg-white p-5 mt-4">
           <div className="w-full 2xl:w-[90%] flex flex-col items-center justify-center gap-5">
             <div className="flex flex-col xl:flex-row w-full gap-5 xl:gap-10 xl:mb-10">
               <div className="w-full">

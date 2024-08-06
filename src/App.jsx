@@ -45,9 +45,11 @@ function Layout() {
       </div>
       {/* <MobileSidebar/> */}
       <div className="flex-1 overflow-auto">
-        <Navbar />
-        <div className="p-4 2xl:px-10">
-          <Outlet />
+        <div id="print-container">
+          <Navbar />
+          <div className="p-4 2xl:px-10">
+            <Outlet />
+          </div>
         </div>
       </div>
     </div>

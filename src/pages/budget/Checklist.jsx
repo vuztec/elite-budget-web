@@ -3,12 +3,7 @@ import Package from "../../package/Package";
 import Loading from "../../components/Loader";
 import { MdFilterAlt, MdFilterAltOff } from "react-icons/md";
 import Button from "../../components/Button";
-import {
-  getDebts,
-  getExpenses,
-  getRetirements,
-  getSavings,
-} from "../../config/api";
+import { getDebts, getExpenses, getRetirements, getSavings } from "../../config/api";
 import { useQuery } from "react-query";
 import { getActiveAccount } from "../../utils/permissions";
 import {
@@ -27,7 +22,7 @@ import useUserStore from "../../app/user";
 import { CheckListView } from "../../components/checklist/CheckListView";
 import MultiSelectDropdown from "../../components/MultiSelect";
 import { PiPrinter } from "react-icons/pi";
-import { usePDF } from "react-to-pdf";
+import generatePDF, { Margin, usePDF } from "react-to-pdf";
 
 export const Checklist = () => {
   const { user } = useUserStore();
@@ -39,10 +34,8 @@ export const Checklist = () => {
   // Filters
   const [owner, setOwner] = useState("Household");
   const uniqueCategories = getUniqueCategories(combinedData);
-  const uniqueBudgetItemsByCategory =
-    getUniqueBudgetItemsByCategory(combinedData);
-  const uniqueDescriptionsByCategory =
-    getUniqueDescriptionsByCategory(combinedData);
+  const uniqueBudgetItemsByCategory = getUniqueBudgetItemsByCategory(combinedData);
+  const uniqueDescriptionsByCategory = getUniqueDescriptionsByCategory(combinedData);
   const { toPDF, targetRef } = usePDF({ filename: "checklist.pdf" });
 
   const { data: debts, status: isDebtLoaded } = useQuery({
@@ -78,26 +71,13 @@ export const Checklist = () => {
   ///-------------END Filters Data Source --------------------------------///
 
   useEffect(() => {
-    if (
-      isSavingLoaded === "success" &&
-      isRetLoaded === "success" &&
-      isExpenseLoaded === "success" &&
-      isDebtLoaded === "success" &&
-      owner
-    ) {
+    if (isSavingLoaded === "success" && isRetLoaded === "success" && isExpenseLoaded === "success" && isDebtLoaded === "success" && owner) {
       const savingData = getOwnerGridData(savings, owner);
       const retirementData = getOwnerGridData(retirements, owner);
       const expenseData = getOwnerExpenseGridData(expenses, owner);
       const debtData = getOwnerGridData(debts, owner);
-      const combinedData = getCombineData(
-        savingData,
-        expenseData,
-        retirementData,
-        debtData
-      );
-      const filteredData = combinedData.filter(
-        (data) => data.MonthlyBudget > 0
-      );
+      const combinedData = getCombineData(savingData, expenseData, retirementData, debtData);
+      const filteredData = combinedData.filter((data) => data.MonthlyBudget > 0);
       const sortedData = filteredData.sort((a, b) => {
         // Determine the display names for both records
         const aDisplayName = a.NickName || a.Description;
@@ -123,17 +103,7 @@ export const Checklist = () => {
     } else {
       setIsDataLoaded(false);
     }
-  }, [
-    savings,
-    retirements,
-    debts,
-    expenses,
-    isSavingLoaded,
-    isExpenseLoaded,
-    isDebtLoaded,
-    isRetLoaded,
-    owner,
-  ]);
+  }, [savings, retirements, debts, expenses, isSavingLoaded, isExpenseLoaded, isDebtLoaded, isRetLoaded, owner]);
 
   const handleOwnerChange = (e) => {
     if (e && e.target?.value) {
@@ -147,41 +117,21 @@ export const Checklist = () => {
     return currentYear?.toString().slice(-2);
   };
 
-  const months = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
-  ];
+  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
   const generateMonthHeaders = () => {
     const lastTwoDigitsOfYear = getCurrentYear();
     let newMonths = months;
-    if (monthsName.length)
-      newMonths = monthsName.sort(
-        (a, b) => months.indexOf(a) - months.indexOf(b)
-      );
-    const monthHeaders = newMonths?.map(
-      (month) => `${month}-${lastTwoDigitsOfYear}`
-    );
+    if (monthsName.length) newMonths = monthsName.sort((a, b) => months.indexOf(a) - months.indexOf(b));
+    const monthHeaders = newMonths?.map((month) => `${month}-${lastTwoDigitsOfYear}`);
 
     return monthHeaders;
   };
 
-  const monthHeaders = useMemo(
-    () => generateMonthHeaders(),
-    [monthsName, generateMonthHeaders]
-  );
+  const monthHeaders = useMemo(() => generateMonthHeaders(), [monthsName, generateMonthHeaders]);
 
   const [isShowing, setIsShowing] = useState(true);
+  const element = () => document.getElementById("print-container");
 
   return activeAccount ? (
     <>
@@ -191,13 +141,7 @@ export const Checklist = () => {
             <div className="text-sm">
               <Button
                 label={!isShowing ? "Show Filters" : "Hide Filters"}
-                icon={
-                  !isShowing ? (
-                    <MdFilterAlt className="text-lg" />
-                  ) : (
-                    <MdFilterAltOff className="text-lg" />
-                  )
-                }
+                icon={!isShowing ? <MdFilterAlt className="text-lg" /> : <MdFilterAltOff className="text-lg" />}
                 className={clsx(
                   "flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:text-black",
                   !isShowing ? "bg-green-800" : "bg-red-800"
@@ -206,19 +150,14 @@ export const Checklist = () => {
               />
             </div>
             <Button
-              onClick={toPDF}
+              onClick={() => generatePDF(element, { filename: "checklist.pdf", page: { margin: Margin.MEDIUM } })}
               icon={<PiPrinter />}
               label={"Print"}
               className={
                 "flex flex-row-reverse justify-center items-center bg-black text-white text-lg gap-2 hover:bg-[whitesmoke] hover:text-black"
               }
             />
-            <MultiSelectDropdown
-              options={months}
-              placeholder={"Filter Months"}
-              value={monthsName}
-              setValue={setMonthsName}
-            />
+            <MultiSelectDropdown options={months} placeholder={"Filter Months"} value={monthsName} setValue={setMonthsName} />
           </div>
         </div>
       </div>
@@ -235,7 +174,7 @@ export const Checklist = () => {
             options={owners}
             placeholder="Household"
             label="Account Owner"
-            className="bg-white w-full py-1"
+            className="bg-white w-full py-1 lg:text-base"
           />
         </div>
       </div>
