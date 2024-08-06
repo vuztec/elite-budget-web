@@ -171,7 +171,8 @@ export const AddTransaction = ({ open, setOpen, recordData }) => {
                 register={register("Amount", {
                   valueAsNumber: true,
                   validate: (value) =>
-                    value > 0 || "Amount must be greater than zero or positive",
+                    value > 0 ||
+                    "Amount must be greater than  or equal to zero",
                 })}
                 error={errors.Amount ? errors.Amount.message : ""}
               />
