@@ -9,6 +9,9 @@ import ConfirmationDialog from "../Dialogs";
 import axios from "../../config/axios";
 import { handleAxiosResponseError } from "../../utils/handleResponseError";
 import {
+  getExtraPayCheckTotal,
+  getFormattedValue,
+  getFormattedValueTotal,
   getMonthlyBudgetTotal,
   getYearlyBudgetTotal,
 } from "../../utils/budget.calculation";
@@ -72,7 +75,7 @@ export const ExtraPayListView = ({ gridData, showDelete }) => {
       <tr className="font-bold bg-[whitesmoke] text-black border border-gray-300 text-left">
         <th className="border-l border-gray-300 p-2">
           <div className="flex justify-between items-center gap-2">
-            * Extra Pay Date
+            * Extra Pay Dates
             <Sort
               order={order}
               setOrder={setOrder}
@@ -132,13 +135,17 @@ export const ExtraPayListView = ({ gridData, showDelete }) => {
 
       <td className="max-w-[300px] whitespace-normal p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p className="text-black">{record?.SelfAmount}</p>
+          <p className="text-black">
+            {getFormattedValueTotal(user, record?.SelfAmount)}
+          </p>
         </div>
       </td>
 
       <td className="max-w-[300px] whitespace-normal p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p className="text-black">{record?.PartnerAmount}</p>
+          <p className="text-black">
+            {getFormattedValueTotal(user, record?.PartnerAmount)}
+          </p>
         </div>
       </td>
 
@@ -177,13 +184,13 @@ export const ExtraPayListView = ({ gridData, showDelete }) => {
 
       <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p>{getMonthlyBudgetTotal(user, gridData)}</p>
+          <p>{getExtraPayCheckTotal(user, gridData, "Self")}</p>
         </div>
       </td>
 
       <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p>{getYearlyBudgetTotal(user, gridData)}</p>
+          <p>{getExtraPayCheckTotal(user, gridData, "Partner")}</p>
         </div>
       </td>
 
@@ -200,7 +207,7 @@ export const ExtraPayListView = ({ gridData, showDelete }) => {
               <thead>
                 <tr>
                   <th className="p-2 w-full uppercase bg-[whitesmoke] text-black  border-l border-t border-r border-gray-300 flex items-center justify-center">
-                    EXTRA PAY CHECKS
+                    EXTRA PAYCHECKS
                   </th>
                 </tr>
               </thead>
@@ -216,7 +223,8 @@ export const ExtraPayListView = ({ gridData, showDelete }) => {
             </table>
             <div className="w-full ml-5">
               <p className="text-xs">
-                * Note: See Extra Pay Dates for more details.
+                * Note: Refer to the Extra Pay Dates tab for your Extra Pay
+                Dates. Only applies if you are paid Weekly or Biweekly.
               </p>
             </div>
           </div>

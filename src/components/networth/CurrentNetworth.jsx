@@ -35,7 +35,7 @@ export const CurrentNetworth = ({
         <div className="w-full xl:w-1/2">
           <table className="w-[99%]">
             <tbody>
-              <tr className="border border-gray-300 text-sm xl:text-[16px]  text-left p-2 font-bold">
+              <tr className="xl:border-t border-l border-r border-b border-gray-300 text-sm xl:text-[16px] bg-gray-400/50 text-left p-2 font-bold">
                 <td className="px-2 py-2 border-r w-2/3 border-gray-300 font-normal">
                   Net Worth
                 </td>

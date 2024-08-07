@@ -5,11 +5,14 @@ export const paymentMethods = [
   "Auto Debit",
   "Auto Transfer",
   "Bill Pay",
-  "Check or Cash",
-  "Debit/Credit",
+  "Check or Cash/Debit",
+  "Credit",
 ];
 export const daydues = [
-  "N/A",
+  "Weekly",
+  "Bimonthly",
+  "Quarterly",
+  "Annually",
   "01",
   "02",
   "03",
@@ -94,6 +97,19 @@ export const getOwnerGridData = (data, owner) => {
   let ownerFilteredData;
   if (owner !== "Household" && owner !== "All" && parseInt(owner) !== 0) {
     ownerFilteredData = data?.filter((item) => item.Owner === owner);
+  } else {
+    ownerFilteredData = data;
+  }
+
+  return ownerFilteredData;
+};
+
+export const getOwnerTransGridData = (data, owner) => {
+  let ownerFilteredData;
+  if (owner !== "Household" && owner !== "All" && parseInt(owner) !== 0) {
+    ownerFilteredData = data?.filter(
+      (item) => item.BankAccountName.Owner === owner
+    );
   } else {
     ownerFilteredData = data;
   }

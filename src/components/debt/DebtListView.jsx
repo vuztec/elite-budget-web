@@ -104,8 +104,22 @@ export const DebtListView = ({ Data, category, showAll }) => {
               order={order}
               setOrder={setOrder}
               column={2}
+              name={"Description"}
+              data={gridData}
+              setData={setGridData}
+              defaultData={Data}
+            />
+          </div>
+        </th>
+        <th className="border-l border-gray-300 p-2">
+          <div className="flex justify-between items-center gap-2">
+            Nickname
+            <Sort
+              tab={"debt"}
+              order={order}
+              setOrder={setOrder}
+              column={2}
               name={"NickName"}
-              name2={"Description"}
               data={gridData}
               setData={setGridData}
               defaultData={Data}
@@ -188,7 +202,7 @@ export const DebtListView = ({ Data, category, showAll }) => {
         <th className="border-l border-gray-300 p-1">
           <div className="flex justify-between items-center gap-2">
             <div className="flex flex-col">
-              <span className="text-left">Annual</span>
+              <span className="text-left">Annual (Other)</span>
               <span className="text-left">Debt Pmts</span>
             </div>
             <Sort
@@ -221,9 +235,13 @@ export const DebtListView = ({ Data, category, showAll }) => {
 
       <td className="max-w-[300px] whitespace-normal p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p className="text-black">
-            {record?.NickName ? record?.NickName : record?.Description}
-          </p>
+          <p className="text-black">{record?.Description}</p>
+        </div>
+      </td>
+
+      <td className="max-w-[300px] whitespace-normal p-2 border-l border-gray-200">
+        <div className="flex flex-col items-start gap-1">
+          <p className="text-black">{record?.NickName}</p>
         </div>
       </td>
 

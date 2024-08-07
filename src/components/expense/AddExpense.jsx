@@ -140,19 +140,21 @@ export const AddExpense = ({ open, setOpen, recordData }) => {
             </div>
             {isVisible && (
               <div className="flex flex-col gap-6 w-full">
-                <Textbox
-                  placeholder="Enter Amount"
-                  type="number"
-                  name="MarketValue"
-                  label="Market Value"
-                  className="w-full rounded"
-                  register={register("MarketValue", {
-                    valueAsNumber: true,
-                    validate: (value) =>
-                      value >= 0 || "Amount must be positive or zero.",
-                  })}
-                  error={errors.MarketValue ? errors.MarketValue.message : ""}
-                />
+                {recordData.Description !== "Home Equity Line of Credit" && (
+                  <Textbox
+                    placeholder="Enter Amount"
+                    type="number"
+                    name="MarketValue"
+                    label="Market Value"
+                    className="w-full rounded"
+                    register={register("MarketValue", {
+                      valueAsNumber: true,
+                      validate: (value) =>
+                        value >= 0 || "Amount must be positive or zero.",
+                    })}
+                    error={errors.MarketValue ? errors.MarketValue.message : ""}
+                  />
+                )}
                 {recordData.Category !== "Children" && (
                   <Textbox
                     placeholder="Enter Amount"

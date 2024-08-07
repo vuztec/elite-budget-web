@@ -94,7 +94,6 @@ export const SavingListView = ({ gridData, showDelete }) => {
           </div>
         </th>
         <th className="border-l border-gray-300 p-2">
-          {" "}
           <div className="flex justify-between items-center gap-2">
             Description
             <Sort
@@ -102,8 +101,22 @@ export const SavingListView = ({ gridData, showDelete }) => {
               order={order}
               setOrder={setOrder}
               column={2}
+              name={"Description"}
+              data={data}
+              setData={setData}
+              defaultData={gridData}
+            />
+          </div>
+        </th>
+        <th className="border-l border-gray-300 p-2">
+          <div className="flex justify-between items-center gap-2">
+            Nickname
+            <Sort
+              tab={"saving"}
+              order={order}
+              setOrder={setOrder}
+              column={2}
               name={"NickName"}
-              name2={"Description"}
               data={data}
               setData={setData}
               defaultData={gridData}
@@ -221,9 +234,13 @@ export const SavingListView = ({ gridData, showDelete }) => {
 
       <td className="max-w-[300px] whitespace-normal p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p className="text-black">
-            {record?.NickName ? record?.NickName : record?.Description}
-          </p>
+          <p className="text-black">{record?.Description}</p>
+        </div>
+      </td>
+
+      <td className="max-w-[300px] whitespace-normal p-2 border-l border-gray-200">
+        <div className="flex flex-col items-start gap-1">
+          <p className="text-black">{record?.NickName}</p>
         </div>
       </td>
 
@@ -293,6 +310,7 @@ export const SavingListView = ({ gridData, showDelete }) => {
 
   const TableTotal = ({ gridData }) => (
     <tr className="border border-gray-300 bg-[whitesmoke] text-gray-600 text-left font-bold">
+      <td className="min-w-fit whitespace-nowrap p-3 border-gray-200"></td>
       <td className="min-w-fit whitespace-nowrap p-3 border-gray-200"></td>
 
       <td className="min-w-fit whitespace-nowrap p-3 border-gray-200">

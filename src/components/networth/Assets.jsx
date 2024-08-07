@@ -28,8 +28,6 @@ export const Assets = ({
   const totalOpeningBalance = getUnformattedOpeningBalanceTotal(bankGridData);
   const totalBankBalance = getUnformattedBankBalanceTotal(transactionGridData);
 
-  console.log("transactionGridData: ", transactionGridData);
-
   return (
     <div className="w-full flex flex-col">
       <div className="w-full px-2 py-1 flex flex-col xl:flex-row gap-0 xl:gap-5">
@@ -51,7 +49,8 @@ export const Assets = ({
               </tr>
               <tr className="border border-gray-300 text-sm xl:text-[16px]  text-left p-2 font-bold">
                 <td className="px-2 py-2 border-r w-2/3 border-gray-300 font-normal">
-                  Household Furnishings & Appliances
+                  Household (Incl. furnishings, kitchen appliances, clothes,
+                  shoes, purses, jewelry, etc.)
                 </td>
                 <td className="px-2">
                   {getHouseHoldMarketValueTotal(
@@ -64,7 +63,8 @@ export const Assets = ({
               </tr>
               <tr className="border border-gray-300 text-sm xl:text-[16px]  text-left  p-2 font-bold">
                 <td className="px-2 py-2 border-r w-2/3 border-gray-300 font-normal">
-                  Other Assets
+                  Other Assets: Recreation: RV, Boats, Jetskis, Sports
+                  Equipment, etc.
                 </td>
                 <td className="px-2">
                   {getOtherAssetMarketValueTotal(
@@ -124,7 +124,7 @@ export const Assets = ({
         <div className="w-full xl:w-1/2">
           <table className="w-[99%]">
             <tbody>
-              <tr className="xl:border-t border-l border-r border-b border-gray-300 text-sm xl:text-[16px] bg-gray-400/10 text-left p-2 font-bold">
+              <tr className="xl:border-t border-l border-r border-b border-gray-300 text-sm xl:text-[16px] bg-gray-400/50 text-left p-2 font-bold">
                 <td className="px-2 py-2 border-r w-2/3 border-gray-300 font-normal">
                   Total Assets
                 </td>

@@ -20,6 +20,7 @@ import Button from "../../components/Button";
 import {
   getFormattedValueTotal,
   getGrossMonthlyTotal,
+  getGrossMonthlyTotalOwner,
   getOwnerGrossMonthlyPercentage,
   getOwnerGrossMonthlyTotal,
   getPartnerContributionPercentage,
@@ -43,7 +44,7 @@ export const JointContribution = () => {
   const [totalJointExpense, setTotalJointExpense] = useState(0);
   const selfPercentage = selectedSelfAmount.SelfAmount
     ? Number(selectedSelfAmount.SelfAmount)
-    : 0;
+    : "";
   const queryClient = useQueryClient();
 
   const activeAccount = getActiveAccount(user);
@@ -163,8 +164,9 @@ export const JointContribution = () => {
       {isDataLoaded && (
         <>
           <p className="text-xs px-5">
-            NOTE: Couples can contribute to joint expenses in proportion to
-            their respective gross income or override the calculated split.
+            NOTE: Couples can choose to contribute to the joint expenses based
+            on their percentage of total gross income or override the calculated
+            split.
           </p>
           <div className="w-full h-fit bg-white p-5 mt-4 shadow-md rounded text-xs md:text-sm">
             <div className="flex flex-col gap-5 xl:gap-10 w-full p-5">
@@ -181,7 +183,7 @@ export const JointContribution = () => {
 
                     <tr className="border border-gray-300">
                       <td className="min-w-fit whitespace-nowrap p-2">
-                        Self Budgeted Gross Monthly Income
+                        Self - Gross Monthly Income
                       </td>
                       <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">
                         <span>
@@ -196,7 +198,7 @@ export const JointContribution = () => {
                     </tr>
                     <tr className="border border-gray-300">
                       <td className="min-w-fit whitespace-nowrap p-2">
-                        Partner Budgeted Gross Monthly Income
+                        Partner - Gross Monthly Income
                       </td>
                       <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">
                         <span>
@@ -210,12 +212,12 @@ export const JointContribution = () => {
                       </td>
                     </tr>
 
-                    <tr className="border border-gray-300 bg-[whitesmoke] text-gray-600">
+                    <tr className="border border-gray-300 bg-[whitesmoke] text-black">
                       <td className="min-w-fit whitespace-nowrap p-2">
-                        Combined Budgeted Gross Monthly Income
+                        Total Gross Monthly Income
                       </td>
                       <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">
-                        <span>{getGrossMonthlyTotal(user, incomes)}</span>
+                        <span>{getGrossMonthlyTotalOwner(user, incomes)}</span>
                       </td>
                       <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">
                         <span>100%</span>
@@ -262,7 +264,7 @@ export const JointContribution = () => {
 
                     <tr className="border border-gray-300">
                       <td className="min-w-fit whitespace-nowrap p-2">
-                        Self Contribution
+                        Self - Contribution
                       </td>
                       <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">
                         <span>
@@ -286,7 +288,7 @@ export const JointContribution = () => {
                     </tr>
                     <tr className="border border-gray-300">
                       <td className="min-w-fit whitespace-nowrap p-2">
-                        Partner Contribution
+                        Partner - Contribution
                       </td>
                       <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">
                         <span>
@@ -309,7 +311,7 @@ export const JointContribution = () => {
                       </td>
                     </tr>
 
-                    <tr className="border border-gray-300 bg-[whitesmoke] text-gray-600">
+                    <tr className="border border-gray-300 bg-[whitesmoke] text-black">
                       <td className="min-w-fit whitespace-nowrap p-2">
                         Total Joint Expenses
                       </td>

@@ -40,7 +40,7 @@ export const DebtSummary = ({ gridData }) => {
 
   const TableRow = ({ cat }) => (
     <tr className="border border-gray-300">
-      <td className="min-w-fit whitespace-nowrap text-right p-2">{cat}</td>
+      <td className="min-w-fit whitespace-nowrap text-left p-2">{cat}</td>
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-300">
         {getSummaryMarketValueTotal(user, gridData, cat)}
       </td>
@@ -58,7 +58,7 @@ export const DebtSummary = ({ gridData }) => {
 
   const TableTotal = ({ gridData }) => (
     <tr className="border border-gray-300 bg-[whitesmoke] text-gray-600">
-      <td className="min-w-fit whitespace-nowrap text-right p-2 font-bold">
+      <td className="min-w-fit whitespace-nowrap text-left p-2 font-bold">
         Total
       </td>
       <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">

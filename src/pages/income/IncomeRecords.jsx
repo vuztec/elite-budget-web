@@ -158,6 +158,26 @@ export const IncomeRecords = () => {
             />
           </div>
 
+          <div className="w-full gap-4 h-10 md:h-12 px-2 bg-white flex items-center justify-between mt-5 -mb-7">
+            <div className="text-sm">
+              <Button
+                label={!showAll ? "Add New" : "Cancel Add"}
+                icon={
+                  !showAll ? (
+                    <IoMdAdd className="text-lg" />
+                  ) : (
+                    <HiMinusSm className="text-lg" />
+                  )
+                }
+                className={clsx(
+                  "flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:bg-viewcolor bg-black hover:text-black",
+                  !showAll ? "bg-black" : "bg-red-800"
+                )}
+                onClick={() => setShowAll((old) => !old)}
+              />
+            </div>
+          </div>
+
           <div className="w-full">
             <ExtraPayListView
               gridData={extraGridData}

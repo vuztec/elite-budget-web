@@ -178,11 +178,11 @@ export const AddTransaction = ({ open, setOpen, recordData }) => {
               />
               <Select
                 name="IsCleared"
-                label="Is Cleared?"
-                defaultValue="Yes"
+                label="Cleared Bank?"
+                defaultValue="No"
                 options={[
-                  { value: true, label: "Yes" },
                   { value: false, label: "No" },
+                  { value: true, label: "Yes" },
                 ]}
                 className="w-full rounded"
                 register={register("IsCleared", {

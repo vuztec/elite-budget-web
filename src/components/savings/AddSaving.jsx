@@ -12,9 +12,11 @@ import { TiCancel } from "react-icons/ti";
 import axios from "../../config/axios";
 import { handleAxiosResponseError } from "../../utils/handleResponseError";
 import { daydues, paymentMethods } from "../../utils/budget.filter";
+import { showMarketValue } from "../../utils/budget.calculation";
 
 export const AddSaving = ({ open, setOpen, recordData, chatUsers }) => {
   const queryClient = useQueryClient();
+  const isVisible = showMarketValue(recordData);
 
   const duedays = daydues.map((day) => ({
     value: day,
@@ -135,21 +137,23 @@ export const AddSaving = ({ open, setOpen, recordData, chatUsers }) => {
                 error={errors.PaymentMethod ? errors.PaymentMethod.message : ""}
               />
             </div>
-            <div className="flex flex-col gap-6 w-full">
-              <Textbox
-                placeholder="Enter Amount"
-                type="number"
-                name="MarketValue"
-                label="Market Value"
-                className="w-full rounded"
-                register={register("MarketValue", {
-                  valueAsNumber: true,
-                  validate: (value) =>
-                    value >= 0 || "Amount must be positive or zero.",
-                })}
-                error={errors.MarketValue ? errors.MarketValue.message : ""}
-              />
-            </div>
+            {isVisible && (
+              <div className="flex flex-col gap-6 w-full">
+                <Textbox
+                  placeholder="Enter Amount"
+                  type="number"
+                  name="MarketValue"
+                  label="Market Value"
+                  className="w-full rounded"
+                  register={register("MarketValue", {
+                    valueAsNumber: true,
+                    validate: (value) =>
+                      value >= 0 || "Amount must be positive or zero.",
+                  })}
+                  error={errors.MarketValue ? errors.MarketValue.message : ""}
+                />
+              </div>
+            )}
             <div className="flex flex-col gap-6 w-full">
               <Textbox
                 placeholder="Enter Amount"

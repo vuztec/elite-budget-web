@@ -28,7 +28,6 @@ export const TransactionListView = ({ Data, bankName }) => {
   const [gridData, setGridData] = useState([]);
   const totalBankBalance = getUnformattedBankBalanceTotal(gridData);
   const openingBalance = bankName.OpeningBalance;
-  console.log("transactionGridData: ", Data);
 
   const [order, setOrder] = useState([
     "default",
@@ -87,7 +86,7 @@ export const TransactionListView = ({ Data, bankName }) => {
   const TableHeader = () => (
     <thead>
       <tr className="font-bold bg-[whitesmoke] text-black border border-gray-300 text-left text-sm xl:text-[16px]">
-        <th className="border-l border-gray-300 p-2">
+        {/* <th className="border-l border-gray-300 p-2">
           <div className="flex justify-between items-center gap-2">
             Owner
             <Sort
@@ -101,10 +100,8 @@ export const TransactionListView = ({ Data, bankName }) => {
               defaultData={Data}
             />
           </div>
-        </th>
-        {/* <th className="border-l border-gray-300 p-2 text-xs xl:text-sm">
-          Bank Name
         </th> */}
+
         <th className="border-l border-gray-300 p-2">
           <div className="flex justify-between items-center gap-2">
             Date
@@ -182,7 +179,7 @@ export const TransactionListView = ({ Data, bankName }) => {
 
         <th className="border-l border-gray-300 p-2">
           <div className="flex justify-between items-center gap-2">
-            Is Cleared?
+            Cleared Bank?
             <Sort
               tab={"transaction"}
               order={order}
@@ -220,13 +217,13 @@ export const TransactionListView = ({ Data, bankName }) => {
 
   const TableRow = ({ record }) => (
     <tr className="border border-gray-300 text-sm xl:text-[16px] hover:bg-gray-400/10 text-left">
-      <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
+      {/* <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
           <span className="flex items-center justify-left gap-2 text-center mb-0 text-gray-900">
             {record?.Owner}
           </span>
         </div>
-      </td>
+      </td> */}
 
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">

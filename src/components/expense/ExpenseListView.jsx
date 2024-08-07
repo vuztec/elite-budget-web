@@ -105,8 +105,22 @@ export const ExpenseListView = ({ Data, category, showColumn, showAll }) => {
               order={order}
               setOrder={setOrder}
               column={2}
+              name={"Description"}
+              data={gridData}
+              setData={setGridData}
+              defaultData={Data}
+            />
+          </div>
+        </th>
+        <th className="border-l border-gray-300 p-2">
+          <div className="flex justify-between items-center gap-2">
+            Nickname
+            <Sort
+              tab={"expense"}
+              order={order}
+              setOrder={setOrder}
+              column={2}
               name={"NickName"}
-              name2={"Description"}
               data={gridData}
               setData={setGridData}
               defaultData={Data}
@@ -253,9 +267,12 @@ export const ExpenseListView = ({ Data, category, showColumn, showAll }) => {
 
       <td className="max-w-[300px] whitespace-normal p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p className="text-black">
-            {record?.NickName ? record?.NickName : record?.Description}
-          </p>
+          <p className="text-black">{record?.Description}</p>
+        </div>
+      </td>
+      <td className="max-w-[300px] whitespace-normal p-2 border-l border-gray-200">
+        <div className="flex flex-col items-start gap-1">
+          <p className="text-black">{record?.NickName}</p>
         </div>
       </td>
       {showColumn && (

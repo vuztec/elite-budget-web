@@ -426,7 +426,7 @@ export const networthExpenses = [
   "Golf Equipment (Gear, balls, etc.)",
   "Jetski Payment",
   "Recreational Vehicle",
-  "Wash/Detailing Service",
+  //"Wash/Detailing Service",
   "Mortgage Payment - Rental Property",
   "Enter - Rental Property",
 ];
@@ -446,6 +446,25 @@ export const showFields = (data) => {
 
   return showFields;
 };
+
+export const SavingsDescriptions = [
+  "6 mo. Emergency Fund Savings Acct",
+  "Add'l Savings Acct #1",
+  "Add'l Savings Acct #2",
+  "Add'l Savings Acct #3",
+  "Add'l Savings Acct #4",
+  "Investment Account #1",
+  "Investment Account #2",
+  "Investment Account #3",
+  "529 Plan: Education Investment Account",
+];
+
+export const showMarketValue = (data) => {
+  let showFields = false;
+  showFields = SavingsDescriptions.includes(data?.Description);
+  return showFields;
+};
+
 //-----------------------------JOINT CONTRIBUTION-----------------------------------//
 
 export const getOwnerGrossMonthlyTotal = (user, data, owner) => {
@@ -488,7 +507,8 @@ export const getUnformattedGrossMonthlyTotal = (data) => {
 
 export const getOwnerGrossMonthlyPercentage = (data, owner) => {
   const updatedData = data?.filter((data) => data.Owner === owner);
-  const totalGrossMonthly = getUnformattedGrossMonthlyTotal(data);
+  const totalData = data?.filter((data) => data.Owner !== "Joint");
+  const totalGrossMonthly = getUnformattedGrossMonthlyTotal(totalData);
   const ownerGrossMonthly = getUnformattedGrossMonthlyTotal(updatedData);
   let percentage = 0;
   if (owner === "Self") {
@@ -501,6 +521,40 @@ export const getOwnerGrossMonthlyPercentage = (data, owner) => {
       : 100;
   }
   return percentage.toFixed(0);
+};
+
+export const getGrossMonthlyTotalOwner = (user, data) => {
+  const totalData = data?.filter((data) => data.Owner !== "Joint");
+  const Amount = totalData?.reduce((accumulator, record) => {
+    const income = record?.GrossAmount || 0;
+    const payFrequency = record?.Frequency || "";
+
+    let monthlyIncome = 0;
+
+    switch (payFrequency) {
+      // case "Yearly":
+      //   monthlyIncome = income / 12;
+      //   break;
+      case "Monthly":
+        monthlyIncome = income;
+        break;
+      case "Semi-Monthly":
+        monthlyIncome = income * 2;
+        break;
+      case "Weekly":
+        monthlyIncome = income * 4;
+        break;
+      case "Bi-Weekly":
+        monthlyIncome = income * 2;
+        break;
+      default:
+        monthlyIncome = 0;
+    }
+
+    return accumulator + Number(monthlyIncome);
+  }, 0);
+  const formattedAmount = getFormattedValueTotal(user, Amount);
+  return formattedAmount;
 };
 
 export const getUnformattedMonthlyBudgetTotal = (data) => {
@@ -523,6 +577,8 @@ export const getSelfContributionTotal = (
   if (selfPerc === "") {
     percentage = getOwnerGrossMonthlyPercentage(incomes, "Self");
   }
+  console.log(selfPerc, "selfPerc");
+
   const Amount = (Number(totalExpense) * Number(percentage)) / 100;
   const formattedAmount = getFormattedValueTotal(user, Amount);
   return formattedAmount;
@@ -534,12 +590,12 @@ export const getPartnerContributionTotal = (
   incomes,
   totalExpense
 ) => {
-  let percentage = selfPerc;
+  let percentage = 100 - Number(selfPerc);
 
   if (selfPerc === "") {
-    percentage = getOwnerGrossMonthlyPercentage(incomes, "Self");
+    percentage = getOwnerGrossMonthlyPercentage(incomes, "Partner");
   }
-  const Amount = (Number(totalExpense) * (100 - Number(percentage))) / 100;
+  const Amount = (Number(totalExpense) * Number(percentage)) / 100;
   const formattedAmount = getFormattedValueTotal(user, Amount);
   return formattedAmount;
 };
@@ -555,12 +611,11 @@ export const getSelfContributionPercentage = (selfPerc, incomes) => {
 };
 
 export const getPartnerContributionPercentage = (selfPerc, incomes) => {
-  let percentage = selfPerc;
-
-  if (selfPerc === 0) {
-    percentage = getOwnerGrossMonthlyPercentage(incomes, "Self");
+  let percentage = 100 - Number(selfPerc);
+  if (selfPerc === "") {
+    percentage = getOwnerGrossMonthlyPercentage(incomes, "Partner");
   }
-  const unFormattedAmount = 100 - Number(percentage);
+  const unFormattedAmount = Number(percentage);
   return unFormattedAmount.toFixed(0);
 };
 
@@ -977,4 +1032,21 @@ export const getJointContribution = (data, owner) => {
   }, 0);
 
   return Amount;
+};
+
+export const getExtraPayCheckTotal = (user, data, owner) => {
+  let Amount = 0;
+  if (owner === "Self") {
+    Amount = data?.reduce((accumulator, record) => {
+      const amount = record?.SelfAmount || 0;
+      return accumulator + Number(amount);
+    }, 0);
+  } else if (owner === "Partner") {
+    Amount = data?.reduce((accumulator, record) => {
+      const amount = record?.PartnerAmount || 0;
+      return accumulator + Number(amount);
+    }, 0);
+  }
+  const formattedAmount = getFormattedValue(user, Amount);
+  return formattedAmount;
 };
