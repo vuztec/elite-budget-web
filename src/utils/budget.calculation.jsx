@@ -1050,3 +1050,11 @@ export const getExtraPayCheckTotal = (user, data, owner) => {
   const formattedAmount = getFormattedValue(user, Amount);
   return formattedAmount;
 };
+
+export const getGoalToal = (goals) => {
+  const total = goals?.reduce((accumulator, record) => {
+    const amount = record?.Percentage || 0;
+    return accumulator + Number(amount);
+  }, 0);
+  return total;
+};

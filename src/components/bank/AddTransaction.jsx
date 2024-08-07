@@ -40,7 +40,7 @@ export const AddTransaction = ({ open, setOpen, recordData }) => {
   useEffect(() => {
     if (recordData?.id) {
       setValue("BankName", recordData.BankAccountName.id);
-      setValue("Owner", recordData.Owner);
+      // setValue("Owner", recordData.Owner);
       setValue("Description", recordData.Description);
       setValue("Type", recordData.Type);
       setValue("Amount", recordData.Amount);
@@ -115,7 +115,7 @@ export const AddTransaction = ({ open, setOpen, recordData }) => {
                 })}
                 error={errors.BankName ? errors.BankName.message : ""}
               />
-              <Select
+              {/* <Select
                 name="Owner"
                 label="Transaction Owner"
                 defaultValue="Self"
@@ -129,7 +129,7 @@ export const AddTransaction = ({ open, setOpen, recordData }) => {
                   required: "Name is required!",
                 })}
                 error={errors.Owner ? errors.Owner.message : ""}
-              />
+              /> */}
             </div>
             <div className="flex flex-col gap-6 w-full">
               <Textbox

@@ -10,10 +10,11 @@ import { IoMdSend } from "react-icons/io";
 import { TiCancel } from "react-icons/ti";
 import axios from "../../config/axios";
 import { handleAxiosResponseError } from "../../utils/handleResponseError";
+import { getGoalToal } from "../../utils/budget.calculation";
 
-export const AddGoal = ({ open, setOpen, recordData, type }) => {
+export const AddGoal = ({ open, setOpen, recordData, type, goals }) => {
   const queryClient = useQueryClient();
-
+  const existingGoals = getGoalToal(goals);
   const [isLoading, setIsLoading] = useState(false);
 
   const {
@@ -84,6 +85,7 @@ export const AddGoal = ({ open, setOpen, recordData, type }) => {
                 register={register("Category")}
                 error={errors.Category ? errors.Category.message : ""}
               />
+
               <Textbox
                 placeholder="Enter Amount"
                 type="number"
@@ -94,6 +96,23 @@ export const AddGoal = ({ open, setOpen, recordData, type }) => {
                   valueAsNumber: true,
                   validate: (value) =>
                     value >= 0 || "Amount must be positive or zero.",
+                })}
+                error={errors.Percentage ? errors.Percentage.message : ""}
+              />
+
+              <Textbox
+                placeholder="0"
+                type="number"
+                name="Percentage"
+                label="All Goal %"
+                disabled={true}
+                className="w-full rounded"
+                register={register("Percentage", {
+                  //Goal % + existingGoals
+                  valueAsNumber: true,
+                  validate: (value) =>
+                    (value <= 100 && value >= 0) ||
+                    "Amount must be between zero and 100.",
                 })}
                 error={errors.Percentage ? errors.Percentage.message : ""}
               />

@@ -141,8 +141,7 @@ export const AddIncome = ({ open, setOpen, recordData }) => {
                 register={register("GrossAmount", {
                   valueAsNumber: true,
                   validate: (value) =>
-                    value > 0 ||
-                    "Amount must be greater than  or equal to zero",
+                    value > 0 || "Amount must be greater than zero",
                 })}
                 error={errors.GrossAmount ? errors.GrossAmount.message : ""}
               />
@@ -155,8 +154,7 @@ export const AddIncome = ({ open, setOpen, recordData }) => {
                 register={register("NetAmount", {
                   valueAsNumber: true,
                   validate: (value) =>
-                    value > 0 ||
-                    "Amount must be greater than  or equal to zero",
+                    value > 0 || "Amount must be greater than zero",
                 })}
                 error={errors.NetAmount ? errors.NetAmount.message : ""}
               />

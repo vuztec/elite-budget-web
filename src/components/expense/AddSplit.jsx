@@ -38,10 +38,10 @@ export const AddSplit = ({ open, setOpen, recordData }) => {
   const handleOnSubmit = async (data) => {
     const numericSelectedID = Number(recordData.id);
     setIsLoading(() => true);
-
+    delete data.PartnerAmount;
     if (!recordData?.id)
       axios
-        .post("/api/joint-split/" + numericSelectedID, data)
+        .post("/api/joint-split", data)
         .then(({ data }) => {
           queryClient.setQueryData(["jointsplits"], (prev) =>
             prev.map((item) =>
