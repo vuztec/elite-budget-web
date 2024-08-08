@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from "react";
-import { RiDeleteBin2Fill } from "react-icons/ri";
-import { FaEdit } from "react-icons/fa";
-import clsx from "clsx";
+import React, { useEffect, useState } from 'react';
+import { RiDeleteBin2Fill } from 'react-icons/ri';
+import { FaEdit } from 'react-icons/fa';
+import clsx from 'clsx';
 
-import useUserStore from "../../app/user";
-import { useQueryClient } from "react-query";
-import ConfirmationDialog from "../Dialogs";
-import axios from "../../config/axios";
-import { handleAxiosResponseError } from "../../utils/handleResponseError";
-import { getFormattedValue } from "../../utils/budget.calculation";
-import AddBank from "./AddBank";
-import ToolTip from "../tooltip";
-import Sort from "../sort";
+import useUserStore from '../../app/user';
+import { useQueryClient } from 'react-query';
+import ConfirmationDialog from '../Dialogs';
+import axios from '../../config/axios';
+import { handleAxiosResponseError } from '../../utils/handleResponseError';
+import { getFormattedValue } from '../../utils/budget.calculation';
+import AddBank from './AddBank';
+import ToolTip from '../tooltip';
+import Sort from '../sort';
 
 export const BankListView = ({ gridData }) => {
   const { user } = useUserStore();
@@ -23,7 +23,7 @@ export const BankListView = ({ gridData }) => {
   const [selected, setSelected] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const [order, setOrder] = useState(["default", "default", "default"]);
+  const [order, setOrder] = useState(['default', 'default', 'default']);
   const [data, setData] = useState(gridData);
 
   useEffect(() => {
@@ -36,8 +36,10 @@ export const BankListView = ({ gridData }) => {
     axios
       .delete(`/api/bank-accounts/name/${selected}`)
       .then(({ data }) => {
-        console.log(data);
-        queryClient.setQueryData(["accountnames"], (prev) => prev.filter((bank) => bank.id !== selected));
+        queryClient.setQueryData(['accountnames'], (prev) => prev.filter((bank) => bank.id !== selected));
+        queryClient.setQueryData(['banktransactions'], (prev) =>
+          prev.filter((transaction) => transaction.BankAccountName.id !== selected),
+        );
         setOpenDialog(false);
         setIsLoading(false);
       })
@@ -66,11 +68,11 @@ export const BankListView = ({ gridData }) => {
           <div className="flex justify-between items-center gap-2">
             Owner
             <Sort
-              tab={"bank"}
+              tab={'bank'}
               order={order}
               setOrder={setOrder}
               column={1}
-              name={"Owner"}
+              name={'Owner'}
               data={data}
               setData={setData}
               defaultData={gridData}
@@ -81,11 +83,11 @@ export const BankListView = ({ gridData }) => {
           <div className="flex justify-between items-center gap-2">
             Bank Account Name
             <Sort
-              tab={"bank"}
+              tab={'bank'}
               order={order}
               setOrder={setOrder}
               column={2}
-              name={"Name"}
+              name={'Name'}
               data={data}
               setData={setData}
               defaultData={gridData}
@@ -96,11 +98,11 @@ export const BankListView = ({ gridData }) => {
           <div className="flex justify-between items-center gap-2">
             Opening Balance
             <Sort
-              tab={"bank"}
+              tab={'bank'}
               order={order}
               setOrder={setOrder}
               column={3}
-              name={"OpeningBalance"}
+              name={'OpeningBalance'}
               data={data}
               setData={setData}
               defaultData={gridData}
@@ -138,7 +140,7 @@ export const BankListView = ({ gridData }) => {
         <div className="flex items-center text-left gap-3 justify-start">
           <div className="group flex relative">
             <FaEdit
-              className={clsx(`text-editcolor`, "hover:text-orange-500 font-semibold cursor-pointer sm:px-0")}
+              className={clsx(`text-editcolor`, 'hover:text-orange-500 font-semibold cursor-pointer sm:px-0')}
               onClick={() => editClick(record)}
             />
             <ToolTip text="Edit" />
@@ -146,7 +148,7 @@ export const BankListView = ({ gridData }) => {
 
           <div className="group flex relative">
             <RiDeleteBin2Fill
-              className={clsx(`text-deletecolor`, "hover:text-red-500 font-semibold cursor-pointer sm:px-0")}
+              className={clsx(`text-deletecolor`, 'hover:text-red-500 font-semibold cursor-pointer sm:px-0')}
               onClick={() => deleteClick(record.id)}
             />
             <ToolTip text="Delete" />
@@ -183,8 +185,16 @@ export const BankListView = ({ gridData }) => {
           </div>
         </div>
       )}
-      <AddBank open={open} setOpen={setOpen} recordData={selected} key={new Date().getTime().toString()} />
-      <ConfirmationDialog isLoading={isLoading} open={openDialog} setOpen={setOpenDialog} onClick={() => deleteHandler(selected)} />
+      <AddBank open={open} setOpen={setOpen} recordData={selected} />
+      <ConfirmationDialog
+        isLoading={isLoading}
+        open={openDialog}
+        setOpen={setOpenDialog}
+        msg={
+          'Deleting this Bank Account will also delete all  associated transactions. Are you sure you want to delete it?'
+        }
+        onClick={() => deleteHandler(selected)}
+      />
     </>
   );
 };

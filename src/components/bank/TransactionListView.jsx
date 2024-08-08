@@ -52,7 +52,6 @@ export const TransactionListView = ({ Data, bankName }) => {
     axios
       .delete(`/api/bank-accounts/transaction/${selected}`)
       .then(({ data }) => {
-        console.log(data);
         queryClient.setQueryData(['banktransactions'], (prev) =>
           prev.filter((transaction) => transaction.id !== selected),
         );
@@ -71,7 +70,6 @@ export const TransactionListView = ({ Data, bankName }) => {
     axios
       .patch(`/api/bank-accounts/transaction/${selected}/status`)
       .then(({ data }) => {
-        console.log(data);
         queryClient.setQueryData(['banktransactions'], (prev) =>
           prev.map((transaction) => (transaction.id === selected ? { ...transaction, ...data } : transaction)),
         );

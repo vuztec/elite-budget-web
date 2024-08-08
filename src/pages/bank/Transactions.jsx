@@ -1,25 +1,18 @@
-import React, { useEffect, useState } from "react";
-import { MdFilterAlt, MdFilterAltOff } from "react-icons/md";
-import Button from "../../components/Button";
-import { IoMdAdd } from "react-icons/io";
-import Loading from "../../components/Loader";
-import { useQuery } from "react-query";
-import clsx from "clsx";
-import Select from "../../components/Select";
-import { getActiveAccount } from "../../utils/permissions";
-import Package from "../../package/Package";
-import {
-  getBankAccountNames,
-  getBankAccountTransactions,
-} from "../../config/api";
-import {
-  getBankGridData,
-  getOwnerGridData,
-  incomeOwners,
-} from "../../utils/budget.filter";
-import { TransactionListView } from "../../components/bank/TransactionListView";
-import AddTransaction from "../../components/bank/AddTransaction";
-import useUserStore from "../../app/user";
+import React, { useEffect, useState } from 'react';
+import { MdFilterAlt, MdFilterAltOff } from 'react-icons/md';
+import Button from '../../components/Button';
+import { IoMdAdd } from 'react-icons/io';
+import Loading from '../../components/Loader';
+import { useQuery } from 'react-query';
+import clsx from 'clsx';
+import Select from '../../components/Select';
+import { getActiveAccount } from '../../utils/permissions';
+import Package from '../../package/Package';
+import { getBankAccountNames, getBankAccountTransactions } from '../../config/api';
+import { getBankGridData, getOwnerGridData, incomeOwners } from '../../utils/budget.filter';
+import { TransactionListView } from '../../components/bank/TransactionListView';
+import AddTransaction from '../../components/bank/AddTransaction';
+import useUserStore from '../../app/user';
 
 export const Transactions = () => {
   const { user } = useUserStore();
@@ -29,24 +22,22 @@ export const Transactions = () => {
   const activeAccount = getActiveAccount(user);
 
   // Filters
-  const [owner, setOwner] = useState("Household");
-  const [bank, setBank] = useState("All");
-  const [year, setYear] = useState("All");
-  const [month, setMonth] = useState("All");
+  const [owner, setOwner] = useState('Household');
+  const [bank, setBank] = useState('All');
+  const [year, setYear] = useState('All');
+  const [month, setMonth] = useState('All');
 
   const { data: transactions, status: isTransactionLoaded } = useQuery({
-    queryKey: ["banktransactions"],
+    queryKey: ['banktransactions'],
     queryFn: getBankAccountTransactions,
     staleTime: 1000 * 60 * 60,
   });
 
   const { data: accountnames, status: isNamesLoaded } = useQuery({
-    queryKey: ["accountnames"],
+    queryKey: ['accountnames'],
     queryFn: getBankAccountNames,
     staleTime: 1000 * 60 * 60,
   });
-
-  console.log(transactions, "transactions");
 
   ///-------------Filters Data Source --------------------------------///
   const owners = incomeOwners.map((owner) => ({
@@ -62,7 +53,7 @@ export const Transactions = () => {
   ///-------------END Filters Data Source --------------------------------///
 
   useEffect(() => {
-    if (isTransactionLoaded === "success" && isNamesLoaded === "success") {
+    if (isTransactionLoaded === 'success' && isNamesLoaded === 'success') {
       const transData = getBankGridData(transactions, owner, bank);
 
       // Sort the data by Owner property
@@ -118,25 +109,19 @@ export const Transactions = () => {
             label="Add New"
             icon={<IoMdAdd className="text-lg" />}
             className={clsx(
-              "flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:bg-viewcolor",
-              `bg-black hover:text-black`
+              'flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:bg-viewcolor',
+              `bg-black hover:text-black`,
             )}
             onClick={() => addNewClick()}
           />
         </div>
         <div className="text-sm">
           <Button
-            label={!isShowing ? "Show Filters" : "Hide Filters"}
-            icon={
-              !isShowing ? (
-                <MdFilterAlt className="text-lg" />
-              ) : (
-                <MdFilterAltOff className="text-lg" />
-              )
-            }
+            label={!isShowing ? 'Show Filters' : 'Hide Filters'}
+            icon={!isShowing ? <MdFilterAlt className="text-lg" /> : <MdFilterAltOff className="text-lg" />}
             className={clsx(
-              "flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:text-black hover:bg-viewcolor",
-              !isShowing ? "bg-green-800" : "bg-red-800"
+              'flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:text-black hover:bg-viewcolor',
+              !isShowing ? 'bg-green-800' : 'bg-red-800',
             )}
             onClick={() => setIsShowing((old) => !old)}
           />
@@ -144,8 +129,8 @@ export const Transactions = () => {
       </div>
       <div
         className={clsx(
-          "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3 pb-5",
-          isShowing ? "block" : "hidden"
+          'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3 pb-5',
+          isShowing ? 'block' : 'hidden',
         )}
       >
         <div className="w-full">
@@ -201,20 +186,13 @@ export const Transactions = () => {
           {accountnames?.map((bankName, index) => (
             <div className="w-full">
               <TransactionListView
-                Data={gridData.filter(
-                  (item) => item.BankAccountName.id === bankName.id
-                )}
+                Data={gridData.filter((item) => item.BankAccountName.id === bankName.id)}
                 key={index}
                 bankName={bankName}
               />
             </div>
           ))}
-          <AddTransaction
-            open={open}
-            setOpen={setOpen}
-            recordData={""}
-            key={new Date().getTime().toString()}
-          />
+          <AddTransaction open={open} setOpen={setOpen} recordData={''} key={new Date().getTime().toString()} />
         </div>
       )}
     </>
