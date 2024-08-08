@@ -259,7 +259,7 @@ export const JointContribution = () => {
           </div>
         </>
       )}
-      <AddSplit open={open} setOpen={setOpen} recordData={selected} key={new Date().getTime().toString()} />
+      <AddSplit open={open} setOpen={setOpen} recordData={selected} />
       <ConfirmationDialog
         isLoading={isLoading}
         open={openDialog}

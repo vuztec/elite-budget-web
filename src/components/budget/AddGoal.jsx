@@ -1,16 +1,16 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { useForm } from "react-hook-form";
-import ModalWrapper from "../ModalWrapper";
-import { Dialog } from "@headlessui/react";
-import Textbox from "../Textbox";
-import Loading from "../Loader";
-import Button from "../Button";
-import { useQueryClient, useQuery } from "react-query";
-import { IoMdSend } from "react-icons/io";
-import { TiCancel } from "react-icons/ti";
-import axios from "../../config/axios";
-import { handleAxiosResponseError } from "../../utils/handleResponseError";
-import { getGoalToal } from "../../utils/budget.calculation";
+import React, { useEffect, useMemo, useState } from 'react';
+import { useForm, useWatch } from 'react-hook-form';
+import ModalWrapper from '../ModalWrapper';
+import { Dialog } from '@headlessui/react';
+import Textbox from '../Textbox';
+import Loading from '../Loader';
+import Button from '../Button';
+import { useQueryClient, useQuery } from 'react-query';
+import { IoMdSend } from 'react-icons/io';
+import { TiCancel } from 'react-icons/ti';
+import axios from '../../config/axios';
+import { handleAxiosResponseError } from '../../utils/handleResponseError';
+import { getGoalToal } from '../../utils/budget.calculation';
 
 export const AddGoal = ({ open, setOpen, recordData, type, goals }) => {
   const queryClient = useQueryClient();
@@ -22,35 +22,42 @@ export const AddGoal = ({ open, setOpen, recordData, type, goals }) => {
     handleSubmit,
     setValue,
     reset,
+    control,
     formState: { errors },
   } = useForm();
 
+  const percentage = useWatch({ control, name: 'Percentage' });
+
   useEffect(() => {
     if (recordData?.id) {
-      setValue("Percentage", recordData.Goal);
-      setValue("Category", recordData.Category);
+      setValue('Percentage', recordData.Percentage);
+      setValue('Category', recordData.Category);
+      setValue('AllGoal', existingGoals);
     }
 
     return () => reset();
   }, [recordData]);
+
+  useEffect(() => {
+    if (percentage) setValue('AllGoal', Number(existingGoals) + Number(percentage));
+    else setValue('AllGoal', existingGoals);
+  }, [percentage]);
 
   // Define handleOnSubmit function to handle form submission
   const handleOnSubmit = async (data) => {
     const numericSelectedID = Number(recordData.id);
     setIsLoading(() => true);
 
-    let query = "maingoals";
+    let query = 'maingoals';
 
-    if (type === "Expense") query = "expensegoals";
-    if (type === "Debt") query = "debtgoals";
+    if (type === 'Expense') query = 'expensegoals';
+    if (type === 'Debt') query = 'debtgoals';
 
     axios
-      .patch("/api/goals/" + numericSelectedID, data)
+      .patch('/api/goals/' + numericSelectedID, data)
       .then(({ data }) => {
         queryClient.setQueryData([query], (prev) =>
-          prev.map((goal) =>
-            goal.id === numericSelectedID ? { ...goal, ...data } : goal
-          )
+          prev.map((goal) => (goal.id === numericSelectedID ? { ...goal, ...data } : goal)),
         );
         setIsLoading(() => false);
         setOpen(false);
@@ -64,15 +71,9 @@ export const AddGoal = ({ open, setOpen, recordData, type, goals }) => {
   return (
     <>
       <ModalWrapper open={open} setOpen={setOpen}>
-        <form
-          onSubmit={handleSubmit(handleOnSubmit)}
-          className="w-full h-[70%]"
-        >
-          <Dialog.Title
-            as="h2"
-            className="text-base font-bold leading-6 text-gray-900 mb-4"
-          >
-            {recordData ? "UPDATE GOAL" : "ADD NEW GOAL"}
+        <form onSubmit={handleSubmit(handleOnSubmit)} className="w-full h-[70%]">
+          <Dialog.Title as="h2" className="text-base font-bold leading-6 text-gray-900 mb-4">
+            {recordData ? 'UPDATE GOAL' : 'ADD NEW GOAL'}
           </Dialog.Title>
           <div className="mt-2 flex flex-col gap-6 overflow-y-scroll bg-scroll">
             <div className="flex flex-col gap-6 w-full">
@@ -82,8 +83,8 @@ export const AddGoal = ({ open, setOpen, recordData, type, goals }) => {
                 label="Category"
                 className="w-full rounded"
                 disabled={true}
-                register={register("Category")}
-                error={errors.Category ? errors.Category.message : ""}
+                register={register('Category')}
+                error={errors.Category ? errors.Category.message : ''}
               />
 
               <Textbox
@@ -92,29 +93,27 @@ export const AddGoal = ({ open, setOpen, recordData, type, goals }) => {
                 name="Percentage"
                 label="Goal %"
                 className="w-full rounded"
-                register={register("Percentage", {
+                register={register('Percentage', {
                   valueAsNumber: true,
                   validate: (value) =>
-                    value >= 0 || "Amount must be positive or zero.",
+                    (value + Number(existingGoals) >= 0 && value + Number(existingGoals) <= 100) ||
+                    'Amount must be between zero and 100.',
                 })}
-                error={errors.Percentage ? errors.Percentage.message : ""}
+                error={errors.Percentage ? errors.Percentage.message : ''}
               />
 
               <Textbox
                 placeholder="0"
                 type="number"
-                name="Percentage"
+                name="AllGoal"
                 label="All Goal %"
                 disabled={true}
                 className="w-full rounded"
-                register={register("Percentage", {
-                  //Goal % + existingGoals
+                register={register('AllGoal', {
                   valueAsNumber: true,
-                  validate: (value) =>
-                    (value <= 100 && value >= 0) ||
-                    "Amount must be between zero and 100.",
+                  validate: (value) => (value <= 100 && value >= 0) || 'Amount must be between zero and 100.',
                 })}
-                error={errors.Percentage ? errors.Percentage.message : ""}
+                error={errors.AllGoal ? errors.AllGoal.message : ''}
               />
             </div>
           </div>

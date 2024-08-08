@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { FaEdit } from "react-icons/fa";
-import clsx from "clsx";
+import React, { useEffect, useState } from 'react';
+import { FaEdit } from 'react-icons/fa';
+import clsx from 'clsx';
 
-import { useQueryClient } from "react-query";
-import ConfirmationDialog from "../Dialogs";
-import axios from "../../config/axios";
-import { handleAxiosResponseError } from "../../utils/handleResponseError";
-import AddGoal from "./AddGoal";
-import ToolTip from "../tooltip";
-import Sort from "../sort";
+import { useQueryClient } from 'react-query';
+import ConfirmationDialog from '../Dialogs';
+import axios from '../../config/axios';
+import { handleAxiosResponseError } from '../../utils/handleResponseError';
+import AddGoal from './AddGoal';
+import ToolTip from '../tooltip';
+import Sort from '../sort';
 
 export const GoalListView = ({ gridData, goal }) => {
   //----------------CRUD----------------//
@@ -18,7 +18,7 @@ export const GoalListView = ({ gridData, goal }) => {
   const [selected, setSelected] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const [order, setOrder] = useState(["default", "default"]);
+  const [order, setOrder] = useState(['default', 'default']);
   const [data, setData] = useState(gridData);
 
   useEffect(() => {
@@ -32,9 +32,7 @@ export const GoalListView = ({ gridData, goal }) => {
       .delete(`/api/project/${selected}`)
       .then(({ data }) => {
         console.log(data);
-        queryClient.setQueryData(["projects"], (prev) =>
-          prev.filter((project) => project.id !== selected)
-        );
+        queryClient.setQueryData(['projects'], (prev) => prev.filter((project) => project.id !== selected));
         setOpenDialog(false);
         setIsLoading(false);
       })
@@ -61,7 +59,7 @@ export const GoalListView = ({ gridData, goal }) => {
               order={order}
               setOrder={setOrder}
               column={1}
-              name={"Category"}
+              name={'Category'}
               data={data}
               setData={setData}
               defaultData={gridData}
@@ -75,7 +73,7 @@ export const GoalListView = ({ gridData, goal }) => {
               order={order}
               setOrder={setOrder}
               column={2}
-              name={"Percentage"}
+              name={'Percentage'}
               data={data}
               setData={setData}
               defaultData={gridData}
@@ -109,13 +107,10 @@ export const GoalListView = ({ gridData, goal }) => {
         <div className="flex items-center text-left gap-3 justify-start">
           <div className="group flex relative">
             <FaEdit
-              className={clsx(
-                `text-editcolor`,
-                "hover:text-orange-500 font-semibold cursor-pointer sm:px-0"
-              )}
+              className={clsx(`text-editcolor`, 'hover:text-orange-500 font-semibold cursor-pointer sm:px-0')}
               onClick={() => editClick(record)}
             />
-            <ToolTip text={"Edit"} />
+            <ToolTip text={'Edit'} />
           </div>
         </div>
       </td>
@@ -149,14 +144,7 @@ export const GoalListView = ({ gridData, goal }) => {
           </div>
         </div>
       )}
-      <AddGoal
-        open={open}
-        setOpen={setOpen}
-        recordData={selected}
-        key={new Date().getTime().toString()}
-        type={goal}
-        goals={gridData}
-      />
+      <AddGoal open={open} setOpen={setOpen} recordData={selected} type={goal} goals={gridData} />
       <ConfirmationDialog
         isLoading={isLoading}
         open={openDialog}
