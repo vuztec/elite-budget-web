@@ -1,24 +1,20 @@
-import React, { useEffect, useState } from "react";
-import { MdFilterAlt, MdFilterAltOff } from "react-icons/md";
-import Button from "../../components/Button";
-import { IoMdAdd } from "react-icons/io";
-import { HiMinusSm } from "react-icons/hi";
-import Loading from "../../components/Loader";
-import { useQuery } from "react-query";
-import clsx from "clsx";
-import Select from "../../components/Select";
-import { getActiveAccount } from "../../utils/permissions";
-import Package from "../../package/Package";
-import { getExpenses } from "../../config/api";
-import {
-  expenseCategories,
-  expenseOwners,
-  getCatGridData,
-} from "../../utils/budget.filter";
-import { ExpenseListView } from "../../components/expense/ExpenseListView";
-import { ExpenseSummary } from "../../components/expense/ExpenseSummary";
-import { hasRecords } from "../../utils/budget.calculation";
-import useUserStore from "../../app/user";
+import React, { useEffect, useState } from 'react';
+import { MdFilterAlt, MdFilterAltOff } from 'react-icons/md';
+import Button from '../../components/Button';
+import { IoMdAdd } from 'react-icons/io';
+import { HiMinusSm } from 'react-icons/hi';
+import Loading from '../../components/Loader';
+import { useQuery } from 'react-query';
+import clsx from 'clsx';
+import Select from '../../components/Select';
+import { getActiveAccount } from '../../utils/permissions';
+import Package from '../../package/Package';
+import { getExpenses } from '../../config/api';
+import { expenseCategories, expenseOwners, getCatGridData } from '../../utils/budget.filter';
+import { ExpenseListView } from '../../components/expense/ExpenseListView';
+import { ExpenseSummary } from '../../components/expense/ExpenseSummary';
+import { hasRecords } from '../../utils/budget.calculation';
+import useUserStore from '../../app/user';
 
 export const ExpenseRecords = () => {
   const { user } = useUserStore();
@@ -28,16 +24,16 @@ export const ExpenseRecords = () => {
   const activeAccount = getActiveAccount(user);
 
   // Filters
-  const [owner, setOwner] = useState("Household");
-  const [catFilter, setCatFilter] = useState("All");
+  const [owner, setOwner] = useState('Household');
+  const [catFilter, setCatFilter] = useState('All');
 
   const { data: expenses, status: isExpenseLoaded } = useQuery({
-    queryKey: ["expenses"],
+    queryKey: ['expenses'],
     queryFn: getExpenses,
     staleTime: 1000 * 60 * 60,
   });
 
-  console.log(expenses, "expenses");
+  console.log(expenses, 'expenses');
   ///-------------Filters Data Source --------------------------------///
   const owners = expenseOwners.map((owner) => ({
     value: owner,
@@ -52,15 +48,12 @@ export const ExpenseRecords = () => {
   ///-------------END Filters Data Source --------------------------------///
 
   useEffect(() => {
-    if (isExpenseLoaded === "success") {
+    if (isExpenseLoaded === 'success') {
       const expenseData = getCatGridData(expenses, owner, catFilter);
       let updatedData = expenseData;
       if (!showAll && hasRecords(expenseData)) {
         updatedData = expenseData.filter(
-          (item) =>
-            item.MarketValue > 0 ||
-            item.LoanBalance > 0 ||
-            item.MonthlyBudget > 0
+          (item) => item.MarketValue > 0 || item.LoanBalance > 0 || item.MonthlyBudget > 0,
         );
       }
       // Sort the data by Owner property
@@ -96,34 +89,22 @@ export const ExpenseRecords = () => {
       <div className="w-full gap-4 h-10 md:h-12 px-2 rounded-full bg-white flex items-center justify-between">
         <div className="text-sm">
           <Button
-            label={!showAll ? "Add New" : "Cancel Add"}
-            icon={
-              !showAll ? (
-                <IoMdAdd className="text-lg" />
-              ) : (
-                <HiMinusSm className="text-lg" />
-              )
-            }
+            label={!showAll ? 'Add New' : 'Cancel Add'}
+            icon={!showAll ? <IoMdAdd className="text-lg" /> : <HiMinusSm className="text-lg" />}
             className={clsx(
-              "flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:bg-viewcolor bg-black hover:text-black",
-              !showAll ? "bg-black" : "bg-red-800"
+              'flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:bg-viewcolor bg-black hover:text-black',
+              !showAll ? 'bg-black' : 'bg-red-800',
             )}
             onClick={() => setShowAll((old) => !old)}
           />
         </div>
         <div className="text-sm">
           <Button
-            label={!isShowing ? "Show Filters" : "Hide Filters"}
-            icon={
-              !isShowing ? (
-                <MdFilterAlt className="text-lg" />
-              ) : (
-                <MdFilterAltOff className="text-lg" />
-              )
-            }
+            label={!isShowing ? 'Show Filters' : 'Hide Filters'}
+            icon={!isShowing ? <MdFilterAlt className="text-lg" /> : <MdFilterAltOff className="text-lg" />}
             className={clsx(
-              "flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:text-black hover:bg-viewcolor",
-              !isShowing ? "bg-green-800" : "bg-red-800"
+              'flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:text-black hover:bg-viewcolor',
+              !isShowing ? 'bg-green-800' : 'bg-red-800',
             )}
             onClick={() => setIsShowing((old) => !old)}
           />
@@ -131,8 +112,8 @@ export const ExpenseRecords = () => {
       </div>
       <div
         className={clsx(
-          "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3 pb-5",
-          isShowing ? "block" : "hidden"
+          'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3 pb-5',
+          isShowing ? 'block' : 'hidden',
         )}
       >
         <div className="w-full">
@@ -168,7 +149,15 @@ export const ExpenseRecords = () => {
         <div className="w-full">
           <div className="w-full">
             <ExpenseListView
-              Data={gridData.filter((item) => item.Category === "Charity")}
+              Data={gridData.filter((item) => item.Category === 'Alimony')}
+              category="Alimony"
+              showColumn={false}
+              showAll={showAll}
+            />
+          </div>
+          <div className="w-full">
+            <ExpenseListView
+              Data={gridData.filter((item) => item.Category === 'Charity')}
               category="Charity"
               showColumn={false}
               showAll={showAll}
@@ -177,7 +166,7 @@ export const ExpenseRecords = () => {
 
           <div className="w-full">
             <ExpenseListView
-              Data={gridData.filter((item) => item.Category === "Children")}
+              Data={gridData.filter((item) => item.Category === 'Children')}
               category="Children"
               showColumn={true}
               showAll={showAll}
@@ -186,9 +175,7 @@ export const ExpenseRecords = () => {
 
           <div className="w-full">
             <ExpenseListView
-              Data={gridData.filter(
-                (item) => item.Category === "Dues/Subscriptions"
-              )}
+              Data={gridData.filter((item) => item.Category === 'Dues/Subscriptions')}
               category="Dues/Subscriptions"
               showColumn={false}
               showAll={showAll}
@@ -197,9 +184,7 @@ export const ExpenseRecords = () => {
 
           <div className="w-full">
             <ExpenseListView
-              Data={gridData.filter(
-                (item) => item.Category === "Entertainment"
-              )}
+              Data={gridData.filter((item) => item.Category === 'Entertainment')}
               category="Entertainment"
               showColumn={false}
               showAll={showAll}
@@ -208,7 +193,7 @@ export const ExpenseRecords = () => {
 
           <div className="w-full">
             <ExpenseListView
-              Data={gridData.filter((item) => item.Category === "Food")}
+              Data={gridData.filter((item) => item.Category === 'Food')}
               category="Food"
               showColumn={false}
               showAll={showAll}
@@ -217,9 +202,7 @@ export const ExpenseRecords = () => {
 
           <div className="w-full">
             <ExpenseListView
-              Data={gridData.filter(
-                (item) => item.Category === "Health/Medical"
-              )}
+              Data={gridData.filter((item) => item.Category === 'Health/Medical')}
               category="Health/Medical"
               showColumn={false}
               showAll={showAll}
@@ -228,9 +211,7 @@ export const ExpenseRecords = () => {
 
           <div className="w-full">
             <ExpenseListView
-              Data={gridData.filter(
-                (item) => item.Category === "Household, Personal Care & Gifts"
-              )}
+              Data={gridData.filter((item) => item.Category === 'Household, Personal Care & Gifts')}
               category="Household, Personal Care & Gifts"
               showColumn={true}
               showAll={showAll}
@@ -239,7 +220,7 @@ export const ExpenseRecords = () => {
 
           <div className="w-full">
             <ExpenseListView
-              Data={gridData.filter((item) => item.Category === "Housing")}
+              Data={gridData.filter((item) => item.Category === 'Housing')}
               category="Housing"
               showColumn={true}
               showAll={showAll}
@@ -248,9 +229,7 @@ export const ExpenseRecords = () => {
 
           <div className="w-full">
             <ExpenseListView
-              Data={gridData.filter(
-                (item) => item.Category === "Joint Contribution"
-              )}
+              Data={gridData.filter((item) => item.Category === 'Joint Contribution')}
               category="Joint Contribution"
               showColumn={true}
               showAll={showAll}
@@ -259,10 +238,8 @@ export const ExpenseRecords = () => {
 
           <div className="w-full">
             <ExpenseListView
-              Data={gridData.filter(
-                (item) => item.Category === "Other Insurance"
-              )}
-              category="Other Insurance"
+              Data={gridData.filter((item) => item.Category === 'Insurance (Other)')}
+              category="Insurance (Other)"
               showColumn={false}
               showAll={showAll}
             />
@@ -270,9 +247,7 @@ export const ExpenseRecords = () => {
 
           <div className="w-full">
             <ExpenseListView
-              Data={gridData.filter(
-                (item) => item.Category === "Parents/Elder Care"
-              )}
+              Data={gridData.filter((item) => item.Category === 'Parents/Elder Care')}
               category="Parents/Elder Care"
               showColumn={false}
               showAll={showAll}
@@ -281,7 +256,7 @@ export const ExpenseRecords = () => {
 
           <div className="w-full">
             <ExpenseListView
-              Data={gridData.filter((item) => item.Category === "Pets/Animals")}
+              Data={gridData.filter((item) => item.Category === 'Pets/Animals')}
               category="Pets/Animals"
               showColumn={false}
               showAll={showAll}
@@ -290,7 +265,7 @@ export const ExpenseRecords = () => {
 
           <div className="w-full">
             <ExpenseListView
-              Data={gridData.filter((item) => item.Category === "Recreation")}
+              Data={gridData.filter((item) => item.Category === 'Recreation')}
               category="Recreation"
               showColumn={true}
               showAll={showAll}
@@ -299,9 +274,7 @@ export const ExpenseRecords = () => {
 
           <div className="w-full">
             <ExpenseListView
-              Data={gridData.filter(
-                (item) => item.Category === "Rental Property"
-              )}
+              Data={gridData.filter((item) => item.Category === 'Rental Property')}
               category="Rental Property"
               showColumn={true}
               showAll={showAll}
@@ -310,9 +283,7 @@ export const ExpenseRecords = () => {
 
           <div className="w-full">
             <ExpenseListView
-              Data={gridData.filter(
-                (item) => item.Category === "Transportation"
-              )}
+              Data={gridData.filter((item) => item.Category === 'Transportation')}
               category="Transportation"
               showColumn={true}
               showAll={showAll}
@@ -321,7 +292,7 @@ export const ExpenseRecords = () => {
 
           <div className="w-full">
             <ExpenseListView
-              Data={gridData.filter((item) => item.Category === "Vacations")}
+              Data={gridData.filter((item) => item.Category === 'Vacations')}
               category="Vacations"
               showColumn={false}
               showAll={showAll}

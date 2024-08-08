@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from "react";
-import { Country } from "country-state-city";
-import { useForm, useWatch } from "react-hook-form";
-import ModalWrapper from "../ModalWrapper";
-import { Dialog } from "@headlessui/react";
-import Textbox from "../Textbox";
-import Select from "../Select";
-import Loading from "../Loader";
-import Button from "../Button";
-import axios from "../../config/axios";
-import { IoMdSend } from "react-icons/io";
-import { TiCancel } from "react-icons/ti";
-import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
-import useUserStore from "../../app/user";
-import { DateFormats } from "../../utils/budget.filter";
-import { handleAxiosResponseError } from "../../utils/handleResponseError";
+import React, { useEffect, useState } from 'react';
+import { Country } from 'country-state-city';
+import { useForm, useWatch } from 'react-hook-form';
+import ModalWrapper from '../ModalWrapper';
+import { Dialog } from '@headlessui/react';
+import Textbox from '../Textbox';
+import Select from '../Select';
+import Loading from '../Loader';
+import Button from '../Button';
+import axios from '../../config/axios';
+import { IoMdSend } from 'react-icons/io';
+import { TiCancel } from 'react-icons/ti';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import useUserStore from '../../app/user';
+import { DateFormats } from '../../utils/budget.filter';
+import { handleAxiosResponseError } from '../../utils/handleResponseError';
 
 export const AddRootUser = ({ open, setOpen }) => {
   const CountryData = Country.getAllCountries();
@@ -26,9 +26,7 @@ export const AddRootUser = ({ open, setOpen }) => {
   }));
 
   const [countryCode, setCountryCode] = useState(
-    user
-      ? CountryData.find((country) => country.name === user.Country)?.isoCode
-      : ""
+    user ? CountryData.find((country) => country.name === user.Country)?.isoCode : '',
   );
 
   const navigate = useNavigate();
@@ -44,20 +42,18 @@ export const AddRootUser = ({ open, setOpen }) => {
     formState: { errors },
   } = useForm();
 
-  const Password = useWatch({ control, name: "Password" });
+  const Password = useWatch({ control, name: 'Password' });
 
   useEffect(() => {
     if (user?.id) {
-      setValue("FullName", user.FullName);
-      setValue("Email", user.Email);
-      setValue("Currency", user.Currency);
-      setValue("PartnerAge", user.PartnerAge);
-      setValue("SelfAge", user.SelfAge);
-      setValue("Country", user.Country);
+      setValue('FullName', user.FullName);
+      setValue('Email', user.Email);
+      setValue('Currency', user.Currency);
+      setValue('PartnerAge', user.PartnerAge);
+      setValue('SelfAge', user.SelfAge);
+      setValue('Country', user.Country);
 
-      const country = CountryData.find(
-        (country) => country.name === user?.Country
-      )?.isoCode;
+      const country = CountryData.find((country) => country.name === user?.Country)?.isoCode;
       setCountryCode(country);
     }
 
@@ -68,56 +64,56 @@ export const AddRootUser = ({ open, setOpen }) => {
   const handleOnSubmit = async (data) => {
     setIsLoading(() => true);
 
-    const id = toast.loading("Updating User Profile....");
+    const id = toast.loading('Updating User Profile....');
     delete data.ConfirmPassword;
 
     if (user?.id) {
       delete data.Password;
       axios
-        .patch("/api/rootusers/" + user.id, data)
+        .patch('/api/rootusers/' + user.id, data)
         .then(({ data }) => {
           setUser(data);
           setIsLoading(() => false);
           setOpen(false);
           toast.update(id, {
-            render: "Profile Updated Successfully",
-            type: "success",
+            render: 'Profile Updated Successfully',
+            type: 'success',
             isLoading: false,
             autoClose: 3000,
           });
         })
         .catch((err) => {
-          console.log("Error : ", err);
+          console.log('Error : ', err);
           setIsLoading(() => false);
 
           toast.update(id, {
             render: handleAxiosResponseError(err),
-            type: "error",
+            type: 'error',
             isLoading: false,
             autoClose: 3000,
           });
         });
     } else {
       axios
-        .post("/api/auth/signup", data)
+        .post('/api/auth/signup', data)
         .then(({ data }) => {
           toast.update(id, {
-            render: "Please login to continue",
-            type: "success",
+            render: 'Please login to continue',
+            type: 'success',
             isLoading: false,
             autoClose: 3000,
           });
           setIsLoading(() => false);
           setOpen(false);
-          navigate("/login");
+          navigate('/login');
         })
         .catch((err) => {
-          console.log("Error : ", handleAxiosResponseError(err));
+          console.log('Error : ', handleAxiosResponseError(err));
           setIsLoading(() => false);
 
           toast.update(id, {
             render: handleAxiosResponseError(err),
-            type: "error",
+            type: 'error',
             isLoading: false,
             autoClose: 3000,
           });
@@ -128,15 +124,13 @@ export const AddRootUser = ({ open, setOpen }) => {
   const handleCountryChange = (e) => {
     if (e && e.target?.value) {
       const selCountry = e.target?.value;
-      const targetCountry = CountryData.find(
-        (item) => item?.isoCode === selCountry
-      );
-      setValue("Country", targetCountry.name);
-      setValue("Currency", targetCountry.currency);
-      const selCountryCode = targetCountry ? targetCountry.isoCode : "";
+      const targetCountry = CountryData.find((item) => item?.isoCode === selCountry);
+      setValue('Country', targetCountry.name);
+      setValue('Currency', targetCountry.currency);
+      const selCountryCode = targetCountry ? targetCountry.isoCode : '';
       setCountryCode(selCountryCode);
 
-      setValue("Separator", "en-" + selCountryCode);
+      setValue('Separator', 'en-' + selCountryCode);
     }
   };
 
@@ -144,11 +138,8 @@ export const AddRootUser = ({ open, setOpen }) => {
     <>
       <ModalWrapper open={open} setOpen={setOpen}>
         <form onSubmit={handleSubmit(handleOnSubmit)} className="">
-          <Dialog.Title
-            as="h2"
-            className="text-base font-bold leading-6 text-gray-900 mb-4"
-          >
-            {user ? "USER PROFILE" : "CREATE NEW ACCOUNT"}
+          <Dialog.Title as="h2" className="text-base font-bold leading-6 text-gray-900 mb-4">
+            {user ? 'USER PROFILE' : 'CREATE NEW ACCOUNT'}
           </Dialog.Title>
           <div className="mt-2 flex flex-col gap-6 overflow-y-scroll bg-scroll">
             <div className="flex flex-col gap-6 w-full">
@@ -159,16 +150,15 @@ export const AddRootUser = ({ open, setOpen }) => {
                   name="FullName"
                   label="Full Name"
                   className="w-full rounded"
-                  register={register("FullName", {
-                    required: "Full name is required!",
+                  register={register('FullName', {
+                    required: 'Full name is required!',
                   })}
-                  error={errors.FullName ? errors.FullName.message : ""}
+                  error={errors.FullName ? errors.FullName.message : ''}
                 />
               </div>
               <p className="text-[11px] text-gray-500">
-                NOTE: Can deduct the years from your age if you didn't start
-                working until you completed an advanced degree, served in the
-                military or were disabled.
+                NOTE: If you didn't start working until you completed an advanced degree, served in the military or were
+                disabled, you can deduct the years spent on those things from your age.
               </p>
               <div className="w-full">
                 <Textbox
@@ -177,12 +167,11 @@ export const AddRootUser = ({ open, setOpen }) => {
                   name="SelfAge"
                   label="Self Age"
                   className="w-full rounded"
-                  register={register("SelfAge", {
+                  register={register('SelfAge', {
                     valueAsNumber: true,
-                    validate: (value) =>
-                      value >= 0 || "Age must be zero or positive",
+                    validate: (value) => value >= 0 || 'Age must be zero or positive',
                   })}
-                  error={errors.SelfAge ? errors.SelfAge.message : ""}
+                  error={errors.SelfAge ? errors.SelfAge.message : ''}
                 />
               </div>
               <div className="w-full">
@@ -192,12 +181,11 @@ export const AddRootUser = ({ open, setOpen }) => {
                   name="PartnerAge"
                   label="Partner's Age"
                   className="w-full rounded"
-                  register={register("PartnerAge", {
+                  register={register('PartnerAge', {
                     valueAsNumber: true,
-                    validate: (value) =>
-                      value >= 0 || "Age must be zero or positive",
+                    validate: (value) => value >= 0 || 'Age must be zero or positive',
                   })}
-                  error={errors.PartnerAge ? errors.PartnerAge.message : ""}
+                  error={errors.PartnerAge ? errors.PartnerAge.message : ''}
                 />
               </div>
             </div>
@@ -214,10 +202,10 @@ export const AddRootUser = ({ open, setOpen }) => {
                   }))} // Map country array to options
                   className="w-full rounded"
                   defaultValue={countryCode}
-                  register={register("Country", {
-                    required: "User Country is required!",
+                  register={register('Country', {
+                    required: 'User Country is required!',
                   })}
-                  error={errors.Country ? errors.Country.message : ""}
+                  error={errors.Country ? errors.Country.message : ''}
                 />
               </div>
               <div className="w-full">
@@ -227,10 +215,10 @@ export const AddRootUser = ({ open, setOpen }) => {
                   name="Email"
                   label="Email Address"
                   className="w-full rounded"
-                  register={register("Email", {
-                    required: "Email Address is required!",
+                  register={register('Email', {
+                    required: 'Email Address is required!',
                   })}
-                  error={errors.Email ? errors.Email.message : ""}
+                  error={errors.Email ? errors.Email.message : ''}
                 />
               </div>
             </div>
@@ -242,10 +230,10 @@ export const AddRootUser = ({ open, setOpen }) => {
                   name="Password"
                   label="Password"
                   className="w-full rounded"
-                  register={register("Password", {
-                    required: "Password is required!",
+                  register={register('Password', {
+                    required: 'Password is required!',
                   })}
-                  error={errors.Password ? errors.Password.message : ""}
+                  error={errors.Password ? errors.Password.message : ''}
                 />
 
                 <Textbox
@@ -254,14 +242,11 @@ export const AddRootUser = ({ open, setOpen }) => {
                   name="ConfirmPassword"
                   label="Confirm Password"
                   className="w-full rounded"
-                  register={register("ConfirmPassword", {
-                    required: "Confirm Password is required!",
-                    validate: (value) =>
-                      value === Password || "Passwords do not match",
+                  register={register('ConfirmPassword', {
+                    required: 'Confirm Password is required!',
+                    validate: (value) => value === Password || 'Passwords do not match',
                   })}
-                  error={
-                    errors.ConfirmPassword ? errors.ConfirmPassword.message : ""
-                  }
+                  error={errors.ConfirmPassword ? errors.ConfirmPassword.message : ''}
                 />
               </div>
             )}
@@ -274,10 +259,10 @@ export const AddRootUser = ({ open, setOpen }) => {
                   name="Currency"
                   label="Currency (e.g. $ or USD)"
                   className="w-full rounded"
-                  register={register("Currency", {
-                    required: "Currency is required!",
+                  register={register('Currency', {
+                    required: 'Currency is required!',
                   })}
-                  error={errors.Currency ? errors.Currency.message : ""}
+                  error={errors.Currency ? errors.Currency.message : ''}
                 />
               </div>
 
@@ -288,8 +273,8 @@ export const AddRootUser = ({ open, setOpen }) => {
                   defaultValue="yyyy-MM-dd"
                   options={dateFormats}
                   className="w-full rounded"
-                  register={register("DateFormat")}
-                  error={errors.DateFormat ? errors.DateFormat.message : ""}
+                  register={register('DateFormat')}
+                  error={errors.DateFormat ? errors.DateFormat.message : ''}
                 />
               </div>
             </div>

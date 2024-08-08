@@ -1,16 +1,16 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { useForm } from "react-hook-form";
-import ModalWrapper from "../ModalWrapper";
-import { Dialog } from "@headlessui/react";
-import Textbox from "../Textbox";
-import Select from "../Select";
-import Loading from "../Loader";
-import Button from "../Button";
-import { useQueryClient, useQuery } from "react-query";
-import { IoMdSend } from "react-icons/io";
-import { TiCancel } from "react-icons/ti";
-import axios from "../../config/axios";
-import { handleAxiosResponseError } from "../../utils/handleResponseError";
+import React, { useEffect, useMemo, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import ModalWrapper from '../ModalWrapper';
+import { Dialog } from '@headlessui/react';
+import Textbox from '../Textbox';
+import Select from '../Select';
+import Loading from '../Loader';
+import Button from '../Button';
+import { useQueryClient, useQuery } from 'react-query';
+import { IoMdSend } from 'react-icons/io';
+import { TiCancel } from 'react-icons/ti';
+import axios from '../../config/axios';
+import { handleAxiosResponseError } from '../../utils/handleResponseError';
 
 export const AddIncome = ({ open, setOpen, recordData }) => {
   const queryClient = useQueryClient();
@@ -27,12 +27,12 @@ export const AddIncome = ({ open, setOpen, recordData }) => {
 
   useEffect(() => {
     if (recordData?.id) {
-      setValue("IncomeSource", recordData.IncomeSource);
-      setValue("NickName", recordData.NickName);
-      setValue("Owner", recordData.Owner);
-      setValue("Frequency", recordData.Frequency);
-      setValue("GrossAmount", recordData.GrossAmount);
-      setValue("NetAmount", recordData.NetAmount);
+      setValue('IncomeSource', recordData.IncomeSource);
+      setValue('NickName', recordData.NickName);
+      setValue('Owner', recordData.Owner);
+      setValue('Frequency', recordData.Frequency);
+      setValue('GrossAmount', recordData.GrossAmount);
+      setValue('NetAmount', recordData.NetAmount);
     }
 
     return () => reset();
@@ -44,12 +44,10 @@ export const AddIncome = ({ open, setOpen, recordData }) => {
     setIsLoading(() => true);
 
     axios
-      .patch("/api/income/" + numericSelectedID, data)
+      .patch('/api/income/' + numericSelectedID, data)
       .then(({ data }) => {
-        queryClient.setQueryData(["incomes"], (prev) =>
-          prev.map((income) =>
-            income.id === numericSelectedID ? { ...income, ...data } : income
-          )
+        queryClient.setQueryData(['incomes'], (prev) =>
+          prev.map((income) => (income.id === numericSelectedID ? { ...income, ...data } : income)),
         );
         setIsLoading(() => false);
         setOpen(false);
@@ -63,15 +61,9 @@ export const AddIncome = ({ open, setOpen, recordData }) => {
   return (
     <>
       <ModalWrapper open={open} setOpen={setOpen}>
-        <form
-          onSubmit={handleSubmit(handleOnSubmit)}
-          className="w-full h-[70%]"
-        >
-          <Dialog.Title
-            as="h2"
-            className="text-base font-bold leading-6 text-gray-900 mb-4"
-          >
-            {recordData ? "UPDATE INCOME RECORD" : "ADD NEW INCOME RECORD"}
+        <form onSubmit={handleSubmit(handleOnSubmit)} className="w-full h-[70%]">
+          <Dialog.Title as="h2" className="text-base font-bold leading-6 text-gray-900 mb-4">
+            {recordData ? 'UPDATE INCOME RECORD' : 'ADD NEW INCOME RECORD'}
           </Dialog.Title>
           <div className="mt-2 flex flex-col gap-6 overflow-y-scroll bg-scroll">
             <div className="flex flex-col gap-6 w-full">
@@ -82,7 +74,7 @@ export const AddIncome = ({ open, setOpen, recordData }) => {
                 label="Income Source"
                 disabled={true}
                 className="w-full rounded"
-                register={register("IncomeSource")}
+                register={register('IncomeSource')}
               />
             </div>
             <div className="flex flex-col gap-6 w-full">
@@ -92,8 +84,8 @@ export const AddIncome = ({ open, setOpen, recordData }) => {
                 name="NickName"
                 label="Nickname"
                 className="w-full rounded"
-                register={register("NickName")}
-                error={errors.NickName ? errors.NickName.message : ""}
+                register={register('NickName')}
+                error={errors.NickName ? errors.NickName.message : ''}
               />
             </div>
 
@@ -103,32 +95,32 @@ export const AddIncome = ({ open, setOpen, recordData }) => {
                 label="Owner"
                 defaultValue="Self"
                 options={[
-                  { value: "Self", label: "Self" },
-                  { value: "Partner", label: "Partner" },
-                  { value: "Joint", label: "Joint" },
+                  { value: 'Self', label: 'Self' },
+                  { value: 'Partner', label: 'Partner' },
+                  { value: 'Joint', label: 'Joint' },
                 ]}
                 className="w-full rounded"
-                register={register("Owner", {
-                  required: "Name is required!",
+                register={register('Owner', {
+                  required: 'Name is required!',
                 })}
-                error={errors.Owner ? errors.Owner.message : ""}
+                error={errors.Owner ? errors.Owner.message : ''}
               />
               <Select
                 name="Frequency"
                 label="Frequency"
                 defaultValue="Monthly"
                 options={[
-                  { value: "Weekly", label: "Weekly" },
-                  { value: "Bi-Weekly", label: "Bi-Weekly" },
-                  { value: "Semi-Monthly", label: "Semi-Monthly" },
-                  { value: "Monthly", label: "Monthly" },
-                  { value: "Yearly", label: "Yearly" },
+                  { value: 'Weekly', label: 'Weekly: Paid Weekly' },
+                  { value: 'Bi-Weekly', label: 'Bi-Weekly: Paid Every 2 Weeks' },
+                  { value: 'Semi-Monthly', label: 'Semi-Monthly: Paid on 15th & last day' },
+                  { value: 'Monthly', label: 'Monthly: Paid 1x per month' },
+                  { value: 'Yearly', label: 'Yearly: Paid 1x per year' },
                 ]}
                 className="w-full rounded"
-                register={register("Frequency", {
-                  required: "Frequency is required!",
+                register={register('Frequency', {
+                  required: 'Frequency is required!',
                 })}
-                error={errors.Frequency ? errors.Frequency.message : ""}
+                error={errors.Frequency ? errors.Frequency.message : ''}
               />
             </div>
             <div className="flex flex-col gap-6 w-full">
@@ -138,12 +130,11 @@ export const AddIncome = ({ open, setOpen, recordData }) => {
                 name="GrossAmount"
                 label="Gross Amount"
                 className="w-full rounded"
-                register={register("GrossAmount", {
+                register={register('GrossAmount', {
                   valueAsNumber: true,
-                  validate: (value) =>
-                    value > 0 || "Amount must be greater than zero",
+                  validate: (value) => value > 0 || 'Amount must be greater than zero',
                 })}
-                error={errors.GrossAmount ? errors.GrossAmount.message : ""}
+                error={errors.GrossAmount ? errors.GrossAmount.message : ''}
               />
               <Textbox
                 placeholder="Enter Amount"
@@ -151,12 +142,11 @@ export const AddIncome = ({ open, setOpen, recordData }) => {
                 name="NetAmount"
                 label="Net Amount"
                 className="w-full rounded"
-                register={register("NetAmount", {
+                register={register('NetAmount', {
                   valueAsNumber: true,
-                  validate: (value) =>
-                    value > 0 || "Amount must be greater than zero",
+                  validate: (value) => value > 0 || 'Amount must be greater than zero',
                 })}
-                error={errors.NetAmount ? errors.NetAmount.message : ""}
+                error={errors.NetAmount ? errors.NetAmount.message : ''}
               />
             </div>
           </div>

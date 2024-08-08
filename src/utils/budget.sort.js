@@ -1,4 +1,13 @@
-const customIncomeList = ["Main Job", "Side Job", "Interest/Dividends", "Child Support", "Bonus", "Rental Income", "Other"];
+const customIncomeList = [
+  'Main Job',
+  'Side Job',
+  'Interest/Dividends',
+  'Child Support',
+  'Bonus',
+  'Rental Income',
+  'Alimony',
+  'Other',
+];
 
 export const defaultIncomeSort = (data) => {
   return data.sort((a, b) => {
@@ -63,7 +72,7 @@ export const ascendingSort = (data, sortBy, sortBy2, isNumber) => {
       bDisplayName = Number(bDisplayName);
     }
 
-    if (typeof a[sortBy] === "boolean" || typeof b[sortBy] === "boolean") {
+    if (typeof a[sortBy] === 'boolean' || typeof b[sortBy] === 'boolean') {
       aDisplayName = a[sortBy];
       bDisplayName = b[sortBy];
     }
@@ -85,7 +94,7 @@ export const descendingSort = (data, sortBy, sortBy2, isNumber) => {
       bDisplayName = Number(bDisplayName);
     }
 
-    if (typeof a[sortBy] === "boolean" || typeof b[sortBy] === "boolean") {
+    if (typeof a[sortBy] === 'boolean' || typeof b[sortBy] === 'boolean') {
       aDisplayName = a[sortBy];
       bDisplayName = b[sortBy];
     }
