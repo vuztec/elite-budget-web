@@ -19,6 +19,7 @@ export const AddGoal = ({ open, setOpen, recordData, type, goals }) => {
   const [percentage, setPercentage] = useState(0);
   const [category, setCategory] = useState('');
   const [error, setError] = useState('');
+  const [error2, setError2] = useState('');
 
   useEffect(() => {
     if (recordData?.id) {
@@ -64,8 +65,11 @@ export const AddGoal = ({ open, setOpen, recordData, type, goals }) => {
     if (value) setPercentage(() => value);
     else setPercentage(() => '');
 
+    if (value > 100 || value < 0) setError2('Amount must be between zero and 100.');
+    else setError2('');
+
     if (value && value + existingGoals - Number(recordData.Percentage) > 100) {
-      setError('Amount must be between zero and 100.');
+      setError('The total percentage cannot exceed 100%');
       setTotalGoal(() => existingGoals - Number(recordData.Percentage) + value);
     } else if (value && Number(recordData.Percentage) > 0) {
       setTotalGoal(() => existingGoals - Number(recordData.Percentage) + value);
@@ -107,7 +111,6 @@ export const AddGoal = ({ open, setOpen, recordData, type, goals }) => {
                 className="w-full rounded"
                 value={percentage}
                 onChange={handleGoalChange}
-                error={error}
               />
 
               <Textbox2
@@ -117,6 +120,7 @@ export const AddGoal = ({ open, setOpen, recordData, type, goals }) => {
                 disabled={true}
                 className="w-full rounded"
                 value={totalGoal}
+                error={error}
               />
             </div>
           </div>
@@ -130,6 +134,7 @@ export const AddGoal = ({ open, setOpen, recordData, type, goals }) => {
               <Button
                 type="button"
                 onClick={handleOnSubmit}
+                disabled={error || error2}
                 className="w-fit flex flex-row-reverse items-center gap-1 text-white bg-black"
                 label="Enter"
                 icon={<IoMdSend />}
