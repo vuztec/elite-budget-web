@@ -96,8 +96,8 @@ export const TransactionListView = ({ Data, bankName }) => {
 
   const handleClearTransaction = (data) => {
     setSelected(data.id);
-    if (data.IsCleared) setPrompt(() => 'Do you want to Un-Clear the transaction?');
-    else setPrompt(() => 'Do you want to Clear the transaction?');
+    if (data.IsCleared) setPrompt(() => 'Do you want to Un-Clear the Bank Transaction?');
+    else setPrompt(() => 'Do you want to Clear the Bank Transaction?');
     setOpenClearDialog(true);
   };
 

@@ -148,7 +148,7 @@ export const Transactions = () => {
           isShowing ? "block" : "hidden"
         )}
       >
-        {/* <div className="w-full">
+        <div className="w-full">
           <Select
             onChange={handleOwnerChange}
             value={owner}
@@ -157,7 +157,7 @@ export const Transactions = () => {
             label="Account Owner"
             className="bg-white w-full py-1"
           />
-        </div> */}
+        </div>
         <div className="w-full">
           <Select
             onChange={handleBankChange}

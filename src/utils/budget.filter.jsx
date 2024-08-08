@@ -131,7 +131,7 @@ export const getOwnerExpenseGridData = (data, owner) => {
 };
 
 export const getBankGridData = (data, owner, bank) => {
-  const ownerFilteredData = getOwnerGridData(data, owner);
+  const ownerFilteredData = getOwnerTransGridData(data, owner);
 
   let bankFilteredData;
   if (bank !== "All" && parseInt(bank) !== 0) {
