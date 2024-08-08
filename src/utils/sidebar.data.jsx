@@ -90,7 +90,7 @@ export const SidebarLinks = [
       },
       {
         label: "Bank Transactions",
-        title: "Bank Register",
+        title: "Bank Register(s)",
         link: "/bank/bank-transactions",
       },
     ],

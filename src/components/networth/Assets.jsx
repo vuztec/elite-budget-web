@@ -48,7 +48,7 @@ export const Assets = ({
                 </td>
               </tr>
               <tr className="border border-gray-300 text-sm xl:text-[16px]  text-left p-2 font-bold">
-                <td className="px-2 py-2 border-r w-2/3 border-gray-300 font-normal">
+                <td className="px-2 py-2 xl:py-1.5 border-r w-2/3 border-gray-300 font-normal">
                   Household (Incl. furnishings, kitchen appliances, clothes,
                   shoes, purses, jewelry, etc.)
                 </td>
@@ -62,7 +62,7 @@ export const Assets = ({
                 </td>
               </tr>
               <tr className="border border-gray-300 text-sm xl:text-[16px]  text-left  p-2 font-bold">
-                <td className="px-2 py-2 border-r w-2/3 border-gray-300 font-normal">
+                <td className="px-2 py-2 xl:py-1.5 border-r w-2/3 border-gray-300 font-normal">
                   Other Assets: Recreation: RV, Boats, Jetskis, Sports
                   Equipment, etc.
                 </td>
@@ -94,7 +94,7 @@ export const Assets = ({
                 </td>
               </tr>
               <tr className="border border-gray-300 text-sm xl:text-[16px]  text-left p-2 font-bold">
-                <td className="px-2 py-2 border-r w-2/3 border-gray-300 font-normal">
+                <td className="px-2 py-2 xl:py-4 border-r w-2/3 border-gray-300 font-normal">
                   Retirement Accounts
                 </td>
                 <td className="px-2">
@@ -102,7 +102,7 @@ export const Assets = ({
                 </td>
               </tr>
               <tr className="border border-gray-300 text-sm xl:text-[16px]  text-left  p-2 font-bold">
-                <td className="px-2 py-2 border-r w-2/3 border-gray-300 font-normal">
+                <td className="px-2 py-2 xl:py-4 border-r w-2/3 border-gray-300 font-normal">
                   Vehicles
                 </td>
                 <td className="px-2">

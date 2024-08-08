@@ -98,7 +98,7 @@ export const AddSplit = ({ open, setOpen, recordData }) => {
                   valueAsNumber: true,
                   validate: (value) =>
                     (value >= 0 && value <= 100) ||
-                    "Amount must between 0 - 100.",
+                    "Number must be between 0 - 100",
                 })}
                 error={errors.SelfAmount ? errors.SelfAmount.message : ""}
               />
