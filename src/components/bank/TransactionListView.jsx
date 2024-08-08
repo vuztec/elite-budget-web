@@ -1,43 +1,36 @@
-import React, { useEffect, useState } from "react";
-import { RiDeleteBin2Fill } from "react-icons/ri";
-import { FaCheckSquare, FaEdit } from "react-icons/fa";
-import clsx from "clsx";
+import React, { useEffect, useState } from 'react';
+import { RiDeleteBin2Fill } from 'react-icons/ri';
+import { FaCheckSquare, FaEdit } from 'react-icons/fa';
+import clsx from 'clsx';
 
-import useUserStore from "../../app/user";
-import { useQueryClient } from "react-query";
-import ConfirmationDialog from "../Dialogs";
-import axios from "../../config/axios";
-import { handleAxiosResponseError } from "../../utils/handleResponseError";
-import AddTransaction from "./AddTransaction";
+import useUserStore from '../../app/user';
+import { useQueryClient } from 'react-query';
+import ConfirmationDialog from '../Dialogs';
+import axios from '../../config/axios';
+import { handleAxiosResponseError } from '../../utils/handleResponseError';
+import AddTransaction from './AddTransaction';
 import {
   getFormattedDate,
   getFormattedValueType,
   getBankAccountTypeTotal,
   getUnformattedBankBalanceTotal,
   getFormattedValueTotal,
-} from "../../utils/budget.calculation";
-import ToolTip from "../tooltip";
-import Sort from "../sort";
-import { defaultTransactionSort } from "../../utils/budget.sort";
-import { FiCheckSquare } from "react-icons/fi";
-import { MdOutlineSquare } from "react-icons/md";
-import { calculateBalances } from "../../utils/budget.filter";
+} from '../../utils/budget.calculation';
+import ToolTip from '../tooltip';
+import Sort from '../sort';
+import { defaultTransactionSort } from '../../utils/budget.sort';
+import { FiCheckSquare } from 'react-icons/fi';
+import { MdOutlineSquare } from 'react-icons/md';
+import { calculateBalances } from '../../utils/budget.filter';
 
 export const TransactionListView = ({ Data, bankName }) => {
   const { user } = useUserStore();
   const [gridData, setGridData] = useState([]);
+  const [prompt, setPrompt] = useState('');
   const totalBankBalance = getUnformattedBankBalanceTotal(gridData);
   const openingBalance = bankName.OpeningBalance;
 
-  const [order, setOrder] = useState([
-    "default",
-    "default",
-    "default",
-    "default",
-    "default",
-    "default",
-    "default",
-  ]);
+  const [order, setOrder] = useState(['default', 'default', 'default', 'default', 'default', 'default', 'default']);
 
   useEffect(() => {
     const sortedData = defaultTransactionSort(Data);
@@ -48,21 +41,41 @@ export const TransactionListView = ({ Data, bankName }) => {
   //----------------CRUD----------------//
   const queryClient = useQueryClient();
   const [openDialog, setOpenDialog] = useState(false);
+  const [openClearDialog, setOpenClearDialog] = useState(false);
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const deleteHandler = async (selected) => {
+  const deleteHandler = async () => {
     setIsLoading(true);
 
     axios
       .delete(`/api/bank-accounts/transaction/${selected}`)
       .then(({ data }) => {
         console.log(data);
-        queryClient.setQueryData(["banktransactions"], (prev) =>
-          prev.filter((transaction) => transaction.id !== selected)
+        queryClient.setQueryData(['banktransactions'], (prev) =>
+          prev.filter((transaction) => transaction.id !== selected),
         );
         setOpenDialog(false);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        console.log(handleAxiosResponseError(err));
+      });
+  };
+
+  const transactionHandler = async () => {
+    setIsLoading(true);
+
+    axios
+      .patch(`/api/bank-accounts/transaction/${selected}/status`)
+      .then(({ data }) => {
+        console.log(data);
+        queryClient.setQueryData(['banktransactions'], (prev) =>
+          prev.map((transaction) => (transaction.id === selected ? { ...transaction, ...data } : transaction)),
+        );
+        setOpenClearDialog(false);
         setIsLoading(false);
       })
       .catch((err) => {
@@ -79,6 +92,13 @@ export const TransactionListView = ({ Data, bankName }) => {
   const editClick = (el) => {
     setSelected(el);
     setOpen(true);
+  };
+
+  const handleClearTransaction = (data) => {
+    setSelected(data.id);
+    if (data.IsCleared) setPrompt(() => 'Do you want to Un-Clear the transaction?');
+    else setPrompt(() => 'Do you want to Clear the transaction?');
+    setOpenClearDialog(true);
   };
 
   //----------------CRUD----------------//
@@ -106,11 +126,11 @@ export const TransactionListView = ({ Data, bankName }) => {
           <div className="flex justify-between items-center gap-2">
             Date
             <Sort
-              tab={"transaction"}
+              tab={'transaction'}
               order={order}
               setOrder={setOrder}
               column={2}
-              name={"Date"}
+              name={'Date'}
               data={gridData}
               setData={setGridData}
               defaultData={Data}
@@ -121,11 +141,11 @@ export const TransactionListView = ({ Data, bankName }) => {
           <div className="flex justify-between items-center gap-2">
             Description
             <Sort
-              tab={"transaction"}
+              tab={'transaction'}
               order={order}
               setOrder={setOrder}
               column={3}
-              name={"Description"}
+              name={'Description'}
               data={gridData}
               setData={setGridData}
               defaultData={Data}
@@ -137,17 +157,15 @@ export const TransactionListView = ({ Data, bankName }) => {
           <div className="flex justify-between items-center gap-2">
             <div className="flex flex-col">
               <span className="whitespace-nowrap text-left">Pmt, Fee,</span>
-              <span className="whitespace-nowrap text-left">
-                Withdrawal (-)
-              </span>
+              <span className="whitespace-nowrap text-left">Withdrawal (-)</span>
             </div>
 
             <Sort
-              tab={"transaction"}
+              tab={'transaction'}
               order={order}
               setOrder={setOrder}
               column={4}
-              name={"Amount"}
+              name={'Amount'}
               data={gridData}
               setData={setGridData}
               defaultData={Data}
@@ -164,11 +182,11 @@ export const TransactionListView = ({ Data, bankName }) => {
             </div>
 
             <Sort
-              tab={"transaction"}
+              tab={'transaction'}
               order={order}
               setOrder={setOrder}
               column={5}
-              name={"Amount"}
+              name={'Amount'}
               data={gridData}
               setData={setGridData}
               defaultData={Data}
@@ -181,11 +199,11 @@ export const TransactionListView = ({ Data, bankName }) => {
           <div className="flex justify-between items-center gap-2">
             Cleared Bank?
             <Sort
-              tab={"transaction"}
+              tab={'transaction'}
               order={order}
               setOrder={setOrder}
               column={6}
-              name={"IsCleared"}
+              name={'IsCleared'}
               data={gridData}
               setData={setGridData}
               defaultData={Data}
@@ -239,37 +257,23 @@ export const TransactionListView = ({ Data, bankName }) => {
 
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p className="text-black">
-            {getFormattedValueType(
-              user,
-              record?.Amount,
-              record?.Type,
-              "Withdrawal"
-            )}
-          </p>
+          <p className="text-black">{getFormattedValueType(user, record?.Amount, record?.Type, 'Withdrawal')}</p>
         </div>
       </td>
 
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p className="text-black">
-            {getFormattedValueType(
-              user,
-              record?.Amount,
-              record?.Type,
-              "Credit"
-            )}
-          </p>
+          <p className="text-black">{getFormattedValueType(user, record?.Amount, record?.Type, 'Credit')}</p>
         </div>
       </td>
 
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p className="text-sm xl:text-lg">
+          <p className="text-sm xl:text-lg cursor-pointer group" onClick={() => handleClearTransaction(record)}>
             {record?.IsCleared ? (
-              <FiCheckSquare className="text-green-500" />
+              <FiCheckSquare className="text-green-500 group-hover:bg-green-200 p-1 h-6 w-6 rounded-full" />
             ) : (
-              <MdOutlineSquare className="text-red-500" />
+              <MdOutlineSquare className="text-red-500 group-hover:bg-red-200 p-1 h-6 w-6 rounded-full" />
             )}
           </p>
         </div>
@@ -277,12 +281,7 @@ export const TransactionListView = ({ Data, bankName }) => {
 
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p className="text-black">
-            {getFormattedValueTotal(
-              user,
-              Number(record?.Balance) + Number(openingBalance)
-            )}
-          </p>
+          <p className="text-black">{getFormattedValueTotal(user, Number(record?.Balance) + Number(openingBalance))}</p>
         </div>
       </td>
 
@@ -290,24 +289,18 @@ export const TransactionListView = ({ Data, bankName }) => {
         <div className="flex items-center text-left gap-3 justify-start">
           <div className="group flex relative">
             <FaEdit
-              className={clsx(
-                `text-editcolor`,
-                "hover:text-orange-500 font-semibold cursor-pointer sm:px-0"
-              )}
+              className={clsx(`text-editcolor`, 'hover:text-orange-500 font-semibold cursor-pointer sm:px-0')}
               onClick={() => editClick(record)}
             />
-            <ToolTip text={"Edit"} />
+            <ToolTip text={'Edit'} />
           </div>
 
           <div className="group flex relative">
             <RiDeleteBin2Fill
-              className={clsx(
-                `text-deletecolor`,
-                "hover:text-red-500 font-semibold cursor-pointer sm:px-0"
-              )}
+              className={clsx(`text-deletecolor`, 'hover:text-red-500 font-semibold cursor-pointer sm:px-0')}
               onClick={() => deleteClick(record.id)}
             />
-            <ToolTip text={"Delete"} />
+            <ToolTip text={'Delete'} />
           </div>
         </div>
       </td>
@@ -320,19 +313,17 @@ export const TransactionListView = ({ Data, bankName }) => {
 
       <td className="min-w-fit whitespace-nowrap p-3 border-gray-200"></td>
 
-      <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200">
-        TOTAL
-      </td>
+      <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200">TOTAL</td>
 
       <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p>{getBankAccountTypeTotal(user, gridData, "Withdrawal")}</p>
+          <p>{getBankAccountTypeTotal(user, gridData, 'Withdrawal')}</p>
         </div>
       </td>
 
       <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p>{getBankAccountTypeTotal(user, gridData, "Credit")}</p>
+          <p>{getBankAccountTypeTotal(user, gridData, 'Credit')}</p>
         </div>
       </td>
 
@@ -340,12 +331,7 @@ export const TransactionListView = ({ Data, bankName }) => {
 
       <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p>
-            {getFormattedValueTotal(
-              user,
-              Number(totalBankBalance) + Number(openingBalance)
-            )}
-          </p>
+          <p>{getFormattedValueTotal(user, Number(totalBankBalance) + Number(openingBalance))}</p>
         </div>
       </td>
 
@@ -386,10 +372,7 @@ export const TransactionListView = ({ Data, bankName }) => {
                       Bank Cash Current Balance
                     </td>
                     <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
-                      {getFormattedValueTotal(
-                        user,
-                        Number(totalBankBalance) + Number(openingBalance)
-                      )}
+                      {getFormattedValueTotal(user, Number(totalBankBalance) + Number(openingBalance))}
                     </td>
                   </tr>
                 </tbody>
@@ -408,17 +391,20 @@ export const TransactionListView = ({ Data, bankName }) => {
           </div>
         </div>
       )}
-      <AddTransaction
-        open={open}
-        setOpen={setOpen}
-        recordData={selected}
-        key={new Date().getTime().toString()}
-      />
+      <AddTransaction open={open} setOpen={setOpen} recordData={selected} key={new Date().getTime().toString()} />
       <ConfirmationDialog
         isLoading={isLoading}
         open={openDialog}
         setOpen={setOpenDialog}
-        onClick={() => deleteHandler(selected)}
+        onClick={() => deleteHandler()}
+      />
+      <ConfirmationDialog
+        isLoading={isLoading}
+        open={openClearDialog}
+        setOpen={setOpenClearDialog}
+        msg={prompt}
+        buttonText={'Yes'}
+        onClick={() => transactionHandler()}
       />
     </>
   );

@@ -1,16 +1,16 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { useForm, useWatch } from "react-hook-form";
-import ModalWrapper from "../ModalWrapper";
-import { Dialog } from "@headlessui/react";
-import Textbox from "../Textbox";
-import Loading from "../Loader";
-import Button from "../Button";
-import { useQueryClient, useQuery } from "react-query";
-import useUserStore from "../../app/user";
-import { IoMdSend } from "react-icons/io";
-import { TiCancel } from "react-icons/ti";
-import axios from "../../config/axios";
-import { handleAxiosResponseError } from "../../utils/handleResponseError";
+import React, { useEffect, useMemo, useState } from 'react';
+import { useForm, useWatch } from 'react-hook-form';
+import ModalWrapper from '../ModalWrapper';
+import { Dialog } from '@headlessui/react';
+import Textbox from '../Textbox';
+import Loading from '../Loader';
+import Button from '../Button';
+import { useQueryClient, useQuery } from 'react-query';
+import useUserStore from '../../app/user';
+import { IoMdSend } from 'react-icons/io';
+import { TiCancel } from 'react-icons/ti';
+import axios from '../../config/axios';
+import { handleAxiosResponseError } from '../../utils/handleResponseError';
 
 export const AddSplit = ({ open, setOpen, recordData }) => {
   const queryClient = useQueryClient();
@@ -27,11 +27,11 @@ export const AddSplit = ({ open, setOpen, recordData }) => {
     formState: { errors },
   } = useForm({ defaultValues });
 
-  const self = useWatch({ control, name: "SelfAmount" });
+  const self = useWatch({ control, name: 'SelfAmount' });
 
   useEffect(() => {
-    if (self) setValue("PartnerAmount", 100 - self);
-    else setValue("PartnerAmount", 100);
+    if (self) setValue('PartnerAmount', 100 - self);
+    else setValue('PartnerAmount', 100);
   }, [self]);
 
   // Define handleOnSubmit function to handle form submission
@@ -41,13 +41,9 @@ export const AddSplit = ({ open, setOpen, recordData }) => {
     delete data.PartnerAmount;
     if (!recordData?.id)
       axios
-        .post("/api/joint-split", data)
+        .post('/api/joint-split', data)
         .then(({ data }) => {
-          queryClient.setQueryData(["jointsplits"], (prev) =>
-            prev.map((item) =>
-              item.id === numericSelectedID ? { ...item, ...data } : item
-            )
-          );
+          queryClient.setQueryData(['jointsplits'], (prev) => [data]);
           setIsLoading(() => false);
           setOpen(false);
         })
@@ -57,12 +53,10 @@ export const AddSplit = ({ open, setOpen, recordData }) => {
         });
     else
       axios
-        .patch("/api/joint-split/" + numericSelectedID, data)
+        .patch('/api/joint-split/' + numericSelectedID, data)
         .then(({ data }) => {
-          queryClient.setQueryData(["jointsplits"], (prev) =>
-            prev.map((item) =>
-              item.id === numericSelectedID ? { ...item, ...data } : item
-            )
+          queryClient.setQueryData(['jointsplits'], (prev) =>
+            prev.map((item) => (item.id === numericSelectedID ? { ...item, ...data } : item)),
           );
           setIsLoading(() => false);
           setOpen(false);
@@ -76,15 +70,9 @@ export const AddSplit = ({ open, setOpen, recordData }) => {
   return (
     <>
       <ModalWrapper open={open} setOpen={setOpen}>
-        <form
-          onSubmit={handleSubmit(handleOnSubmit)}
-          className="w-full h-[70%]"
-        >
-          <Dialog.Title
-            as="h2"
-            className="text-base font-bold leading-6 text-gray-900 mb-4"
-          >
-            {recordData ? "UPDATE CALC SPLIT" : "ADD NEW CALC SPLIT"}
+        <form onSubmit={handleSubmit(handleOnSubmit)} className="w-full h-[70%]">
+          <Dialog.Title as="h2" className="text-base font-bold leading-6 text-gray-900 mb-4">
+            {recordData ? 'UPDATE CALC SPLIT' : 'ADD NEW CALC SPLIT'}
           </Dialog.Title>
           <div className="mt-2 flex flex-col gap-6 overflow-y-scroll bg-scroll">
             <div className="flex flex-col gap-6 w-full">
@@ -94,13 +82,11 @@ export const AddSplit = ({ open, setOpen, recordData }) => {
                 name="SelfAmount"
                 label="Self % Split"
                 className="w-full rounded"
-                register={register("SelfAmount", {
+                register={register('SelfAmount', {
                   valueAsNumber: true,
-                  validate: (value) =>
-                    (value >= 0 && value <= 100) ||
-                    "Number must be between 0 - 100",
+                  validate: (value) => (value >= 0 && value <= 100) || 'Amount must between 0 - 100.',
                 })}
-                error={errors.SelfAmount ? errors.SelfAmount.message : ""}
+                error={errors.SelfAmount ? errors.SelfAmount.message : ''}
               />
               <Textbox
                 type="number"
@@ -108,7 +94,7 @@ export const AddSplit = ({ open, setOpen, recordData }) => {
                 label="Partner % Split"
                 disabled={true}
                 className="w-full rounded"
-                register={register("PartnerAmount")}
+                register={register('PartnerAmount')}
               />
             </div>
           </div>
