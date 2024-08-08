@@ -1,17 +1,17 @@
-import { format } from "date-fns";
-import { FaThumbsDown, FaThumbsUp } from "react-icons/fa";
+import { format } from 'date-fns';
+import { FaThumbsDown, FaThumbsUp } from 'react-icons/fa';
 
 export const getFormattedDate = (user, date) => {
-  const formattedDate = date ? format(new Date(date), user.DateFormat) : "";
+  const formattedDate = date ? format(new Date(date), user.DateFormat) : '';
   return formattedDate;
 };
 
 export const getFormattedValue = (user, Amount) => {
-  const usedCurrency = user?.Currency ? user?.Currency : "$";
-  const separator = user?.Separator ? user?.Separator : "en-us";
+  const usedCurrency = user?.Currency ? user?.Currency : '$';
+  const separator = user?.Separator ? user?.Separator : 'en-us';
 
-  let formattedAmount = "";
-  if (Amount !== "" && Amount > 0.0) {
+  let formattedAmount = '';
+  if (Amount !== '' && Amount > 0.0) {
     formattedAmount =
       usedCurrency +
       new Intl.NumberFormat(separator, {
@@ -24,11 +24,11 @@ export const getFormattedValue = (user, Amount) => {
 };
 
 export const getFormattedValueTotal = (user, Amount) => {
-  const usedCurrency = user?.Currency ? user?.Currency : "$";
-  const separator = user?.Separator ? user?.Separator : "en-us";
+  const usedCurrency = user?.Currency ? user?.Currency : '$';
+  const separator = user?.Separator ? user?.Separator : 'en-us';
 
-  let formattedAmount = "";
-  if (Amount !== "") {
+  let formattedAmount = '';
+  if (Amount !== '') {
     formattedAmount =
       usedCurrency +
       new Intl.NumberFormat(separator, {
@@ -41,55 +41,55 @@ export const getFormattedValueTotal = (user, Amount) => {
 };
 
 export const getIncomeAmount = (user, amount, frequency, column) => {
-  let Amount = "-";
+  let Amount = '-';
   if (amount > 0) {
-    if (column === "Yearly") {
-      if (frequency === "Yearly") {
+    if (column === 'Yearly') {
+      if (frequency === 'Yearly') {
         Amount = amount * 1;
-      } else if (frequency === "Monthly") {
+      } else if (frequency === 'Monthly') {
         Amount = amount * 12;
-      } else if (frequency === "Semi-Monthly") {
+      } else if (frequency === 'Semi-Monthly') {
         Amount = amount * 24;
-      } else if (frequency === "Weekly") {
+      } else if (frequency === 'Weekly') {
         Amount = amount * 52;
-      } else if (frequency === "Bi-Weekly") {
+      } else if (frequency === 'Bi-Weekly') {
         Amount = amount * 26;
       } else {
-        Amount = "-";
+        Amount = '-';
       }
     }
 
-    if (column === "Monthly") {
-      if (frequency === "Yearly") {
+    if (column === 'Monthly') {
+      if (frequency === 'Yearly') {
         Amount = amount / 12;
-      } else if (frequency === "Monthly") {
+      } else if (frequency === 'Monthly') {
         Amount = amount * 1;
-      } else if (frequency === "Semi-Monthly") {
+      } else if (frequency === 'Semi-Monthly') {
         Amount = amount * 2;
-      } else if (frequency === "Weekly") {
+      } else if (frequency === 'Weekly') {
         Amount = amount * 4;
-      } else if (frequency === "Bi-Weekly") {
+      } else if (frequency === 'Bi-Weekly') {
         Amount = amount * 2;
       } else {
-        Amount = "-";
+        Amount = '-';
       }
     }
 
-    if (column !== "Yearly" && column !== "Monthly") {
-      if (frequency === "Semi-Monthly" && column === "Semi-Monthly") {
+    if (column !== 'Yearly' && column !== 'Monthly') {
+      if (frequency === 'Semi-Monthly' && column === 'Semi-Monthly') {
         Amount = amount;
-      } else if (frequency === "Weekly" && column === "Weekly") {
+      } else if (frequency === 'Weekly' && column === 'Weekly') {
         Amount = amount;
-      } else if (frequency === "Bi-Weekly" && column === "Bi-Weekly") {
+      } else if (frequency === 'Bi-Weekly' && column === 'Bi-Weekly') {
         Amount = amount;
       } else {
-        Amount = "-";
+        Amount = '-';
       }
     }
   }
 
-  let formattedAmount = "-";
-  if (Amount !== "-") {
+  let formattedAmount = '-';
+  if (Amount !== '-') {
     formattedAmount = getFormattedValue(user, Amount);
   }
 
@@ -97,7 +97,7 @@ export const getIncomeAmount = (user, amount, frequency, column) => {
 };
 
 export const getGrossWeeklyTotal = (user, data) => {
-  const filteredData = data?.filter((item) => item.Frequency === "Weekly");
+  const filteredData = data?.filter((item) => item.Frequency === 'Weekly');
   const Amount = filteredData?.reduce((accumulator, record) => {
     const amount = record?.GrossAmount || 0;
     return accumulator + Number(amount);
@@ -107,7 +107,7 @@ export const getGrossWeeklyTotal = (user, data) => {
 };
 
 export const getNetWeeklyTotal = (user, data) => {
-  const filteredData = data?.filter((item) => item.Frequency === "Weekly");
+  const filteredData = data?.filter((item) => item.Frequency === 'Weekly');
   const Amount = filteredData?.reduce((accumulator, record) => {
     const amount = record?.NetAmount || 0;
     return accumulator + Number(amount);
@@ -117,7 +117,7 @@ export const getNetWeeklyTotal = (user, data) => {
 };
 
 export const getGrossBiWeeklyTotal = (user, data) => {
-  const filteredData = data?.filter((item) => item.Frequency === "Bi-Weekly");
+  const filteredData = data?.filter((item) => item.Frequency === 'Bi-Weekly');
   const Amount = filteredData?.reduce((accumulator, record) => {
     const amount = record?.GrossAmount || 0;
     return accumulator + Number(amount);
@@ -127,7 +127,7 @@ export const getGrossBiWeeklyTotal = (user, data) => {
 };
 
 export const getNetBiWeeklyTotal = (user, data) => {
-  const filteredData = data?.filter((item) => item.Frequency === "Bi-Weekly");
+  const filteredData = data?.filter((item) => item.Frequency === 'Bi-Weekly');
   const Amount = filteredData?.reduce((accumulator, record) => {
     const amount = record?.NetAmount || 0;
     return accumulator + Number(amount);
@@ -137,9 +137,7 @@ export const getNetBiWeeklyTotal = (user, data) => {
 };
 
 export const getGrossSemiMonthlyTotal = (user, data) => {
-  const filteredData = data?.filter(
-    (item) => item.Frequency === "Semi-Monthly"
-  );
+  const filteredData = data?.filter((item) => item.Frequency === 'Semi-Monthly');
   const Amount = filteredData?.reduce((accumulator, record) => {
     const amount = record?.GrossAmount || 0;
     return accumulator + Number(amount);
@@ -149,9 +147,7 @@ export const getGrossSemiMonthlyTotal = (user, data) => {
 };
 
 export const getNetSemiMonthlyTotal = (user, data) => {
-  const filteredData = data?.filter(
-    (item) => item.Frequency === "Semi-Monthly"
-  );
+  const filteredData = data?.filter((item) => item.Frequency === 'Semi-Monthly');
   const Amount = filteredData?.reduce((accumulator, record) => {
     const amount = record?.NetAmount || 0;
     return accumulator + Number(amount);
@@ -163,7 +159,7 @@ export const getNetSemiMonthlyTotal = (user, data) => {
 export const getGrossMonthlyTotal = (user, data) => {
   const Amount = data?.reduce((accumulator, record) => {
     const income = record?.GrossAmount || 0;
-    const payFrequency = record?.Frequency || "";
+    const payFrequency = record?.Frequency || '';
 
     let monthlyIncome = 0;
 
@@ -171,16 +167,16 @@ export const getGrossMonthlyTotal = (user, data) => {
       // case "Yearly":
       //   monthlyIncome = income / 12;
       //   break;
-      case "Monthly":
+      case 'Monthly':
         monthlyIncome = income;
         break;
-      case "Semi-Monthly":
+      case 'Semi-Monthly':
         monthlyIncome = income * 2;
         break;
-      case "Weekly":
+      case 'Weekly':
         monthlyIncome = income * 4;
         break;
-      case "Bi-Weekly":
+      case 'Bi-Weekly':
         monthlyIncome = income * 2;
         break;
       default:
@@ -196,7 +192,7 @@ export const getGrossMonthlyTotal = (user, data) => {
 export const getNetMonthlyTotal = (user, data) => {
   const Amount = data?.reduce((accumulator, record) => {
     const income = record?.NetAmount || 0;
-    const payFrequency = record?.Frequency || "";
+    const payFrequency = record?.Frequency || '';
 
     let monthlyIncome = 0;
 
@@ -204,16 +200,16 @@ export const getNetMonthlyTotal = (user, data) => {
       // case "Yearly":
       //   monthlyIncome = income / 12;
       //   break;
-      case "Monthly":
+      case 'Monthly':
         monthlyIncome = income;
         break;
-      case "Semi-Monthly":
+      case 'Semi-Monthly':
         monthlyIncome = income * 2;
         break;
-      case "Weekly":
+      case 'Weekly':
         monthlyIncome = income * 4;
         break;
-      case "Bi-Weekly":
+      case 'Bi-Weekly':
         monthlyIncome = income * 2;
         break;
       default:
@@ -229,24 +225,24 @@ export const getNetMonthlyTotal = (user, data) => {
 export const getGrossYearlyTotal = (user, data) => {
   const Amount = data?.reduce((accumulator, record) => {
     const income = record?.GrossAmount || 0;
-    const payFrequency = record?.Frequency || "";
+    const payFrequency = record?.Frequency || '';
 
     let yearlyIncome = 0;
 
     switch (payFrequency) {
-      case "Yearly":
+      case 'Yearly':
         yearlyIncome = income;
         break;
-      case "Monthly":
+      case 'Monthly':
         yearlyIncome = income * 12;
         break;
-      case "Semi-Monthly":
+      case 'Semi-Monthly':
         yearlyIncome = income * 24;
         break;
-      case "Weekly":
+      case 'Weekly':
         yearlyIncome = income * 52;
         break;
-      case "Bi-Weekly":
+      case 'Bi-Weekly':
         yearlyIncome = income * 26;
         break;
       default:
@@ -262,24 +258,24 @@ export const getGrossYearlyTotal = (user, data) => {
 export const getNetYearlyTotal = (user, data) => {
   const Amount = data?.reduce((accumulator, record) => {
     const income = record?.NetAmount || 0;
-    const payFrequency = record?.Frequency || "";
+    const payFrequency = record?.Frequency || '';
 
     let yearlyIncome = 0;
 
     switch (payFrequency) {
-      case "Yearly":
+      case 'Yearly':
         yearlyIncome = income;
         break;
-      case "Monthly":
+      case 'Monthly':
         yearlyIncome = income * 12;
         break;
-      case "Semi-Monthly":
+      case 'Semi-Monthly':
         yearlyIncome = income * 24;
         break;
-      case "Weekly":
+      case 'Weekly':
         yearlyIncome = income * 52;
         break;
-      case "Bi-Weekly":
+      case 'Bi-Weekly':
         yearlyIncome = income * 26;
         break;
       default:
@@ -365,7 +361,7 @@ export const hasRecords = (data) => {
       item.MonthlyBudget > 0 ||
       item.SelfAmount > 0 ||
       item.PartnerAmount > 0 ||
-      item.GrossAmount > 0
+      item.GrossAmount > 0,
   );
   if (updatedData.length > 0) {
     hasRecords = true;
@@ -376,12 +372,12 @@ export const hasRecords = (data) => {
 /////************************BANK ACCOUNT ********************************************************
 
 export const getFormattedValueType = (user, Amount, type, column) => {
-  const usedCurrency = user?.Currency ? user?.Currency : "$";
-  const separator = user?.Separator ? user?.Separator : "en-us";
-  let formattedAmount = "";
+  const usedCurrency = user?.Currency ? user?.Currency : '$';
+  const separator = user?.Separator ? user?.Separator : 'en-us';
+  let formattedAmount = '';
 
   if (type === column) {
-    if (Amount !== "" && Amount > 0.0) {
+    if (Amount !== '' && Amount > 0.0) {
       formattedAmount =
         usedCurrency +
         new Intl.NumberFormat(separator, {
@@ -405,41 +401,41 @@ export const getBankAccountTypeTotal = (user, data, column) => {
 };
 
 export const networthExpenses = [
-  "Mortgage/House Payment",
-  "Home Equity Line of Credit",
-  "Enter",
-  "Car Payment #1",
-  "Car Payment #2",
-  "Car Payment #3",
-  "Motorcycle Payment",
-  "Clothes & Shoes",
-  "Computer & Accessories (keyboard & mouse, printer, Ink, Paper)",
-  "Toys/child gear",
-  "Cell/Telephone",
-  "Clothing, shoes & purses",
-  "Furniture",
-  "Hobby expenses",
-  "Household Items (kitchenware, appliances, cookware, home décor etc.)",
-  "Jewelry",
-  "Office Supplies",
-  "Boat Payment",
-  "Golf Equipment (Gear, balls, etc.)",
-  "Jetski Payment",
-  "Recreational Vehicle",
+  'Mortgage/House Payment',
+  'Home Equity Line of Credit',
+  'Enter',
+  'Car Payment #1',
+  'Car Payment #2',
+  'Car Payment #3',
+  'Motorcycle Payment',
+  'Clothes & Shoes',
+  'Computer & Accessories (keyboard & mouse, printer, Ink, Paper)',
+  'Toys/child gear',
+  'Cell/Telephone',
+  'Clothing, shoes & purses',
+  'Furniture',
+  'Hobby expenses',
+  'Household Items (kitchenware, appliances, cookware, home décor etc.)',
+  'Jewelry',
+  'Office Supplies',
+  'Boat Payment',
+  'Golf Equipment (Gear, balls, etc.)',
+  'Jetski Payment',
+  'Recreational Vehicle',
   //"Wash/Detailing Service",
-  "Mortgage Payment - Rental Property",
-  "Enter - Rental Property",
+  'Mortgage Payment - Rental Property',
+  'Enter - Rental Property',
 ];
 
 export const showFields = (data) => {
   let showFields = false;
   if (
-    data?.Category === "Housing" ||
-    data?.Category === "Transportation" ||
-    data?.Category === "Children" ||
-    data?.Category === "Household, Personal Care & Gifts" ||
-    data?.Category === "Recreation" ||
-    data?.Category === "Rental Property"
+    data?.Category === 'Housing' ||
+    data?.Category === 'Transportation' ||
+    data?.Category === 'Children' ||
+    data?.Category === 'Household, Personal Care & Gifts' ||
+    data?.Category === 'Recreation' ||
+    data?.Category === 'Rental Property'
   ) {
     showFields = networthExpenses.includes(data?.Description);
   }
@@ -448,15 +444,15 @@ export const showFields = (data) => {
 };
 
 export const SavingsDescriptions = [
-  "6 mo. Emergency Fund Savings Acct",
+  '6 mo. Emergency Fund Savings Acct',
   "Add'l Savings Acct #1",
   "Add'l Savings Acct #2",
   "Add'l Savings Acct #3",
   "Add'l Savings Acct #4",
-  "Investment Account #1",
-  "Investment Account #2",
-  "Investment Account #3",
-  "529 Plan: Education Investment Account",
+  'Investment Account #1',
+  'Investment Account #2',
+  'Investment Account #3',
+  '529 Plan: Education Investment Account',
 ];
 
 export const showMarketValue = (data) => {
@@ -476,7 +472,7 @@ export const getOwnerGrossMonthlyTotal = (user, data, owner) => {
 export const getUnformattedGrossMonthlyTotal = (data) => {
   const Amount = data?.reduce((accumulator, record) => {
     const income = record?.GrossAmount || 0;
-    const payFrequency = record?.Frequency || "";
+    const payFrequency = record?.Frequency || '';
 
     let monthlyIncome = 0;
 
@@ -484,16 +480,16 @@ export const getUnformattedGrossMonthlyTotal = (data) => {
       // case "Yearly":
       //   monthlyIncome = income / 12;
       //   break;
-      case "Monthly":
+      case 'Monthly':
         monthlyIncome = income;
         break;
-      case "Semi-Monthly":
+      case 'Semi-Monthly':
         monthlyIncome = income * 2;
         break;
-      case "Weekly":
+      case 'Weekly':
         monthlyIncome = income * 4;
         break;
-      case "Bi-Weekly":
+      case 'Bi-Weekly':
         monthlyIncome = income * 2;
         break;
       default:
@@ -507,27 +503,23 @@ export const getUnformattedGrossMonthlyTotal = (data) => {
 
 export const getOwnerGrossMonthlyPercentage = (data, owner) => {
   const updatedData = data?.filter((data) => data.Owner === owner);
-  const totalData = data?.filter((data) => data.Owner !== "Joint");
+  const totalData = data?.filter((data) => data.Owner !== 'Joint');
   const totalGrossMonthly = getUnformattedGrossMonthlyTotal(totalData);
   const ownerGrossMonthly = getUnformattedGrossMonthlyTotal(updatedData);
   let percentage = 0;
-  if (owner === "Self") {
-    percentage = totalGrossMonthly
-      ? (ownerGrossMonthly / totalGrossMonthly) * 100
-      : 0;
-  } else if (owner === "Partner") {
-    percentage = totalGrossMonthly
-      ? (ownerGrossMonthly / totalGrossMonthly) * 100
-      : 100;
+  if (owner === 'Self') {
+    percentage = totalGrossMonthly ? (ownerGrossMonthly / totalGrossMonthly) * 100 : 0;
+  } else if (owner === 'Partner') {
+    percentage = totalGrossMonthly ? (ownerGrossMonthly / totalGrossMonthly) * 100 : 100;
   }
   return percentage.toFixed(0);
 };
 
 export const getGrossMonthlyTotalOwner = (user, data) => {
-  const totalData = data?.filter((data) => data.Owner !== "Joint");
+  const totalData = data?.filter((data) => data.Owner !== 'Joint');
   const Amount = totalData?.reduce((accumulator, record) => {
     const income = record?.GrossAmount || 0;
-    const payFrequency = record?.Frequency || "";
+    const payFrequency = record?.Frequency || '';
 
     let monthlyIncome = 0;
 
@@ -535,16 +527,16 @@ export const getGrossMonthlyTotalOwner = (user, data) => {
       // case "Yearly":
       //   monthlyIncome = income / 12;
       //   break;
-      case "Monthly":
+      case 'Monthly':
         monthlyIncome = income;
         break;
-      case "Semi-Monthly":
+      case 'Semi-Monthly':
         monthlyIncome = income * 2;
         break;
-      case "Weekly":
+      case 'Weekly':
         monthlyIncome = income * 4;
         break;
-      case "Bi-Weekly":
+      case 'Bi-Weekly':
         monthlyIncome = income * 2;
         break;
       default:
@@ -558,7 +550,7 @@ export const getGrossMonthlyTotalOwner = (user, data) => {
 };
 
 export const getUnformattedMonthlyBudgetTotal = (data) => {
-  const updatedData = data?.filter((data) => data.Owner === "Joint");
+  const updatedData = data?.filter((data) => data.Owner === 'Joint');
   const Amount = updatedData?.reduce((accumulator, record) => {
     const amount = record?.MonthlyBudget || 0;
     return accumulator + Number(amount);
@@ -566,34 +558,22 @@ export const getUnformattedMonthlyBudgetTotal = (data) => {
   return Amount;
 };
 
-export const getSelfContributionTotal = (
-  user,
-  selfPerc,
-  incomes,
-  totalExpense
-) => {
+export const getSelfContributionTotal = (user, selfPerc, incomes, totalExpense) => {
   let percentage = selfPerc;
 
-  if (selfPerc === "") {
-    percentage = getOwnerGrossMonthlyPercentage(incomes, "Self");
+  if (selfPerc === '') {
+    percentage = getOwnerGrossMonthlyPercentage(incomes, 'Self');
   }
-  console.log(selfPerc, "selfPerc");
-
   const Amount = (Number(totalExpense) * Number(percentage)) / 100;
   const formattedAmount = getFormattedValueTotal(user, Amount);
   return formattedAmount;
 };
 
-export const getPartnerContributionTotal = (
-  user,
-  selfPerc,
-  incomes,
-  totalExpense
-) => {
+export const getPartnerContributionTotal = (user, selfPerc, incomes, totalExpense) => {
   let percentage = 100 - Number(selfPerc);
 
-  if (selfPerc === "") {
-    percentage = getOwnerGrossMonthlyPercentage(incomes, "Partner");
+  if (selfPerc === '') {
+    percentage = getOwnerGrossMonthlyPercentage(incomes, 'Partner');
   }
   const Amount = (Number(totalExpense) * Number(percentage)) / 100;
   const formattedAmount = getFormattedValueTotal(user, Amount);
@@ -603,8 +583,8 @@ export const getPartnerContributionTotal = (
 export const getSelfContributionPercentage = (selfPerc, incomes) => {
   let percentage = selfPerc;
 
-  if (selfPerc === "") {
-    percentage = getOwnerGrossMonthlyPercentage(incomes, "Self");
+  if (selfPerc === '') {
+    percentage = getOwnerGrossMonthlyPercentage(incomes, 'Self');
   }
   const formattedAmount = Number(percentage);
   return formattedAmount.toFixed(0);
@@ -612,8 +592,8 @@ export const getSelfContributionPercentage = (selfPerc, incomes) => {
 
 export const getPartnerContributionPercentage = (selfPerc, incomes) => {
   let percentage = 100 - Number(selfPerc);
-  if (selfPerc === "") {
-    percentage = getOwnerGrossMonthlyPercentage(incomes, "Partner");
+  if (selfPerc === '') {
+    percentage = getOwnerGrossMonthlyPercentage(incomes, 'Partner');
   }
   const unFormattedAmount = Number(percentage);
   return unFormattedAmount.toFixed(0);
@@ -622,11 +602,11 @@ export const getPartnerContributionPercentage = (selfPerc, incomes) => {
 ///***************************FINAL BUDGET***************************** */
 
 export const getNegativeFormattedValue = (user, Amount) => {
-  const usedCurrency = user?.Currency ? user?.Currency : "$";
-  const separator = user?.Separator ? user?.Separator : "en-us";
+  const usedCurrency = user?.Currency ? user?.Currency : '$';
+  const separator = user?.Separator ? user?.Separator : 'en-us';
 
-  let formattedAmount = "";
-  if (Amount !== "") {
+  let formattedAmount = '';
+  if (Amount !== '') {
     formattedAmount =
       usedCurrency +
       new Intl.NumberFormat(separator, {
@@ -647,24 +627,24 @@ export const getBudgetGoal = (goals, category) => {
 export const getUnformattedGrossYearlyTotal = (data) => {
   const Amount = data?.reduce((accumulator, record) => {
     const income = record?.GrossAmount || 0;
-    const payFrequency = record?.Frequency || "";
+    const payFrequency = record?.Frequency || '';
 
     let yearlyIncome = 0;
 
     switch (payFrequency) {
-      case "Yearly":
+      case 'Yearly':
         yearlyIncome = income;
         break;
-      case "Monthly":
+      case 'Monthly':
         yearlyIncome = income * 12;
         break;
-      case "Semi-Monthly":
+      case 'Semi-Monthly':
         yearlyIncome = income * 24;
         break;
-      case "Weekly":
+      case 'Weekly':
         yearlyIncome = income * 52;
         break;
-      case "Bi-Weekly":
+      case 'Bi-Weekly':
         yearlyIncome = income * 26;
         break;
       default:
@@ -679,24 +659,24 @@ export const getUnformattedGrossYearlyTotal = (data) => {
 export const getUnformattedNetYearlyTotal = (data) => {
   const Amount = data?.reduce((accumulator, record) => {
     const income = record?.NetAmount || 0;
-    const payFrequency = record?.Frequency || "";
+    const payFrequency = record?.Frequency || '';
 
     let yearlyIncome = 0;
 
     switch (payFrequency) {
-      case "Yearly":
+      case 'Yearly':
         yearlyIncome = income;
         break;
-      case "Monthly":
+      case 'Monthly':
         yearlyIncome = income * 12;
         break;
-      case "Semi-Monthly":
+      case 'Semi-Monthly':
         yearlyIncome = income * 24;
         break;
-      case "Weekly":
+      case 'Weekly':
         yearlyIncome = income * 52;
         break;
-      case "Bi-Weekly":
+      case 'Bi-Weekly':
         yearlyIncome = income * 26;
         break;
       default:
@@ -721,7 +701,7 @@ export const getUnformattedYearlyBudgetTotal = (data) => {
 export const getActualGoal = (incomeData, budgetData, category) => {
   const budget = getUnformattedYearlyBudgetTotal(budgetData);
   let income = getUnformattedNetYearlyTotal(incomeData);
-  if (category === "Retirement") {
+  if (category === 'Retirement') {
     income = getUnformattedGrossYearlyTotal(incomeData);
   }
   const perc = income > 0 ? (Number(budget) / Number(income)) * 100 : 0;
@@ -740,19 +720,19 @@ export const getCatActualGoal = (incomeData, budgetData, category) => {
 export const getIcon = (incomeData, budgetData, category, goals) => {
   const budget = getUnformattedYearlyBudgetTotal(budgetData);
   let income = getUnformattedNetYearlyTotal(incomeData);
-  if (category === "Retirement") {
+  if (category === 'Retirement') {
     income = getUnformattedGrossYearlyTotal(incomeData);
   }
   const actualPerc = (Number(budget) / Number(income)) * 100;
   const goalPerc = getBudgetGoal(goals, category);
-  let icon = "";
-  if (category === "Retirement" || category === "Savings") {
+  let icon = '';
+  if (category === 'Retirement' || category === 'Savings') {
     if (actualPerc >= goalPerc) {
       icon = <FaThumbsUp className="text-green-500 text-xl" />;
     } else {
       icon = <FaThumbsDown className="text-red-500 text-xl" />;
     }
-  } else if (category === "Debts" || category === "Expenses") {
+  } else if (category === 'Debts' || category === 'Expenses') {
     if (actualPerc >= goalPerc) {
       icon = <FaThumbsDown className="text-red-500 text-xl" />;
     } else {
@@ -770,7 +750,7 @@ export const getCatIcon = (incomeData, budgetData, category, goals) => {
   const actualPerc = (Number(budget) / Number(income)) * 100;
   const goalPerc = getBudgetGoal(goals, category);
   console.log(category, goalPerc);
-  let icon = "";
+  let icon = '';
   if (actualPerc >= goalPerc && goalPerc > 0) {
     icon = <FaThumbsDown className="text-red-500 text-xl" />;
   } else if (actualPerc < goalPerc && goalPerc > 0) {
@@ -782,60 +762,52 @@ export const getCatIcon = (incomeData, budgetData, category, goals) => {
 export const getLabel = (incomeData, budgetData, category, goals) => {
   const budget = getUnformattedYearlyBudgetTotal(budgetData);
   let income = getUnformattedNetYearlyTotal(incomeData);
-  if (category === "Retirement") {
+  if (category === 'Retirement') {
     income = getUnformattedGrossYearlyTotal(incomeData);
   }
   const actualPerc = (Number(budget) / Number(income)) * 100;
   const goalPerc = getBudgetGoal(goals, category);
-  let label = "Over/(Under) by";
-  if (category === "Retirement" || category === "Savings") {
+  let label = 'Over/(Under) by';
+  if (category === 'Retirement' || category === 'Savings') {
     if (actualPerc >= goalPerc) {
-      label = "Over by";
+      label = 'Over by';
     } else {
-      label = "Under by";
+      label = 'Under by';
     }
-  } else if (category === "Debts" || category === "Expenses") {
+  } else if (category === 'Debts' || category === 'Expenses') {
     if (actualPerc >= goalPerc) {
-      label = "Over by";
+      label = 'Over by';
     } else {
-      label = "Under by";
+      label = 'Under by';
     }
   }
   return label;
 };
 
 export const getTotalLabel = (diff) => {
-  let label = "Over/Under Bubget by";
+  let label = 'Over/Under Bubget by';
   if (diff < 0) {
-    label = "Over Budget by";
+    label = 'Over Budget by';
   } else if (diff > 0) {
-    label = "Under Budget by";
+    label = 'Under Budget by';
   }
   return label;
 };
 
-export const getDifference = (
-  incomeData,
-  budgetData,
-  category,
-  goals,
-  user
-) => {
+export const getDifference = (incomeData, budgetData, category, goals, user) => {
   const budget = getUnformattedYearlyBudgetTotal(budgetData);
   let income = getUnformattedNetYearlyTotal(incomeData);
-  if (category === "Retirement") {
+  if (category === 'Retirement') {
     income = getUnformattedGrossYearlyTotal(incomeData);
   }
   const actualPerc = income > 0 ? Number(budget) / Number(income) : 0;
   const goalPerc = getBudgetGoal(goals, category) / 100;
   let Amount = 0;
-  if (category === "Retirement" || category === "Savings") {
+  if (category === 'Retirement' || category === 'Savings') {
     // Amount = (Number(actualPerc) / Number(goalPerc)) * Number(budget);
-    Amount =
-      Number(actualPerc) * Number(income) - Number(goalPerc) * Number(income);
-  } else if (category === "Debts" || category === "Expenses") {
-    Amount =
-      Number(goalPerc) * Number(income) - Number(actualPerc) * Number(income);
+    Amount = Number(actualPerc) * Number(income) - Number(goalPerc) * Number(income);
+  } else if (category === 'Debts' || category === 'Expenses') {
+    Amount = Number(goalPerc) * Number(income) - Number(actualPerc) * Number(income);
   }
   const formattedAmount = getNegativeFormattedValue(user, Amount);
   return formattedAmount;
@@ -846,7 +818,7 @@ export const getUniqueBudgetItemsWithSum = (data) => {
   const uniqueBudgetItems = new Set();
   const budgetItemValue = {};
   data?.forEach((record) => {
-    const budgetItem = record?.Category || "";
+    const budgetItem = record?.Category || '';
     const monthlyPayment = record?.MonthlyBudget || 0;
     if (!uniqueBudgetItems.has(budgetItem)) {
       uniqueBudgetItems.add(budgetItem);
@@ -866,9 +838,9 @@ export const getUniqueDescriptionsWithSumForEachBudgetItem = (data) => {
   const uniqueDescriptions = {};
 
   data?.forEach((record) => {
-    const budgetItem = record?.Category || "";
-    const description = record?.Description || "";
-    const nickName = record?.NickName || "";
+    const budgetItem = record?.Category || '';
+    const description = record?.Description || '';
+    const nickName = record?.NickName || '';
     const monthlyPayment = record?.MonthlyBudget || 0;
 
     // Use NickName if it's not blank, otherwise use Description
@@ -891,9 +863,7 @@ export const getUniqueDescriptionsWithSumForEachBudgetItem = (data) => {
 //****************************NETWORTH****************************/
 
 export const getRealEstateMarketValueTotal = (user, data, cat1, cat2) => {
-  const updatedData = data.filter(
-    (item) => item.Category === cat1 || item.Category === cat2
-  );
+  const updatedData = data.filter((item) => item.Category === cat1 || item.Category === cat2);
   const formattedAmount = getMarketValueTotal(user, updatedData);
   return formattedAmount;
 };
@@ -905,9 +875,7 @@ export const getVehicleMarketValueTotal = (user, data, cat1) => {
 };
 
 export const getHouseHoldMarketValueTotal = (user, data, cat1, cat2) => {
-  const updatedData = data.filter(
-    (item) => item.Category === cat1 || item.Category === cat2
-  );
+  const updatedData = data.filter((item) => item.Category === cat1 || item.Category === cat2);
   const formattedAmount = getMarketValueTotal(user, updatedData);
   return formattedAmount;
 };
@@ -946,7 +914,7 @@ export const getUnformattedBankBalanceTotal = (data) => {
   const Amount = data?.reduce((accumulator, record) => {
     const type = record?.Type;
     let amount = record?.Amount || 0;
-    if (type === "Withdrawal") {
+    if (type === 'Withdrawal') {
       amount = -amount;
     }
     return accumulator + Number(amount);
@@ -955,17 +923,13 @@ export const getUnformattedBankBalanceTotal = (data) => {
 };
 
 export const getCreditCardLoanBalanceTotal = (user, data, cat1, cat2) => {
-  const updatedData = data.filter(
-    (item) => item.Category === cat1 || item.Category === cat2
-  );
+  const updatedData = data.filter((item) => item.Category === cat1 || item.Category === cat2);
   const formattedAmount = getLoanBalanceTotal(user, updatedData);
   return formattedAmount;
 };
 
 export const getRealEstateLoanBalanceTotal = (user, data, cat1, cat2) => {
-  const updatedData = data.filter(
-    (item) => item.Category === cat1 || item.Category === cat2
-  );
+  const updatedData = data.filter((item) => item.Category === cat1 || item.Category === cat2);
   const formattedAmount = getLoanBalanceTotal(user, updatedData);
   return formattedAmount;
 };
@@ -983,25 +947,13 @@ export const getMedicalDebtBalanceTotal = (user, data, cat1) => {
 };
 
 export const getLoanOtherLoanBalanceTotal = (user, data, cat1, cat2, cat3) => {
-  const updatedData = data.filter(
-    (item) =>
-      item.Category !== cat1 && item.Category !== cat2 && item.Category !== cat3
-  );
+  const updatedData = data.filter((item) => item.Category !== cat1 && item.Category !== cat2 && item.Category !== cat3);
   const formattedAmount = getLoanBalanceTotal(user, updatedData);
   return formattedAmount;
 };
 
-export const getRealOtherDebtLoanBalanceTotal = (
-  user,
-  data,
-  cat1,
-  cat2,
-  cat3
-) => {
-  const updatedData = data.filter(
-    (item) =>
-      item.Category === cat1 || item.Category === cat2 || item.Category === cat3
-  );
+export const getRealOtherDebtLoanBalanceTotal = (user, data, cat1, cat2, cat3) => {
+  const updatedData = data.filter((item) => item.Category === cat1 || item.Category === cat2 || item.Category === cat3);
   const formattedAmount = getLoanBalanceTotal(user, updatedData);
   return formattedAmount;
 };
@@ -1011,9 +963,9 @@ export const getAge = (user, owner) => {
   const partner = Number(user.PartnerAge) || 0;
   let age = Math.max(self, partner);
 
-  if (owner === "Self") {
+  if (owner === 'Self') {
     age = self;
-  } else if (owner === "Partner") {
+  } else if (owner === 'Partner') {
     age = partner;
   }
 
@@ -1025,7 +977,7 @@ export const getAge = (user, owner) => {
 export const getJointContribution = (data, owner) => {
   const Amount = data.reduce((accumulator, record) => {
     const amount = record?.MonthlyBudget || 0;
-    if (record.Category === "Joint Contribution" && record.Owner === owner) {
+    if (record.Category === 'Joint Contribution' && record.Owner === owner) {
       return accumulator + Number(amount);
     }
     return accumulator;
@@ -1036,12 +988,12 @@ export const getJointContribution = (data, owner) => {
 
 export const getExtraPayCheckTotal = (user, data, owner) => {
   let Amount = 0;
-  if (owner === "Self") {
+  if (owner === 'Self') {
     Amount = data?.reduce((accumulator, record) => {
       const amount = record?.SelfAmount || 0;
       return accumulator + Number(amount);
     }, 0);
-  } else if (owner === "Partner") {
+  } else if (owner === 'Partner') {
     Amount = data?.reduce((accumulator, record) => {
       const amount = record?.PartnerAmount || 0;
       return accumulator + Number(amount);
