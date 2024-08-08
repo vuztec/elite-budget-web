@@ -9,7 +9,7 @@ import Select from '../../components/Select';
 import { getActiveAccount } from '../../utils/permissions';
 import Package from '../../package/Package';
 import { getBankAccountNames, getBankAccountTransactions } from '../../config/api';
-import { getBankGridData, getOwnerGridData, incomeOwners } from '../../utils/budget.filter';
+import { getBankGridData, incomeOwners } from '../../utils/budget.filter';
 import { TransactionListView } from '../../components/bank/TransactionListView';
 import AddTransaction from '../../components/bank/AddTransaction';
 import useUserStore from '../../app/user';
