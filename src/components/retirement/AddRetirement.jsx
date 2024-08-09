@@ -1,17 +1,17 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { useForm } from "react-hook-form";
-import ModalWrapper from "../ModalWrapper";
-import { Dialog } from "@headlessui/react";
-import Textbox from "../Textbox";
-import Select from "../Select";
-import Loading from "../Loader";
-import Button from "../Button";
-import { useQueryClient } from "react-query";
-import { IoMdSend } from "react-icons/io";
-import { TiCancel } from "react-icons/ti";
-import axios from "../../config/axios";
-import { handleAxiosResponseError } from "../../utils/handleResponseError";
-import { daydues, paymentMethods } from "../../utils/budget.filter";
+import React, { useEffect, useMemo, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import ModalWrapper from '../ModalWrapper';
+import { Dialog } from '@headlessui/react';
+import Textbox from '../Textbox';
+import Select from '../Select';
+import Loading from '../Loader';
+import Button from '../Button';
+import { useQueryClient } from 'react-query';
+import { IoMdSend } from 'react-icons/io';
+import { TiCancel } from 'react-icons/ti';
+import axios from '../../config/axios';
+import { handleAxiosResponseError } from '../../utils/handleResponseError';
+import { daydues, paymentMethods } from '../../utils/budget.filter';
 
 export const AddRetirement = ({ open, setOpen, recordData }) => {
   const queryClient = useQueryClient();
@@ -38,13 +38,13 @@ export const AddRetirement = ({ open, setOpen, recordData }) => {
 
   useEffect(() => {
     if (recordData?.id) {
-      setValue("Description", recordData.Description);
-      setValue("NickName", recordData.NickName);
-      setValue("Owner", recordData.Owner);
-      setValue("PaymentMethod", recordData.PaymentMethod);
-      setValue("MarketValue", recordData.MarketValue);
-      setValue("MonthlyBudget", recordData.MonthlyBudget);
-      setValue("DueDate", recordData.DueDate);
+      setValue('Description', recordData.Description);
+      setValue('NickName', recordData.NickName);
+      setValue('Owner', recordData.Owner);
+      setValue('PaymentMethod', recordData.PaymentMethod);
+      setValue('MarketValue', recordData.MarketValue);
+      setValue('MonthlyBudget', recordData.MonthlyBudget);
+      setValue('DueDate', recordData.DueDate);
     }
 
     return () => reset();
@@ -56,14 +56,10 @@ export const AddRetirement = ({ open, setOpen, recordData }) => {
     setIsLoading(() => true);
 
     axios
-      .patch("/api/savings-retirements/" + numericSelectedID, data)
+      .patch('/api/savings-retirements/' + numericSelectedID, data)
       .then(({ data }) => {
-        queryClient.setQueryData(["retirements"], (prev) =>
-          prev.map((retirement) =>
-            retirement.id === numericSelectedID
-              ? { ...retirement, ...data }
-              : retirement
-          )
+        queryClient.setQueryData(['retirements'], (prev) =>
+          prev.map((retirement) => (retirement.id === numericSelectedID ? { ...retirement, ...data } : retirement)),
         );
         setIsLoading(() => false);
         setOpen(false);
@@ -77,17 +73,9 @@ export const AddRetirement = ({ open, setOpen, recordData }) => {
   return (
     <>
       <ModalWrapper open={open} setOpen={setOpen}>
-        <form
-          onSubmit={handleSubmit(handleOnSubmit)}
-          className="w-full h-[70%]"
-        >
-          <Dialog.Title
-            as="h2"
-            className="text-base font-bold leading-6 text-gray-900 mb-4"
-          >
-            {recordData
-              ? "UPDATE RETIREMENT RECORD"
-              : "ADD NEW RETIREMENT RECORD"}
+        <form onSubmit={handleSubmit(handleOnSubmit)} className="w-full h-[70%]">
+          <Dialog.Title as="h2" className="text-base font-bold leading-6 text-gray-900 mb-4">
+            {recordData ? 'UPDATE RETIREMENT RECORD' : 'ADD NEW RETIREMENT RECORD'}
           </Dialog.Title>
           <div className="mt-2 flex flex-col gap-6 overflow-y-scroll bg-scroll">
             <div className="flex flex-col gap-6 w-full">
@@ -98,7 +86,7 @@ export const AddRetirement = ({ open, setOpen, recordData }) => {
                 label="Retirement Savings Description"
                 disabled={true}
                 className="w-full rounded"
-                register={register("Description")}
+                register={register('Description')}
               />
             </div>
             <div className="flex flex-col gap-6 w-full">
@@ -108,8 +96,8 @@ export const AddRetirement = ({ open, setOpen, recordData }) => {
                 name="NickName"
                 label="Nickname"
                 className="w-full rounded"
-                register={register("NickName")}
-                error={errors.NickName ? errors.NickName.message : ""}
+                register={register('NickName')}
+                error={errors.NickName ? errors.NickName.message : ''}
               />
             </div>
 
@@ -119,64 +107,69 @@ export const AddRetirement = ({ open, setOpen, recordData }) => {
                 label="Owner"
                 defaultValue="Self"
                 options={[
-                  { value: "Self", label: "Self" },
-                  { value: "Partner", label: "Partner" },
+                  { value: 'Self', label: 'Self' },
+                  { value: 'Partner', label: 'Partner' },
                 ]}
                 className="w-full rounded"
-                register={register("Owner", {
-                  required: "Name is required!",
+                register={register('Owner', {
+                  required: 'Name is required!',
                 })}
-                error={errors.Owner ? errors.Owner.message : ""}
+                error={errors.Owner ? errors.Owner.message : ''}
               />
-              <Select
-                name="PaymentMethod"
-                label="Payment Method"
-                defaultValue="Auto Debit"
-                options={payMethods}
-                className="w-full rounded"
-                register={register("PaymentMethod")}
-                error={errors.PaymentMethod ? errors.PaymentMethod.message : ""}
-              />
-            </div>
-            <div className="flex flex-col gap-6 w-full">
               <Textbox
                 placeholder="Enter Amount"
                 type="number"
                 name="MarketValue"
                 label="Market Value"
                 className="w-full rounded"
-                register={register("MarketValue", {
+                register={register('MarketValue', {
                   valueAsNumber: true,
-                  validate: (value) =>
-                    value >= 0 || "Amount must be positive or zero.",
+                  validate: (value) => value >= 0 || 'Amount must be positive or zero.',
                 })}
-                error={errors.MarketValue ? errors.MarketValue.message : ""}
+                error={errors.MarketValue ? errors.MarketValue.message : ''}
               />
             </div>
-            <div className="flex flex-col gap-6 w-full">
-              <Textbox
-                placeholder="Enter Amount"
-                type="number"
-                name="MonthlyBudget"
-                label="Monthly Budget"
-                className="w-full rounded"
-                register={register("MonthlyBudget", {
-                  valueAsNumber: true,
-                  validate: (value) =>
-                    value >= 0 || "Amount must be positive or zero.",
-                })}
-                error={errors.MonthlyBudget ? errors.MonthlyBudget.message : ""}
-              />
-              <Select
-                name="DueDate"
-                label="Day Due"
-                defaultValue="N/A"
-                options={duedays}
-                className="w-full rounded"
-                register={register("DueDate")}
-                error={errors.DueDate ? errors.DueDate.message : ""}
-              />
-            </div>
+            {recordData.Description !== 'Retirement (401k, Roth 401K, 403b) Prior Job' && (
+              <>
+                <div className="flex flex-col gap-6 w-full">
+                  <Select
+                    name="PaymentMethod"
+                    label="Payment Method"
+                    defaultValue="Auto Debit"
+                    options={payMethods}
+                    className="w-full rounded"
+                    register={register('PaymentMethod')}
+                    error={errors.PaymentMethod ? errors.PaymentMethod.message : ''}
+                  />
+                </div>
+                <div className="flex flex-col gap-6 w-full">
+                  <Textbox
+                    placeholder="Enter Amount"
+                    type="number"
+                    name="MonthlyBudget"
+                    label="Monthly Budget"
+                    className="w-full rounded"
+                    register={register('MonthlyBudget', {
+                      valueAsNumber: true,
+                      validate: (value) =>
+                        recordData.Description !== 'Retirement (401k, Roth 401K, 403b) Prior Job'
+                          ? value >= 0 || 'Amount must be positive or zero.'
+                          : true,
+                    })}
+                    error={errors.MonthlyBudget ? errors.MonthlyBudget.message : ''}
+                  />
+                  <Select
+                    name="DueDate"
+                    label="Day Due"
+                    defaultValue="01"
+                    options={duedays}
+                    className="w-full rounded"
+                    register={register('DueDate')}
+                    error={errors.DueDate ? errors.DueDate.message : ''}
+                  />
+                </div>
+              </>
+            )}
           </div>
 
           {isLoading ? (

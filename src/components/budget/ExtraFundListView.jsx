@@ -343,44 +343,46 @@ export const ExtraFundListView = ({
                 <TableTotal gridData={gridData} />
               </tbody>
             </table>
-            <div className="flex flex-col gap-3 mt-5">
-              <p className="text-sm font-bold italic text-gray-500 ml-5">
+            <div className="flex flex-col gap-3 mt-10 w-[97%]">
+              <p className="text-sm font-bold italic text-gray-500 ml-5 text-justify">
                 Note: One number focus! This is NOT your bank account register. This is a tool to track the balance of
                 your available extra funds (the amount remaining when all your budget items are paid).
               </p>
               <div className="flex gap-1">
-                <p className="text-sm font-bold italic text-gray-500 ml-5">Step 1:</p>
-                <p className="text-sm font-semibold italic text-gray-500 ml-5">Add</p>
-                <p className="text-sm italic text-gray-500 ml-5">
+                <p className="text-sm font-bold italic text-gray-500 ml-5 whitespace-nowrap">Step 1:</p>
+                <p className="text-sm font-semibold italic text-gray-500 ml-2 md:ml-5">Add</p>
+                <p className="text-sm italic text-gray-500 ml-2 md:ml-5 text-justify">
                   At the beginning of each month, enter the current month's extra funds total (the amount that you are
                   under budget by).
                 </p>
               </div>
               <div className="flex gap-1">
-                <p className="text-sm font-bold italic text-gray-500 ml-5">Step 2:</p>
-                <p className="text-sm font-semibold italic text-gray-500 ml-5">Subtract</p>
-                <p className="text-sm italic text-gray-500 ml-5">Enter any purchases not included in the budget.</p>
+                <p className="text-sm font-bold italic text-gray-500 ml-5 whitespace-nowrap">Step 2:</p>
+                <p className="text-sm font-semibold italic text-gray-500 ml-2 md:ml-5">Subtract</p>
+                <p className="text-sm italic text-gray-500 ml-2 md:ml-5 text-justify">
+                  Enter any purchases not included in the budget.
+                </p>
               </div>
               <div className="flex gap-1">
-                <p className="text-sm font-bold italic text-gray-500 ml-5">Step 3:</p>
-                <p className="text-sm font-semibold italic text-gray-500 ml-5">Subtract</p>
-                <p className="text-sm italic text-gray-500 ml-5">
+                <p className="text-sm font-bold italic text-gray-500 ml-5 whitespace-nowrap">Step 3:</p>
+                <p className="text-sm font-semibold italic text-gray-500 ml-2 md:ml-5">Subtract</p>
+                <p className="text-sm italic text-gray-500 ml-2 md:ml-5 text-justify">
                   Enter the amount that exceeds a budget item (e.g. Your cell phone budget is $75. The monthly bill is
                   $100. Subtract $25).
                 </p>
               </div>
               <div className="flex gap-1">
-                <p className="text-sm font-bold italic text-gray-500 ml-5">Step 4:</p>
-                <p className="text-sm font-semibold italic text-gray-500 ml-5">Add</p>
-                <p className="text-sm italic text-gray-500 ml-5">
+                <p className="text-sm font-bold italic text-gray-500 ml-5 whitespace-nowrap">Step 4:</p>
+                <p className="text-sm font-semibold italic text-gray-500 ml-2 md:ml-5">Add</p>
+                <p className="text-sm italic text-gray-500 ml-2 md:ml-5 text-justify">
                   Enter the amount of a monthly budget item you didn't have to pay (e.g. vehicle ins 6 mo. policy is
                   paid in 5 monthly pmts. In the 6th mo., no premiums will be paid so add it to your tracker).
                 </p>
               </div>
               <div className="flex gap-1">
-                <p className="text-sm font-bold italic text-gray-500 ml-5">Step 5:</p>
-                <p className="text-sm font-semibold italic text-gray-500 ml-5">Add</p>
-                <p className="text-sm italic text-gray-500 ml-5">
+                <p className="text-sm font-bold italic text-gray-500 ml-5 whitespace-nowrap">Step 5:</p>
+                <p className="text-sm font-semibold italic text-gray-500 ml-2 md:ml-5">Add</p>
+                <p className="text-sm italic text-gray-500 ml-2 md:ml-5 text-justify">
                   Enter the difference of a budget item that is less than the budget (e.g. Your food budget is $1000.
                   The actual amt spent was $800. Add $200 to the tracker).
                 </p>

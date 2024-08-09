@@ -87,7 +87,12 @@ export const Checklist = () => {
       owner
     ) {
       const savingData = getOwnerGridData(savings, owner);
-      const retirementData = getOwnerGridData(retirements, owner);
+      const updatedRetirements = retirements.filter(
+        (retirement) =>
+          retirement.Description !== 'Retirement (401k, Roth 401K, 403b) Payroll Deductions' &&
+          retirement.Description !== '401k, Roth 401K, 403b) Prior Job',
+      );
+      const retirementData = getOwnerGridData(updatedRetirements, owner);
       const expenseData = getOwnerExpenseGridData(expenses, owner);
       const debtData = getOwnerGridData(debts, owner);
       const combinedData = getCombineData(savingData, expenseData, retirementData, debtData);
