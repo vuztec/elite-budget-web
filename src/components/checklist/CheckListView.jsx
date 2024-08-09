@@ -1,7 +1,7 @@
 import React from 'react';
 import useUserStore from '../../app/user';
 import { getFormattedValueTotal } from '../../utils/budget.calculation';
-
+import './checklist.css';
 export const CheckListView = ({
   uniqueCategories,
   uniqueBudgetItemsByCategory,
@@ -55,6 +55,7 @@ export const CheckListView = ({
                               <td key={index} className=""></td>
                             ))}
                           </tr>
+                          <div className="page-break"></div>
                           {uniqueDescriptionsByCategory[category] &&
                             uniqueDescriptionsByCategory[category][budgetItem] &&
                             Object.entries(uniqueDescriptionsByCategory[category][budgetItem])?.map(

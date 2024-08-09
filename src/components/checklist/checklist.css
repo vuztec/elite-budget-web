@@ -1,0 +1,10 @@
+@media print {
+  .page-break {
+    page-break-before: always !important; /* For PDF generation */
+    break-before: always !important; /* For modern browsers */
+    margin-top: 20px !important;
+  }
+  .avoid-page-break {
+    page-break-inside: avoid;
+  }
+}

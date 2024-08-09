@@ -25,6 +25,8 @@ import { PiPrinter } from 'react-icons/pi';
 import { Margin, usePDF } from 'react-to-pdf';
 import { useLocation } from 'react-router-dom';
 import { SidebarLinks } from '../../utils/sidebar.data';
+import { PDFDownloadLink } from '@react-pdf/renderer';
+import { CheckListPDF } from '../../components/checklist/CheckListPDF';
 
 export const Checklist = () => {
   const { user } = useUserStore();
@@ -189,14 +191,32 @@ export const Checklist = () => {
                 onClick={() => setIsShowing((old) => !old)}
               />
             </div>
-            <Button
-              onClick={handlePdf}
-              icon={<PiPrinter />}
-              label={'Print'}
-              className={
-                'flex flex-row-reverse justify-center items-center bg-black text-white text-lg gap-2 hover:bg-[whitesmoke] hover:text-black'
+
+            <PDFDownloadLink
+              document={
+                <CheckListPDF
+                  uniqueCategories={uniqueCategories}
+                  uniqueBudgetItemsByCategory={uniqueBudgetItemsByCategory}
+                  uniqueDescriptionsByCategory={uniqueDescriptionsByCategory}
+                  monthHeaders={monthHeaders}
+                  user={user}
+                  title={title}
+                  owner={owner}
+                />
               }
-            />
+              fileName="checklist.pdf"
+            >
+              {({ blob, url, loading, error }) => (
+                <Button
+                  icon={<PiPrinter />} // You can use a different icon or text if preferred
+                  label={loading ? 'Loading document...' : 'Print'}
+                  className={`flex justify-center items-center text-lg gap-2 ${
+                    loading ? 'bg-gray-400 text-white' : 'bg-black text-white hover:bg-[whitesmoke] hover:text-black'
+                  }`}
+                />
+              )}
+            </PDFDownloadLink>
+
             <MultiSelectDropdown
               options={months}
               placeholder={'Filter Months'}
