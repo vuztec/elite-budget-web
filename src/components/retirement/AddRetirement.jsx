@@ -43,7 +43,7 @@ export const AddRetirement = ({ open, setOpen, recordData }) => {
       setValue('Owner', recordData.Owner);
       setValue('PaymentMethod', recordData.PaymentMethod);
       setValue('MarketValue', recordData.MarketValue);
-      setValue('MonthlyBudget', recordData.MonthlyBudget);
+      setValue('MonthlyBudget', Number(recordData.MonthlyBudget));
       setValue('DueDate', recordData.DueDate);
     }
 
@@ -54,6 +54,8 @@ export const AddRetirement = ({ open, setOpen, recordData }) => {
   const handleOnSubmit = async (data) => {
     const numericSelectedID = Number(recordData.id);
     setIsLoading(() => true);
+
+    console.log(data);
 
     axios
       .patch('/api/savings-retirements/' + numericSelectedID, data)
