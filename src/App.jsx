@@ -37,7 +37,7 @@ function Layout() {
   return user ? (
     <div className="w-full h-screen flex">
       <div
-        className={`w-full overflow-auto md:w-max h-full md:h-min md:rounded-3xl md:m-2 lg:m-0 lg:rounded-none bg-[rgba(0,0,0,0.3)] md:bg-white top-0 fixed md:static md:block ${
+        className={`w-full overflow-auto lg:w-max h-full lg:h-min lg:m-0 lg:rounded-none bg-[rgba(0,0,0,0.3)] lg:bg-white top-0 fixed lg:static lg:block ${
           sidebar ? '' : 'hidden'
         }`}
         onClick={setSidebar}
@@ -46,11 +46,9 @@ function Layout() {
       </div>
       {/* <MobileSidebar/> */}
       <div className="flex-1 overflow-auto">
-        <div>
-          <Navbar />
-          <div className="p-4 2xl:px-10">
-            <Outlet />
-          </div>
+        <Navbar />
+        <div className="p-4 2xl:px-10">
+          <Outlet />
         </div>
       </div>
     </div>
