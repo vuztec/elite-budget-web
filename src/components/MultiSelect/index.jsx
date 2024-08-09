@@ -1,10 +1,6 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
-const MultiSelectDropdown = ({ options, placeholder, value, setValue }) => {
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
-  const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
-
+const MultiSelectDropdown = ({ options, placeholder, value, setValue, toggleDropdown, isDropdownOpen }) => {
   const handleOptionClick = (option) => {
     if (value.includes(option)) {
       setValue(value.filter((item) => item !== option));
@@ -16,7 +12,7 @@ const MultiSelectDropdown = ({ options, placeholder, value, setValue }) => {
   const isSelected = (option) => value.includes(option);
 
   return (
-    <div className="relative">
+    <div className="relative" onClick={(e) => e.stopPropagation()}>
       <div className="bg-white border border-gray-300 rounded p-1 cursor-pointer" onClick={toggleDropdown}>
         <span className="text-gray-600 text-sm">{placeholder}</span>
       </div>
@@ -26,7 +22,7 @@ const MultiSelectDropdown = ({ options, placeholder, value, setValue }) => {
           {options.map((option, index) => (
             <div
               key={index}
-              className={`p-2 cursor-pointer hover:bg-gray-100 ${isSelected(option) ? "bg-blue-100" : ""}`}
+              className={`p-2 cursor-pointer hover:bg-gray-100 ${isSelected(option) ? 'bg-blue-100' : ''}`}
               onClick={() => handleOptionClick(option)}
             >
               {option}

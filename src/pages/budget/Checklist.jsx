@@ -32,6 +32,7 @@ export const Checklist = () => {
   const [combinedData, setCombinedData] = useState([]);
   const [monthsName, setMonthsName] = useState([]);
   const activeAccount = getActiveAccount(user);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   // Filters
   const [owner, setOwner] = useState('Household');
@@ -165,8 +166,10 @@ export const Checklist = () => {
     }, 10);
   };
 
+  const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
+
   return activeAccount ? (
-    <>
+    <div onClick={() => setIsDropdownOpen(false)}>
       <div className="w-full flex item-center justify-end">
         <div className="w-fit gap-4 h-10 md:h-12 px-2 rounded-full bg-white flex items-center">
           <div className="flex items-center gap-2">
@@ -194,6 +197,8 @@ export const Checklist = () => {
               placeholder={'Filter Months'}
               value={monthsName}
               setValue={setMonthsName}
+              toggleDropdown={toggleDropdown}
+              isDropdownOpen={isDropdownOpen}
             />
           </div>
         </div>
@@ -245,7 +250,7 @@ export const Checklist = () => {
           />
         </div>
       )}
-    </>
+    </div>
   ) : (
     <Package />
   );
