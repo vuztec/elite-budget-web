@@ -749,7 +749,6 @@ export const getCatIcon = (incomeData, budgetData, category, goals) => {
 
   const actualPerc = (Number(budget) / Number(income)) * 100;
   const goalPerc = getBudgetGoal(goals, category);
-  console.log(category, goalPerc);
   let icon = '';
   if (actualPerc >= goalPerc && goalPerc > 0) {
     icon = <FaThumbsDown className="text-red-500 text-xl" />;

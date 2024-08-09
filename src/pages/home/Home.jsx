@@ -1,25 +1,27 @@
-import React, { useEffect, useState } from "react";
-import MonthlyIncome from "../../components/budget/MonthlyIncome";
-import MonthlySavings from "../../components/budget/MonthlySavings";
-import MonthlyRetirement from "../../components/budget/MonthlyRetirement";
-import MonthlySummary from "../../components/budget/MonthlySummary";
-import Package from "../../package/Package";
-import Loading from "../../components/Loader";
-import { MdFilterAlt, MdFilterAltOff } from "react-icons/md";
-import Button from "../../components/Button";
-import { getDebts, getExpenses, getIncomes, getMainGoals, getRetirements, getSavings } from "../../config/api";
-import { useQuery } from "react-query";
-import generatePDF, { Margin } from "react-to-pdf";
-import { PiPrinter } from "react-icons/pi";
-import { getActiveAccount } from "../../utils/permissions";
-import { expenseOwners, getOwnerExpenseGridData, getOwnerGridData } from "../../utils/budget.filter";
-import clsx from "clsx";
-import Select from "../../components/Select";
-import YearlyIncome from "../../components/budget/YearlyIncome";
-import MonthlyExpenseHome from "../../components/budget/MonthlyExpenseHome";
-import MonthlyDebtHome from "../../components/budget/MonthlyDebtHome";
-import { getJointContribution } from "../../utils/budget.calculation";
-import useUserStore from "../../app/user";
+import React, { useEffect, useRef, useState } from 'react';
+import MonthlyIncome from '../../components/budget/MonthlyIncome';
+import MonthlySavings from '../../components/budget/MonthlySavings';
+import MonthlyRetirement from '../../components/budget/MonthlyRetirement';
+import MonthlySummary from '../../components/budget/MonthlySummary';
+import Package from '../../package/Package';
+import Loading from '../../components/Loader';
+import { MdFilterAlt, MdFilterAltOff } from 'react-icons/md';
+import Button from '../../components/Button';
+import { getDebts, getExpenses, getIncomes, getMainGoals, getRetirements, getSavings } from '../../config/api';
+import { useQuery } from 'react-query';
+import generatePDF, { Margin } from 'react-to-pdf';
+import { PiPrinter } from 'react-icons/pi';
+import { getActiveAccount } from '../../utils/permissions';
+import { expenseOwners, getOwnerExpenseGridData, getOwnerGridData } from '../../utils/budget.filter';
+import clsx from 'clsx';
+import Select from '../../components/Select';
+import YearlyIncome from '../../components/budget/YearlyIncome';
+import MonthlyExpenseHome from '../../components/budget/MonthlyExpenseHome';
+import MonthlyDebtHome from '../../components/budget/MonthlyDebtHome';
+import { getJointContribution } from '../../utils/budget.calculation';
+import useUserStore from '../../app/user';
+import { SidebarLinks } from '../../utils/sidebar.data';
+import { useLocation } from 'react-router-dom';
 
 export const Home = () => {
   const { user } = useUserStore();
@@ -33,42 +35,46 @@ export const Home = () => {
   const [selfContribution, setSelfContribution] = useState(0);
   const [partnerContribution, setPartnerContribution] = useState(0);
   const activeAccount = getActiveAccount(user);
+  const pdfRef = useRef();
+  const [showPdfContent, setShowPdfContent] = useState(false);
+  const [title, setTitle] = useState('');
+  const location = useLocation();
 
   // Filters
-  const [owner, setOwner] = useState("Household");
+  const [owner, setOwner] = useState('Household');
 
   const { data: debts, status: isDebtLoaded } = useQuery({
-    queryKey: ["debts"],
+    queryKey: ['debts'],
     queryFn: getDebts,
     staleTime: 1000 * 60 * 60,
   });
 
   const { data: expenses, status: isExpenseLoaded } = useQuery({
-    queryKey: ["expenses"],
+    queryKey: ['expenses'],
     queryFn: getExpenses,
     staleTime: 1000 * 60 * 60,
   });
 
   const { data: incomes, status: isIncomeLoaded } = useQuery({
-    queryKey: ["incomes"],
+    queryKey: ['incomes'],
     queryFn: getIncomes,
     staleTime: 1000 * 60 * 60,
   });
 
   const { data: savings, status: isSavingLoaded } = useQuery({
-    queryKey: ["savings"],
+    queryKey: ['savings'],
     queryFn: getSavings,
     staleTime: 1000 * 60 * 60,
   });
 
   const { data: retirements, status: isRetLoaded } = useQuery({
-    queryKey: ["retirements"],
+    queryKey: ['retirements'],
     queryFn: getRetirements,
     staleTime: 1000 * 60 * 60,
   });
 
   const { data: maingoals, status: isMainGoalsLoaded } = useQuery({
-    queryKey: ["maingoals"],
+    queryKey: ['maingoals'],
     queryFn: getMainGoals,
     staleTime: 1000 * 60 * 60,
   });
@@ -79,16 +85,27 @@ export const Home = () => {
     label: owner,
   }));
 
+  useEffect(() => {
+    const data = SidebarLinks.find((item) =>
+      item.link ? item.link === location.pathname : item.sub.find((sub_item) => sub_item.link === location.pathname),
+    );
+
+    if (data?.sub?.length) {
+      const sub = data.sub.find((sub_item) => sub_item.link === location.pathname);
+      setTitle(sub?.title);
+    } else setTitle(data?.title);
+  }, [location.pathname]);
+
   ///-------------END Filters Data Source --------------------------------///
 
   useEffect(() => {
     if (
-      isSavingLoaded === "success" &&
-      isRetLoaded === "success" &&
-      isExpenseLoaded === "success" &&
-      isDebtLoaded === "success" &&
-      isIncomeLoaded === "success" &&
-      isMainGoalsLoaded === "success" &&
+      isSavingLoaded === 'success' &&
+      isRetLoaded === 'success' &&
+      isExpenseLoaded === 'success' &&
+      isDebtLoaded === 'success' &&
+      isIncomeLoaded === 'success' &&
+      isMainGoalsLoaded === 'success' &&
       owner
     ) {
       const savingData = getOwnerGridData(savings, owner);
@@ -106,9 +123,9 @@ export const Home = () => {
       const incomeData = getOwnerGridData(incomes, owner);
       setIncomeGridData(incomeData);
 
-      const selfAmount = getJointContribution(expenses, "Self");
+      const selfAmount = getJointContribution(expenses, 'Self');
       setSelfContribution(selfAmount);
-      const partnerAmount = getJointContribution(expenses, "Partner");
+      const partnerAmount = getJointContribution(expenses, 'Partner');
       setPartnerContribution(partnerAmount);
 
       setIsDataLoaded(true);
@@ -137,7 +154,14 @@ export const Home = () => {
   };
 
   const [isShowing, setIsShowing] = useState(true);
-  const element = () => document.getElementById("print-container");
+
+  const handlePdf = () => {
+    setShowPdfContent(true);
+    setTimeout(() => {
+      generatePDF(pdfRef, { filename: 'home.pdf', page: { margin: Margin.MEDIUM } });
+      setShowPdfContent(false);
+    }, 10);
+  };
 
   return activeAccount ? (
     <>
@@ -145,20 +169,20 @@ export const Home = () => {
         <div className="w-fit gap-4 h-10 md:h-12 px-2 rounded-full bg-white flex items-center ">
           <div className="text-sm flex gap-2">
             <Button
-              label={!isShowing ? "Show Filters" : "Hide Filters"}
+              label={!isShowing ? 'Show Filters' : 'Hide Filters'}
               icon={!isShowing ? <MdFilterAlt className="text-lg" /> : <MdFilterAltOff className="text-lg" />}
               className={clsx(
-                "flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:text-black",
-                !isShowing ? "bg-green-800" : "bg-red-800"
+                'flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:text-black',
+                !isShowing ? 'bg-green-800' : 'bg-red-800',
               )}
               onClick={() => setIsShowing((old) => !old)}
             />
             <Button
-              onClick={() => generatePDF(element, { filename: "home.pdf", page: { margin: Margin.MEDIUM } })}
+              onClick={handlePdf}
               icon={<PiPrinter />}
-              label={"Print"}
+              label={'Print'}
               className={
-                "flex flex-row-reverse justify-center items-center bg-black text-white text-lg gap-2 hover:bg-[whitesmoke] hover:text-black"
+                'flex flex-row-reverse justify-center items-center bg-black text-white text-lg gap-2 hover:bg-[whitesmoke] hover:text-black'
               }
             />
           </div>
@@ -166,8 +190,8 @@ export const Home = () => {
       </div>
       <div
         className={clsx(
-          "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3 pb-5",
-          isShowing ? "block" : "hidden"
+          'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3 pb-5',
+          isShowing ? 'block' : 'hidden',
         )}
       >
         <div className="w-full">
@@ -177,17 +201,34 @@ export const Home = () => {
             options={owners}
             placeholder="Household"
             label="Account Owner"
-            className="bg-white w-full py-1 lg:text-base"
+            className="bg-white w-full py-1 "
           />
         </div>
       </div>
+
       {!isDataLoaded && (
         <div className="py-10">
           <Loading />
         </div>
       )}
       {isDataLoaded && (
-        <div className="w-full flex flex-col items-center gap-5 xl:gap-10 bg-white p-5 mt-4">
+        <div className="w-full flex flex-col items-center gap-5 xl:gap-10 bg-white p-5 mt-4" ref={pdfRef}>
+          {showPdfContent && (
+            <div className="w-full">
+              <div className="w-full flex justify-center items-center py-2 px-3 gap-2 rounded-full">
+                <h1 className="font-bold uppercase hidden md:block">
+                  {title === 'Home' ? title : title + ' for ' + (user?.FullName || '')}
+                </h1>
+                <h1 className="font-bold uppercase md:hidden"> {title}</h1>
+              </div>
+
+              <div className="w-full">
+                <h1 className="font-medium text-left">
+                  Account Owner: <span className="italic font-bold"> {owner}</span>
+                </h1>
+              </div>
+            </div>
+          )}
           <div className="w-full 2xl:w-[90%] flex flex-col items-center justify-center gap-5">
             <div className="flex flex-col xl:flex-row w-full gap-5 xl:gap-10 xl:mb-10">
               <div className="w-full">
@@ -210,7 +251,12 @@ export const Home = () => {
             <div className="flex flex-col xl:flex-row w-full gap-5 xl:gap-10">
               <div className="flex flex-col w-full gap-5">
                 <div className="w-full">
-                  <MonthlySavings savingsGridData={savingsGridData} incomeGridData={incomeGridData} maingoals={maingoals} owner={owner} />
+                  <MonthlySavings
+                    savingsGridData={savingsGridData}
+                    incomeGridData={incomeGridData}
+                    maingoals={maingoals}
+                    owner={owner}
+                  />
                 </div>
                 <div className="w-full">
                   <MonthlyRetirement
@@ -223,7 +269,12 @@ export const Home = () => {
               </div>
               <div className="flex flex-col w-full gap-5">
                 <div className="w-full">
-                  <MonthlyDebtHome debtGridData={debtGridData} incomeGridData={incomeGridData} maingoals={maingoals} owner={owner} />
+                  <MonthlyDebtHome
+                    debtGridData={debtGridData}
+                    incomeGridData={incomeGridData}
+                    maingoals={maingoals}
+                    owner={owner}
+                  />
                 </div>
                 <div className="w-full">
                   <MonthlyExpenseHome

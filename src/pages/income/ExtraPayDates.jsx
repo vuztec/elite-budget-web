@@ -1,18 +1,26 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import useUserStore from '../../app/user';
-import generatePDF, { Margin, usePDF } from 'react-to-pdf';
+import { Margin, usePDF } from 'react-to-pdf';
 import Button from '../../components/Button';
 import { PiPrinter } from 'react-icons/pi';
 import Package from '../../package/Package';
 import { getActiveAccount } from '../../utils/permissions';
+import { useLocation } from 'react-router-dom';
+import { SidebarLinks } from '../../utils/sidebar.data';
 
 // color for each row in
 export const colors = ['#FFFFFF', 'whitesmoke', '#FFFFFF', 'whitesmoke', '#FFFFFF'];
 
 export const ExtraPayDates = () => {
   const { user } = useUserStore();
-  const { toPDF, targetRef } = usePDF({ filename: 'extra-pay-dates.pdf' });
+  const { toPDF, targetRef } = usePDF({
+    filename: 'extra-pay-dates.pdf',
+    page: { margin: Margin.MEDIUM, orientation: 'landscape' },
+  });
   const activeAccount = getActiveAccount(user);
+  const [showPdfContent, setShowPdfContent] = useState(false);
+  const [title, setTitle] = useState('');
+  const location = useLocation();
 
   function getFifthMondays() {
     const currentDate = new Date();
@@ -182,20 +190,40 @@ export const ExtraPayDates = () => {
     return fifthSundays;
   }
 
-  const element = () => document.getElementById('print-container');
+  useEffect(() => {
+    const data = SidebarLinks.find((item) =>
+      item.link ? item.link === location.pathname : item.sub.find((sub_item) => sub_item.link === location.pathname),
+    );
+
+    if (data?.sub?.length) {
+      const sub = data.sub.find((sub_item) => sub_item.link === location.pathname);
+      setTitle(sub?.title);
+    } else setTitle(data?.title);
+  }, [location.pathname]);
+
+  const handlePdf = () => {
+    setShowPdfContent(true);
+    setTimeout(() => {
+      toPDF();
+      setShowPdfContent(false);
+    }, 10);
+  };
 
   return activeAccount ? (
-    <>
-      <div className="flex flex-col" ref={targetRef}>
+    <div ref={targetRef}>
+      {showPdfContent && (
+        <div className="w-full">
+          <div className="w-full flex justify-center items-center py-2 px-3 gap-2 rounded-full">
+            <h1 className="font-bold uppercase hidden md:block">{title + ' for ' + (user?.FullName || '')}</h1>
+            <h1 className="font-bold uppercase md:hidden"> {title}</h1>
+          </div>
+        </div>
+      )}
+      <div className="flex flex-col">
         <div className="flex flex-col gap-5">
           <div className="flex justify-end">
             <Button
-              onClick={() =>
-                generatePDF(element, {
-                  filename: 'pay-dates.pdf',
-                  page: { margin: Margin.MEDIUM },
-                })
-              }
+              onClick={handlePdf}
               icon={<PiPrinter />}
               label={'Print'}
               className={
@@ -329,7 +357,7 @@ export const ExtraPayDates = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   ) : (
     <Package />
   );

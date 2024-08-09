@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
-import Package from "../../package/Package";
-import Loading from "../../components/Loader";
-import { MdFilterAlt, MdFilterAltOff } from "react-icons/md";
-import Button from "../../components/Button";
-import { getDebts, getExpenses, getRetirements, getSavings } from "../../config/api";
-import { useQuery } from "react-query";
-import { getActiveAccount } from "../../utils/permissions";
+import React, { useEffect, useState } from 'react';
+import Package from '../../package/Package';
+import Loading from '../../components/Loader';
+import { MdFilterAlt, MdFilterAltOff } from 'react-icons/md';
+import Button from '../../components/Button';
+import { getDebts, getExpenses, getRetirements, getSavings } from '../../config/api';
+import { useQuery } from 'react-query';
+import { getActiveAccount } from '../../utils/permissions';
 import {
   expenseOwners,
   getCombineData,
@@ -14,15 +14,17 @@ import {
   getUniqueBudgetItemsByCategory,
   getUniqueCategories,
   getUniqueDescriptionsByCategory,
-} from "../../utils/budget.filter";
-import clsx from "clsx";
-import Select from "../../components/Select";
-import { useMemo } from "react";
-import useUserStore from "../../app/user";
-import { CheckListView } from "../../components/checklist/CheckListView";
-import MultiSelectDropdown from "../../components/MultiSelect";
-import { PiPrinter } from "react-icons/pi";
-import generatePDF, { Margin, usePDF } from "react-to-pdf";
+} from '../../utils/budget.filter';
+import clsx from 'clsx';
+import Select from '../../components/Select';
+import { useMemo } from 'react';
+import useUserStore from '../../app/user';
+import { CheckListView } from '../../components/checklist/CheckListView';
+import MultiSelectDropdown from '../../components/MultiSelect';
+import { PiPrinter } from 'react-icons/pi';
+import { Margin, usePDF } from 'react-to-pdf';
+import { useLocation } from 'react-router-dom';
+import { SidebarLinks } from '../../utils/sidebar.data';
 
 export const Checklist = () => {
   const { user } = useUserStore();
@@ -32,32 +34,38 @@ export const Checklist = () => {
   const activeAccount = getActiveAccount(user);
 
   // Filters
-  const [owner, setOwner] = useState("Household");
+  const [owner, setOwner] = useState('Household');
   const uniqueCategories = getUniqueCategories(combinedData);
   const uniqueBudgetItemsByCategory = getUniqueBudgetItemsByCategory(combinedData);
   const uniqueDescriptionsByCategory = getUniqueDescriptionsByCategory(combinedData);
-  const { toPDF, targetRef } = usePDF({ filename: "checklist.pdf" });
+  const { toPDF, targetRef } = usePDF({
+    filename: 'checklist.pdf',
+    page: { margin: Margin.MEDIUM, orientation: 'landscape' },
+  });
+  const [showPdfContent, setShowPdfContent] = useState(false);
+  const [title, setTitle] = useState('');
+  const location = useLocation();
 
   const { data: debts, status: isDebtLoaded } = useQuery({
-    queryKey: ["debts"],
+    queryKey: ['debts'],
     queryFn: getDebts,
     staleTime: 1000 * 60 * 60,
   });
 
   const { data: expenses, status: isExpenseLoaded } = useQuery({
-    queryKey: ["expenses"],
+    queryKey: ['expenses'],
     queryFn: getExpenses,
     staleTime: 1000 * 60 * 60,
   });
 
   const { data: savings, status: isSavingLoaded } = useQuery({
-    queryKey: ["savings"],
+    queryKey: ['savings'],
     queryFn: getSavings,
     staleTime: 1000 * 60 * 60,
   });
 
   const { data: retirements, status: isRetLoaded } = useQuery({
-    queryKey: ["retirements"],
+    queryKey: ['retirements'],
     queryFn: getRetirements,
     staleTime: 1000 * 60 * 60,
   });
@@ -71,7 +79,13 @@ export const Checklist = () => {
   ///-------------END Filters Data Source --------------------------------///
 
   useEffect(() => {
-    if (isSavingLoaded === "success" && isRetLoaded === "success" && isExpenseLoaded === "success" && isDebtLoaded === "success" && owner) {
+    if (
+      isSavingLoaded === 'success' &&
+      isRetLoaded === 'success' &&
+      isExpenseLoaded === 'success' &&
+      isDebtLoaded === 'success' &&
+      owner
+    ) {
       const savingData = getOwnerGridData(savings, owner);
       const retirementData = getOwnerGridData(retirements, owner);
       const expenseData = getOwnerExpenseGridData(expenses, owner);
@@ -117,7 +131,7 @@ export const Checklist = () => {
     return currentYear?.toString().slice(-2);
   };
 
-  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
   const generateMonthHeaders = () => {
     const lastTwoDigitsOfYear = getCurrentYear();
@@ -131,7 +145,25 @@ export const Checklist = () => {
   const monthHeaders = useMemo(() => generateMonthHeaders(), [monthsName, generateMonthHeaders]);
 
   const [isShowing, setIsShowing] = useState(true);
-  const element = () => document.getElementById("print-container");
+
+  useEffect(() => {
+    const data = SidebarLinks.find((item) =>
+      item.link ? item.link === location.pathname : item.sub.find((sub_item) => sub_item.link === location.pathname),
+    );
+
+    if (data?.sub?.length) {
+      const sub = data.sub.find((sub_item) => sub_item.link === location.pathname);
+      setTitle(sub?.title);
+    } else setTitle(data?.title);
+  }, [location.pathname]);
+
+  const handlePdf = () => {
+    setShowPdfContent(true);
+    setTimeout(() => {
+      toPDF();
+      setShowPdfContent(false);
+    }, 10);
+  };
 
   return activeAccount ? (
     <>
@@ -140,31 +172,36 @@ export const Checklist = () => {
           <div className="flex items-center gap-2">
             <div className="text-sm">
               <Button
-                label={!isShowing ? "Show Filters" : "Hide Filters"}
+                label={!isShowing ? 'Show Filters' : 'Hide Filters'}
                 icon={!isShowing ? <MdFilterAlt className="text-lg" /> : <MdFilterAltOff className="text-lg" />}
                 className={clsx(
-                  "flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:text-black",
-                  !isShowing ? "bg-green-800" : "bg-red-800"
+                  'flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:text-black',
+                  !isShowing ? 'bg-green-800' : 'bg-red-800',
                 )}
                 onClick={() => setIsShowing((old) => !old)}
               />
             </div>
             <Button
-              onClick={() => generatePDF(element, { filename: "checklist.pdf", page: { margin: Margin.MEDIUM } })}
+              onClick={handlePdf}
               icon={<PiPrinter />}
-              label={"Print"}
+              label={'Print'}
               className={
-                "flex flex-row-reverse justify-center items-center bg-black text-white text-lg gap-2 hover:bg-[whitesmoke] hover:text-black"
+                'flex flex-row-reverse justify-center items-center bg-black text-white text-lg gap-2 hover:bg-[whitesmoke] hover:text-black'
               }
             />
-            <MultiSelectDropdown options={months} placeholder={"Filter Months"} value={monthsName} setValue={setMonthsName} />
+            <MultiSelectDropdown
+              options={months}
+              placeholder={'Filter Months'}
+              value={monthsName}
+              setValue={setMonthsName}
+            />
           </div>
         </div>
       </div>
       <div
         className={clsx(
-          "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3 pb-5",
-          isShowing ? "block" : "hidden"
+          'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3 pb-5',
+          isShowing ? 'block' : 'hidden',
         )}
       >
         <div className="w-full">
@@ -186,6 +223,20 @@ export const Checklist = () => {
       )}
       {isDataLoaded && (
         <div className="w-full" ref={targetRef}>
+          {showPdfContent && (
+            <div className="w-full">
+              <div className="w-full flex justify-center items-center py-2 px-3 gap-2 rounded-full">
+                <h1 className="font-bold uppercase hidden md:block">{title + ' for ' + (user?.FullName || '')}</h1>
+                <h1 className="font-bold uppercase md:hidden"> {title}</h1>
+              </div>
+
+              <div className="w-full">
+                <h1 className="font-medium text-left">
+                  Account Owner: <span className="italic font-bold"> {owner}</span>
+                </h1>
+              </div>
+            </div>
+          )}
           <CheckListView
             uniqueCategories={uniqueCategories}
             uniqueBudgetItemsByCategory={uniqueBudgetItemsByCategory}
