@@ -129,7 +129,7 @@ export const AddRetirement = ({ open, setOpen, recordData }) => {
                 error={errors.MarketValue ? errors.MarketValue.message : ''}
               />
             </div>
-            {recordData.Description !== 'Retirement (401k, Roth 401K, 403b) Prior Job' && (
+            {recordData?.Description !== 'Retirement (401k, Roth 401K, 403b) Prior Job' && (
               <>
                 <div className="flex flex-col gap-6 w-full">
                   <Select
@@ -152,7 +152,7 @@ export const AddRetirement = ({ open, setOpen, recordData }) => {
                     register={register('MonthlyBudget', {
                       valueAsNumber: true,
                       validate: (value) =>
-                        recordData.Description !== 'Retirement (401k, Roth 401K, 403b) Prior Job'
+                        recordData?.Description !== 'Retirement (401k, Roth 401K, 403b) Prior Job'
                           ? value >= 0 || 'Amount must be positive or zero.'
                           : true,
                     })}
