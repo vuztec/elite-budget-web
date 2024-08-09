@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { RiDeleteBin2Fill } from "react-icons/ri";
-import { FaEdit } from "react-icons/fa";
-import { AiFillEdit } from "react-icons/ai";
-import clsx from "clsx";
+import React, { useEffect, useState } from 'react';
+import { RiDeleteBin2Fill } from 'react-icons/ri';
+import { FaEdit } from 'react-icons/fa';
+import { AiFillEdit } from 'react-icons/ai';
+import clsx from 'clsx';
 
-import useUserStore from "../../app/user";
-import { useQueryClient } from "react-query";
-import ConfirmationDialog from "../Dialogs";
-import axios from "../../config/axios";
-import { handleAxiosResponseError } from "../../utils/handleResponseError";
+import useUserStore from '../../app/user';
+import { useQueryClient } from 'react-query';
+import ConfirmationDialog from '../Dialogs';
+import axios from '../../config/axios';
+import { handleAxiosResponseError } from '../../utils/handleResponseError';
 import {
   getBankAccountTypeTotal,
   getFormattedValueTotal,
@@ -16,12 +16,12 @@ import {
   getUnformattedBankBalanceTotal,
   getUnformattedNetYearlyTotal,
   getUnformattedYearlyBudgetTotal,
-} from "../../utils/budget.calculation";
-import AddExtraFund from "./AddExtraFund";
-import { formatDate } from "../../utils";
-import ToolTip from "../tooltip";
-import Sort from "../sort";
-import AddBalance from "./AddBalance";
+} from '../../utils/budget.calculation';
+import AddExtraFund from './AddExtraFund';
+import { formatDate } from '../../utils';
+import ToolTip from '../tooltip';
+import Sort from '../sort';
+import AddBalance from './AddBalance';
 
 export const ExtraFundListView = ({
   gridData,
@@ -47,14 +47,7 @@ export const ExtraFundListView = ({
   const [openingBalance, setOpeningBalance] = useState(0);
   const prevBalance = excessBal?.Balance ? excessBal?.Balance : 0;
 
-  const [order, setOrder] = useState([
-    "default",
-    "default",
-    "default",
-    "default",
-    "default",
-    "default",
-  ]);
+  const [order, setOrder] = useState(['default', 'default', 'default', 'default', 'default', 'default']);
   const [data, setData] = useState(gridData);
 
   useEffect(() => {
@@ -65,7 +58,7 @@ export const ExtraFundListView = ({
       getUnformattedYearlyBudgetTotal(expenseGridData) +
       getUnformattedYearlyBudgetTotal(retirementGridData);
     const income =
-      owner === "Joint"
+      owner === 'Joint'
         ? 12 * Number(selfContribution) + 12 * Number(partnerContribution)
         : getUnformattedNetYearlyTotal(incomeGridData);
     const difference = (Number(income) - Number(Expenses)) / 12;
@@ -88,9 +81,7 @@ export const ExtraFundListView = ({
     axios
       .delete(`/api/extra-funds-tracker/${selected}`)
       .then(({ data }) => {
-        queryClient.setQueryData(["extrafunds"], (prev) =>
-          prev.filter((fund) => fund.id !== selected)
-        );
+        queryClient.setQueryData(['extrafunds'], (prev) => prev.filter((fund) => fund.id !== selected));
         setOpenDialog(false);
         setIsLoading(false);
       })
@@ -123,11 +114,11 @@ export const ExtraFundListView = ({
           <div className="flex justify-between items-center gap-2">
             Owner
             <Sort
-              tab={"fund"}
+              tab={'fund'}
               order={order}
               setOrder={setOrder}
               column={1}
-              name={"Owner"}
+              name={'Owner'}
               data={data}
               setData={setData}
               defaultData={gridData}
@@ -138,11 +129,11 @@ export const ExtraFundListView = ({
           <div className="flex justify-between items-center gap-2">
             Date
             <Sort
-              tab={"fund"}
+              tab={'fund'}
               order={order}
               setOrder={setOrder}
               column={2}
-              name={"Date"}
+              name={'Date'}
               data={data}
               setData={setData}
               defaultData={gridData}
@@ -153,11 +144,11 @@ export const ExtraFundListView = ({
           <div className="flex justify-between items-center gap-2">
             Description
             <Sort
-              tab={"fund"}
+              tab={'fund'}
               order={order}
               setOrder={setOrder}
               column={3}
-              name={"Description"}
+              name={'Description'}
               data={data}
               setData={setData}
               defaultData={gridData}
@@ -169,11 +160,11 @@ export const ExtraFundListView = ({
           <div className="flex justify-between items-center gap-2">
             Withdrawal (-)
             <Sort
-              tab={"fund"}
+              tab={'fund'}
               order={order}
               setOrder={setOrder}
               column={4}
-              name={"Amount"}
+              name={'Amount'}
               data={data}
               setData={setData}
               defaultData={gridData}
@@ -186,11 +177,11 @@ export const ExtraFundListView = ({
           <div className="flex justify-between items-center gap-2">
             Credit (+)
             <Sort
-              tab={"fund"}
+              tab={'fund'}
               order={order}
               setOrder={setOrder}
               column={5}
-              name={"Amount"}
+              name={'Amount'}
               data={data}
               setData={setData}
               defaultData={gridData}
@@ -225,9 +216,7 @@ export const ExtraFundListView = ({
     <tr className="border border-gray-300 hover:bg-gray-400/10 text-left">
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <span className="flex items-center justify-left gap-2 text-center mb-0 text-gray-900">
-            {record?.Owner}
-          </span>
+          <span className="flex items-center justify-left gap-2 text-center mb-0 text-gray-900">{record?.Owner}</span>
         </div>
       </td>
 
@@ -245,39 +234,18 @@ export const ExtraFundListView = ({
 
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p className="text-black">
-            {getFormattedValueType(
-              user,
-              record?.Amount,
-              record?.Type,
-              "Withdrawal"
-            )}
-          </p>
+          <p className="text-black">{getFormattedValueType(user, record?.Amount, record?.Type, 'Withdrawal')}</p>
         </div>
       </td>
 
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p className="text-black">
-            {getFormattedValueType(
-              user,
-              record?.Amount,
-              record?.Type,
-              "Credit"
-            )}
-          </p>
+          <p className="text-black">{getFormattedValueType(user, record?.Amount, record?.Type, 'Credit')}</p>
         </div>
       </td>
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p className="text-black">
-            {getFormattedValueTotal(
-              user,
-              Number(record?.Balance) +
-                Number(openingBalance) +
-                Number(prevBalance)
-            )}
-          </p>
+          <p className="text-black">{getFormattedValueTotal(user, Number(record?.Balance))}</p>
         </div>
       </td>
 
@@ -285,24 +253,18 @@ export const ExtraFundListView = ({
         <div className="flex items-center text-left gap-3 justify-start">
           <div className="group flex relative">
             <FaEdit
-              className={clsx(
-                `text-editcolor`,
-                "hover:text-orange-500 font-semibold cursor-pointer sm:px-0"
-              )}
+              className={clsx(`text-editcolor`, 'hover:text-orange-500 font-semibold cursor-pointer sm:px-0')}
               onClick={() => editClick(record)}
             />
-            <ToolTip text={"Edit"} />
+            <ToolTip text={'Edit'} />
           </div>
 
           <div className="group flex relative">
             <RiDeleteBin2Fill
-              className={clsx(
-                `text-deletecolor`,
-                "hover:text-red-500 font-semibold cursor-pointer sm:px-0"
-              )}
+              className={clsx(`text-deletecolor`, 'hover:text-red-500 font-semibold cursor-pointer sm:px-0')}
               onClick={() => deleteClick(record.id)}
             />
-            <ToolTip text={"Delete"} />
+            <ToolTip text={'Delete'} />
           </div>
         </div>
       </td>
@@ -315,32 +277,23 @@ export const ExtraFundListView = ({
 
       <td className="min-w-fit whitespace-nowrap p-3 border-gray-200"></td>
 
-      <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200">
-        TOTAL
-      </td>
+      <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200">TOTAL</td>
 
       <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p>{getBankAccountTypeTotal(user, gridData, "Withdrawal")}</p>
+          <p>{getBankAccountTypeTotal(user, gridData, 'Withdrawal')}</p>
         </div>
       </td>
 
       <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p>{getBankAccountTypeTotal(user, gridData, "Credit")}</p>
+          <p>{getBankAccountTypeTotal(user, gridData, 'Credit')}</p>
         </div>
       </td>
 
       <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p>
-            {getFormattedValueTotal(
-              user,
-              Number(totalExcessBalance) +
-                Number(openingBalance) +
-                Number(prevBalance)
-            )}
-          </p>
+          <p>{getFormattedValueTotal(user, Number(totalExcessBalance))}</p>
         </div>
       </td>
 
@@ -357,7 +310,7 @@ export const ExtraFundListView = ({
               <tbody>
                 <tr className="border border-gray-300 text-sm xl:text-[16px] text-left font-bold">
                   <td className="min-w-fit whitespace-nowrap p-2 border-gray-200 font-normal">
-                    Current Month's Excess Funds
+                    Current Month’s Extra Funds
                   </td>
                   <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
                     {getFormattedValueTotal(user, openingBalance)}
@@ -365,33 +318,18 @@ export const ExtraFundListView = ({
                 </tr>
                 <tr className="border border-gray-300 text-sm xl:text-[16px] text-left font-bold">
                   <td className="min-w-fit whitespace-nowrap p-2 border-gray-200 font-normal">
-                    * Excess Balance from Previous Month
+                    Extra Funds by the week
                   </td>
                   <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
-                    <div className="flex flex-row items-start gap-5">
-                      <p>{getFormattedValueTotal(user, prevBalance)}</p>
-                      <div className="group flex relative">
-                        <AiFillEdit
-                          className={clsx(
-                            `text-editcolor`,
-                            "hover:text-orange-500 font-semibold cursor-pointer sm:px-0"
-                          )}
-                          onClick={() => editBalClick()}
-                        />
-                        <ToolTip text={"Edit"} />
-                      </div>
-                    </div>
+                    {getFormattedValueTotal(user, Number(openingBalance) / 4)}
                   </td>
                 </tr>
                 <tr className="border border-gray-300 text-sm xl:text-[16px] text-left font-bold">
                   <td className="min-w-fit whitespace-nowrap p-2 border-gray-200 font-normal">
-                    Excess Funds Current Balance
+                    Extra Funds Current Balance
                   </td>
                   <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
-                    {getFormattedValueTotal(
-                      user,
-                      Number(totalExcessBalance) + Number(openingBalance)
-                    )}
+                    {getFormattedValueTotal(user, Number(totalExcessBalance))}
                   </td>
                 </tr>
               </tbody>
@@ -405,10 +343,49 @@ export const ExtraFundListView = ({
                 <TableTotal gridData={gridData} />
               </tbody>
             </table>
-            <p className="text-sm italic text-gray-500 ml-5">
-              * This is a total amount of excess funds not used in the previous
-              months
-            </p>
+            <div className="flex flex-col gap-3 mt-5">
+              <p className="text-sm font-bold italic text-gray-500 ml-5">
+                Note: One number focus! This is NOT your bank account register. This is a tool to track the balance of
+                your available extra funds (the amount remaining when all your budget items are paid).
+              </p>
+              <div className="flex gap-1">
+                <p className="text-sm font-bold italic text-gray-500 ml-5">Step 1:</p>
+                <p className="text-sm font-semibold italic text-gray-500 ml-5">Add</p>
+                <p className="text-sm italic text-gray-500 ml-5">
+                  At the beginning of each month, enter the current month's extra funds total (the amount that you are
+                  under budget by).
+                </p>
+              </div>
+              <div className="flex gap-1">
+                <p className="text-sm font-bold italic text-gray-500 ml-5">Step 2:</p>
+                <p className="text-sm font-semibold italic text-gray-500 ml-5">Subtract</p>
+                <p className="text-sm italic text-gray-500 ml-5">Enter any purchases not included in the budget.</p>
+              </div>
+              <div className="flex gap-1">
+                <p className="text-sm font-bold italic text-gray-500 ml-5">Step 3:</p>
+                <p className="text-sm font-semibold italic text-gray-500 ml-5">Subtract</p>
+                <p className="text-sm italic text-gray-500 ml-5">
+                  Enter the amount that exceeds a budget item (e.g. Your cell phone budget is $75. The monthly bill is
+                  $100. Subtract $25).
+                </p>
+              </div>
+              <div className="flex gap-1">
+                <p className="text-sm font-bold italic text-gray-500 ml-5">Step 4:</p>
+                <p className="text-sm font-semibold italic text-gray-500 ml-5">Add</p>
+                <p className="text-sm italic text-gray-500 ml-5">
+                  Enter the amount of a monthly budget item you didn't have to pay (e.g. vehicle ins 6 mo. policy is
+                  paid in 5 monthly pmts. In the 6th mo., no premiums will be paid so add it to your tracker).
+                </p>
+              </div>
+              <div className="flex gap-1">
+                <p className="text-sm font-bold italic text-gray-500 ml-5">Step 5:</p>
+                <p className="text-sm font-semibold italic text-gray-500 ml-5">Add</p>
+                <p className="text-sm italic text-gray-500 ml-5">
+                  Enter the difference of a budget item that is less than the budget (e.g. Your food budget is $1000.
+                  The actual amt spent was $800. Add $200 to the tracker).
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
