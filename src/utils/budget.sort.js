@@ -1,11 +1,11 @@
 const customIncomeList = [
   'Main Job',
   'Side Job',
-  'Interest/Dividends',
-  'Child Support',
   'Bonus',
-  'Rental Income',
+  'Child Support',
   'Alimony',
+  'Interest/Dividends',
+  'Rental Income',
   'Other',
 ];
 

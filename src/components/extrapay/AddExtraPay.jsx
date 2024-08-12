@@ -1,16 +1,16 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { useForm } from "react-hook-form";
-import ModalWrapper from "../ModalWrapper";
-import { Dialog } from "@headlessui/react";
-import Textbox from "../Textbox";
-import Loading from "../Loader";
-import Button from "../Button";
-import { useQueryClient, useQuery } from "react-query";
-import { IoMdSend } from "react-icons/io";
-import { TiCancel } from "react-icons/ti";
-import axios from "../../config/axios";
-import { handleAxiosResponseError } from "../../utils/handleResponseError";
-import { formatDateForForm } from "../../utils";
+import React, { useEffect, useMemo, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import ModalWrapper from '../ModalWrapper';
+import { Dialog } from '@headlessui/react';
+import Textbox from '../Textbox';
+import Loading from '../Loader';
+import Button from '../Button';
+import { useQueryClient, useQuery } from 'react-query';
+import { IoMdSend } from 'react-icons/io';
+import { TiCancel } from 'react-icons/ti';
+import axios from '../../config/axios';
+import { handleAxiosResponseError } from '../../utils/handleResponseError';
+import { formatDateForForm } from '../../utils';
 
 export const AddExtraPay = ({ open, setOpen, recordData }) => {
   const queryClient = useQueryClient();
@@ -27,9 +27,9 @@ export const AddExtraPay = ({ open, setOpen, recordData }) => {
 
   useEffect(() => {
     if (recordData?.id) {
-      setValue("Date", formatDateForForm(new Date(recordData.Date)));
-      setValue("SelfAmount", recordData.SelfAmount);
-      setValue("PartnerAmount", recordData.PartnerAmount);
+      setValue('Date', formatDateForForm(new Date(recordData.Date)));
+      setValue('SelfAmount', recordData.SelfAmount);
+      setValue('PartnerAmount', recordData.PartnerAmount);
     }
 
     return () => reset();
@@ -41,10 +41,10 @@ export const AddExtraPay = ({ open, setOpen, recordData }) => {
     setIsLoading(() => true);
 
     axios
-      .patch("/api/extra-pay-checks/" + numericSelectedID, data)
+      .patch('/api/extra-pay-checks/' + numericSelectedID, data)
       .then(({ data }) => {
-        queryClient.setQueryData(["extrapaychecks"], (prev) =>
-          prev.map((check) => (check.id === data.id ? data : check))
+        queryClient.setQueryData(['extrapaychecks'], (prev) =>
+          prev.map((check) => (check.id === data.id ? data : check)),
         );
         setIsLoading(() => false);
         setOpen(false);
@@ -58,15 +58,9 @@ export const AddExtraPay = ({ open, setOpen, recordData }) => {
   return (
     <>
       <ModalWrapper open={open} setOpen={setOpen}>
-        <form
-          onSubmit={handleSubmit(handleOnSubmit)}
-          className="w-full h-[70%]"
-        >
-          <Dialog.Title
-            as="h2"
-            className="text-base font-bold leading-6 text-gray-900 mb-4"
-          >
-            {recordData ? "UPDATE EXTRA PAYCHECK" : "ADD NEW EXTRA PAYCHECK"}
+        <form onSubmit={handleSubmit(handleOnSubmit)} className="w-full h-[70%]">
+          <Dialog.Title as="h2" className="text-base font-bold leading-6 text-gray-900 mb-4">
+            {recordData ? 'UPDATE EXTRA PAYCHECK' : 'ADD NEW EXTRA PAYCHECK'}
           </Dialog.Title>
           <div className="mt-2 flex flex-col gap-6 overflow-y-scroll bg-scroll">
             <div className="flex flex-col gap-6 w-full">
@@ -76,10 +70,10 @@ export const AddExtraPay = ({ open, setOpen, recordData }) => {
                 name="Date"
                 label="Date"
                 className="w-full rounded"
-                register={register("Date", {
+                register={register('Date', {
                   valueAsDate: true,
                 })}
-                error={errors.Date ? errors.Date.message : ""}
+                error={errors.Date ? errors.Date.message : ''}
               />
             </div>
             <div className="flex flex-col gap-6 w-full">
@@ -89,10 +83,10 @@ export const AddExtraPay = ({ open, setOpen, recordData }) => {
                 name="SelfAmount"
                 label="Self Amount"
                 className="w-full rounded"
-                register={register("SelfAmount", {
+                register={register('SelfAmount', {
                   valueAsNumber: true,
                 })}
-                error={errors.SelfAmount ? errors.SelfAmount.message : ""}
+                error={errors.SelfAmount ? errors.SelfAmount.message : ''}
               />
               <Textbox
                 placeholder="Enter Amount"
@@ -100,10 +94,10 @@ export const AddExtraPay = ({ open, setOpen, recordData }) => {
                 name="PartnerAmount"
                 label="Partner Amount"
                 className="w-full rounded"
-                register={register("PartnerAmount", {
+                register={register('PartnerAmount', {
                   valueAsNumber: true,
                 })}
-                error={errors.PartnerAmount ? errors.PartnerAmount.message : ""}
+                error={errors.PartnerAmount ? errors.PartnerAmount.message : ''}
               />
             </div>
           </div>

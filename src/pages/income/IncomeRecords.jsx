@@ -20,6 +20,7 @@ import useUserStore from '../../app/user';
 export const IncomeRecords = () => {
   const { user } = useUserStore();
   const [showAll, setShowAll] = useState(false);
+  const [showAll2, setShowAll2] = useState(false);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [gridData, setGridData] = useState([]);
   const [extraGridData, setExtraGridData] = useState([]);
@@ -53,10 +54,12 @@ export const IncomeRecords = () => {
       const incomeData = getOwnerGridData(incomes, owner);
       let updatedData = incomeData;
       let updatedExtraData = extrapaychecks;
+
       if (!showAll && hasRecords(incomeData)) {
         updatedData = incomeData.filter((item) => item.GrossAmount > 0);
       }
-      if (!showAll && hasRecords(extrapaychecks)) {
+
+      if (!showAll2 && hasRecords(extrapaychecks)) {
         updatedExtraData = extrapaychecks.filter((item) => item.SelfAmount > 0 || item.PartnerAmount > 0);
       }
 
@@ -139,19 +142,19 @@ export const IncomeRecords = () => {
           <div className="w-full gap-4 h-10 md:h-12 px-2 bg-white flex items-center justify-between mt-5 -mb-7">
             <div className="text-sm">
               <Button
-                label={!showAll ? 'Add New' : 'Cancel Add'}
-                icon={!showAll ? <IoMdAdd className="text-lg" /> : <HiMinusSm className="text-lg" />}
+                label={!showAll2 ? 'Add New' : 'Cancel Add'}
+                icon={!showAll2 ? <IoMdAdd className="text-lg" /> : <HiMinusSm className="text-lg" />}
                 className={clsx(
                   'flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:bg-viewcolor bg-black hover:text-black',
-                  !showAll ? 'bg-black' : 'bg-red-800',
+                  !showAll2 ? 'bg-black' : 'bg-red-800',
                 )}
-                onClick={() => setShowAll((old) => !old)}
+                onClick={() => setShowAll2((old2) => !old2)}
               />
             </div>
           </div>
 
           <div className="w-full">
-            <ExtraPayListView gridData={extraGridData} showDelete={!showAll && hasRecords(extraGridData)} />
+            <ExtraPayListView gridData={extraGridData} showDelete={!showAll2 && hasRecords(extraGridData)} />
           </div>
         </div>
       )}
