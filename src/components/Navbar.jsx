@@ -33,7 +33,7 @@ const Navbar = () => {
   }, [location.pathname]);
 
   return (
-    <div className="flex justify-between items-center bg-white px-4 py-3 2xl:py-4 sticky top-0">
+    <div className="flex justify-between items-center bg-white px-4 py-3 2xl:py-4 sticky top-0 z-10">
       <div className="w-full flex gap-4">
         <button onClick={() => setSidebar()} className="text-2xl text-gray-500 block lg:hidden">
           ☰

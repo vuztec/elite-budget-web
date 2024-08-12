@@ -1,21 +1,22 @@
-import React, { useEffect, useState } from "react";
-import { MdFilterAlt, MdFilterAltOff } from "react-icons/md";
-import Button from "../../components/Button";
-import { IoMdAdd } from "react-icons/io";
-import { HiMinusSm } from "react-icons/hi";
-import Loading from "../../components/Loader";
-import { useQuery } from "react-query";
-import clsx from "clsx";
-import Select from "../../components/Select";
-import { getActiveAccount } from "../../utils/permissions";
-import Package from "../../package/Package";
-import { getExtraPayChecks, getIncomes } from "../../config/api";
-import { getOwnerGridData, incomeOwners } from "../../utils/budget.filter";
-import { IncomeListView } from "../../components/income/IncomeListView";
-import { hasRecords } from "../../utils/budget.calculation";
-import { ExtraPayListView } from "../../components/extrapay/ExtraPayListView";
-import { defaultIncomeSort } from "../../utils/budget.sort";
-import useUserStore from "../../app/user";
+import React, { useEffect, useState } from 'react';
+import { MdFilterAlt, MdFilterAltOff } from 'react-icons/md';
+import Button from '../../components/Button';
+import { IoMdAdd } from 'react-icons/io';
+import { HiMinusSm } from 'react-icons/hi';
+import Loading from '../../components/Loader';
+import { useQuery } from 'react-query';
+import clsx from 'clsx';
+import Select from '../../components/Select';
+import { getActiveAccount } from '../../utils/permissions';
+import Package from '../../package/Package';
+import { getExtraPayChecks, getIncomes } from '../../config/api';
+import { getOwnerGridData, incomeOwners } from '../../utils/budget.filter';
+import { IncomeListView } from '../../components/income/IncomeListView';
+import { hasRecords } from '../../utils/budget.calculation';
+import { ExtraPayListView } from '../../components/extrapay/ExtraPayListView';
+import { defaultIncomeSort } from '../../utils/budget.sort';
+import useUserStore from '../../app/user';
+import { BiArrowToTop } from 'react-icons/bi';
 
 export const IncomeRecords = () => {
   const { user } = useUserStore();
@@ -26,16 +27,16 @@ export const IncomeRecords = () => {
   const activeAccount = getActiveAccount(user);
 
   // Filters
-  const [owner, setOwner] = useState("Household");
+  const [owner, setOwner] = useState('Household');
 
   const { data: incomes, status: isIncomeLoaded } = useQuery({
-    queryKey: ["incomes"],
+    queryKey: ['incomes'],
     queryFn: getIncomes,
     staleTime: 1000 * 60 * 60,
   });
 
   const { data: extrapaychecks, status: isPayChecksLoaded } = useQuery({
-    queryKey: ["extrapaychecks"],
+    queryKey: ['extrapaychecks'],
     queryFn: getExtraPayChecks,
     staleTime: 1000 * 60 * 60,
   });
@@ -49,7 +50,7 @@ export const IncomeRecords = () => {
   ///-------------END Filters Data Source --------------------------------///
 
   useEffect(() => {
-    if (isIncomeLoaded === "success" && isPayChecksLoaded === "success") {
+    if (isIncomeLoaded === 'success' && isPayChecksLoaded === 'success') {
       const incomeData = getOwnerGridData(incomes, owner);
       let updatedData = incomeData;
       let updatedExtraData = extrapaychecks;
@@ -57,9 +58,7 @@ export const IncomeRecords = () => {
         updatedData = incomeData.filter((item) => item.GrossAmount > 0);
       }
       if (!showAll && hasRecords(extrapaychecks)) {
-        updatedExtraData = extrapaychecks.filter(
-          (item) => item.SelfAmount > 0 || item.PartnerAmount > 0
-        );
+        updatedExtraData = extrapaychecks.filter((item) => item.SelfAmount > 0 || item.PartnerAmount > 0);
       }
 
       // Sort the data by Owner property
@@ -70,14 +69,7 @@ export const IncomeRecords = () => {
     } else {
       setIsDataLoaded(false);
     }
-  }, [
-    incomes,
-    extrapaychecks,
-    isIncomeLoaded,
-    isPayChecksLoaded,
-    owner,
-    showAll,
-  ]);
+  }, [incomes, extrapaychecks, isIncomeLoaded, isPayChecksLoaded, owner, showAll]);
 
   const handleOwnerChange = (e) => {
     if (e && e.target?.value) {
@@ -87,59 +79,65 @@ export const IncomeRecords = () => {
 
   const [isShowing, setIsShowing] = useState(true);
 
+  const scrollToTop = () => {
+    const scrollableDiv = document.querySelector('.flex-1.overflow-auto');
+    if (scrollableDiv) {
+      scrollableDiv.scrollTo({
+        top: 0,
+        behavior: 'smooth', // Optional for smooth scrolling
+      });
+    } else {
+      // Fallback to window scroll (in case your layout changes)
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+    }
+  };
+
   return activeAccount ? (
     <>
-      <div className="w-full gap-4 h-10 md:h-12 px-2 rounded-full bg-white flex items-center justify-between">
-        <div className="text-sm">
-          <Button
-            label={!showAll ? "Add New" : "Cancel Add"}
-            icon={
-              !showAll ? (
-                <IoMdAdd className="text-lg" />
-              ) : (
-                <HiMinusSm className="text-lg" />
-              )
-            }
-            className={clsx(
-              "flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:bg-viewcolor bg-black hover:text-black",
-              !showAll ? "bg-black" : "bg-red-800"
-            )}
-            onClick={() => setShowAll((old) => !old)}
-          />
+      <div className="fixed bg-white w-[calc(100vw-40px)] lg:w-[calc(100vw-270px)] -mt-4 rounded px-4 z-10">
+        <div className="w-full gap-4 h-10 md:h-12 px-2 rounded-full bg-white flex items-center justify-between">
+          <div className="text-sm">
+            <Button
+              label={!showAll ? 'Add New' : 'Cancel Add'}
+              icon={!showAll ? <IoMdAdd className="text-lg" /> : <HiMinusSm className="text-lg" />}
+              className={clsx(
+                'flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:bg-viewcolor bg-black hover:text-black',
+                !showAll ? 'bg-black' : 'bg-red-800',
+              )}
+              onClick={() => setShowAll((old) => !old)}
+            />
+          </div>
+          <div className="text-sm">
+            <Button
+              label={!isShowing ? 'Show Filters' : 'Hide Filters'}
+              icon={!isShowing ? <MdFilterAlt className="text-lg" /> : <MdFilterAltOff className="text-lg" />}
+              className={clsx(
+                'flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:text-black hover:bg-viewcolor',
+                !isShowing ? 'bg-green-800' : 'bg-red-800',
+              )}
+              onClick={() => setIsShowing((old) => !old)}
+            />
+          </div>
         </div>
-        <div className="text-sm">
-          <Button
-            label={!isShowing ? "Show Filters" : "Hide Filters"}
-            icon={
-              !isShowing ? (
-                <MdFilterAlt className="text-lg" />
-              ) : (
-                <MdFilterAltOff className="text-lg" />
-              )
-            }
-            className={clsx(
-              "flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:text-black hover:bg-viewcolor",
-              !isShowing ? "bg-green-800" : "bg-red-800"
-            )}
-            onClick={() => setIsShowing((old) => !old)}
-          />
-        </div>
-      </div>
-      <div
-        className={clsx(
-          "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3 pb-5",
-          isShowing ? "block" : "hidden"
-        )}
-      >
-        <div className="w-full">
-          <Select
-            onChange={handleOwnerChange}
-            value={owner}
-            options={owners}
-            placeholder="Household"
-            label="Account Owner"
-            className="bg-white w-full py-1"
-          />
+        <div
+          className={clsx(
+            'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3 pb-5',
+            isShowing ? 'block' : 'hidden',
+          )}
+        >
+          <div className="w-full">
+            <Select
+              onChange={handleOwnerChange}
+              value={owner}
+              options={owners}
+              placeholder="Household"
+              label="Account Owner"
+              className="bg-white w-full py-1"
+            />
+          </div>
         </div>
       </div>
 
@@ -150,28 +148,19 @@ export const IncomeRecords = () => {
       )}
 
       {isDataLoaded && (
-        <div className="w-full">
+        <div className="w-full mt-40">
           <div className="w-full">
-            <IncomeListView
-              gridData={gridData}
-              showDelete={!showAll && hasRecords(gridData)}
-            />
+            <IncomeListView gridData={gridData} showDelete={!showAll && hasRecords(gridData)} />
           </div>
 
           <div className="w-full gap-4 h-10 md:h-12 px-2 bg-white flex items-center justify-between mt-5 -mb-7">
             <div className="text-sm">
               <Button
-                label={!showAll ? "Add New" : "Cancel Add"}
-                icon={
-                  !showAll ? (
-                    <IoMdAdd className="text-lg" />
-                  ) : (
-                    <HiMinusSm className="text-lg" />
-                  )
-                }
+                label={!showAll ? 'Add New' : 'Cancel Add'}
+                icon={!showAll ? <IoMdAdd className="text-lg" /> : <HiMinusSm className="text-lg" />}
                 className={clsx(
-                  "flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:bg-viewcolor bg-black hover:text-black",
-                  !showAll ? "bg-black" : "bg-red-800"
+                  'flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:bg-viewcolor bg-black hover:text-black',
+                  !showAll ? 'bg-black' : 'bg-red-800',
                 )}
                 onClick={() => setShowAll((old) => !old)}
               />
@@ -179,13 +168,15 @@ export const IncomeRecords = () => {
           </div>
 
           <div className="w-full">
-            <ExtraPayListView
-              gridData={extraGridData}
-              showDelete={!showAll && hasRecords(extraGridData)}
-            />
+            <ExtraPayListView gridData={extraGridData} showDelete={!showAll && hasRecords(extraGridData)} />
           </div>
         </div>
       )}
+      <div className="fixed bottom-4 right-4">
+        <button className="text-black font-bold p-4 bg-gray-300 rounded-full shadow-lg" onClick={scrollToTop}>
+          <BiArrowToTop className="h-6 w-6" />
+        </button>
+      </div>
     </>
   ) : (
     <Package />

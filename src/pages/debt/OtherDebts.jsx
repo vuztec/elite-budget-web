@@ -1,24 +1,21 @@
-import React, { useEffect, useState } from "react";
-import { MdFilterAlt, MdFilterAltOff } from "react-icons/md";
-import Button from "../../components/Button";
-import { IoMdAdd } from "react-icons/io";
-import { HiMinusSm } from "react-icons/hi";
-import Loading from "../../components/Loader";
-import { useQuery } from "react-query";
-import clsx from "clsx";
-import Select from "../../components/Select";
-import { getActiveAccount } from "../../utils/permissions";
-import Package from "../../package/Package";
-import { getDebts } from "../../config/api";
-import {
-  debtCategories,
-  expenseOwners,
-  getCatGridData,
-} from "../../utils/budget.filter";
-import { DebtListView } from "../../components/debt/DebtListView";
-import { DebtSummary } from "../../components/debt/DebtSummary";
-import { hasRecords } from "../../utils/budget.calculation";
-import useUserStore from "../../app/user";
+import React, { useEffect, useState } from 'react';
+import { MdFilterAlt, MdFilterAltOff } from 'react-icons/md';
+import Button from '../../components/Button';
+import { IoMdAdd } from 'react-icons/io';
+import { HiMinusSm } from 'react-icons/hi';
+import Loading from '../../components/Loader';
+import { useQuery } from 'react-query';
+import clsx from 'clsx';
+import Select from '../../components/Select';
+import { getActiveAccount } from '../../utils/permissions';
+import Package from '../../package/Package';
+import { getDebts } from '../../config/api';
+import { debtCategories, expenseOwners, getCatGridData } from '../../utils/budget.filter';
+import { DebtListView } from '../../components/debt/DebtListView';
+import { DebtSummary } from '../../components/debt/DebtSummary';
+import { hasRecords } from '../../utils/budget.calculation';
+import useUserStore from '../../app/user';
+import { BiArrowToTop } from 'react-icons/bi';
 
 export const OtherDebts = () => {
   const { user } = useUserStore();
@@ -28,11 +25,11 @@ export const OtherDebts = () => {
   const activeAccount = getActiveAccount(user);
 
   // Filters
-  const [owner, setOwner] = useState("Household");
-  const [catFilter, setCatFilter] = useState("All");
+  const [owner, setOwner] = useState('Household');
+  const [catFilter, setCatFilter] = useState('All');
 
   const { data: debts, status: isDebtLoaded } = useQuery({
-    queryKey: ["debts"],
+    queryKey: ['debts'],
     queryFn: getDebts,
     staleTime: 1000 * 60 * 60,
   });
@@ -51,16 +48,11 @@ export const OtherDebts = () => {
   ///-------------END Filters Data Source --------------------------------///
 
   useEffect(() => {
-    if (isDebtLoaded === "success") {
+    if (isDebtLoaded === 'success') {
       const debtData = getCatGridData(debts, owner, catFilter);
       let updatedData = debtData;
       if (!showAll && hasRecords(debtData)) {
-        updatedData = debtData.filter(
-          (item) =>
-            item.MarketValue > 0 ||
-            item.LoanBalance > 0 ||
-            item.MonthlyBudget > 0
-        );
+        updatedData = debtData.filter((item) => item.MarketValue > 0 || item.LoanBalance > 0 || item.MonthlyBudget > 0);
       }
       // Sort the data by Owner property
       const sortedData = updatedData.sort((a, b) => {
@@ -90,70 +82,76 @@ export const OtherDebts = () => {
 
   const [isShowing, setIsShowing] = useState(true);
 
+  const scrollToTop = () => {
+    const scrollableDiv = document.querySelector('.flex-1.overflow-auto');
+    if (scrollableDiv) {
+      scrollableDiv.scrollTo({
+        top: 0,
+        behavior: 'smooth', // Optional for smooth scrolling
+      });
+    } else {
+      // Fallback to window scroll (in case your layout changes)
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+    }
+  };
+
   return activeAccount ? (
     <>
-      <div className="w-full gap-4 h-10 md:h-12 px-2 rounded-full bg-white flex items-center justify-between">
-        <div className="text-sm">
-          <Button
-            label={!showAll ? "Add New" : "Cancel Add"}
-            icon={
-              !showAll ? (
-                <IoMdAdd className="text-lg" />
-              ) : (
-                <HiMinusSm className="text-lg" />
-              )
-            }
-            className={clsx(
-              "flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:bg-viewcolor bg-black hover:text-black",
-              !showAll ? "bg-black" : "bg-red-800"
-            )}
-            onClick={() => setShowAll((old) => !old)}
-          />
+      <div className="fixed bg-white w-[calc(100vw-40px)] lg:w-[calc(100vw-270px)] -mt-4 rounded px-4 z-10">
+        <div className="w-full gap-4 h-10 md:h-12 px-2 rounded-full bg-white flex items-center justify-between">
+          <div className="text-sm">
+            <Button
+              label={!showAll ? 'Add New' : 'Cancel Add'}
+              icon={!showAll ? <IoMdAdd className="text-lg" /> : <HiMinusSm className="text-lg" />}
+              className={clsx(
+                'flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:bg-viewcolor bg-black hover:text-black',
+                !showAll ? 'bg-black' : 'bg-red-800',
+              )}
+              onClick={() => setShowAll((old) => !old)}
+            />
+          </div>
+          <div className="text-sm">
+            <Button
+              label={!isShowing ? 'Show Filters' : 'Hide Filters'}
+              icon={!isShowing ? <MdFilterAlt className="text-lg" /> : <MdFilterAltOff className="text-lg" />}
+              className={clsx(
+                'flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:text-black hover:bg-viewcolor',
+                !isShowing ? 'bg-green-800' : 'bg-red-800',
+              )}
+              onClick={() => setIsShowing((old) => !old)}
+            />
+          </div>
         </div>
-        <div className="text-sm">
-          <Button
-            label={!isShowing ? "Show Filters" : "Hide Filters"}
-            icon={
-              !isShowing ? (
-                <MdFilterAlt className="text-lg" />
-              ) : (
-                <MdFilterAltOff className="text-lg" />
-              )
-            }
-            className={clsx(
-              "flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:text-black hover:bg-viewcolor",
-              !isShowing ? "bg-green-800" : "bg-red-800"
-            )}
-            onClick={() => setIsShowing((old) => !old)}
-          />
-        </div>
-      </div>
-      <div
-        className={clsx(
-          "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3 pb-5",
-          isShowing ? "block" : "hidden"
-        )}
-      >
-        <div className="w-full">
-          <Select
-            onChange={handleOwnerChange}
-            value={owner}
-            options={owners}
-            placeholder="Household"
-            label="Account Owner"
-            className="bg-white w-full py-1"
-          />
-        </div>
+        <div
+          className={clsx(
+            'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3 pb-5',
+            isShowing ? 'block' : 'hidden',
+          )}
+        >
+          <div className="w-full">
+            <Select
+              onChange={handleOwnerChange}
+              value={owner}
+              options={owners}
+              placeholder="Household"
+              label="Account Owner"
+              className="bg-white w-full py-1"
+            />
+          </div>
 
-        <div className="w-full">
-          <Select
-            onChange={handleCatChange}
-            value={catFilter}
-            options={categories}
-            placeholder="All"
-            label="Category"
-            className="bg-white w-full py-1"
-          />
+          <div className="w-full">
+            <Select
+              onChange={handleCatChange}
+              value={catFilter}
+              options={categories}
+              placeholder="All"
+              label="Category"
+              className="bg-white w-full py-1"
+            />
+          </div>
         </div>
       </div>
 
@@ -164,10 +162,10 @@ export const OtherDebts = () => {
       )}
 
       {isDataLoaded && (
-        <div className="w-full">
+        <div className="w-full mt-40">
           <div className="w-full">
             <DebtListView
-              Data={gridData.filter((item) => item.Category === "Credit Card")}
+              Data={gridData.filter((item) => item.Category === 'Credit Card')}
               category="Credit Card"
               showAll={showAll}
             />
@@ -175,9 +173,7 @@ export const OtherDebts = () => {
 
           <div className="w-full">
             <DebtListView
-              Data={gridData.filter(
-                (item) => item.Category === "Department Store"
-              )}
+              Data={gridData.filter((item) => item.Category === 'Department Store')}
               category="Department Store"
               showAll={showAll}
             />
@@ -185,9 +181,7 @@ export const OtherDebts = () => {
 
           <div className="w-full">
             <DebtListView
-              Data={gridData.filter(
-                (item) => item.Category === "Family/Friend Loan"
-              )}
+              Data={gridData.filter((item) => item.Category === 'Family/Friend Loan')}
               category="Family/Friend Loan"
               showAll={showAll}
             />
@@ -195,7 +189,7 @@ export const OtherDebts = () => {
 
           <div className="w-full">
             <DebtListView
-              Data={gridData.filter((item) => item.Category === "Medical Debt")}
+              Data={gridData.filter((item) => item.Category === 'Medical Debt')}
               category="Medical Debt"
               showAll={showAll}
             />
@@ -203,9 +197,7 @@ export const OtherDebts = () => {
 
           <div className="w-full">
             <DebtListView
-              Data={gridData.filter(
-                (item) => item.Category === "Personal Loan"
-              )}
+              Data={gridData.filter((item) => item.Category === 'Personal Loan')}
               category="Personal Loan"
               showAll={showAll}
             />
@@ -213,7 +205,7 @@ export const OtherDebts = () => {
 
           <div className="w-full">
             <DebtListView
-              Data={gridData.filter((item) => item.Category === "Student Loan")}
+              Data={gridData.filter((item) => item.Category === 'Student Loan')}
               category="Student Loan"
               showAll={showAll}
             />
@@ -221,7 +213,7 @@ export const OtherDebts = () => {
 
           <div className="w-full">
             <DebtListView
-              Data={gridData.filter((item) => item.Category === "Other Debt")}
+              Data={gridData.filter((item) => item.Category === 'Other Debt')}
               category="Other Debt"
               showAll={showAll}
             />
@@ -232,6 +224,11 @@ export const OtherDebts = () => {
           </div>
         </div>
       )}
+      <div className="fixed bottom-4 right-4">
+        <button className="text-black font-bold p-4 bg-gray-300 rounded-full shadow-lg" onClick={scrollToTop}>
+          <BiArrowToTop className="h-6 w-6" />
+        </button>
+      </div>
     </>
   ) : (
     <Package />
