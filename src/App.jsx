@@ -37,7 +37,7 @@ function Layout() {
   return user ? (
     <div className="w-full h-screen flex">
       <div
-        className={`w-full overflow-auto lg:w-max h-full lg:h-min lg:m-0 lg:rounded-none bg-[rgba(0,0,0,0.3)] lg:bg-white top-0 fixed lg:static lg:block ${
+        className={`w-full overflow-auto z-20 lg:w-max h-full lg:h-min lg:m-0 lg:rounded-none bg-[rgba(0,0,0,0.3)] lg:bg-white top-0 fixed lg:static lg:block ${
           sidebar ? '' : 'hidden'
         }`}
         onClick={setSidebar}

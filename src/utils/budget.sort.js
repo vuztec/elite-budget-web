@@ -53,11 +53,20 @@ export const defaultDebSort = (data) => {
     const aDisplayName = a.NickName || a.Description;
     const bDisplayName = b.NickName || b.Description;
 
+    // If either Description is 'Enter', push it to the end
+    if (a.Description === 'Enter' && b.Description !== 'Enter') {
+      return 1;
+    }
+    if (b.Description === 'Enter' && a.Description !== 'Enter') {
+      return -1;
+    }
+
     // Sort by Owner in descending order
     if (a.Owner === b.Owner) {
       // If Owners are equal, sort by display name (NickName or Description) in ascending order
       return aDisplayName.localeCompare(bDisplayName);
     }
+
     return a.Owner < b.Owner ? 1 : -1;
   });
 };
