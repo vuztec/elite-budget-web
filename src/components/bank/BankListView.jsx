@@ -36,10 +36,13 @@ export const BankListView = ({ gridData }) => {
     axios
       .delete(`/api/bank-accounts/name/${selected}`)
       .then(({ data }) => {
-        queryClient.setQueryData(['accountnames'], (prev) => prev.filter((bank) => bank.id !== selected));
+        queryClient.setQueryData(['accountnames'], (prev) => {
+          return prev.filter((bank) => bank.id !== selected);
+        });
         queryClient.setQueryData(['banktransactions'], (prev) =>
-          prev.filter((transaction) => transaction.BankAccountName.id !== selected),
+          prev ? prev?.filter((transaction) => transaction?.BankAccountName?.id !== selected) : [],
         );
+        console.log('coming 3');
         setOpenDialog(false);
         setIsLoading(false);
       })

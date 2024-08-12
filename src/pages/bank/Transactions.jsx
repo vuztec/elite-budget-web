@@ -58,7 +58,7 @@ export const Transactions = () => {
       const transData = getBankGridData(transactions, owner, bank);
 
       // Sort the data by Owner property
-      const sortedData = transData.sort((a, b) => {
+      const sortedData = transData?.sort((a, b) => {
         if (a.Owner === b.Owner) {
           return a.Description < b.Description ? 1 : -1; // Descending order for Owner
         }
