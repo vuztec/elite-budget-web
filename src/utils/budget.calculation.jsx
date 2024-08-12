@@ -1078,10 +1078,10 @@ export const getCategoryTotal = (type, maingoals) => {
   let total = 100;
 
   if (type === 'Expense') {
-    const updatedData = maingoals?.filter((goal) => (goal.Category = 'Expenses' && goal.Type === 'Main'));
+    const updatedData = maingoals?.filter((goal) => goal.Category === 'Expenses' && goal.Type === 'Main');
     total = updatedData?.Percentage?.[0] || 0;
   } else if (type === 'Debt') {
-    const updatedData = maingoals?.filter((goal) => (goal.Category = 'Debts' && goal.Type === 'Main'));
+    const updatedData = maingoals?.filter((goal) => goal.Category === 'Debts' && goal.Type === 'Main');
     total = updatedData?.Percentage?.[0] || 0;
   }
 
