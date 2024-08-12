@@ -549,6 +549,40 @@ export const getGrossMonthlyTotalOwner = (user, data) => {
   return formattedAmount;
 };
 
+export const getGrossMonthlyTotalJoint = (data) => {
+  const totalData = data?.filter((data) => data.Owner === 'Joint');
+  const Amount = totalData?.reduce((accumulator, record) => {
+    const income = record?.GrossAmount || 0;
+    const payFrequency = record?.Frequency || '';
+
+    let monthlyIncome = 0;
+
+    switch (payFrequency) {
+      // case "Yearly":
+      //   monthlyIncome = income / 12;
+      //   break;
+      case 'Monthly':
+        monthlyIncome = income;
+        break;
+      case 'Semi-Monthly':
+        monthlyIncome = income * 2;
+        break;
+      case 'Weekly':
+        monthlyIncome = income * 4;
+        break;
+      case 'Bi-Weekly':
+        monthlyIncome = income * 2;
+        break;
+      default:
+        monthlyIncome = 0;
+    }
+
+    return accumulator + Number(monthlyIncome);
+  }, 0);
+
+  return Amount;
+};
+
 export const getUnformattedMonthlyBudgetTotal = (data) => {
   const updatedData = data?.filter((data) => data.Owner === 'Joint');
   const Amount = updatedData?.reduce((accumulator, record) => {
@@ -597,6 +631,12 @@ export const getPartnerContributionPercentage = (selfPerc, incomes) => {
   }
   const unFormattedAmount = Number(percentage);
   return unFormattedAmount.toFixed(0);
+};
+
+export const getExtraJointExpense = (expense, income) => {
+  let amount = Number(expense) - Number(income);
+  if (amount < 0) amount = 0;
+  return amount;
 };
 
 ///***************************FINAL BUDGET***************************** */

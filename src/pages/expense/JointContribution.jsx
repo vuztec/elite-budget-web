@@ -11,8 +11,10 @@ import clsx from 'clsx';
 import { IoMdAdd } from 'react-icons/io';
 import Button from '../../components/Button';
 import {
+  getExtraJointExpense,
   getFormattedValueTotal,
   getGrossMonthlyTotal,
+  getGrossMonthlyTotalJoint,
   getGrossMonthlyTotalOwner,
   getOwnerGrossMonthlyPercentage,
   getOwnerGrossMonthlyTotal,
@@ -58,6 +60,8 @@ export const JointContribution = () => {
     staleTime: 1000 * 60 * 60,
   });
 
+  const jointIncome = getGrossMonthlyTotalJoint(incomes);
+
   const { data: jointsplits, status: isJointLoaded } = useQuery({
     queryKey: ['jointsplits'],
     queryFn: getJointSplits,
@@ -70,12 +74,6 @@ export const JointContribution = () => {
     staleTime: 1000 * 60 * 60,
   });
 
-  const { data: retirements, status: isRetLoaded } = useQuery({
-    queryKey: ['retirements'],
-    queryFn: getRetirements,
-    staleTime: 1000 * 60 * 60,
-  });
-
   ///-------------END Filters Data Source --------------------------------///
 
   useEffect(() => {
@@ -84,7 +82,6 @@ export const JointContribution = () => {
       isExpenseLoaded === 'success' &&
       isIncomeLoaded === 'success' &&
       isJointLoaded === 'success' &&
-      isRetLoaded === 'success' &&
       isSavingLoaded === 'success'
     ) {
       const firstRecord = jointsplits[0];
@@ -104,7 +101,7 @@ export const JointContribution = () => {
       setIsDataLoaded(false);
       setTotalJointExpense(0);
     }
-  }, [jointsplits, isDebtLoaded, isExpenseLoaded, isIncomeLoaded, isJointLoaded, isRetLoaded, isSavingLoaded]);
+  }, [jointsplits, isDebtLoaded, isExpenseLoaded, isIncomeLoaded, isJointLoaded, isSavingLoaded]);
 
   const deleteHandler = async (selected) => {
     setIsLoading(true);
@@ -224,32 +221,78 @@ export const JointContribution = () => {
                       <td></td>
                     </tr>
 
-                    <tr className="border border-gray-300">
-                      <td className="min-w-fit whitespace-nowrap p-2">Self - Contribution</td>
-                      <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">
-                        <span>{getSelfContributionTotal(user, selfPercentage, incomes, totalJointExpense)}</span>
-                      </td>
-                      <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">
-                        <span>{getSelfContributionPercentage(selfPercentage, incomes)}%</span>
-                      </td>
-                    </tr>
-                    <tr className="border border-gray-300">
-                      <td className="min-w-fit whitespace-nowrap p-2">Partner - Contribution</td>
-                      <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">
-                        <span>{getPartnerContributionTotal(user, selfPercentage, incomes, totalJointExpense)}</span>
-                      </td>
-                      <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">
-                        <span>{getPartnerContributionPercentage(selfPercentage, incomes)}%</span>
-                      </td>
-                    </tr>
-
-                    <tr className="border border-gray-300 bg-[whitesmoke] text-black">
+                    <tr className="border border-gray-300 text-black">
                       <td className="min-w-fit whitespace-nowrap p-2">Total Joint Expenses</td>
                       <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">
                         <span>{getFormattedValueTotal(user, totalJointExpense)}</span>
                       </td>
                       <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">
-                        <span>100%</span>
+                        <span></span>
+                      </td>
+                    </tr>
+
+                    <tr className="border border-gray-300">
+                      <td className="min-w-fit whitespace-nowrap p-2">Joint Income</td>
+                      <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">
+                        <span>{getFormattedValueTotal(user, jointIncome)}</span>
+                      </td>
+                      <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">
+                        <span></span>
+                      </td>
+                    </tr>
+
+                    <tr className="border border-gray-300 bg-[whitesmoke]">
+                      <td className="min-w-fit whitespace-nowrap p-2">Joint Expenses not Covered by Joint Income</td>
+                      <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">
+                        <span>
+                          {getFormattedValueTotal(user, getExtraJointExpense(totalJointExpense, jointIncome))}
+                        </span>
+                      </td>
+                      <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">
+                        <span>{getExtraJointExpense(totalJointExpense, jointIncome) > 0 ? '100%' : '0%'}</span>
+                      </td>
+                    </tr>
+
+                    <tr className="border border-gray-300">
+                      <td className="min-w-fit whitespace-nowrap p-2">Self - Contribution</td>
+                      <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">
+                        <span>
+                          {getSelfContributionTotal(
+                            user,
+                            selfPercentage,
+                            incomes,
+                            getExtraJointExpense(totalJointExpense, jointIncome),
+                          )}
+                        </span>
+                      </td>
+                      <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">
+                        <span>
+                          {getExtraJointExpense(totalJointExpense, jointIncome) > 0
+                            ? getSelfContributionPercentage(selfPercentage, incomes)
+                            : 0}
+                          %
+                        </span>
+                      </td>
+                    </tr>
+                    <tr className="border border-gray-300">
+                      <td className="min-w-fit whitespace-nowrap p-2">Partner - Contribution</td>
+                      <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">
+                        <span>
+                          {getPartnerContributionTotal(
+                            user,
+                            selfPercentage,
+                            incomes,
+                            getExtraJointExpense(totalJointExpense, jointIncome),
+                          )}
+                        </span>
+                      </td>
+                      <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">
+                        <span>
+                          {getExtraJointExpense(totalJointExpense, jointIncome) > 0
+                            ? getPartnerContributionPercentage(selfPercentage, incomes)
+                            : 0}
+                          %
+                        </span>
                       </td>
                     </tr>
                   </tbody>
