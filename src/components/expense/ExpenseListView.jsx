@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { RiDeleteBin2Fill } from "react-icons/ri";
-import { FaEdit } from "react-icons/fa";
-import clsx from "clsx";
+import React, { useEffect, useState } from 'react';
+import { RiDeleteBin2Fill } from 'react-icons/ri';
+import { FaEdit } from 'react-icons/fa';
+import clsx from 'clsx';
 
-import useUserStore from "../../app/user";
-import { useQueryClient } from "react-query";
-import ConfirmationDialog from "../Dialogs";
-import axios from "../../config/axios";
-import { handleAxiosResponseError } from "../../utils/handleResponseError";
-import { AddExpense } from "./AddExpense";
+import useUserStore from '../../app/user';
+import { useQueryClient } from 'react-query';
+import ConfirmationDialog from '../Dialogs';
+import axios from '../../config/axios';
+import { handleAxiosResponseError } from '../../utils/handleResponseError';
+import { AddExpense } from './AddExpense';
 import {
   getFormattedValue,
   getMarketValueTotal,
@@ -16,23 +16,23 @@ import {
   getMonthlyBudgetTotal,
   getYearlyBudgetTotal,
   hasRecords,
-} from "../../utils/budget.calculation";
-import ToolTip from "../tooltip";
-import Sort from "../sort";
-import { defaultDebSort } from "../../utils/budget.sort";
+} from '../../utils/budget.calculation';
+import ToolTip from '../tooltip';
+import Sort from '../sort';
+import { defaultDebSort } from '../../utils/budget.sort';
 
 export const ExpenseListView = ({ Data, category, showColumn, showAll }) => {
   const { user } = useUserStore();
   const [gridData, setGridData] = useState([]);
   const [order, setOrder] = useState([
-    "default",
-    "default",
-    "default",
-    "default",
-    "default",
-    "default",
-    "default",
-    "default",
+    'default',
+    'default',
+    'default',
+    'default',
+    'default',
+    'default',
+    'default',
+    'default',
   ]);
   const showDelete = !showAll && hasRecords(Data);
   useEffect(() => {
@@ -53,10 +53,8 @@ export const ExpenseListView = ({ Data, category, showColumn, showAll }) => {
     axios
       .delete(`/api/expenses/${selected}`)
       .then(({ data }) => {
-        queryClient.setQueryData(["expenses"], (prev) =>
-          prev.map((item) =>
-            item.id === selected ? { ...item, ...data } : item
-          )
+        queryClient.setQueryData(['expenses'], (prev) =>
+          prev.map((item) => (item.id === selected ? { ...item, ...data } : item)),
         );
         setOpenDialog(false);
         setIsLoading(false);
@@ -86,11 +84,11 @@ export const ExpenseListView = ({ Data, category, showColumn, showAll }) => {
           <div className="flex justify-between items-center gap-2">
             Owner
             <Sort
-              tab={"expense"}
+              tab={'expense'}
               order={order}
               setOrder={setOrder}
               column={1}
-              name={"Owner"}
+              name={'Owner'}
               data={gridData}
               setData={setGridData}
               defaultData={Data}
@@ -101,11 +99,11 @@ export const ExpenseListView = ({ Data, category, showColumn, showAll }) => {
           <div className="flex justify-between items-center gap-2">
             Description
             <Sort
-              tab={"expense"}
+              tab={'expense'}
               order={order}
               setOrder={setOrder}
               column={2}
-              name={"Description"}
+              name={'Description'}
               data={gridData}
               setData={setGridData}
               defaultData={Data}
@@ -116,11 +114,11 @@ export const ExpenseListView = ({ Data, category, showColumn, showAll }) => {
           <div className="flex justify-between items-center gap-2">
             Nickname
             <Sort
-              tab={"expense"}
+              tab={'expense'}
               order={order}
               setOrder={setOrder}
               column={2}
-              name={"NickName"}
+              name={'NickName'}
               data={gridData}
               setData={setGridData}
               defaultData={Data}
@@ -133,17 +131,15 @@ export const ExpenseListView = ({ Data, category, showColumn, showAll }) => {
               <div className="flex justify-between items-center gap-2">
                 <div className="flex flex-col">
                   <span className="text-left">Market Value</span>
-                  <span className="text-left text-xs">
-                    (For Net Worth Calc)
-                  </span>
+                  <span className="text-left text-xs">(For Net Worth Calc)</span>
                 </div>
 
                 <Sort
-                  tab={"expense"}
+                  tab={'expense'}
                   order={order}
                   setOrder={setOrder}
                   column={3}
-                  name={"MarketValue"}
+                  name={'MarketValue'}
                   data={gridData}
                   setData={setGridData}
                   defaultData={Data}
@@ -155,18 +151,15 @@ export const ExpenseListView = ({ Data, category, showColumn, showAll }) => {
               <div className="flex justify-between items-center gap-2">
                 <div className="flex flex-col">
                   <span className="text-left">Loan Balance</span>
-                  <span className="text-left text-xs">
-                    {" "}
-                    (For Net Worth Calc)
-                  </span>
+                  <span className="text-left text-xs"> (For Net Worth Calc)</span>
                 </div>
 
                 <Sort
-                  tab={"expense"}
+                  tab={'expense'}
                   order={order}
                   setOrder={setOrder}
                   column={4}
-                  name={"LoanBalance"}
+                  name={'LoanBalance'}
                   data={gridData}
                   setData={setGridData}
                   defaultData={Data}
@@ -180,11 +173,11 @@ export const ExpenseListView = ({ Data, category, showColumn, showAll }) => {
           <div className="flex justify-between items-center gap-2">
             Day Due
             <Sort
-              tab={"expense"}
+              tab={'expense'}
               order={order}
               setOrder={setOrder}
               column={5}
-              name={"DueDate"}
+              name={'DueDate'}
               data={gridData}
               setData={setGridData}
               defaultData={Data}
@@ -199,11 +192,11 @@ export const ExpenseListView = ({ Data, category, showColumn, showAll }) => {
             </div>
 
             <Sort
-              tab={"expense"}
+              tab={'expense'}
               order={order}
               setOrder={setOrder}
               column={6}
-              name={"PaymentMethod"}
+              name={'PaymentMethod'}
               data={gridData}
               setData={setGridData}
               defaultData={Data}
@@ -218,11 +211,11 @@ export const ExpenseListView = ({ Data, category, showColumn, showAll }) => {
             </div>
 
             <Sort
-              tab={"expense"}
+              tab={'expense'}
               order={order}
               setOrder={setOrder}
               column={7}
-              name={"MonthlyBudget"}
+              name={'MonthlyBudget'}
               data={gridData}
               setData={setGridData}
               defaultData={Data}
@@ -237,11 +230,11 @@ export const ExpenseListView = ({ Data, category, showColumn, showAll }) => {
               <span className="text-left">Cost</span>
             </div>
             <Sort
-              tab={"expense"}
+              tab={'expense'}
               order={order}
               setOrder={setOrder}
               column={8}
-              name={"MonthlyBudget"}
+              name={'MonthlyBudget'}
               data={gridData}
               setData={setGridData}
               defaultData={Data}
@@ -259,9 +252,7 @@ export const ExpenseListView = ({ Data, category, showColumn, showAll }) => {
     <tr className="border border-gray-300 text-sm xl:text-[16px] hover:bg-gray-400/10 text-left">
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <span className="flex items-center justify-left gap-2 text-center mb-0 text-gray-900">
-            {record?.Owner}
-          </span>
+          <span className="flex items-center justify-left gap-2 text-center mb-0 text-gray-900">{record?.Owner}</span>
         </div>
       </td>
 
@@ -279,17 +270,13 @@ export const ExpenseListView = ({ Data, category, showColumn, showAll }) => {
         <>
           <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
             <div className="flex flex-col items-start gap-1">
-              <p className="text-black">
-                {getFormattedValue(user, record?.MarketValue)}
-              </p>
+              <p className="text-black">{getFormattedValue(user, record?.MarketValue)}</p>
             </div>
           </td>
 
           <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
             <div className="flex flex-col items-start gap-1">
-              <p className="text-black">
-                {getFormattedValue(user, record?.LoanBalance)}
-              </p>
+              <p className="text-black">{getFormattedValue(user, record?.LoanBalance)}</p>
             </div>
           </td>
         </>
@@ -306,17 +293,13 @@ export const ExpenseListView = ({ Data, category, showColumn, showAll }) => {
       </td>
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p className="text-black">
-            {getFormattedValue(user, record?.MonthlyBudget)}
-          </p>
+          <p className="text-black">{getFormattedValue(user, record?.MonthlyBudget)}</p>
         </div>
       </td>
 
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p className="text-black">
-            {getFormattedValue(user, 12 * record?.MonthlyBudget)}
-          </p>
+          <p className="text-black">{getFormattedValue(user, 12 * record?.MonthlyBudget)}</p>
         </div>
       </td>
 
@@ -324,24 +307,18 @@ export const ExpenseListView = ({ Data, category, showColumn, showAll }) => {
         <div className="flex items-center text-left gap-3 justify-start">
           <div className="group flex relative">
             <FaEdit
-              className={clsx(
-                `text-editcolor`,
-                "hover:text-orange-500 font-semibold cursor-pointer sm:px-0"
-              )}
+              className={clsx(`text-editcolor`, 'hover:text-orange-500 font-semibold cursor-pointer sm:px-0')}
               onClick={() => editClick(record)}
             />
-            <ToolTip text={"Edit"} />
+            <ToolTip text={'Edit'} />
           </div>
           {showDelete && (
             <div className="group flex relative">
               <RiDeleteBin2Fill
-                className={clsx(
-                  `text-deletecolor`,
-                  "hover:text-red-500 font-semibold cursor-pointer sm:px-0"
-                )}
+                className={clsx(`text-deletecolor`, 'hover:text-red-500 font-semibold cursor-pointer sm:px-0')}
                 onClick={() => deleteClick(record.id)}
               />
-              <ToolTip text={"Delete"} />
+              <ToolTip text={'Delete'} />
             </div>
           )}
         </div>
@@ -351,6 +328,7 @@ export const ExpenseListView = ({ Data, category, showColumn, showAll }) => {
 
   const TableTotal = ({ gridData }) => (
     <tr className="border border-gray-300 bg-[whitesmoke] text-gray-600 text-left font-bold">
+      <td className="min-w-fit whitespace-nowrap p-3 border-gray-200"></td>
       <td className="min-w-fit whitespace-nowrap p-3 border-gray-200"></td>
 
       <td className="min-w-fit whitespace-nowrap p-3 border-gray-200">
@@ -421,12 +399,7 @@ export const ExpenseListView = ({ Data, category, showColumn, showAll }) => {
           </div>
         </div>
       )}
-      <AddExpense
-        open={open}
-        setOpen={setOpen}
-        recordData={selected}
-        key={new Date().getTime().toString()}
-      />
+      <AddExpense open={open} setOpen={setOpen} recordData={selected} key={new Date().getTime().toString()} />
       <ConfirmationDialog
         isLoading={isLoading}
         open={openDialog}
