@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   getActualGoal,
+  getActualGoalYearly,
   getBudgetGoal,
   getDifference,
   getIcon,
@@ -48,7 +49,7 @@ const MonthlyRetirement = ({ retirementGridData, incomeGridData, maingoals, owne
             <tr className="border border-gray-300 text-left p-2">
               <td className="px-2 py-2 border-r w-2/3 border-gray-300">Percentage of Annual Gross Income</td>
               <td className="px-2 font-bold">
-                {owner === 'Joint' ? '' : getActualGoal(incomeGridData, retirementGridData, 'Retirement')}%
+                {owner === 'Joint' ? '' : getActualGoalYearly(incomeGridData, retirementGridData, 'Retirement')}%
               </td>
             </tr>
             <tr className="border border-gray-300 text-left p-2">

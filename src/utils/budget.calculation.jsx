@@ -751,6 +751,39 @@ export const getUnformattedNetYearlyTotal = (data) => {
   return Amount;
 };
 
+export const getUnformattedNetMonthlyTotal = (data) => {
+  const Amount = data?.reduce((accumulator, record) => {
+    const income = record?.NetAmount || 0;
+    const payFrequency = record?.Frequency || '';
+
+    let monthlyIncome = 0;
+
+    switch (payFrequency) {
+      // case "Yearly":
+      //   monthlyIncome = income / 12;
+      //   break;
+      case 'Monthly':
+        monthlyIncome = income;
+        break;
+      case 'Semi-Monthly':
+        monthlyIncome = income * 2;
+        break;
+      case 'Weekly':
+        monthlyIncome = income * 4;
+        break;
+      case 'Bi-Weekly':
+        monthlyIncome = income * 2;
+        break;
+      default:
+        monthlyIncome = 0;
+    }
+
+    return accumulator + Number(monthlyIncome);
+  }, 0);
+
+  return 12 * Number(Amount);
+};
+
 export const getUnformattedYearlyBudgetTotal = (data) => {
   const Amount =
     12 *
@@ -763,9 +796,19 @@ export const getUnformattedYearlyBudgetTotal = (data) => {
 
 export const getActualGoal = (incomeData, budgetData, category) => {
   const budget = getUnformattedYearlyBudgetTotal(budgetData);
+  let income = getUnformattedNetMonthlyTotal(incomeData);
+  if (category === 'Retirement') {
+    income = 12 * Number(getUnformattedGrossMonthlyTotal(incomeData));
+  }
+  const perc = income > 0 ? (Number(budget) / Number(income)) * 100 : 0;
+  return Number(perc).toFixed(2);
+};
+
+export const getActualGoalYearly = (incomeData, budgetData, category) => {
+  const budget = getUnformattedYearlyBudgetTotal(budgetData);
   let income = getUnformattedNetYearlyTotal(incomeData);
   if (category === 'Retirement') {
-    income = getUnformattedGrossYearlyTotal(incomeData);
+    income = Number(getUnformattedGrossYearlyTotal(incomeData));
   }
   const perc = income > 0 ? (Number(budget) / Number(income)) * 100 : 0;
   return Number(perc).toFixed(2);
