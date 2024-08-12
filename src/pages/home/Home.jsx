@@ -290,7 +290,7 @@ export const Home = () => {
                 </div>
               </div>
             </div>
-            <div className="flex flex-col xl:flex-row w-full gap-5 mt-10 xl:gap-10">
+            <div className="flex flex-col xl:flex-row w-full gap-5 mt-5 xl:gap-10">
               <div className="hidden xl:block w-full"></div>
               <div className="flex flex-col w-full">
                 <div className="w-full">

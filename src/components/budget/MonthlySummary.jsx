@@ -58,11 +58,11 @@ const MonthlySummary = ({
       <div className="w-full xl:w-full">
         <table className="w-[99%]">
           <tbody>
-            <tr className="border-t border-l border-r border-b border-gray-300 text-sm xl:text-[16px] text-left p-2 font-bold">
+            <tr className="border-t border-l border-r border-b border-gray-300 bg-[whitesmoke] text-sm xl:text-[16px] text-left p-2 font-bold">
               <td className="px-2 py-2 border-r w-2/3 border-gray-300">
                 {owner === 'Joint' ? 'TOTAL MONTHLY JOINT EXPENSES' : 'TOTAL MONTHLY EXPENSES'}
               </td>
-              <td className="px-2">{totalExpenses}</td>
+              <td className="px-2 bg-white">{totalExpenses}</td>
             </tr>
           </tbody>
         </table>
@@ -71,25 +71,25 @@ const MonthlySummary = ({
         <table className="w-[99%]">
           <tbody>
             <tr className="border border-gray-300 text-sm xl:text-[16px]  text-left p-2 font-bold">
-              <td className="px-2 py-2 border-r w-2/3 border-gray-300">MONTHLY NET INCOME</td>
+              <td className="px-2 py-2 border-r w-2/3 border-gray-300 bg-[whitesmoke]">MONTHLY NET INCOME</td>
               <td className="px-2">{getNetMonthlyTotal(user, incomeGridData)}</td>
             </tr>
             {owner === 'Joint' && (
               <tr className="border border-gray-300 text-sm xl:text-[16px]  text-left p-2 font-bold">
-                <td className="px-2 py-2 border-r w-2/3 border-gray-300">TOTAL JOINT CONTRIBUTION</td>
+                <td className="px-2 py-2 border-r w-2/3 border-gray-300 bg-[whitesmoke]">TOTAL JOINT CONTRIBUTION</td>
                 <td className="px-2">
                   {getFormattedValueTotal(user, Number(partnerContribution) + Number(selfContribution))}
                 </td>
               </tr>
             )}
             <tr className="border border-gray-300 text-sm xl:text-[16px]  text-left p-2 font-bold">
-              <td className="px-2 py-2 border-r w-2/3 border-gray-300">
+              <td className="px-2 py-2 border-r w-2/3 border-gray-300 bg-[whitesmoke]">
                 {owner === 'Joint' ? 'LESS TOTAL MONTHLY JOINT EXPENSES' : 'LESS MONTHLY EXPENSES'}
               </td>
               <td className="px-2">{totalExpenses}</td>
             </tr>
             <tr className="border border-gray-300 text-sm xl:text-[16px]  text-left  p-2 font-bold">
-              <td className="px-2 py-2 border-r w-2/3 border-gray-300 uppercase">{label}</td>
+              <td className="px-2 py-2 border-r w-2/3 border-gray-300 uppercase bg-[whitesmoke]">{label}</td>
               <td className="px-2">{totalDifference}</td>
             </tr>
           </tbody>
