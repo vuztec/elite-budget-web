@@ -307,7 +307,7 @@ export const TransactionListView = ({ Data, bankName }) => {
 
   const TableTotal = ({ gridData }) => (
     <tr className="border border-gray-300 text-sm xl:text-[18px] bg-[whitesmoke] text-gray-600 text-left font-bold">
-      <td className="min-w-fit whitespace-nowrap p-3 border-gray-200"></td>
+      {/* <td className="min-w-fit whitespace-nowrap p-3 border-gray-200"></td> */}
 
       <td className="min-w-fit whitespace-nowrap p-3 border-gray-200"></td>
 

@@ -264,7 +264,7 @@ export const Networth = () => {
 
               <div className="w-full">
                 <h1 className="font-medium text-left">
-                  Account Owner: <span className="italic font-bold"> {owner}</span>
+                  Account Owner: <span className="italic font-bold"> {owner === '0' ? 'Household' : owner}</span>
                 </h1>
               </div>
             </div>

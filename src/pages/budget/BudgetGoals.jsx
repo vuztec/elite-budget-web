@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
-import Loading from "../../components/Loader";
-import { useQuery } from "react-query";
-import { getActiveAccount } from "../../utils/permissions";
-import Package from "../../package/Package";
-import { getDebtGoals, getExpenseGoals, getMainGoals } from "../../config/api";
-import { GoalListView } from "../../components/budget/GoalListView";
-import useUserStore from "../../app/user";
+import React, { useEffect, useState } from 'react';
+import Loading from '../../components/Loader';
+import { useQuery } from 'react-query';
+import { getActiveAccount } from '../../utils/permissions';
+import Package from '../../package/Package';
+import { getDebtGoals, getExpenseGoals, getMainGoals } from '../../config/api';
+import { GoalListView } from '../../components/budget/GoalListView';
+import useUserStore from '../../app/user';
 
 export const BudgetGoals = () => {
   const { user } = useUserStore();
@@ -13,19 +13,19 @@ export const BudgetGoals = () => {
   const activeAccount = getActiveAccount(user);
 
   const { data: debtgoals, status: isDebtGoalsLoaded } = useQuery({
-    queryKey: ["debtgoals"],
+    queryKey: ['debtgoals'],
     queryFn: getDebtGoals,
     staleTime: 1000 * 60 * 60,
   });
 
   const { data: expensegoals, status: isExpenseGoalsLoaded } = useQuery({
-    queryKey: ["expensegoals"],
+    queryKey: ['expensegoals'],
     queryFn: getExpenseGoals,
     staleTime: 1000 * 60 * 60,
   });
 
   const { data: maingoals, status: isMainGoalsLoaded } = useQuery({
-    queryKey: ["maingoals"],
+    queryKey: ['maingoals'],
     queryFn: getMainGoals,
     staleTime: 1000 * 60 * 60,
   });
@@ -33,11 +33,7 @@ export const BudgetGoals = () => {
   ///-------------END Filters Data Source --------------------------------///
 
   useEffect(() => {
-    if (
-      isDebtGoalsLoaded === "success" &&
-      isMainGoalsLoaded === "success" &&
-      isExpenseGoalsLoaded === "success"
-    ) {
+    if (isDebtGoalsLoaded === 'success' && isMainGoalsLoaded === 'success' && isExpenseGoalsLoaded === 'success') {
       setIsDataLoaded(true);
     } else {
       setIsDataLoaded(false);
@@ -59,11 +55,11 @@ export const BudgetGoals = () => {
           </div>
 
           <div className="w-full">
-            <GoalListView gridData={expensegoals} goal="Expense" />
+            <GoalListView gridData={expensegoals} goal="Expense" maingoals={maingoals} />
           </div>
 
           <div className="w-full">
-            <GoalListView gridData={debtgoals} goal="Debt" />
+            <GoalListView gridData={debtgoals} goal="Debt" maingoals={maingoals} />
           </div>
         </div>
       )}

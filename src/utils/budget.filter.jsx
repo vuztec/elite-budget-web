@@ -50,6 +50,7 @@ export const expenseCategories = [
   'Household, Personal Care & Gifts',
   'Housing',
   'Insurance (Other)',
+  'Joint Contribution',
   'Parents/Elder Care',
   'Pets/Animals',
   'Recreation',
@@ -235,6 +236,7 @@ export const getUniqueDescriptionsByCategory = (combinedData) => {
     const paymentMethod = item.PaymentMethod;
     const MonthlyBudget = item.MonthlyBudget;
     const NickName = item.NickName;
+    const owner = item.Owner;
     if (!uniqueDescriptionsByCategory[category]) {
       uniqueDescriptionsByCategory[category] = {};
     }
@@ -248,6 +250,7 @@ export const getUniqueDescriptionsByCategory = (combinedData) => {
         PaymentMethod: paymentMethod,
         MonthlyBudget: MonthlyBudget,
         NickName: NickName,
+        Owner: owner,
       };
     }
   });

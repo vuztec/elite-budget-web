@@ -10,7 +10,7 @@ import AddGoal from './AddGoal';
 import ToolTip from '../tooltip';
 import Sort from '../sort';
 
-export const GoalListView = ({ gridData, goal }) => {
+export const GoalListView = ({ gridData, goal, maingoals }) => {
   //----------------CRUD----------------//
   const queryClient = useQueryClient();
   const [openDialog, setOpenDialog] = useState(false);
@@ -144,7 +144,7 @@ export const GoalListView = ({ gridData, goal }) => {
           </div>
         </div>
       )}
-      <AddGoal open={open} setOpen={setOpen} recordData={selected} type={goal} goals={gridData} />
+      <AddGoal open={open} setOpen={setOpen} recordData={selected} type={goal} goals={gridData} maingoals={maingoals} />
       <ConfirmationDialog
         isLoading={isLoading}
         open={openDialog}

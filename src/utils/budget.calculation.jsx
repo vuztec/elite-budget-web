@@ -12,12 +12,18 @@ export const getFormattedValue = (user, Amount) => {
 
   let formattedAmount = '';
   if (Amount !== '' && Amount > 0.0) {
-    formattedAmount =
-      usedCurrency +
-      new Intl.NumberFormat(separator, {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-      }).format(Amount);
+    // Check if the amount is negative
+    const isNegative = Number(Amount) < 0;
+    const absoluteAmount = Math.abs(Amount);
+
+    // Format the absolute value of the amount
+    formattedAmount = new Intl.NumberFormat(separator, {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(absoluteAmount);
+
+    // Prepend the currency and minus sign if negative
+    formattedAmount = (isNegative ? '-' : '') + usedCurrency + formattedAmount;
   }
 
   return formattedAmount;
@@ -29,14 +35,19 @@ export const getFormattedValueTotal = (user, Amount) => {
 
   let formattedAmount = '';
   if (Amount !== '') {
-    formattedAmount =
-      usedCurrency +
-      new Intl.NumberFormat(separator, {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-      }).format(Amount);
-  }
+    // Check if the amount is negative
+    const isNegative = Number(Amount) < 0;
+    const absoluteAmount = Math.abs(Amount);
 
+    // Format the absolute value of the amount
+    formattedAmount = new Intl.NumberFormat(separator, {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(absoluteAmount);
+
+    // Prepend the currency and minus sign if negative
+    formattedAmount = (isNegative ? '-' : '') + usedCurrency + formattedAmount;
+  }
   return formattedAmount;
 };
 
@@ -378,12 +389,18 @@ export const getFormattedValueType = (user, Amount, type, column) => {
 
   if (type === column) {
     if (Amount !== '' && Amount > 0.0) {
-      formattedAmount =
-        usedCurrency +
-        new Intl.NumberFormat(separator, {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
-        }).format(Amount);
+      // Check if the amount is negative
+      const isNegative = Number(Amount) < 0;
+      const absoluteAmount = Math.abs(Amount);
+
+      // Format the absolute value of the amount
+      formattedAmount = new Intl.NumberFormat(separator, {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      }).format(absoluteAmount);
+
+      // Prepend the currency and minus sign if negative
+      formattedAmount = (isNegative ? '-' : '') + usedCurrency + formattedAmount;
     }
   }
 
@@ -647,12 +664,18 @@ export const getNegativeFormattedValue = (user, Amount) => {
 
   let formattedAmount = '';
   if (Amount !== '') {
-    formattedAmount =
-      usedCurrency +
-      new Intl.NumberFormat(separator, {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-      }).format(Amount);
+    // Check if the amount is negative
+    const isNegative = Number(Amount) < 0;
+    const absoluteAmount = Math.abs(Amount);
+
+    // Format the absolute value of the amount
+    formattedAmount = new Intl.NumberFormat(separator, {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(absoluteAmount);
+
+    // Prepend the currency and minus sign if negative
+    formattedAmount = (isNegative ? '-' : '') + usedCurrency + formattedAmount;
   }
 
   return formattedAmount;
@@ -1042,10 +1065,25 @@ export const getExtraPayCheckTotal = (user, data, owner) => {
   return formattedAmount;
 };
 
-export const getGoalToal = (goals) => {
+export const getGoalTotal = (goals) => {
   const total = goals?.reduce((accumulator, record) => {
     const amount = record?.Percentage || 0;
     return accumulator + Number(amount);
   }, 0);
+
+  return total;
+};
+
+export const getCategoryTotal = (type, maingoals) => {
+  let total = 100;
+
+  if (type === 'Expense') {
+    const updatedData = maingoals?.filter((goal) => (goal.Category = 'Expenses' && goal.Type === 'Main'));
+    total = updatedData?.Percentage?.[0] || 0;
+  } else if (type === 'Debt') {
+    const updatedData = maingoals?.filter((goal) => (goal.Category = 'Debts' && goal.Type === 'Main'));
+    total = updatedData?.Percentage?.[0] || 0;
+  }
+
   return total;
 };

@@ -8,12 +8,13 @@ import { IoMdSend } from 'react-icons/io';
 import { TiCancel } from 'react-icons/ti';
 import axios from '../../config/axios';
 import { handleAxiosResponseError } from '../../utils/handleResponseError';
-import { getGoalToal } from '../../utils/budget.calculation';
+import { getCategoryTotal, getGoalTotal } from '../../utils/budget.calculation';
 import Textbox2 from '../Textbox2';
 
-export const AddGoal = ({ open, setOpen, recordData, type, goals }) => {
+export const AddGoal = ({ open, setOpen, recordData, type, goals, maingoals }) => {
   const queryClient = useQueryClient();
-  const existingGoals = getGoalToal(goals);
+  const existingGoals = getGoalTotal(goals);
+  const existingTotal = getCategoryTotal(type, maingoals);
   const [isLoading, setIsLoading] = useState(false);
   const [totalGoal, setTotalGoal] = useState(existingGoals);
   const [percentage, setPercentage] = useState(0);
@@ -68,8 +69,8 @@ export const AddGoal = ({ open, setOpen, recordData, type, goals }) => {
     if (value > 100 || value < 0) setError2('Amount must be between zero and 100.');
     else setError2('');
 
-    if (value && value + existingGoals - Number(recordData.Percentage) > 100) {
-      setError('The total percentage cannot exceed 100%');
+    if (value && value + existingGoals - Number(recordData.Percentage) > existingTotal) {
+      setError(`The total percentage cannot exceed ${existingTotal}%`);
       setTotalGoal(() => existingGoals - Number(recordData.Percentage) + value);
     } else if (value && Number(recordData.Percentage) > 0) {
       setTotalGoal(() => existingGoals - Number(recordData.Percentage) + value);
@@ -77,7 +78,7 @@ export const AddGoal = ({ open, setOpen, recordData, type, goals }) => {
     } else if (!value && Number(recordData.Percentage) > 0) {
       setTotalGoal(() => existingGoals - Number(recordData.Percentage));
       setError('');
-    } else if (value && value + existingGoals >= 0 && value + existingGoals <= 100) {
+    } else if (value && value + existingGoals >= 0 && value + existingGoals <= existingTotal) {
       setTotalGoal(() => existingGoals + value);
       setError('');
     } else {
@@ -116,7 +117,7 @@ export const AddGoal = ({ open, setOpen, recordData, type, goals }) => {
               <Textbox2
                 placeholder="0"
                 type="number"
-                label="All Goal %"
+                label={`${type} Goal Total %`}
                 disabled={true}
                 className="w-full rounded"
                 value={totalGoal}

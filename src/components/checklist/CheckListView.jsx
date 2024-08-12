@@ -19,8 +19,9 @@ export const CheckListView = ({
               <tr className="text-black font-bold bg-[whitesmoke] border border-gray-400 text-left text-sm xl:text-[16px] uppercase">
                 <th className="px-1 py-2">Savings & Spending</th>
                 <th className="border-l border-gray-300 px-1 py-2m">Day Due</th>
-                <th className="border-l border-gray-300 px-1 py-2">Monthly Budget</th>
                 <th className="border-l border-gray-300 px-1 py-2-sm">Payment Method</th>
+                <th className="border-l border-gray-300 px-1 py-2">Monthly Budget</th>
+
                 {monthHeaders?.map((header, index) => (
                   <th key={index} className="border-l border-gray-300 px-1 py-2">
                     {header}
@@ -71,11 +72,12 @@ export const CheckListView = ({
                                     {details.DueDate}
                                   </td>
                                   <td className="min-w-fit whitespace-nowrap border-l p-2 border-gray-200">
-                                    {getFormattedValueTotal(user, details.MonthlyBudget)}
-                                  </td>
-                                  <td className="min-w-fit whitespace-nowrap border-l p-2 border-gray-200">
                                     {details.PaymentMethod}
                                   </td>
+                                  <td className="min-w-fit whitespace-nowrap border-l p-2 border-gray-200">
+                                    {getFormattedValueTotal(user, details.MonthlyBudget)}
+                                  </td>
+
                                   {monthHeaders?.map((index) => (
                                     <td
                                       key={index}

@@ -93,8 +93,8 @@ export const Checklist = () => {
       const savingData = getOwnerGridData(savings, owner);
       const updatedRetirements = retirements.filter(
         (retirement) =>
-          retirement.Description !== 'Retirement (401k, Roth 401K, 403b) Payroll Deductions' &&
-          retirement.Description !== '401k, Roth 401K, 403b) Prior Job',
+          retirement.Description !== 'Retirement (401k, Roth 401k, 403b) Payroll Deductions' &&
+          retirement.Description !== 'Retirement (401k, Roth 401k, 403b) Prior Job',
       );
       const retirementData = getOwnerGridData(updatedRetirements, owner);
       const expenseData = getOwnerExpenseGridData(expenses, owner);
@@ -284,7 +284,7 @@ export const Checklist = () => {
 
               <div className="w-full">
                 <h1 className="font-medium text-left">
-                  Account Owner: <span className="italic font-bold"> {owner}</span>
+                  Account Owner: <span className="italic font-bold"> {owner === '0' ? 'Household' : owner}</span>
                 </h1>
               </div>
             </div>
