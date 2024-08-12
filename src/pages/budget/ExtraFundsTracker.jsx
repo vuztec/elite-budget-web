@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { MdFilterAlt, MdFilterAltOff } from "react-icons/md";
-import Button from "../../components/Button";
-import { IoMdAdd } from "react-icons/io";
-import Loading from "../../components/Loader";
-import { useQuery } from "react-query";
-import clsx from "clsx";
-import Select from "../../components/Select";
-import { getActiveAccount } from "../../utils/permissions";
-import Package from "../../package/Package";
+import React, { useEffect, useState } from 'react';
+import { MdFilterAlt, MdFilterAltOff } from 'react-icons/md';
+import Button from '../../components/Button';
+import { IoMdAdd } from 'react-icons/io';
+import Loading from '../../components/Loader';
+import { useQuery } from 'react-query';
+import clsx from 'clsx';
+import Select from '../../components/Select';
+import { getActiveAccount } from '../../utils/permissions';
+import Package from '../../package/Package';
 import {
   getDebts,
   getExcessBalance,
@@ -16,18 +16,14 @@ import {
   getIncomes,
   getRetirements,
   getSavings,
-} from "../../config/api";
-import {
-  calculateBalances,
-  getOwnerExpenseGridData,
-  getOwnerGridData,
-  incomeOwners,
-} from "../../utils/budget.filter";
-import { ExtraFundListView } from "../../components/budget/ExtraFundListView";
-import AddExtraFund from "../../components/budget/AddExtraFund";
-import { defaultFundSort } from "../../utils/budget.sort";
-import useUserStore from "../../app/user";
-import { getJointContribution } from "../../utils/budget.calculation";
+} from '../../config/api';
+import { calculateBalances, getOwnerExpenseGridData, getOwnerGridData, incomeOwners } from '../../utils/budget.filter';
+import { ExtraFundListView } from '../../components/budget/ExtraFundListView';
+import AddExtraFund from '../../components/budget/AddExtraFund';
+import { defaultFundSort } from '../../utils/budget.sort';
+import useUserStore from '../../app/user';
+import { getJointContribution } from '../../utils/budget.calculation';
+import { BiArrowToTop } from 'react-icons/bi';
 
 export const ExtraFundsTracker = () => {
   const { user } = useUserStore();
@@ -44,46 +40,46 @@ export const ExtraFundsTracker = () => {
   const activeAccount = getActiveAccount(user);
 
   // Filters
-  const [owner, setOwner] = useState("Household");
+  const [owner, setOwner] = useState('Household');
 
   const { data: extrafunds, status: isFundLoaded } = useQuery({
-    queryKey: ["extrafunds"],
+    queryKey: ['extrafunds'],
     queryFn: getExtraFundsTrackers,
     staleTime: 1000 * 60 * 60,
   });
 
   const { data: debts, status: isDebtLoaded } = useQuery({
-    queryKey: ["debts"],
+    queryKey: ['debts'],
     queryFn: getDebts,
     staleTime: 1000 * 60 * 60,
   });
 
   const { data: expenses, status: isExpenseLoaded } = useQuery({
-    queryKey: ["expenses"],
+    queryKey: ['expenses'],
     queryFn: getExpenses,
     staleTime: 1000 * 60 * 60,
   });
 
   const { data: incomes, status: isIncomeLoaded } = useQuery({
-    queryKey: ["incomes"],
+    queryKey: ['incomes'],
     queryFn: getIncomes,
     staleTime: 1000 * 60 * 60,
   });
 
   const { data: savings, status: isSavingLoaded } = useQuery({
-    queryKey: ["savings"],
+    queryKey: ['savings'],
     queryFn: getSavings,
     staleTime: 1000 * 60 * 60,
   });
 
   const { data: retirements, status: isRetLoaded } = useQuery({
-    queryKey: ["retirements"],
+    queryKey: ['retirements'],
     queryFn: getRetirements,
     staleTime: 1000 * 60 * 60,
   });
 
   const { data: excessBal } = useQuery({
-    queryKey: ["excessbalance"],
+    queryKey: ['excessbalance'],
     queryFn: getExcessBalance,
     staleTime: 1000 * 60 * 60,
   });
@@ -98,12 +94,12 @@ export const ExtraFundsTracker = () => {
 
   useEffect(() => {
     if (
-      isSavingLoaded === "success" &&
-      isRetLoaded === "success" &&
-      isExpenseLoaded === "success" &&
-      isDebtLoaded === "success" &&
-      isIncomeLoaded === "success" &&
-      isFundLoaded === "success"
+      isSavingLoaded === 'success' &&
+      isRetLoaded === 'success' &&
+      isExpenseLoaded === 'success' &&
+      isDebtLoaded === 'success' &&
+      isIncomeLoaded === 'success' &&
+      isFundLoaded === 'success'
     ) {
       const transData = getOwnerGridData(extrafunds, owner);
 
@@ -130,9 +126,9 @@ export const ExtraFundsTracker = () => {
       const incomeData = getOwnerGridData(incomes, owner);
       setIncomeGridData(incomeData);
 
-      const selfAmount = getJointContribution(expenses, "Self");
+      const selfAmount = getJointContribution(expenses, 'Self');
       setSelfContribution(selfAmount);
-      const partnerAmount = getJointContribution(expenses, "Partner");
+      const partnerAmount = getJointContribution(expenses, 'Partner');
       setPartnerContribution(partnerAmount);
 
       setIsDataLoaded(true);
@@ -167,53 +163,65 @@ export const ExtraFundsTracker = () => {
 
   const [isShowing, setIsShowing] = useState(true);
 
+  const scrollToTop = () => {
+    const scrollableDiv = document.querySelector('.flex-1.overflow-auto');
+    if (scrollableDiv) {
+      scrollableDiv.scrollTo({
+        top: 0,
+        behavior: 'smooth', // Optional for smooth scrolling
+      });
+    } else {
+      // Fallback to window scroll (in case your layout changes)
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+    }
+  };
+
   return activeAccount ? (
     <>
-      <div className="w-full gap-4 h-10 md:h-12 px-2 rounded-full bg-white flex items-center justify-between">
-        <div className="text-sm">
-          <Button
-            label="Add New"
-            icon={<IoMdAdd className="text-lg" />}
-            className={clsx(
-              "flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:bg-viewcolor",
-              `bg-black hover:text-black`
-            )}
-            onClick={() => addNewClick()}
-          />
+      <div className="fixed bg-white w-[calc(100vw-40px)] lg:w-[calc(100vw-270px)] -mt-4 rounded px-4 z-10">
+        <div className="w-full gap-4 h-10 md:h-12 px-2 rounded-full bg-white flex items-center justify-between">
+          <div className="text-sm">
+            <Button
+              label="Add New"
+              icon={<IoMdAdd className="text-lg" />}
+              className={clsx(
+                'flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:bg-viewcolor',
+                `bg-black hover:text-black`,
+              )}
+              onClick={() => addNewClick()}
+            />
+          </div>
+          <div className="text-sm">
+            <Button
+              label={!isShowing ? 'Show Filters' : 'Hide Filters'}
+              icon={!isShowing ? <MdFilterAlt className="text-lg" /> : <MdFilterAltOff className="text-lg" />}
+              className={clsx(
+                'flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:text-black hover:bg-viewcolor',
+                !isShowing ? 'bg-green-800' : 'bg-red-800',
+              )}
+              onClick={() => setIsShowing((old) => !old)}
+            />
+          </div>
         </div>
-        <div className="text-sm">
-          <Button
-            label={!isShowing ? "Show Filters" : "Hide Filters"}
-            icon={
-              !isShowing ? (
-                <MdFilterAlt className="text-lg" />
-              ) : (
-                <MdFilterAltOff className="text-lg" />
-              )
-            }
-            className={clsx(
-              "flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:text-black hover:bg-viewcolor",
-              !isShowing ? "bg-green-800" : "bg-red-800"
-            )}
-            onClick={() => setIsShowing((old) => !old)}
-          />
-        </div>
-      </div>
-      <div
-        className={clsx(
-          "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3 pb-5",
-          isShowing ? "block" : "hidden"
-        )}
-      >
-        <div className="w-full">
-          <Select
-            onChange={handleOwnerChange}
-            value={owner}
-            options={owners}
-            placeholder="Household"
-            label="Account Owner"
-            className="bg-white w-full py-1"
-          />
+        <div
+          className={clsx(
+            'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3 pb-5',
+            isShowing ? 'block' : 'hidden',
+          )}
+        >
+          <div className="w-full">
+            <Select
+              onChange={handleOwnerChange}
+              value={owner}
+              options={owners}
+              placeholder="Household"
+              label="Account Owner"
+              className="bg-white w-full py-1"
+            />
+          </div>
         </div>
       </div>
 
@@ -224,7 +232,7 @@ export const ExtraFundsTracker = () => {
       )}
 
       {isDataLoaded && (
-        <div className="w-full">
+        <div className="w-full mt-40">
           <div className="w-full">
             <ExtraFundListView
               gridData={gridData}
@@ -240,9 +248,14 @@ export const ExtraFundsTracker = () => {
             />
           </div>
 
-          <AddExtraFund open={open} setOpen={setOpen} recordData={""} />
+          <AddExtraFund open={open} setOpen={setOpen} recordData={''} />
         </div>
       )}
+      <div className="fixed bottom-4 right-4">
+        <button className="text-black font-bold p-4 bg-gray-300 rounded-full shadow-lg" onClick={scrollToTop}>
+          <BiArrowToTop className="h-6 w-6" />
+        </button>
+      </div>
     </>
   ) : (
     <Package />

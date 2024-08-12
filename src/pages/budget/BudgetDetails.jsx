@@ -31,6 +31,7 @@ import { getJointContribution } from '../../utils/budget.calculation';
 import useUserStore from '../../app/user';
 import { SidebarLinks } from '../../utils/sidebar.data';
 import { useLocation } from 'react-router-dom';
+import { BiArrowToTop } from 'react-icons/bi';
 
 export const BudgetDetails = () => {
   const { user } = useUserStore();
@@ -188,48 +189,66 @@ export const BudgetDetails = () => {
     }, 10);
   };
 
+  const scrollToTop = () => {
+    const scrollableDiv = document.querySelector('.flex-1.overflow-auto');
+    if (scrollableDiv) {
+      scrollableDiv.scrollTo({
+        top: 0,
+        behavior: 'smooth', // Optional for smooth scrolling
+      });
+    } else {
+      // Fallback to window scroll (in case your layout changes)
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+    }
+  };
+
   return activeAccount ? (
     <>
-      <div className="w-full flex item-center justify-end">
-        <div className="w-fit gap-4 h-10 md:h-12 px-2 rounded-full bg-white flex items-center">
-          <div className="flex items-center gap-2">
-            <div className="text-sm">
+      <div className="fixed bg-white w-[calc(100vw-40px)] lg:w-[calc(100vw-270px)] -mt-4 rounded px-4 z-10">
+        <div className="w-full flex item-center justify-end">
+          <div className="w-fit gap-4 h-10 md:h-12 px-2 rounded-full bg-white flex items-center">
+            <div className="flex items-center gap-2">
+              <div className="text-sm">
+                <Button
+                  label={!isShowing ? 'Show Filters' : 'Hide Filters'}
+                  icon={!isShowing ? <MdFilterAlt className="text-lg" /> : <MdFilterAltOff className="text-lg" />}
+                  className={clsx(
+                    'flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:text-black',
+                    !isShowing ? 'bg-green-800' : 'bg-red-800',
+                  )}
+                  onClick={() => setIsShowing((old) => !old)}
+                />
+              </div>
               <Button
-                label={!isShowing ? 'Show Filters' : 'Hide Filters'}
-                icon={!isShowing ? <MdFilterAlt className="text-lg" /> : <MdFilterAltOff className="text-lg" />}
-                className={clsx(
-                  'flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:text-black',
-                  !isShowing ? 'bg-green-800' : 'bg-red-800',
-                )}
-                onClick={() => setIsShowing((old) => !old)}
+                onClick={handlePdf}
+                icon={<PiPrinter />}
+                label={'Print'}
+                className={
+                  'flex flex-row-reverse justify-center items-center bg-black text-white text-lg gap-2 hover:bg-[whitesmoke] hover:text-black'
+                }
               />
             </div>
-            <Button
-              onClick={handlePdf}
-              icon={<PiPrinter />}
-              label={'Print'}
-              className={
-                'flex flex-row-reverse justify-center items-center bg-black text-white text-lg gap-2 hover:bg-[whitesmoke] hover:text-black'
-              }
-            />
           </div>
         </div>
-      </div>
-      <div
-        className={clsx(
-          'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3 pb-5',
-          isShowing ? 'block' : 'hidden',
-        )}
-      >
-        <div className="w-full">
-          <Select
-            onChange={handleOwnerChange}
-            value={owner}
-            options={owners}
-            placeholder="Household"
-            label="Account Owner"
-            className="bg-white w-full py-1 lg:text-base"
-          />
+        <div
+          className={clsx(
+            'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3 pb-5',
+            isShowing ? 'block' : 'hidden',
+          )}
+        >
+          <div className="w-full">
+            <Select
+              onChange={handleOwnerChange}
+              value={owner}
+              options={owners}
+              placeholder="Household"
+              label="Account Owner"
+              className="bg-white w-full py-1 lg:text-base"
+            />
+          </div>
         </div>
       </div>
 
@@ -239,7 +258,7 @@ export const BudgetDetails = () => {
         </div>
       )}
       {isDataLoaded && (
-        <div className="w-full flex flex-col items-center gap-5 xl:gap-10 bg-white p-5 mt-4" ref={targetRef}>
+        <div className="w-full flex flex-col items-center gap-5 xl:gap-10 bg-white p-5 mt-40" ref={targetRef}>
           {showPdfContent && (
             <div className="w-full">
               <div className="w-full flex justify-center items-center py-2 px-3 gap-2 rounded-full">
@@ -331,6 +350,11 @@ export const BudgetDetails = () => {
           </div>
         </div>
       )}
+      <div className="fixed bottom-4 right-4">
+        <button className="text-black font-bold p-4 bg-gray-300 rounded-full shadow-lg" onClick={scrollToTop}>
+          <BiArrowToTop className="h-6 w-6" />
+        </button>
+      </div>
     </>
   ) : (
     <Package />

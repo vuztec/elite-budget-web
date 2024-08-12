@@ -1,17 +1,12 @@
-import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useRef } from "react";
+import { Dialog, Transition } from '@headlessui/react';
+import { Fragment, useRef } from 'react';
 
 const ModalWrapper = ({ open, setOpen, children }) => {
   const cancelButtonRef = useRef(null);
 
   return (
     <Transition.Root show={open} as={Fragment}>
-      <Dialog
-        as="div"
-        className="relative z-10 w-full"
-        initialFocus={cancelButtonRef}
-        onClose={() => setOpen(false)}
-      >
+      <Dialog as="div" className="relative z-50 w-full" initialFocus={cancelButtonRef} onClose={() => setOpen(false)}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -38,9 +33,7 @@ const ModalWrapper = ({ open, setOpen, children }) => {
               <Dialog.Panel className="w-full h-fit max-h-[90%] sm:h-fit overflow-y-scroll relative transform overflow-hidden rounded-xl bg-white text-left shadow-xl transition-all pb-0 sm:my-8 sm:w-[69%] max-w-[99%] lg:max-w-[50%] xl:max-w-[35%] 2xl:max-w-[25%]">
                 <div className="bg-white px-2 pb-4 pt-5 sm:p-6 sm:pb-4">
                   <div className="sm:flex sm:items-start">
-                    <div className="w-full mt-3  sm:ml-4 sm:mt-0 sm:text-left">
-                      {children}
-                    </div>
+                    <div className="w-full mt-3  sm:ml-4 sm:mt-0 sm:text-left">{children}</div>
                   </div>
                 </div>
               </Dialog.Panel>

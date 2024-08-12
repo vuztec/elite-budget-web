@@ -51,7 +51,7 @@ export const defaultDebSort = (data) => {
   return data.sort((a, b) => {
     // Determine the display names for both records
     const aDisplayName = a.NickName || a.Description;
-    const bDisplayName = b.NickName || b.Description;
+    const bDisplayName = b.NickName || a.Description;
 
     // If either Description is 'Enter', push it to the end
     if (a.Description === 'Enter' && b.Description !== 'Enter') {
@@ -59,6 +59,11 @@ export const defaultDebSort = (data) => {
     }
     if (b.Description === 'Enter' && a.Description !== 'Enter') {
       return -1;
+    }
+
+    // If both Descriptions are 'Enter', sort by NickName in ascending order
+    if (a.Description === 'Enter' && b.Description === 'Enter') {
+      return a.NickName.localeCompare(b.NickName);
     }
 
     // Sort by Owner in descending order
