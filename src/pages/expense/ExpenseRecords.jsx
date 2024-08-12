@@ -15,6 +15,7 @@ import { ExpenseListView } from '../../components/expense/ExpenseListView';
 import { ExpenseSummary } from '../../components/expense/ExpenseSummary';
 import { hasRecords } from '../../utils/budget.calculation';
 import useUserStore from '../../app/user';
+import { BiArrowToTop } from 'react-icons/bi';
 
 export const ExpenseRecords = () => {
   const { user } = useUserStore();
@@ -33,7 +34,6 @@ export const ExpenseRecords = () => {
     staleTime: 1000 * 60 * 60,
   });
 
-  console.log(expenses, 'expenses');
   ///-------------Filters Data Source --------------------------------///
   const owners = expenseOwners.map((owner) => ({
     value: owner,
@@ -84,58 +84,76 @@ export const ExpenseRecords = () => {
 
   const [isShowing, setIsShowing] = useState(true);
 
+  const scrollToTop = () => {
+    const scrollableDiv = document.querySelector('.flex-1.overflow-auto');
+    if (scrollableDiv) {
+      scrollableDiv.scrollTo({
+        top: 0,
+        behavior: 'smooth', // Optional for smooth scrolling
+      });
+    } else {
+      // Fallback to window scroll (in case your layout changes)
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+    }
+  };
+
   return activeAccount ? (
     <>
-      <div className="w-full gap-4 h-10 md:h-12 px-2 rounded-full bg-white flex items-center justify-between">
-        <div className="text-sm">
-          <Button
-            label={!showAll ? 'Add New' : 'Cancel Add'}
-            icon={!showAll ? <IoMdAdd className="text-lg" /> : <HiMinusSm className="text-lg" />}
-            className={clsx(
-              'flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:bg-viewcolor bg-black hover:text-black',
-              !showAll ? 'bg-black' : 'bg-red-800',
-            )}
-            onClick={() => setShowAll((old) => !old)}
-          />
+      <div className="fixed bg-white w-[calc(100vw-280px)] rounded px-4">
+        <div className="w-full gap-4 h-10 md:h-12 px-2 rounded-full bg-white flex items-center justify-between">
+          <div className="text-sm">
+            <Button
+              label={!showAll ? 'Add New' : 'Cancel Add'}
+              icon={!showAll ? <IoMdAdd className="text-lg" /> : <HiMinusSm className="text-lg" />}
+              className={clsx(
+                'flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:bg-viewcolor bg-black hover:text-black',
+                !showAll ? 'bg-black' : 'bg-red-800',
+              )}
+              onClick={() => setShowAll((old) => !old)}
+            />
+          </div>
+          <div className="text-sm">
+            <Button
+              label={!isShowing ? 'Show Filters' : 'Hide Filters'}
+              icon={!isShowing ? <MdFilterAlt className="text-lg" /> : <MdFilterAltOff className="text-lg" />}
+              className={clsx(
+                'flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:text-black hover:bg-viewcolor',
+                !isShowing ? 'bg-green-800' : 'bg-red-800',
+              )}
+              onClick={() => setIsShowing((old) => !old)}
+            />
+          </div>
         </div>
-        <div className="text-sm">
-          <Button
-            label={!isShowing ? 'Show Filters' : 'Hide Filters'}
-            icon={!isShowing ? <MdFilterAlt className="text-lg" /> : <MdFilterAltOff className="text-lg" />}
-            className={clsx(
-              'flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:text-black hover:bg-viewcolor',
-              !isShowing ? 'bg-green-800' : 'bg-red-800',
-            )}
-            onClick={() => setIsShowing((old) => !old)}
-          />
-        </div>
-      </div>
-      <div
-        className={clsx(
-          'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3 pb-5',
-          isShowing ? 'block' : 'hidden',
-        )}
-      >
-        <div className="w-full">
-          <Select
-            onChange={handleOwnerChange}
-            value={owner}
-            options={owners}
-            placeholder="Household"
-            label="Account Owner"
-            className="bg-white w-full py-1"
-          />
-        </div>
+        <div
+          className={clsx(
+            'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3 pb-5',
+            isShowing ? 'block' : 'hidden',
+          )}
+        >
+          <div className="w-full">
+            <Select
+              onChange={handleOwnerChange}
+              value={owner}
+              options={owners}
+              placeholder="Household"
+              label="Account Owner"
+              className="bg-white w-full py-1"
+            />
+          </div>
 
-        <div className="w-full">
-          <Select
-            onChange={handleCatChange}
-            value={catFilter}
-            options={categories}
-            placeholder="All"
-            label="Category"
-            className="bg-white w-full py-1"
-          />
+          <div className="w-full">
+            <Select
+              onChange={handleCatChange}
+              value={catFilter}
+              options={categories}
+              placeholder="All"
+              label="Category"
+              className="bg-white w-full py-1"
+            />
+          </div>
         </div>
       </div>
 
@@ -146,7 +164,7 @@ export const ExpenseRecords = () => {
       )}
 
       {isDataLoaded && (
-        <div className="w-full">
+        <div className="w-full mt-40">
           <div className="w-full">
             <ExpenseListView
               Data={gridData.filter((item) => item.Category === 'Alimony')}
@@ -304,6 +322,12 @@ export const ExpenseRecords = () => {
           </div>
         </div>
       )}
+
+      <div className="fixed bottom-4 right-4">
+        <button className="text-black font-bold p-4 bg-gray-300 rounded-full shadow-lg" onClick={scrollToTop}>
+          <BiArrowToTop className="h-6 w-6" />
+        </button>
+      </div>
     </>
   ) : (
     <Package />
