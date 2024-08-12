@@ -15,7 +15,6 @@ import { RetirementListView } from '../../components/retirement/RetirementListVi
 import { hasRecords } from '../../utils/budget.calculation';
 import { defaultDebSort } from '../../utils/budget.sort';
 import useUserStore from '../../app/user';
-import { BiArrowToTop } from 'react-icons/bi';
 
 export const Retirement = () => {
   const { user } = useUserStore();
@@ -67,22 +66,6 @@ export const Retirement = () => {
   };
 
   const [isShowing, setIsShowing] = useState(true);
-
-  const scrollToTop = () => {
-    const scrollableDiv = document.querySelector('.flex-1.overflow-auto');
-    if (scrollableDiv) {
-      scrollableDiv.scrollTo({
-        top: 0,
-        behavior: 'smooth', // Optional for smooth scrolling
-      });
-    } else {
-      // Fallback to window scroll (in case your layout changes)
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth',
-      });
-    }
-  };
 
   return activeAccount ? (
     <>
@@ -143,11 +126,6 @@ export const Retirement = () => {
           </div>
         </div>
       )}
-      <div className="fixed bottom-4 right-4">
-        <button className="text-black font-bold p-4 bg-gray-300 rounded-full shadow-lg" onClick={scrollToTop}>
-          <BiArrowToTop className="h-6 w-6" />
-        </button>
-      </div>
     </>
   ) : (
     <Package />

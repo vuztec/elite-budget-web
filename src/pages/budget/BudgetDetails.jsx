@@ -31,7 +31,6 @@ import { getJointContribution } from '../../utils/budget.calculation';
 import useUserStore from '../../app/user';
 import { SidebarLinks } from '../../utils/sidebar.data';
 import { useLocation } from 'react-router-dom';
-import { BiArrowToTop } from 'react-icons/bi';
 
 export const BudgetDetails = () => {
   const { user } = useUserStore();
@@ -193,22 +192,6 @@ export const BudgetDetails = () => {
     }, 10);
   };
 
-  const scrollToTop = () => {
-    const scrollableDiv = document.querySelector('.flex-1.overflow-auto');
-    if (scrollableDiv) {
-      scrollableDiv.scrollTo({
-        top: 0,
-        behavior: 'smooth', // Optional for smooth scrolling
-      });
-    } else {
-      // Fallback to window scroll (in case your layout changes)
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth',
-      });
-    }
-  };
-
   return activeAccount ? (
     <>
       <div className="fixed bg-white w-[calc(100vw-40px)] lg:w-[calc(100vw-270px)] -mt-4 rounded px-4 z-10">
@@ -354,11 +337,6 @@ export const BudgetDetails = () => {
           </div>
         </div>
       )}
-      <div className="fixed bottom-4 right-4">
-        <button className="text-black font-bold p-4 bg-gray-300 rounded-full shadow-lg" onClick={scrollToTop}>
-          <BiArrowToTop className="h-6 w-6" />
-        </button>
-      </div>
     </>
   ) : (
     <Package />
