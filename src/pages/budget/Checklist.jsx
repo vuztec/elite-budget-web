@@ -178,7 +178,7 @@ export const Checklist = () => {
   return activeAccount ? (
     <>
       <div
-        className="fixed bg-white w-[calc(100vw-40px)] lg:w-[calc(100vw-270px)] -mt-4 rounded px-4 z-10"
+        className="fixed bg-white w-[calc(100vw-40px)] lg:w-[calc(100vw-270px)] -mt-4 rounded px-4 z-9"
         onClick={() => setIsDropdownOpen(false)}
       >
         <div className="w-full flex item-center justify-end">

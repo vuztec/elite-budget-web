@@ -11,6 +11,12 @@ const customIncomeList = [
 
 export const defaultIncomeSort = (data) => {
   return data.sort((a, b) => {
+    if (a.Owner === null && b.Owner !== null) return 1;
+    if (b.Owner === null && a.Owner !== null) return -1;
+
+    // If both Owners are null, treat them as equal
+    if (a.Owner === null && b.Owner === null) return 0;
+
     if (a.Owner < b.Owner) return 1;
     if (a.Owner > b.Owner) return -1;
     // If Owner is the same, sort by IncomeSource using customList

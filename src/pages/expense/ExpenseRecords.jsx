@@ -85,7 +85,7 @@ export const ExpenseRecords = () => {
 
   return activeAccount ? (
     <>
-      <div className="fixed bg-white w-[calc(100vw-40px)] lg:w-[calc(100vw-270px)] -mt-4 rounded px-4 z-10">
+      <div className="fixed bg-white w-[calc(100vw-40px)] lg:w-[calc(100vw-270px)] -mt-4 rounded px-4 z-9">
         <div className="w-full gap-4 h-10 md:h-12 px-2 rounded-full bg-white flex items-center justify-between">
           <div className="text-sm">
             <Button

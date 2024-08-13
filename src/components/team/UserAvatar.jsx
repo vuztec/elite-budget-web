@@ -1,13 +1,13 @@
-import { Menu, Transition } from "@headlessui/react";
-import { Fragment, useState } from "react";
-import { FaUser, FaUserLock } from "react-icons/fa";
-import { IoLogOutOutline } from "react-icons/io5";
-import { useNavigate } from "react-router-dom";
-import { getInitials } from "../../utils";
-import useUserStore from "../../app/user";
-import AddRootUser from "./AddRootUser";
-import { ChangePassword } from "../team";
-import { useQueryClient } from "react-query";
+import { Menu, Transition } from '@headlessui/react';
+import { Fragment, useState } from 'react';
+import { FaUser, FaUserLock } from 'react-icons/fa';
+import { IoLogOutOutline } from 'react-icons/io5';
+import { useNavigate } from 'react-router-dom';
+import { getInitials } from '../../utils';
+import useUserStore from '../../app/user';
+import AddRootUser from './AddRootUser';
+import { ChangePassword } from '../team';
+import { useQueryClient } from 'react-query';
 
 export const UserAvatar = () => {
   const [open, setOpen] = useState(false);
@@ -21,7 +21,7 @@ export const UserAvatar = () => {
     setUser(null, null);
     setJwt(null);
     queryClient.clear();
-    navigate("/login");
+    navigate('/login');
   };
 
   const editClick = (el) => {
@@ -31,7 +31,7 @@ export const UserAvatar = () => {
   };
 
   const editPasswordClick = (el) => {
-    console.log("User:", el);
+    console.log('User:', el);
     setSelected(el);
     setOpenPassword(true);
   };
@@ -104,7 +104,13 @@ export const UserAvatar = () => {
         recordData={selected}
         key={`CP${new Date().getTime().toString()}`}
       />
-      <AddRootUser setUser={setUser} open={open} setOpen={setOpen} recordData={selected} key={`UP${new Date().getTime().toString()}`} />
+      <AddRootUser
+        setUser={setUser}
+        open={open}
+        setOpen={setOpen}
+        recordData={selected}
+        key={`UP${new Date().getTime().toString()}`}
+      />
     </>
   );
 };
