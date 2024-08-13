@@ -339,7 +339,7 @@ export const TransactionListView = ({ Data, bankName }) => {
 
   return (
     <>
-      {gridData?.length > 0 && (
+      {gridData?.length > -1 && (
         <div className="w-full h-fit bg-white py-6 mt-4 shadow-md rounded">
           <div className="flex flex-col gap-5 w-full items-end">
             <div className="w-full overflow-x-auto">

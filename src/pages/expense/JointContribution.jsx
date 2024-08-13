@@ -242,7 +242,7 @@ export const JointContribution = () => {
                     </tr>
 
                     <tr className="border border-gray-300 bg-[whitesmoke]">
-                      <td className="min-w-fit whitespace-nowrap p-2">Joint Expenses not Covered by Joint Income</td>
+                      <td className="min-w-fit whitespace-nowrap p-2">Joint Expenses Less Joint Income</td>
                       <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">
                         <span>
                           {getFormattedValueTotal(user, getExtraJointExpense(totalJointExpense, jointIncome))}
