@@ -240,7 +240,7 @@ export const BudgetDetails = () => {
       </div>
 
       {!isDataLoaded && (
-        <div className="py-10">
+        <div className="py-10 mt-40">
           <Loading />
         </div>
       )}

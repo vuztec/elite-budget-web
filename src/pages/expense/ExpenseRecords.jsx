@@ -58,6 +58,12 @@ export const ExpenseRecords = () => {
       // Sort the data by Owner property
       const sortedData = updatedData.sort((a, b) => {
         if (a.Category === b.Category) {
+          if (a.Owner === null && b.Owner !== null) return 1;
+          if (b.Owner === null && a.Owner !== null) return -1;
+
+          // If both Owners are null, treat them as equal
+          if (a.Owner === null && b.Owner === null) return 0;
+
           return a.Owner < b.Owner ? 1 : -1; // Descending order for Owner
         }
         return a.Category > b.Category ? 1 : -1; // Ascending order for Category
@@ -141,7 +147,7 @@ export const ExpenseRecords = () => {
       </div>
 
       {!isDataLoaded && (
-        <div className="py-10">
+        <div className="py-10 mt-40">
           <Loading />
         </div>
       )}

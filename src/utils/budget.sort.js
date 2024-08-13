@@ -28,6 +28,12 @@ export const defaultIncomeSort = (data) => {
 
 export const defaultTransactionSort = (data) => {
   return data.sort((a, b) => {
+    if (a.Owner === null && b.Owner !== null) return 1;
+    if (b.Owner === null && a.Owner !== null) return -1;
+
+    // If both Owners are null, treat them as equal
+    if (a.Owner === null && b.Owner === null) return 0;
+
     if (a.Owner === b.Owner) {
       return a.Description.localeCompare(b.Description); // Ascending order for Description
     }
@@ -37,6 +43,12 @@ export const defaultTransactionSort = (data) => {
 
 export const defaultBankSort = (data) => {
   return data.sort((a, b) => {
+    if (a.Owner === null && b.Owner !== null) return 1;
+    if (b.Owner === null && a.Owner !== null) return -1;
+
+    // If both Owners are null, treat them as equal
+    if (a.Owner === null && b.Owner === null) return 0;
+
     if (a.Owner === b.Owner) {
       return a.Name < b.Name ? 1 : -1; // Descending order for Owner
     }
@@ -46,6 +58,12 @@ export const defaultBankSort = (data) => {
 
 export const defaultFundSort = (data) => {
   return data.sort((a, b) => {
+    if (a.Owner === null && b.Owner !== null) return 1;
+    if (b.Owner === null && a.Owner !== null) return -1;
+
+    // If both Owners are null, treat them as equal
+    if (a.Owner === null && b.Owner === null) return 0;
+
     if (a.Owner === b.Owner) {
       return a.Description < b.Description ? 1 : -1; // Descending order for Owner
     }
@@ -55,6 +73,12 @@ export const defaultFundSort = (data) => {
 
 export const defaultDebSort = (data) => {
   return data.sort((a, b) => {
+    if (a.Owner === null && b.Owner !== null) return 1;
+    if (b.Owner === null && a.Owner !== null) return -1;
+
+    // If both Owners are null, treat them as equal
+    if (a.Owner === null && b.Owner === null) return 0;
+
     // Determine the display names for both records
     const aDisplayName = a.NickName || a.Description;
     const bDisplayName = b.NickName || a.Description;
