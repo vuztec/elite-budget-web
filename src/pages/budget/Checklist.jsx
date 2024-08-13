@@ -27,7 +27,6 @@ import { useLocation } from 'react-router-dom';
 import { SidebarLinks } from '../../utils/sidebar.data';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import { CheckListPDF } from '../../components/checklist/CheckListPDF';
-import { BiArrowToTop } from 'react-icons/bi';
 
 export const Checklist = () => {
   const { user } = useUserStore();
@@ -176,22 +175,6 @@ export const Checklist = () => {
 
   const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
 
-  const scrollToTop = () => {
-    const scrollableDiv = document.querySelector('.flex-1.overflow-auto');
-    if (scrollableDiv) {
-      scrollableDiv.scrollTo({
-        top: 0,
-        behavior: 'smooth', // Optional for smooth scrolling
-      });
-    } else {
-      // Fallback to window scroll (in case your layout changes)
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth',
-      });
-    }
-  };
-
   return activeAccount ? (
     <>
       <div
@@ -297,11 +280,6 @@ export const Checklist = () => {
           />
         </div>
       )}
-      <div className="fixed bottom-4 right-4">
-        <button className="text-black font-bold p-4 bg-gray-300 rounded-full shadow-lg" onClick={scrollToTop}>
-          <BiArrowToTop className="h-6 w-6" />
-        </button>
-      </div>
     </>
   ) : (
     <Package />

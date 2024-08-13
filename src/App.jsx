@@ -27,12 +27,29 @@ import { ToastContainer } from 'react-toastify';
 import ForgetPassword from './pages/forgetpassword';
 import VerifyOtp from './pages/verifyotp';
 import UpdatePassword from './pages/updatepassword';
+import { BiArrowToTop } from 'react-icons/bi';
 
 function Layout() {
   //const user = false;
   const { sidebar, user, setSidebar } = useUserStore();
 
   const location = useLocation();
+
+  const scrollToTop = () => {
+    const scrollableDiv = document.querySelector('.flex-1.overflow-auto');
+    if (scrollableDiv) {
+      scrollableDiv.scrollTo({
+        top: 0,
+        behavior: 'smooth', // Optional for smooth scrolling
+      });
+    } else {
+      // Fallback to window scroll (in case your layout changes)
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+    }
+  };
 
   return user ? (
     <div className="w-full h-screen flex">
@@ -49,6 +66,11 @@ function Layout() {
         <Navbar />
         <div className="p-4 2xl:px-10">
           <Outlet />
+          <div className="fixed bottom-4 right-4">
+            <button className="text-black font-bold p-4 bg-gray-300 rounded-full shadow-lg" onClick={scrollToTop}>
+              <BiArrowToTop className="h-6 w-6" />
+            </button>
+          </div>
         </div>
       </div>
     </div>

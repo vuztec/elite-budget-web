@@ -23,7 +23,6 @@ import AddExtraFund from '../../components/budget/AddExtraFund';
 import { defaultFundSort } from '../../utils/budget.sort';
 import useUserStore from '../../app/user';
 import { getJointContribution } from '../../utils/budget.calculation';
-import { BiArrowToTop } from 'react-icons/bi';
 
 export const ExtraFundsTracker = () => {
   const { user } = useUserStore();
@@ -163,22 +162,6 @@ export const ExtraFundsTracker = () => {
 
   const [isShowing, setIsShowing] = useState(true);
 
-  const scrollToTop = () => {
-    const scrollableDiv = document.querySelector('.flex-1.overflow-auto');
-    if (scrollableDiv) {
-      scrollableDiv.scrollTo({
-        top: 0,
-        behavior: 'smooth', // Optional for smooth scrolling
-      });
-    } else {
-      // Fallback to window scroll (in case your layout changes)
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth',
-      });
-    }
-  };
-
   return activeAccount ? (
     <>
       <div className="fixed bg-white w-[calc(100vw-40px)] lg:w-[calc(100vw-270px)] -mt-4 rounded px-4 z-10">
@@ -251,11 +234,6 @@ export const ExtraFundsTracker = () => {
           <AddExtraFund open={open} setOpen={setOpen} recordData={''} />
         </div>
       )}
-      <div className="fixed bottom-4 right-4">
-        <button className="text-black font-bold p-4 bg-gray-300 rounded-full shadow-lg" onClick={scrollToTop}>
-          <BiArrowToTop className="h-6 w-6" />
-        </button>
-      </div>
     </>
   ) : (
     <Package />

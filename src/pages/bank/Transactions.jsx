@@ -13,7 +13,6 @@ import { getBankGridData, incomeOwners } from '../../utils/budget.filter';
 import { TransactionListView } from '../../components/bank/TransactionListView';
 import AddTransaction from '../../components/bank/AddTransaction';
 import useUserStore from '../../app/user';
-import { BiArrowToTop } from 'react-icons/bi';
 
 export const Transactions = () => {
   const { user } = useUserStore();
@@ -101,22 +100,6 @@ export const Transactions = () => {
   };
 
   const [isShowing, setIsShowing] = useState(true);
-
-  const scrollToTop = () => {
-    const scrollableDiv = document.querySelector('.flex-1.overflow-auto');
-    if (scrollableDiv) {
-      scrollableDiv.scrollTo({
-        top: 0,
-        behavior: 'smooth', // Optional for smooth scrolling
-      });
-    } else {
-      // Fallback to window scroll (in case your layout changes)
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth',
-      });
-    }
-  };
 
   return activeAccount ? (
     <>
@@ -214,11 +197,6 @@ export const Transactions = () => {
           <AddTransaction open={open} setOpen={setOpen} recordData={''} key={new Date().getTime().toString()} />
         </div>
       )}
-      <div className="fixed bottom-4 right-4">
-        <button className="text-black font-bold p-4 bg-gray-300 rounded-full shadow-lg" onClick={scrollToTop}>
-          <BiArrowToTop className="h-6 w-6" />
-        </button>
-      </div>
     </>
   ) : (
     <Package />
