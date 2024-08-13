@@ -59,7 +59,7 @@ export const IncomeRecords = () => {
         updatedData = incomeData.filter((item) => item.GrossAmount > 0);
       }
 
-      if (!showAll && hasRecords(extrapaychecks)) {
+      if (!showAll2 && hasRecords(extrapaychecks)) {
         updatedExtraData = extrapaychecks.filter((item) => item.SelfAmount > 0 || item.PartnerAmount > 0);
       }
 
@@ -71,7 +71,7 @@ export const IncomeRecords = () => {
     } else {
       setIsDataLoaded(false);
     }
-  }, [incomes, extrapaychecks, isIncomeLoaded, isPayChecksLoaded, owner, showAll]);
+  }, [incomes, extrapaychecks, isIncomeLoaded, isPayChecksLoaded, owner, showAll, showAll2]);
 
   const handleOwnerChange = (e) => {
     if (e && e.target?.value) {
@@ -142,11 +142,11 @@ export const IncomeRecords = () => {
           <div className="w-full gap-4 h-10 md:h-12 px-2 bg-white flex items-center justify-between mt-5 -mb-7">
             <div className="text-sm">
               <Button
-                label={!showAll ? 'Add New' : 'Cancel Add'}
-                icon={!showAll ? <IoMdAdd className="text-lg" /> : <HiMinusSm className="text-lg" />}
+                label={!showAll2 ? 'Add New' : 'Cancel Add'}
+                icon={!showAll2 ? <IoMdAdd className="text-lg" /> : <HiMinusSm className="text-lg" />}
                 className={clsx(
                   'flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:bg-viewcolor bg-black hover:text-black',
-                  !showAll ? 'bg-black' : 'bg-red-800',
+                  !showAll2 ? 'bg-black' : 'bg-red-800',
                 )}
                 onClick={() => setShowAll2((old) => !old)}
               />
