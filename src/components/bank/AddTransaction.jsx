@@ -167,7 +167,7 @@ export const AddTransaction = ({ open, setOpen, recordData, banks }) => {
               />
               <Select
                 name="Taxable"
-                label="Taxable?"
+                label="Tax?"
                 defaultValue="No"
                 options={[
                   { value: false, label: 'No' },

@@ -162,6 +162,22 @@ export const TransactionListView = ({ Data, bankName, banks }) => {
 
         <th className="border-l border-gray-300 p-2">
           <div className="flex justify-between items-center gap-2">
+            Tax?
+            <Sort
+              tab={'transaction'}
+              order={order}
+              setOrder={setOrder}
+              column={7}
+              name={'IsCleared'}
+              data={gridData}
+              setData={setGridData}
+              defaultData={Data}
+            />
+          </div>
+        </th>
+
+        <th className="border-l border-gray-300 p-2">
+          <div className="flex justify-between items-center gap-2">
             <div className="flex flex-col">
               <span className="whitespace-nowrap text-left">Pmt, Fee,</span>
               <span className="whitespace-nowrap text-left">Withdrawal (-)</span>
@@ -220,22 +236,6 @@ export const TransactionListView = ({ Data, bankName, banks }) => {
 
         <th className="border-l border-gray-300 p-2">
           <div className="flex justify-between items-center gap-2">
-            Taxable?
-            <Sort
-              tab={'transaction'}
-              order={order}
-              setOrder={setOrder}
-              column={7}
-              name={'IsCleared'}
-              data={gridData}
-              setData={setGridData}
-              defaultData={Data}
-            />
-          </div>
-        </th>
-
-        <th className="border-l border-gray-300 p-2">
-          <div className="flex justify-between items-center gap-2">
             Balance
             {/* <Sort
               tab={"transaction"}
@@ -280,6 +280,18 @@ export const TransactionListView = ({ Data, bankName, banks }) => {
 
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
+          <p className="text-sm xl:text-lg cursor-pointer group" onClick={() => handleTaxableTransaction(record)}>
+            {record?.Taxable ? (
+              <IoMdRadioButtonOn className="text-red-500 group-hover:bg-red-200 p-1 h-6 w-6 rounded-full" />
+            ) : (
+              <IoMdRadioButtonOff className="text-gray-500 group-hover:bg-gray-200 p-1 h-6 w-6 rounded-full" />
+            )}
+          </p>
+        </div>
+      </td>
+
+      <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
+        <div className="flex flex-col items-start gap-1">
           <p className="text-black">{getFormattedValueType(user, record?.Amount, record?.Type, 'Withdrawal')}</p>
         </div>
       </td>
@@ -297,18 +309,6 @@ export const TransactionListView = ({ Data, bankName, banks }) => {
               <FiCheckSquare className="text-green-500 group-hover:bg-green-200 p-1 h-6 w-6 rounded-full" />
             ) : (
               <MdOutlineSquare className="text-red-500 group-hover:bg-red-200 p-1 h-6 w-6 rounded-full" />
-            )}
-          </p>
-        </div>
-      </td>
-
-      <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
-        <div className="flex flex-col items-start gap-1">
-          <p className="text-sm xl:text-lg cursor-pointer group" onClick={() => handleTaxableTransaction(record)}>
-            {record?.Taxable ? (
-              <IoMdRadioButtonOn className="text-red-500 group-hover:bg-red-200 p-1 h-6 w-6 rounded-full" />
-            ) : (
-              <IoMdRadioButtonOff className="text-gray-500 group-hover:bg-gray-200 p-1 h-6 w-6 rounded-full" />
             )}
           </p>
         </div>
@@ -348,6 +348,7 @@ export const TransactionListView = ({ Data, bankName, banks }) => {
 
       <td className="min-w-fit whitespace-nowrap p-3 border-gray-200"></td>
 
+      <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200"></td>
       <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200">TOTAL</td>
 
       <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200">
@@ -362,7 +363,6 @@ export const TransactionListView = ({ Data, bankName, banks }) => {
         </div>
       </td>
 
-      <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200"></td>
       <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200"></td>
 
       <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200">
