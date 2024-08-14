@@ -153,7 +153,7 @@ export const ExpenseRecords = () => {
       )}
 
       {isDataLoaded && (
-        <div className="w-full mt-40">
+        <div className={`w-full ${isShowing ? 'mt-40' : 'mt-10'}`}>
           <div className="w-full">
             <ExpenseListView
               Data={gridData.filter((item) => item.Category === 'Alimony')}

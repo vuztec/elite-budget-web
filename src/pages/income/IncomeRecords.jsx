@@ -134,7 +134,7 @@ export const IncomeRecords = () => {
       )}
 
       {isDataLoaded && (
-        <div className="w-full mt-40">
+        <div className={`w-full ${isShowing ? 'mt-40' : 'mt-10'}`}>
           <div className="w-full">
             <IncomeListView gridData={gridData} showDelete={!showAll && hasRecords(gridData)} />
           </div>
