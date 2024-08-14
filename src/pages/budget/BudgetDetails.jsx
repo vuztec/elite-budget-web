@@ -245,7 +245,10 @@ export const BudgetDetails = () => {
         </div>
       )}
       {isDataLoaded && (
-        <div className="w-full flex flex-col items-center gap-5 xl:gap-10 bg-white p-5 mt-40" ref={targetRef}>
+        <div
+          className={`w-full flex flex-col items-center gap-5 xl:gap-10 bg-white p-5 ${isShowing ? 'mt-40' : 'mt-10'}`}
+          ref={targetRef}
+        >
           {showPdfContent && (
             <div className="w-full">
               <div className="w-full flex justify-center items-center py-2 px-3 gap-2 rounded-full">

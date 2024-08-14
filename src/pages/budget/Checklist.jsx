@@ -257,7 +257,11 @@ export const Checklist = () => {
         </div>
       )}
       {isDataLoaded && (
-        <div className="w-full mt-40" ref={targetRef} onClick={() => setIsDropdownOpen(false)}>
+        <div
+          className={`w-full ${isShowing ? 'mt-40' : 'mt-10'}`}
+          ref={targetRef}
+          onClick={() => setIsDropdownOpen(false)}
+        >
           {showPdfContent && (
             <div className="w-full">
               <div className="w-full flex justify-center items-center py-2 px-3 gap-2 rounded-full">

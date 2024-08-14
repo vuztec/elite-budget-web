@@ -145,7 +145,7 @@ export const OtherDebts = () => {
       )}
 
       {isDataLoaded && (
-        <div className="w-full mt-40">
+        <div className={`w-full ${isShowing ? 'mt-40' : 'mt-10'}`}>
           <div className="w-full">
             <DebtListView
               Data={gridData.filter((item) => item.Category === 'Credit Card')}

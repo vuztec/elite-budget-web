@@ -184,7 +184,7 @@ export const Transactions = () => {
       )}
 
       {isDataLoaded && (
-        <div className="w-full mt-40">
+        <div className={`w-full ${isShowing ? 'mt-40' : 'mt-10'}`}>
           {accountnames?.map((bankName, index) => (
             <div className="w-full">
               <TransactionListView
