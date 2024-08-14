@@ -22,6 +22,7 @@ import { defaultTransactionSort } from '../../utils/budget.sort';
 import { FiCheckSquare } from 'react-icons/fi';
 import { MdOutlineSquare } from 'react-icons/md';
 import { calculateBalances } from '../../utils/budget.filter';
+import { IoMdRadioButtonOff, IoMdRadioButtonOn } from 'react-icons/io';
 
 export const TransactionListView = ({ Data, bankName, banks }) => {
   const { user } = useUserStore();
@@ -42,6 +43,7 @@ export const TransactionListView = ({ Data, bankName, banks }) => {
   const queryClient = useQueryClient();
   const [openDialog, setOpenDialog] = useState(false);
   const [openClearDialog, setOpenClearDialog] = useState(false);
+  const [openTaxDialog, setOpenTaxDialog] = useState(false);
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -97,6 +99,13 @@ export const TransactionListView = ({ Data, bankName, banks }) => {
     if (data.IsCleared) setPrompt(() => 'Do you want to Un-Clear the Bank Transaction?');
     else setPrompt(() => 'Do you want to Clear the Bank Transaction?');
     setOpenClearDialog(true);
+  };
+
+  const handleTaxableTransaction = (data) => {
+    setSelected(data.id);
+    if (data.Taxable) setPrompt(() => 'Do you want to make the Bank Transaction Taxable?');
+    else setPrompt(() => 'Do you want to make the Bank Transaction Un-taxable?');
+    setOpenTaxDialog(true);
   };
 
   //----------------CRUD----------------//
@@ -211,6 +220,22 @@ export const TransactionListView = ({ Data, bankName, banks }) => {
 
         <th className="border-l border-gray-300 p-2">
           <div className="flex justify-between items-center gap-2">
+            Taxable?
+            <Sort
+              tab={'transaction'}
+              order={order}
+              setOrder={setOrder}
+              column={7}
+              name={'IsCleared'}
+              data={gridData}
+              setData={setGridData}
+              defaultData={Data}
+            />
+          </div>
+        </th>
+
+        <th className="border-l border-gray-300 p-2">
+          <div className="flex justify-between items-center gap-2">
             Balance
             {/* <Sort
               tab={"transaction"}
@@ -279,6 +304,18 @@ export const TransactionListView = ({ Data, bankName, banks }) => {
 
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
+          <p className="text-sm xl:text-lg cursor-pointer group" onClick={() => handleTaxableTransaction(record)}>
+            {record?.Taxable ? (
+              <IoMdRadioButtonOn className="text-red-500 group-hover:bg-red-200 p-1 h-6 w-6 rounded-full" />
+            ) : (
+              <IoMdRadioButtonOff className="text-gray-500 group-hover:bg-gray-200 p-1 h-6 w-6 rounded-full" />
+            )}
+          </p>
+        </div>
+      </td>
+
+      <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
+        <div className="flex flex-col items-start gap-1">
           <p className="text-black">{getFormattedValueTotal(user, Number(record?.Balance) + Number(openingBalance))}</p>
         </div>
       </td>
@@ -325,6 +362,7 @@ export const TransactionListView = ({ Data, bankName, banks }) => {
         </div>
       </td>
 
+      <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200"></td>
       <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200"></td>
 
       <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200">

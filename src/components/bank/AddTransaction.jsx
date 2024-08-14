@@ -165,6 +165,20 @@ export const AddTransaction = ({ open, setOpen, recordData, banks }) => {
                 })}
                 error={errors.IsCleared ? errors.IsCleared.message : ''}
               />
+              <Select
+                name="Taxable"
+                label="Taxable?"
+                defaultValue="No"
+                options={[
+                  { value: false, label: 'No' },
+                  { value: true, label: 'Yes' },
+                ]}
+                className="w-full rounded"
+                register={register('Taxable', {
+                  setValueAs: (value) => value === 'true',
+                })}
+                error={errors.Taxable ? errors.Taxable.message : ''}
+              />
             </div>
           </div>
 
