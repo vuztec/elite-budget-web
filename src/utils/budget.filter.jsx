@@ -258,6 +258,41 @@ export const getUniqueDescriptionsByCategory = (combinedData) => {
   return uniqueDescriptionsByCategory;
 };
 
+export const getDescriptionsByCategory = (combinedData) => {
+  const descriptionsByCategory = {};
+
+  combinedData.forEach((item) => {
+    const Category = item.Category;
+    const BudgetItem = item.BudgetItem;
+    const Description = item.Description;
+    const DueDate = item.DueDate;
+    const PaymentMethod = item.PaymentMethod;
+    const MonthlyBudget = item.MonthlyBudget;
+    const NickName = item.NickName;
+    const Owner = item.Owner;
+
+    if (!descriptionsByCategory[Category]) {
+      descriptionsByCategory[Category] = {};
+    }
+
+    if (!descriptionsByCategory[Category][BudgetItem]) {
+      descriptionsByCategory[Category][BudgetItem] = [];
+    }
+
+    // Add the description and associated data to the array
+    descriptionsByCategory[Category][BudgetItem].push({
+      Description: Description,
+      DueDate: DueDate,
+      PaymentMethod: PaymentMethod,
+      MonthlyBudget: MonthlyBudget,
+      NickName: NickName,
+      Owner: Owner,
+    });
+  });
+
+  return descriptionsByCategory;
+};
+
 export const generateMonthHeaders = () => {
   const lastTwoDigitsOfYear = getCurrentYear();
   let newMonths = months;

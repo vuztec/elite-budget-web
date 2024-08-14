@@ -1,24 +1,25 @@
-import React, { useEffect, useState } from "react";
-import { RiDeleteBin2Fill } from "react-icons/ri";
-import { FaEdit } from "react-icons/fa";
-import clsx from "clsx";
+import React, { useEffect, useState } from 'react';
+import { RiDeleteBin2Fill } from 'react-icons/ri';
+import { FaEdit } from 'react-icons/fa';
+import clsx from 'clsx';
 
-import useUserStore from "../../app/user";
-import { useQueryClient } from "react-query";
-import ConfirmationDialog from "../Dialogs";
-import axios from "../../config/axios";
-import { handleAxiosResponseError } from "../../utils/handleResponseError";
+import useUserStore from '../../app/user';
+import { useQueryClient } from 'react-query';
+import ConfirmationDialog from '../Dialogs';
+import axios from '../../config/axios';
+import { handleAxiosResponseError } from '../../utils/handleResponseError';
 import {
   getExtraPayCheckTotal,
+  getFormattedDate,
   getFormattedValue,
   getFormattedValueTotal,
   getMonthlyBudgetTotal,
   getYearlyBudgetTotal,
-} from "../../utils/budget.calculation";
-import AddExtraPay from "./AddExtraPay";
-import { formatDate } from "../../utils";
-import ToolTip from "../tooltip";
-import Sort from "../sort";
+} from '../../utils/budget.calculation';
+import AddExtraPay from './AddExtraPay';
+import { formatDate } from '../../utils';
+import ToolTip from '../tooltip';
+import Sort from '../sort';
 
 export const ExtraPayListView = ({ gridData, showDelete }) => {
   const { user } = useUserStore();
@@ -30,7 +31,7 @@ export const ExtraPayListView = ({ gridData, showDelete }) => {
   const [selected, setSelected] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const [order, setOrder] = useState(["default", "default", "default"]);
+  const [order, setOrder] = useState(['default', 'default', 'default']);
   const [data, setData] = useState(gridData);
 
   useEffect(() => {
@@ -43,10 +44,8 @@ export const ExtraPayListView = ({ gridData, showDelete }) => {
     axios
       .delete(`/api/extra-pay-checks/${selected}`)
       .then(({ data }) => {
-        queryClient.setQueryData(["extrapaychecks"], (prev) =>
-          prev.map((check) =>
-            check.id === selected ? { ...check, ...data } : check
-          )
+        queryClient.setQueryData(['extrapaychecks'], (prev) =>
+          prev.map((check) => (check.id === selected ? { ...check, ...data } : check)),
         );
 
         setOpenDialog(false);
@@ -80,7 +79,7 @@ export const ExtraPayListView = ({ gridData, showDelete }) => {
               order={order}
               setOrder={setOrder}
               column={1}
-              name={"Date"}
+              name={'Date'}
               data={data}
               setData={setData}
               defaultData={gridData}
@@ -94,7 +93,7 @@ export const ExtraPayListView = ({ gridData, showDelete }) => {
               order={order}
               setOrder={setOrder}
               column={2}
-              name={"SelfAmount"}
+              name={'SelfAmount'}
               data={data}
               setData={setData}
               defaultData={gridData}
@@ -109,7 +108,7 @@ export const ExtraPayListView = ({ gridData, showDelete }) => {
               order={order}
               setOrder={setOrder}
               column={3}
-              name={"PartnerAmount"}
+              name={'PartnerAmount'}
               data={data}
               setData={setData}
               defaultData={gridData}
@@ -128,24 +127,20 @@ export const ExtraPayListView = ({ gridData, showDelete }) => {
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
           <span className="flex items-center justify-left gap-2 text-center mb-0 text-gray-900">
-            {record?.Date ? formatDate(new Date(record?.Date)) : "XX/XX/XXXX"}
+            {record?.Date ? getFormattedDate(user, record?.Date) : 'XX/XX/XXXX'}
           </span>
         </div>
       </td>
 
       <td className="max-w-[300px] whitespace-normal p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p className="text-black">
-            {getFormattedValueTotal(user, record?.SelfAmount)}
-          </p>
+          <p className="text-black">{getFormattedValueTotal(user, record?.SelfAmount)}</p>
         </div>
       </td>
 
       <td className="max-w-[300px] whitespace-normal p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p className="text-black">
-            {getFormattedValueTotal(user, record?.PartnerAmount)}
-          </p>
+          <p className="text-black">{getFormattedValueTotal(user, record?.PartnerAmount)}</p>
         </div>
       </td>
 
@@ -153,24 +148,18 @@ export const ExtraPayListView = ({ gridData, showDelete }) => {
         <div className="flex items-center text-left gap-3 justify-start">
           <div className="group flex relative">
             <FaEdit
-              className={clsx(
-                `text-editcolor`,
-                "hover:text-orange-500 font-semibold cursor-pointer sm:px-0"
-              )}
+              className={clsx(`text-editcolor`, 'hover:text-orange-500 font-semibold cursor-pointer sm:px-0')}
               onClick={() => editClick(record)}
             />
-            <ToolTip text={"Edit"} />
+            <ToolTip text={'Edit'} />
           </div>
           {showDelete && (
             <div className="group flex relative">
               <RiDeleteBin2Fill
-                className={clsx(
-                  `text-deletecolor`,
-                  "hover:text-red-500 font-semibold cursor-pointer sm:px-0"
-                )}
+                className={clsx(`text-deletecolor`, 'hover:text-red-500 font-semibold cursor-pointer sm:px-0')}
                 onClick={() => deleteClick(record.id)}
               />
-              <ToolTip text={"Delete"} />
+              <ToolTip text={'Delete'} />
             </div>
           )}
         </div>
@@ -184,13 +173,13 @@ export const ExtraPayListView = ({ gridData, showDelete }) => {
 
       <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p>{getExtraPayCheckTotal(user, gridData, "Self")}</p>
+          <p>{getExtraPayCheckTotal(user, gridData, 'Self')}</p>
         </div>
       </td>
 
       <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p>{getExtraPayCheckTotal(user, gridData, "Partner")}</p>
+          <p>{getExtraPayCheckTotal(user, gridData, 'Partner')}</p>
         </div>
       </td>
 
@@ -221,22 +210,17 @@ export const ExtraPayListView = ({ gridData, showDelete }) => {
                 <TableTotal gridData={gridData} />
               </tbody>
             </table>
-            <div className="w-full ml-5">
+            <div className="w-[97%] ml-5 mb-5">
               <p className="text-xs">
-                * Note: Refer to the Extra Pay Dates tab for your Extra Pay
-                Dates. Only applies if you are paid Weekly or Biweekly.
+                * Note: Refer to the Extra Pay Dates tab for your Extra Pay Dates. Only applies if you are paid Weekly
+                or Biweekly.
               </p>
             </div>
           </div>
         </div>
       </div>
 
-      <AddExtraPay
-        open={open}
-        setOpen={setOpen}
-        recordData={selected}
-        key={new Date().getTime().toString()}
-      />
+      <AddExtraPay open={open} setOpen={setOpen} recordData={selected} key={new Date().getTime().toString()} />
       <ConfirmationDialog
         isLoading={isLoading}
         open={openDialog}

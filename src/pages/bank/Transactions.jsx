@@ -18,6 +18,8 @@ export const Transactions = () => {
   const { user } = useUserStore();
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [gridData, setGridData] = useState([]);
+  const [filteredOwnerBank, setFilteredOwnerBank] = useState([]);
+  const [filteredBank, setFilteredBank] = useState([]);
   const [open, setOpen] = useState(false);
   const activeAccount = getActiveAccount(user);
 
@@ -45,7 +47,12 @@ export const Transactions = () => {
     label: owner,
   }));
 
-  const banks = accountnames?.map((bank) => ({
+  const ownerBanks = filteredOwnerBank?.map((bank) => ({
+    value: bank.id,
+    label: bank.Name,
+  }));
+
+  const banks = filteredBank?.map((bank) => ({
     value: bank.id,
     label: bank.Name,
   }));
@@ -54,8 +61,18 @@ export const Transactions = () => {
 
   useEffect(() => {
     if (isTransactionLoaded === 'success' && isNamesLoaded === 'success') {
-      const transData = getBankGridData(transactions, owner, bank);
+      let updatedOwnerBank = accountnames;
+      if (owner !== 'Household' && parseInt(owner) !== 0) {
+        updatedOwnerBank = accountnames.filter((account) => account.Owner === owner);
+      }
+      setFilteredOwnerBank(updatedOwnerBank);
+      let updatedBank = updatedOwnerBank;
+      if (bank !== 'All' && parseInt(bank) !== 0) {
+        updatedBank = updatedOwnerBank.filter((account) => parseInt(account.id) === parseInt(bank));
+      }
+      setFilteredBank(updatedBank);
 
+      const transData = getBankGridData(transactions, owner, bank);
       // Sort the data by Owner property
       const sortedData = transData?.sort((a, b) => {
         if (a.Owner === b.Owner) {
@@ -69,7 +86,7 @@ export const Transactions = () => {
     } else {
       setIsDataLoaded(false);
     }
-  }, [transactions, isTransactionLoaded, isNamesLoaded, owner, bank]);
+  }, [transactions, isTransactionLoaded, accountnames, isNamesLoaded, owner, bank]);
 
   const handleOwnerChange = (e) => {
     if (e && e.target?.value) {
@@ -99,6 +116,7 @@ export const Transactions = () => {
     setOpen(true);
   };
 
+  console.log('banks', banks);
   const [isShowing, setIsShowing] = useState(true);
 
   return activeAccount ? (
@@ -148,7 +166,7 @@ export const Transactions = () => {
             <Select
               onChange={handleBankChange}
               value={bank}
-              options={banks}
+              options={ownerBanks}
               placeholder="All"
               label="Bank Account"
               className="bg-white w-full py-1"
@@ -185,16 +203,23 @@ export const Transactions = () => {
 
       {isDataLoaded && (
         <div className={`w-full ${isShowing ? 'mt-40' : 'mt-10'}`}>
-          {accountnames?.map((bankName, index) => (
+          {filteredBank?.map((bankName, index) => (
             <div className="w-full">
               <TransactionListView
                 Data={gridData.filter((item) => item.BankAccountName.id === bankName.id)}
                 key={index}
                 bankName={bankName}
+                banks={banks}
               />
             </div>
           ))}
-          <AddTransaction open={open} setOpen={setOpen} recordData={''} key={new Date().getTime().toString()} />
+          <AddTransaction
+            open={open}
+            setOpen={setOpen}
+            recordData={''}
+            key={new Date().getTime().toString()}
+            banks={banks}
+          />
         </div>
       )}
     </>

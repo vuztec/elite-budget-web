@@ -22,8 +22,9 @@ import { defaultTransactionSort } from '../../utils/budget.sort';
 import { FiCheckSquare } from 'react-icons/fi';
 import { MdOutlineSquare } from 'react-icons/md';
 import { calculateBalances } from '../../utils/budget.filter';
+import { IoMdRadioButtonOff, IoMdRadioButtonOn } from 'react-icons/io';
 
-export const TransactionListView = ({ Data, bankName }) => {
+export const TransactionListView = ({ Data, bankName, banks }) => {
   const { user } = useUserStore();
   const [gridData, setGridData] = useState([]);
   const [prompt, setPrompt] = useState('');
@@ -42,6 +43,7 @@ export const TransactionListView = ({ Data, bankName }) => {
   const queryClient = useQueryClient();
   const [openDialog, setOpenDialog] = useState(false);
   const [openClearDialog, setOpenClearDialog] = useState(false);
+  const [openTaxDialog, setOpenTaxDialog] = useState(false);
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -99,6 +101,13 @@ export const TransactionListView = ({ Data, bankName }) => {
     setOpenClearDialog(true);
   };
 
+  const handleTaxableTransaction = (data) => {
+    setSelected(data.id);
+    if (data.Taxable) setPrompt(() => 'Do you want to make the Bank Transaction Taxable?');
+    else setPrompt(() => 'Do you want to make the Bank Transaction Un-taxable?');
+    setOpenTaxDialog(true);
+  };
+
   //----------------CRUD----------------//
 
   const TableHeader = () => (
@@ -144,6 +153,22 @@ export const TransactionListView = ({ Data, bankName }) => {
               setOrder={setOrder}
               column={3}
               name={'Description'}
+              data={gridData}
+              setData={setGridData}
+              defaultData={Data}
+            />
+          </div>
+        </th>
+
+        <th className="border-l border-gray-300 p-2">
+          <div className="flex justify-between items-center gap-2">
+            Tax?
+            <Sort
+              tab={'transaction'}
+              order={order}
+              setOrder={setOrder}
+              column={7}
+              name={'IsCleared'}
               data={gridData}
               setData={setGridData}
               defaultData={Data}
@@ -255,6 +280,18 @@ export const TransactionListView = ({ Data, bankName }) => {
 
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
+          <p className="text-sm xl:text-lg cursor-pointer group" onClick={() => handleTaxableTransaction(record)}>
+            {record?.Taxable ? (
+              <IoMdRadioButtonOn className="text-red-500 group-hover:bg-red-200 p-1 h-6 w-6 rounded-full" />
+            ) : (
+              <IoMdRadioButtonOff className="text-gray-500 group-hover:bg-gray-200 p-1 h-6 w-6 rounded-full" />
+            )}
+          </p>
+        </div>
+      </td>
+
+      <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
+        <div className="flex flex-col items-start gap-1">
           <p className="text-black">{getFormattedValueType(user, record?.Amount, record?.Type, 'Withdrawal')}</p>
         </div>
       </td>
@@ -311,6 +348,7 @@ export const TransactionListView = ({ Data, bankName }) => {
 
       <td className="min-w-fit whitespace-nowrap p-3 border-gray-200"></td>
 
+      <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200"></td>
       <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200">TOTAL</td>
 
       <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200">
@@ -389,7 +427,13 @@ export const TransactionListView = ({ Data, bankName }) => {
           </div>
         </div>
       )}
-      <AddTransaction open={open} setOpen={setOpen} recordData={selected} key={new Date().getTime().toString()} />
+      <AddTransaction
+        open={open}
+        setOpen={setOpen}
+        recordData={selected}
+        key={new Date().getTime().toString()}
+        banks={banks}
+      />
       <ConfirmationDialog
         isLoading={isLoading}
         open={openDialog}

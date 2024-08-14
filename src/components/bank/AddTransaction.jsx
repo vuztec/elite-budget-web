@@ -1,32 +1,19 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { useForm } from "react-hook-form";
-import ModalWrapper from "../ModalWrapper";
-import { Dialog } from "@headlessui/react";
-import Textbox from "../Textbox";
-import Select from "../Select";
-import Loading from "../Loader";
-import Button from "../Button";
-import { useQueryClient, useQuery } from "react-query";
-import { IoMdSend } from "react-icons/io";
-import { TiCancel } from "react-icons/ti";
-import axios from "../../config/axios";
-import { handleAxiosResponseError } from "../../utils/handleResponseError";
-import { getBankAccountNames } from "../../config/api";
+import React, { useEffect, useMemo, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import ModalWrapper from '../ModalWrapper';
+import { Dialog } from '@headlessui/react';
+import Textbox from '../Textbox';
+import Select from '../Select';
+import Loading from '../Loader';
+import Button from '../Button';
+import { useQueryClient, useQuery } from 'react-query';
+import { IoMdSend } from 'react-icons/io';
+import { TiCancel } from 'react-icons/ti';
+import axios from '../../config/axios';
+import { handleAxiosResponseError } from '../../utils/handleResponseError';
 
-export const AddTransaction = ({ open, setOpen, recordData }) => {
+export const AddTransaction = ({ open, setOpen, recordData, banks }) => {
   const queryClient = useQueryClient();
-
-  const { data: accountnames, status: isNamesLoaded } = useQuery({
-    queryKey: ["accountnames"],
-    queryFn: getBankAccountNames,
-    staleTime: 1000 * 60 * 60,
-  });
-
-  const bankAccountNames = accountnames.map((account) => ({
-    value: account.id,
-    label: account.Name,
-  }));
-
   const [isLoading, setIsLoading] = useState(false);
 
   const {
@@ -39,12 +26,12 @@ export const AddTransaction = ({ open, setOpen, recordData }) => {
 
   useEffect(() => {
     if (recordData?.id) {
-      setValue("BankName", recordData.BankAccountName.id);
+      setValue('BankName', recordData.BankAccountName.id);
       // setValue("Owner", recordData.Owner);
-      setValue("Description", recordData.Description);
-      setValue("Type", recordData.Type);
-      setValue("Amount", recordData.Amount);
-      setValue("IsCleared", recordData.IsCleared);
+      setValue('Description', recordData.Description);
+      setValue('Type', recordData.Type);
+      setValue('Amount', recordData.Amount);
+      setValue('IsCleared', recordData.IsCleared);
     }
 
     return () => reset();
@@ -57,11 +44,9 @@ export const AddTransaction = ({ open, setOpen, recordData }) => {
 
     if (!recordData?.id)
       axios
-        .post("/api/bank-accounts/transaction", data)
+        .post('/api/bank-accounts/transaction', data)
         .then(({ data }) => {
-          queryClient.setQueryData(["banktransactions"], (prev) =>
-            prev ? [...prev, data] : [data]
-          );
+          queryClient.setQueryData(['banktransactions'], (prev) => (prev ? [...prev, data] : [data]));
           setIsLoading(() => false);
           setOpen(false);
         })
@@ -71,14 +56,12 @@ export const AddTransaction = ({ open, setOpen, recordData }) => {
         });
     else
       axios
-        .patch("/api/bank-accounts/transaction/" + numericSelectedID, data)
+        .patch('/api/bank-accounts/transaction/' + numericSelectedID, data)
         .then(({ data }) => {
-          queryClient.setQueryData(["banktransactions"], (prev) =>
+          queryClient.setQueryData(['banktransactions'], (prev) =>
             prev.map((transaction) =>
-              transaction.id === numericSelectedID
-                ? { ...transaction, ...data }
-                : transaction
-            )
+              transaction.id === numericSelectedID ? { ...transaction, ...data } : transaction,
+            ),
           );
           setIsLoading(() => false);
           setOpen(false);
@@ -92,28 +75,22 @@ export const AddTransaction = ({ open, setOpen, recordData }) => {
   return (
     <>
       <ModalWrapper open={open} setOpen={setOpen}>
-        <form
-          onSubmit={handleSubmit(handleOnSubmit)}
-          className="w-full h-[70%]"
-        >
-          <Dialog.Title
-            as="h2"
-            className="text-base font-bold leading-6 text-gray-900 mb-4"
-          >
-            {recordData ? "UPDATE TRANSACTION" : "ADD NEW TRANSACTION"}
+        <form onSubmit={handleSubmit(handleOnSubmit)} className="w-full h-[70%]">
+          <Dialog.Title as="h2" className="text-base font-bold leading-6 text-gray-900 mb-4">
+            {recordData ? 'UPDATE TRANSACTION' : 'ADD NEW TRANSACTION'}
           </Dialog.Title>
           <div className="mt-2 flex flex-col gap-6 overflow-y-scroll bg-scroll">
             <div className="flex flex-col gap-6 w-full">
               <Select
                 name="BankName"
                 label="Bank Account Name"
-                options={bankAccountNames}
+                options={banks}
                 className="w-full rounded"
-                register={register("BankName", {
-                  required: "Name is required!",
+                register={register('BankName', {
+                  required: 'Name is required!',
                   valueAsNumber: true,
                 })}
-                error={errors.BankName ? errors.BankName.message : ""}
+                error={errors.BankName ? errors.BankName.message : ''}
               />
               {/* <Select
                 name="Owner"
@@ -138,10 +115,10 @@ export const AddTransaction = ({ open, setOpen, recordData }) => {
                 name="Description"
                 label="Description"
                 className="w-full rounded"
-                register={register("Description", {
-                  required: "Description is required!",
+                register={register('Description', {
+                  required: 'Description is required!',
                 })}
-                error={errors.Description ? errors.Description.message : ""}
+                error={errors.Description ? errors.Description.message : ''}
               />
             </div>
 
@@ -151,14 +128,14 @@ export const AddTransaction = ({ open, setOpen, recordData }) => {
                 label="Type"
                 defaultValue="Credit"
                 options={[
-                  { value: "Withdrawal", label: "Pmt, Fee, Withdrawal (-)" },
-                  { value: "Credit", label: "Deposit, Credit (+)" },
+                  { value: 'Withdrawal', label: 'Pmt, Fee, Withdrawal (-)' },
+                  { value: 'Credit', label: 'Deposit, Credit (+)' },
                 ]}
                 className="w-full rounded"
-                register={register("Type", {
-                  required: "Type is required!",
+                register={register('Type', {
+                  required: 'Type is required!',
                 })}
-                error={errors.Type ? errors.Type.message : ""}
+                error={errors.Type ? errors.Type.message : ''}
               />
             </div>
             <div className="flex flex-col gap-6 w-full">
@@ -168,27 +145,39 @@ export const AddTransaction = ({ open, setOpen, recordData }) => {
                 name="Amount"
                 label="Amount"
                 className="w-full rounded"
-                register={register("Amount", {
+                register={register('Amount', {
                   valueAsNumber: true,
-                  validate: (value) =>
-                    value > 0 ||
-                    "Amount must be greater than  or equal to zero",
+                  validate: (value) => value > 0 || 'Amount must be greater than  or equal to zero',
                 })}
-                error={errors.Amount ? errors.Amount.message : ""}
+                error={errors.Amount ? errors.Amount.message : ''}
               />
               <Select
                 name="IsCleared"
                 label="Cleared Bank?"
                 defaultValue="No"
                 options={[
-                  { value: false, label: "No" },
-                  { value: true, label: "Yes" },
+                  { value: false, label: 'No' },
+                  { value: true, label: 'Yes' },
                 ]}
                 className="w-full rounded"
-                register={register("IsCleared", {
-                  setValueAs: (value) => value === "true",
+                register={register('IsCleared', {
+                  setValueAs: (value) => value === 'true',
                 })}
-                error={errors.IsCleared ? errors.IsCleared.message : ""}
+                error={errors.IsCleared ? errors.IsCleared.message : ''}
+              />
+              <Select
+                name="Taxable"
+                label="Tax?"
+                defaultValue="No"
+                options={[
+                  { value: false, label: 'No' },
+                  { value: true, label: 'Yes' },
+                ]}
+                className="w-full rounded"
+                register={register('Taxable', {
+                  setValueAs: (value) => value === 'true',
+                })}
+                error={errors.Taxable ? errors.Taxable.message : ''}
               />
             </div>
           </div>

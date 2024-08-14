@@ -277,7 +277,7 @@ export const IncomeListView = ({ gridData, showDelete }) => {
               </tr>
             </tbody>
           </table>
-          <div className="w-full ml-5">
+          <div className="w-[97%] ml-5 mb-10">
             <p className="text-xs">
               * Note 1: Budgeted monthly income for someone paid weekly is based on 4 pay periods per month (48 pay
               periods per year). The 4 extra pay periods per year can be directed to savings or debt reduction.
