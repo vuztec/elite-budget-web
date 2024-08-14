@@ -9,11 +9,11 @@ import { getActiveAccount } from '../../utils/permissions';
 import {
   expenseOwners,
   getCombineData,
+  getDescriptionsByCategory,
   getOwnerExpenseGridData,
   getOwnerGridData,
   getUniqueBudgetItemsByCategory,
   getUniqueCategories,
-  getUniqueDescriptionsByCategory,
 } from '../../utils/budget.filter';
 import clsx from 'clsx';
 import Select from '../../components/Select';
@@ -40,7 +40,7 @@ export const Checklist = () => {
   const [owner, setOwner] = useState('Household');
   const uniqueCategories = getUniqueCategories(combinedData);
   const uniqueBudgetItemsByCategory = getUniqueBudgetItemsByCategory(combinedData);
-  const uniqueDescriptionsByCategory = getUniqueDescriptionsByCategory(combinedData);
+  const uniqueDescriptionsByCategory = getDescriptionsByCategory(combinedData);
   const { toPDF, targetRef } = usePDF({
     filename: 'checklist.pdf',
     page: { margin: Margin.MEDIUM, orientation: 'landscape' },
