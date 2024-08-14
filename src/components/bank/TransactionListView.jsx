@@ -23,7 +23,7 @@ import { FiCheckSquare } from 'react-icons/fi';
 import { MdOutlineSquare } from 'react-icons/md';
 import { calculateBalances } from '../../utils/budget.filter';
 
-export const TransactionListView = ({ Data, bankName }) => {
+export const TransactionListView = ({ Data, bankName, banks }) => {
   const { user } = useUserStore();
   const [gridData, setGridData] = useState([]);
   const [prompt, setPrompt] = useState('');
@@ -389,7 +389,13 @@ export const TransactionListView = ({ Data, bankName }) => {
           </div>
         </div>
       )}
-      <AddTransaction open={open} setOpen={setOpen} recordData={selected} key={new Date().getTime().toString()} />
+      <AddTransaction
+        open={open}
+        setOpen={setOpen}
+        recordData={selected}
+        key={new Date().getTime().toString()}
+        banks={banks}
+      />
       <ConfirmationDialog
         isLoading={isLoading}
         open={openDialog}
