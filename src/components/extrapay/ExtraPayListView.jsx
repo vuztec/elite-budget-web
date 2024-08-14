@@ -10,6 +10,7 @@ import axios from '../../config/axios';
 import { handleAxiosResponseError } from '../../utils/handleResponseError';
 import {
   getExtraPayCheckTotal,
+  getFormattedDate,
   getFormattedValue,
   getFormattedValueTotal,
   getMonthlyBudgetTotal,
@@ -126,7 +127,7 @@ export const ExtraPayListView = ({ gridData, showDelete }) => {
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
           <span className="flex items-center justify-left gap-2 text-center mb-0 text-gray-900">
-            {record?.Date ? formatDate(new Date(record?.Date)) : 'XX/XX/XXXX'}
+            {record?.Date ? getFormattedDate(user, record?.Date) : 'XX/XX/XXXX'}
           </span>
         </div>
       </td>
