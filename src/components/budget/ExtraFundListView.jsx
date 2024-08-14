@@ -14,6 +14,8 @@ import {
   getFormattedValueTotal,
   getFormattedValueType,
   getUnformattedBankBalanceTotal,
+  getUnformattedMonthlyBudget,
+  getUnformattedNetMonthlyTotal,
   getUnformattedNetYearlyTotal,
   getUnformattedYearlyBudgetTotal,
 } from '../../utils/budget.calculation';
@@ -53,15 +55,18 @@ export const ExtraFundListView = ({
   useEffect(() => {
     setData(gridData);
     const Expenses =
-      getUnformattedYearlyBudgetTotal(debtGridData) +
-      getUnformattedYearlyBudgetTotal(savingsGridData) +
-      getUnformattedYearlyBudgetTotal(expenseGridData) +
-      getUnformattedYearlyBudgetTotal(retirementGridData);
+      getUnformattedMonthlyBudget(debtGridData) +
+      getUnformattedMonthlyBudget(savingsGridData) +
+      getUnformattedMonthlyBudget(expenseGridData) +
+      getUnformattedMonthlyBudget(retirementGridData);
     const income =
       owner === 'Joint'
-        ? 12 * Number(selfContribution) + 12 * Number(partnerContribution)
-        : getUnformattedNetYearlyTotal(incomeGridData);
-    const difference = (Number(income) - Number(Expenses)) / 12;
+        ? Number(selfContribution) +
+          Number(partnerContribution) +
+          Number(getUnformattedNetMonthlyTotal(incomeGridData)) / 12
+        : Number(getUnformattedNetMonthlyTotal(incomeGridData)) / 12;
+
+    const difference = Number(income) - Number(Expenses);
     setOpeningBalance(difference);
   }, [
     gridData,

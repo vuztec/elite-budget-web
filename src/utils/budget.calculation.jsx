@@ -794,6 +794,14 @@ export const getUnformattedYearlyBudgetTotal = (data) => {
   return Amount;
 };
 
+export const getUnformattedMonthlyBudget = (data) => {
+  const Amount = data?.reduce((accumulator, record) => {
+    const amount = record?.MonthlyBudget || 0;
+    return accumulator + Number(amount);
+  }, 0);
+  return Amount;
+};
+
 export const getActualGoal = (incomeData, budgetData, category) => {
   const budget = getUnformattedYearlyBudgetTotal(budgetData);
   let income = getUnformattedNetMonthlyTotal(incomeData);

@@ -113,7 +113,13 @@ export const ExtraFundsTracker = () => {
       const savingData = getOwnerGridData(savings, owner);
       setSavingsGridData(savingData);
 
-      const retirementData = getOwnerGridData(retirements, owner);
+      const updatedRetirements = retirements.filter(
+        (retirement) =>
+          retirement.Description !== 'Retirement (401k, Roth 401k, 403b) Payroll Deductions' &&
+          retirement.Description !== 'Retirement (401k, Roth 401k, 403b) Prior Job',
+      );
+      const retirementData = getOwnerGridData(updatedRetirements, owner);
+
       setRetirementGridData(retirementData);
 
       const expenseData = getOwnerExpenseGridData(expenses, owner);

@@ -8,16 +8,8 @@ import { useQueryClient } from 'react-query';
 import ConfirmationDialog from '../Dialogs';
 import axios from '../../config/axios';
 import { handleAxiosResponseError } from '../../utils/handleResponseError';
-import {
-  getExtraPayCheckTotal,
-  getFormattedDate,
-  getFormattedValue,
-  getFormattedValueTotal,
-  getMonthlyBudgetTotal,
-  getYearlyBudgetTotal,
-} from '../../utils/budget.calculation';
+import { getExtraPayCheckTotal, getFormattedDate, getFormattedValueTotal } from '../../utils/budget.calculation';
 import AddExtraPay from './AddExtraPay';
-import { formatDate } from '../../utils';
 import ToolTip from '../tooltip';
 import Sort from '../sort';
 

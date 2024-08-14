@@ -136,7 +136,7 @@ export const getBankGridData = (data, owner, bank) => {
 };
 
 export const getCatGridData = (data, owner, catFilter) => {
-  const ownerFilteredData = getOwnerGridData(data, owner);
+  const ownerFilteredData = getOwnerExpenseGridData(data, owner);
 
   let catFilteredData;
   if (catFilter !== 'All' && parseInt(catFilter) !== 0) {

@@ -3,9 +3,9 @@ import {
   getFormattedValueTotal,
   getNetMonthlyTotal,
   getTotalLabel,
+  getUnformattedMonthlyBudget,
+  getUnformattedMonthlyBudgetTotal,
   getUnformattedNetMonthlyTotal,
-  getUnformattedNetYearlyTotal,
-  getUnformattedYearlyBudgetTotal,
 } from '../../utils/budget.calculation';
 import useUserStore from '../../app/user';
 
@@ -26,19 +26,22 @@ const MonthlySummary = ({
 
   useEffect(() => {
     const Expenses =
-      getUnformattedYearlyBudgetTotal(debtGridData) +
-      getUnformattedYearlyBudgetTotal(savingsGridData) +
-      getUnformattedYearlyBudgetTotal(expenseGridData) +
-      getUnformattedYearlyBudgetTotal(retirementGridData);
-    const formattedAmount = getFormattedValueTotal(user, Number(Expenses) / 12);
+      getUnformattedMonthlyBudget(debtGridData) +
+      getUnformattedMonthlyBudget(savingsGridData) +
+      getUnformattedMonthlyBudget(expenseGridData) +
+      getUnformattedMonthlyBudget(retirementGridData);
+    const formattedAmount = getFormattedValueTotal(user, Number(Expenses));
     setTotalExpenses(formattedAmount);
 
     const income =
       owner === 'Joint'
-        ? Number(selfContribution) + Number(partnerContribution) + Number(getUnformattedNetMonthlyTotal(incomeGridData))
-        : Number(getUnformattedNetMonthlyTotal(incomeGridData));
+        ? Number(selfContribution) +
+          Number(partnerContribution) +
+          Number(getUnformattedNetMonthlyTotal(incomeGridData)) / 12
+        : Number(getUnformattedNetMonthlyTotal(incomeGridData)) / 12;
+
     const difference = Number(income) - Number(Expenses);
-    const formattedDiif = getFormattedValueTotal(user, Number(difference) / 12);
+    const formattedDiif = getFormattedValueTotal(user, Number(difference));
     setTotalDifference(formattedDiif);
     const diffLabel = getTotalLabel(difference);
     setLabel(diffLabel);
