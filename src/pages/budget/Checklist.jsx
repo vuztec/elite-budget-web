@@ -181,7 +181,7 @@ export const Checklist = () => {
         className="fixed bg-white w-[calc(100vw-40px)] lg:w-[calc(100vw-270px)] -mt-4 rounded px-4 z-9"
         onClick={() => setIsDropdownOpen(false)}
       >
-        <div className="w-full flex item-center justify-end">
+        <div className="w-full flex item-center justify-end pr-6">
           <div className="w-fit gap-4 h-10 md:h-12 px-2 rounded-full bg-white flex items-center">
             <div className="flex items-center gap-2">
               <div className="text-sm">
