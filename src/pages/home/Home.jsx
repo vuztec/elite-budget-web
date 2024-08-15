@@ -169,54 +169,59 @@ export const Home = () => {
 
   return activeAccount ? (
     <>
-      <div className="w-full flex item-center justify-end">
-        <div className="w-fit gap-4 h-10 md:h-12 px-2 rounded-full bg-white flex items-center ">
-          <div className="text-sm flex gap-2">
-            <Button
-              label={!isShowing ? 'Show Filters' : 'Hide Filters'}
-              icon={!isShowing ? <MdFilterAlt className="text-lg" /> : <MdFilterAltOff className="text-lg" />}
-              className={clsx(
-                'flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:text-black',
-                !isShowing ? 'bg-green-800' : 'bg-red-800',
-              )}
-              onClick={() => setIsShowing((old) => !old)}
-            />
-            <Button
-              onClick={handlePdf}
-              icon={<PiPrinter />}
-              label={'Print'}
-              className={
-                'flex flex-row-reverse justify-center items-center bg-black text-white text-lg gap-2 hover:bg-[whitesmoke] hover:text-black'
-              }
+      <div className="fixed bg-white w-[calc(100vw-40px)] lg:w-[calc(100vw-270px)] -mt-4 rounded px-4 z-9">
+        <div className="w-full flex item-center justify-end">
+          <div className="w-fit gap-4 h-10 md:h-12 px-2 rounded-full bg-white flex items-center ">
+            <div className="text-sm flex gap-2">
+              <Button
+                label={!isShowing ? 'Show Filters' : 'Hide Filters'}
+                icon={!isShowing ? <MdFilterAlt className="text-lg" /> : <MdFilterAltOff className="text-lg" />}
+                className={clsx(
+                  'flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:text-black',
+                  !isShowing ? 'bg-green-800' : 'bg-red-800',
+                )}
+                onClick={() => setIsShowing((old) => !old)}
+              />
+              <Button
+                onClick={handlePdf}
+                icon={<PiPrinter />}
+                label={'Print'}
+                className={
+                  'flex flex-row-reverse justify-center items-center bg-black text-white text-lg gap-2 hover:bg-[whitesmoke] hover:text-black'
+                }
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          className={clsx(
+            'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3 pb-5',
+            isShowing ? 'block' : 'hidden',
+          )}
+        >
+          <div className="w-full">
+            <Select
+              onChange={handleOwnerChange}
+              value={owner}
+              options={owners}
+              placeholder="Household"
+              label="Account Owner"
+              className="bg-white w-full py-1 "
             />
           </div>
         </div>
       </div>
-      <div
-        className={clsx(
-          'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3 pb-5',
-          isShowing ? 'block' : 'hidden',
-        )}
-      >
-        <div className="w-full">
-          <Select
-            onChange={handleOwnerChange}
-            value={owner}
-            options={owners}
-            placeholder="Household"
-            label="Account Owner"
-            className="bg-white w-full py-1 "
-          />
-        </div>
-      </div>
 
       {!isDataLoaded && (
-        <div className="py-10">
+        <div className="py-10 mt-40">
           <Loading />
         </div>
       )}
       {isDataLoaded && (
-        <div className="w-full flex flex-col items-center gap-5 xl:gap-10 bg-white p-5 mt-4" ref={pdfRef}>
+        <div
+          className={`w-full flex flex-col items-center gap-5 xl:gap-10 bg-white p-5 ${isShowing ? 'mt-40' : 'mt-10'} `}
+          ref={pdfRef}
+        >
           {showPdfContent && (
             <div className="w-full">
               <div className="w-full flex justify-center items-center py-2 px-3 gap-2 rounded-full">

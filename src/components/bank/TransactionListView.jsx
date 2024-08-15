@@ -84,6 +84,24 @@ export const TransactionListView = ({ Data, bankName, banks }) => {
       });
   };
 
+  const taxHandler = async () => {
+    setIsLoading(true);
+
+    axios
+      .patch(`/api/bank-accounts/transaction/${selected}/tax`)
+      .then(({ data }) => {
+        queryClient.setQueryData(['banktransactions'], (prev) =>
+          prev.map((transaction) => (transaction.id === selected ? { ...transaction, ...data } : transaction)),
+        );
+        setOpenTaxDialog(false);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        console.log(handleAxiosResponseError(err));
+      });
+  };
+
   const deleteClick = (id) => {
     setSelected(id);
     setOpenDialog(true);
@@ -447,6 +465,14 @@ export const TransactionListView = ({ Data, bankName, banks }) => {
         msg={prompt}
         buttonText={'Yes'}
         onClick={() => transactionHandler()}
+      />
+      <ConfirmationDialog
+        isLoading={isLoading}
+        open={openTaxDialog}
+        setOpen={setOpenTaxDialog}
+        msg={prompt}
+        buttonText={'Yes'}
+        onClick={() => taxHandler()}
       />
     </>
   );

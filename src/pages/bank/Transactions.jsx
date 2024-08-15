@@ -204,7 +204,7 @@ export const Transactions = () => {
       {isDataLoaded && (
         <div className={`w-full ${isShowing ? 'mt-40' : 'mt-10'}`}>
           {filteredBank?.map((bankName, index) => (
-            <div className="w-full">
+            <div className="w-full" key={index}>
               <TransactionListView
                 Data={gridData.filter((item) => item.BankAccountName.id === bankName.id)}
                 key={index}
