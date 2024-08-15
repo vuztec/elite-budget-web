@@ -15,6 +15,7 @@ const Textbox2 = React.forwardRef(
           <input
             type={type}
             name={name}
+            step={0.01}
             placeholder={placeholder}
             disabled={disabled}
             ref={ref}

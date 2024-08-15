@@ -63,22 +63,22 @@ export const AddGoal = ({ open, setOpen, recordData, type, goals, maingoals }) =
   const handleGoalChange = (e) => {
     const value = Number(e.target?.value);
 
-    if (value) setPercentage(() => value);
+    if (value >= 0) setPercentage(() => value);
     else setPercentage(() => '');
 
     if (value > 100 || value < 0) setError2('Amount must be between zero and 100.');
     else setError2('');
 
-    if (value && value + existingGoals - Number(recordData.Percentage) > existingTotal) {
+    if (value + existingGoals - Number(recordData.Percentage) > existingTotal) {
       setError(`The total percentage cannot exceed ${existingTotal}%`);
       setTotalGoal(() => existingGoals - Number(recordData.Percentage) + value);
-    } else if (value && Number(recordData.Percentage) > 0) {
+    } else if (Number(recordData.Percentage) > 0) {
       setTotalGoal(() => existingGoals - Number(recordData.Percentage) + value);
       setError('');
     } else if (!value && Number(recordData.Percentage) > 0) {
       setTotalGoal(() => existingGoals - Number(recordData.Percentage));
       setError('');
-    } else if (value && value + existingGoals >= 0 && value + existingGoals <= existingTotal) {
+    } else if (value + existingGoals >= 0 && value + existingGoals <= existingTotal) {
       setTotalGoal(() => existingGoals + value);
       setError('');
     } else {
