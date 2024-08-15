@@ -1,13 +1,12 @@
 import React from 'react';
 import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
-import { getFormattedValueTotal } from '../../utils/budget.calculation';
+import { getFormattedValueTotal, getMonthlyBudgetCategory, getMonthlyBudgetItem } from '../../utils/budget.calculation';
 
-// Create styles for your PDF components
 const styles = StyleSheet.create({
   page: {
     padding: 10,
     fontSize: 10,
-    flexDirection: 'column', // Ensure content is laid out in column direction
+    flexDirection: 'column',
   },
   headerContainer: {
     width: '100%',
@@ -35,9 +34,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: 'medium',
   },
-  pageBreak: {
-    margin: 10,
-  },
   table: {
     width: '100%',
     borderStyle: 'solid',
@@ -58,13 +54,16 @@ const styles = StyleSheet.create({
     borderBottomColor: '#ccc',
   },
   tableCell: {
-    borderStyle: 'solid',
-    borderWidth: 1,
+    // borderStyle: 'solid',
+    // borderWidth: 1,
+    borderRight: 1,
     borderColor: '#ccc',
     padding: 5,
     fontSize: 10,
     textAlign: 'left',
-    flex: 1,
+  },
+  dateCell: {
+    width: '4%', // Fixed width for date columns
   },
   headerCell: {
     fontWeight: 'bold',
@@ -78,12 +77,6 @@ const styles = StyleSheet.create({
     fontSize: 10,
     textTransform: 'uppercase',
   },
-  emptyCell: {
-    flex: 0.5,
-  },
-  firstColumn: {
-    width: '200px',
-  },
 });
 
 export const CheckListPDF = ({
@@ -91,13 +84,20 @@ export const CheckListPDF = ({
   uniqueBudgetItemsByCategory,
   uniqueDescriptionsByCategory,
   monthHeaders,
+  combinedData,
   user,
   title,
   owner,
 }) => {
+  // Calculate the dynamic width for the four columns
+  const numOfMonthHeaders = monthHeaders.length;
+  const fixedWidth = numOfMonthHeaders * 4; // Total fixed width for date columns
+  const remainingWidth = 100 - fixedWidth; // Remaining width to be divided
+  const dynamicWidth = remainingWidth / 4; // Dynamic width for each of the four columns
+
   return (
     <Document>
-      <Page style={styles.page} orientation="landscape">
+      <Page style={styles.page} orientation="landscape" size="A3">
         {/* Header Section */}
         <View style={styles.headerContainer}>
           <View style={styles.titleContainer}>
@@ -117,12 +117,13 @@ export const CheckListPDF = ({
         <View style={styles.table}>
           {/* Table Header */}
           <View style={[styles.tableRow, styles.tableHeader]}>
-            <Text style={[styles.tableCell, styles.headerCell]}>Savings & Spending</Text>
-            <Text style={[styles.tableCell, styles.headerCell]}>Day Due</Text>
-            <Text style={[styles.tableCell, styles.headerCell]}>Monthly Budget</Text>
-            <Text style={[styles.tableCell, styles.headerCell]}>Payment Method</Text>
+            <Text style={[styles.tableCell, styles.headerCell, { width: `${dynamicWidth}%` }]}>Savings & Spending</Text>
+            <Text style={[styles.tableCell, styles.headerCell, { width: `${dynamicWidth}%` }]}>NickName</Text>
+            <Text style={[styles.tableCell, styles.headerCell, styles.dateCell]}>Day Due</Text>
+            <Text style={[styles.tableCell, styles.headerCell, { width: `${dynamicWidth}%` }]}>Payment Method</Text>
+            <Text style={[styles.tableCell, styles.headerCell, { width: `${dynamicWidth}%` }]}>Monthly Budget</Text>
             {monthHeaders.map((header, index) => (
-              <Text key={index} style={[styles.tableCell, styles.headerCell]}>
+              <Text key={index} style={[styles.tableCell, styles.headerCell, styles.dateCell]}>
                 {header}
               </Text>
             ))}
@@ -133,10 +134,13 @@ export const CheckListPDF = ({
             <View key={categoryIndex}>
               {/* Category Row */}
               <View style={styles.tableRow}>
-                <Text style={[styles.tableCell, styles.categoryCell]}>{category}</Text>
-                <Text style={styles.emptyCell}></Text>
-                <Text style={styles.emptyCell}></Text>
-                <Text style={styles.emptyCell}></Text>
+                <Text style={[styles.tableCell, styles.categoryCell, { width: `${dynamicWidth}%` }]}>{category}</Text>
+                <Text style={[styles.emptyCell, { width: `${dynamicWidth}%` }]}></Text>
+                <Text style={[styles.emptyCell, styles.dateCell]}></Text>
+                <Text style={[styles.emptyCell, { width: `${dynamicWidth}%` }]}></Text>
+                <Text style={[styles.tableCell, { width: `${dynamicWidth}%`, borderRight: 0 }]}>
+                  {getMonthlyBudgetCategory(user, combinedData, category)}
+                </Text>
                 {monthHeaders.map((_, index) => (
                   <Text key={index} style={styles.emptyCell}></Text>
                 ))}
@@ -146,10 +150,15 @@ export const CheckListPDF = ({
                 <View key={`${category}_${budgetItemIndex}`} wrap={false}>
                   {/* Budget Item Row */}
                   <View style={styles.tableRow}>
-                    <Text style={[styles.tableCell, styles.categoryCell]}>{budgetItem}</Text>
-                    <Text style={styles.emptyCell}></Text>
-                    <Text style={styles.emptyCell}></Text>
-                    <Text style={styles.emptyCell}></Text>
+                    <Text style={[styles.tableCell, styles.categoryCell, { width: `${dynamicWidth}%` }]}>
+                      {budgetItem}
+                    </Text>
+                    <Text style={[styles.emptyCell, { width: `${dynamicWidth}%` }]}></Text>
+                    <Text style={[styles.emptyCell, styles.dateCell]}></Text>
+                    <Text style={[styles.emptyCell, { width: `${dynamicWidth}%` }]}></Text>
+                    <Text style={[styles.tableCell, { width: `${dynamicWidth}%`, borderRight: 0 }]}>
+                      {getMonthlyBudgetItem(user, combinedData, category, budgetItem)}
+                    </Text>
                     {monthHeaders.map((_, index) => (
                       <Text key={index} style={styles.emptyCell}></Text>
                     ))}
@@ -160,12 +169,15 @@ export const CheckListPDF = ({
                     Object.entries(uniqueDescriptionsByCategory[category][budgetItem]).map(
                       ([description, details], descriptionIndex) => (
                         <View style={styles.tableRow} key={`${category}_${budgetItem}_${descriptionIndex}`}>
-                          <Text style={styles.tableCell}>{details.NickName ? details.NickName : description}</Text>
-                          <Text style={styles.tableCell}>{details.DueDate}</Text>
-                          <Text style={styles.tableCell}>{getFormattedValueTotal(user, details.MonthlyBudget)}</Text>
-                          <Text style={styles.tableCell}>{details.PaymentMethod}</Text>
+                          <Text style={[styles.tableCell, { width: `${dynamicWidth}%` }]}>{details.Description}</Text>
+                          <Text style={[styles.tableCell, { width: `${dynamicWidth}%` }]}>{details.NickName}</Text>
+                          <Text style={[styles.tableCell, styles.dateCell]}>{details.DueDate}</Text>
+                          <Text style={[styles.tableCell, { width: `${dynamicWidth}%` }]}>{details.PaymentMethod}</Text>
+                          <Text style={[styles.tableCell, { width: `${dynamicWidth}%` }]}>
+                            {getFormattedValueTotal(user, details.MonthlyBudget)}
+                          </Text>
                           {monthHeaders.map((_, index) => (
-                            <Text key={index} style={styles.tableCell}></Text>
+                            <Text key={index} style={[styles.tableCell, styles.dateCell]}></Text>
                           ))}
                         </View>
                       ),

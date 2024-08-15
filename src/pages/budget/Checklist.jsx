@@ -203,6 +203,7 @@ export const Checklist = () => {
                     uniqueBudgetItemsByCategory={uniqueBudgetItemsByCategory}
                     uniqueDescriptionsByCategory={uniqueDescriptionsByCategory}
                     monthHeaders={monthHeaders}
+                    combinedData={combinedData}
                     user={user}
                     title={title}
                     owner={owner}
