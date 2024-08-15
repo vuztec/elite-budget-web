@@ -101,10 +101,6 @@ export const Checklist = () => {
       const combinedData = getCombineData(savingData, expenseData, retirementData, debtData);
       const filteredData = combinedData.filter((data) => data.MonthlyBudget > 0);
       const sortedData = filteredData.sort((a, b) => {
-        // Determine the display names for both records
-        const aDisplayName = a.NickName || a.Description;
-        const bDisplayName = b.NickName || b.Description;
-
         // First sort by Category
         if (a.Category < b.Category) return -1;
         if (a.Category > b.Category) return 1;
@@ -113,9 +109,13 @@ export const Checklist = () => {
         if (a.BudgetItem < b.BudgetItem) return -1;
         if (a.BudgetItem > b.BudgetItem) return 1;
 
-        // If BudgetItems are equal, sort by display name (NickName or Description)
-        if (aDisplayName < bDisplayName) return -1;
-        if (aDisplayName > bDisplayName) return 1;
+        // If BudgetItems are equal, sort by DueDate
+        if (a.DueDate < b.DueDate) return -1;
+        if (a.DueDate > b.DueDate) return 1;
+
+        // If DueDate are equal, sort by Description
+        if (a.Description < b.Description) return -1;
+        if (a.Description > b.Description) return 1;
 
         return 0;
       });
@@ -281,6 +281,7 @@ export const Checklist = () => {
             uniqueBudgetItemsByCategory={uniqueBudgetItemsByCategory}
             uniqueDescriptionsByCategory={uniqueDescriptionsByCategory}
             monthHeaders={monthHeaders}
+            combinedData={combinedData}
           />
         </div>
       )}

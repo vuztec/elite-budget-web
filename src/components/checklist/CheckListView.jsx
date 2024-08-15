@@ -1,14 +1,21 @@
 import React from 'react';
 import useUserStore from '../../app/user';
-import { getFormattedValueTotal } from '../../utils/budget.calculation';
+import {
+  getFormattedValueTotal,
+  getMonthlyBudgetCategory,
+  getMonthlyBudgetItem,
+  getMonthlyBudgetTotal,
+} from '../../utils/budget.calculation';
 import './checklist.css';
 export const CheckListView = ({
   uniqueCategories,
   uniqueBudgetItemsByCategory,
   uniqueDescriptionsByCategory,
   monthHeaders,
+  combinedData,
 }) => {
   const { user } = useUserStore();
+  console.log(combinedData, 'combinedData');
 
   return (
     <div className="w-full h-fit bg-white py-2 mt-4 shadow-md rounded">
@@ -34,13 +41,13 @@ export const CheckListView = ({
               {uniqueCategories &&
                 uniqueCategories?.map((category, categoryIndex) => (
                   <React.Fragment key={categoryIndex}>
-                    <tr className="text-gray-600 font-bold bg-[whitesmoke] border-b border-t border-gray-200 text-left text-sm xl:text-[16px] uppercase">
+                    <tr className="text-gray-600 font-bold bg-gray-400/25 border-b border-t border-gray-400 text-left text-sm xl:text-[16px] uppercase">
                       <td className="px-1 lg:px-2 py-2">{category}</td>
 
                       <td className=""></td>
                       <td className=""></td>
                       <td className=""></td>
-                      <td className=""></td>
+                      <td className="">{getMonthlyBudgetCategory(user, combinedData, category)}</td>
                       {monthHeaders?.map((index) => (
                         <td key={index} className=""></td>
                       ))}
@@ -54,7 +61,7 @@ export const CheckListView = ({
                             <td className=""></td>
                             <td className=""></td>
                             <td className=""></td>
-                            <td className=""></td>
+                            <td className="">{getMonthlyBudgetItem(user, combinedData, category, budgetItem)}</td>
                             {monthHeaders.map((index) => (
                               <td key={index} className=""></td>
                             ))}
@@ -97,6 +104,17 @@ export const CheckListView = ({
                       ))}
                   </React.Fragment>
                 ))}
+              <tr className="text-gray-600 font-bold bg-gray-400/50 border-b border-t border-gray-400 text-left text-sm xl:text-[16px] uppercase">
+                <td className="px-1 lg:px-2 py-2">OVERALL TOTAL</td>
+
+                <td className=""></td>
+                <td className=""></td>
+                <td className=""></td>
+                <td className="">{getMonthlyBudgetTotal(user, combinedData)}</td>
+                {monthHeaders?.map((index) => (
+                  <td key={index} className=""></td>
+                ))}
+              </tr>
             </tbody>
           </table>
         </div>

@@ -326,6 +326,26 @@ export const getMonthlyBudgetTotal = (user, data) => {
   return formattedAmount;
 };
 
+export const getMonthlyBudgetCategory = (user, data, cat) => {
+  const filteredData = data?.filter((item) => item.Category === cat);
+  const Amount = filteredData?.reduce((accumulator, record) => {
+    const amount = record?.MonthlyBudget || 0;
+    return accumulator + Number(amount);
+  }, 0);
+  const formattedAmount = getFormattedValue(user, Amount);
+  return formattedAmount;
+};
+
+export const getMonthlyBudgetItem = (user, data, cat, budgetItem) => {
+  const filteredData = data?.filter((item) => item.Category === cat && item.BudgetItem === budgetItem);
+  const Amount = filteredData?.reduce((accumulator, record) => {
+    const amount = record?.MonthlyBudget || 0;
+    return accumulator + Number(amount);
+  }, 0);
+  const formattedAmount = getFormattedValue(user, Amount);
+  return formattedAmount;
+};
+
 export const getYearlyBudgetTotal = (user, data) => {
   const Amount =
     12 *
