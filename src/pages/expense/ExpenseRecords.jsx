@@ -15,6 +15,7 @@ import { ExpenseListView } from '../../components/expense/ExpenseListView';
 import { ExpenseSummary } from '../../components/expense/ExpenseSummary';
 import { hasRecords } from '../../utils/budget.calculation';
 import useUserStore from '../../app/user';
+import { defaultDebSort } from '../../utils/budget.sort';
 
 export const ExpenseRecords = () => {
   const { user } = useUserStore();
@@ -56,18 +57,19 @@ export const ExpenseRecords = () => {
         );
       }
       // Sort the data by Owner property
-      const sortedData = updatedData.sort((a, b) => {
-        if (a.Category === b.Category) {
-          if (a.Owner === null && b.Owner !== null) return 1;
-          if (b.Owner === null && a.Owner !== null) return -1;
+      // const sortedData = updatedData.sort((a, b) => {
+      //   if (a.Category === b.Category) {
+      //     if (a.Owner === null && b.Owner !== null) return 1;
+      //     if (b.Owner === null && a.Owner !== null) return -1;
 
-          // If both Owners are null, treat them as equal
-          if (a.Owner === null && b.Owner === null) return 0;
+      //     // If both Owners are null, treat them as equal
+      //     if (a.Owner === null && b.Owner === null) return 0;
 
-          return a.Owner < b.Owner ? 1 : -1; // Descending order for Owner
-        }
-        return a.Category > b.Category ? 1 : -1; // Ascending order for Category
-      });
+      //     return a.Owner < b.Owner ? 1 : -1; // Descending order for Owner
+      //   }
+      //   return a.Category > b.Category ? 1 : -1; // Ascending order for Category
+      // });
+      const sortedData = defaultDebSort(updatedData);
       setGridData(sortedData);
       setIsDataLoaded(true);
     } else {
