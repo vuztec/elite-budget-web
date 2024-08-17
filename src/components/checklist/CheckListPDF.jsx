@@ -4,7 +4,7 @@ import { getFormattedValueTotal, getMonthlyBudgetCategory, getMonthlyBudgetItem 
 
 const styles = StyleSheet.create({
   page: {
-    padding: 10,
+    padding: 70,
     fontSize: 10,
     flexDirection: 'column',
   },
@@ -134,15 +134,24 @@ export const CheckListPDF = ({
             <View key={categoryIndex}>
               {/* Category Row */}
               <View style={styles.tableRow}>
-                <Text style={[styles.tableCell, styles.categoryCell, { width: `${dynamicWidth}%` }]}>{category}</Text>
-                <Text style={[styles.emptyCell, { width: `${dynamicWidth}%` }]}></Text>
-                <Text style={[styles.emptyCell, styles.dateCell]}></Text>
-                <Text style={[styles.emptyCell, { width: `${dynamicWidth}%` }]}></Text>
-                <Text style={[styles.tableCell, { width: `${dynamicWidth}%`, borderRight: 0 }]}>
+                <Text style={[styles.tableCell, styles.categoryCell, { width: `${dynamicWidth}%`, borderRight: 0 }]}>
+                  {category}
+                </Text>
+                <Text
+                  style={[styles.tableCell, styles.categoryCell, { width: `${dynamicWidth}%`, borderRight: 0 }]}
+                ></Text>
+                <Text style={[styles.tableCell, styles.categoryCell, styles.dateCell, { borderRight: 0 }]}></Text>
+                <Text
+                  style={[styles.tableCell, styles.categoryCell, { width: `${dynamicWidth}%`, borderRight: 0 }]}
+                ></Text>
+                <Text style={[styles.tableCell, styles.categoryCell, { width: `${dynamicWidth}%`, borderRight: 0 }]}>
                   {getMonthlyBudgetCategory(user, combinedData, category)}
                 </Text>
                 {monthHeaders.map((_, index) => (
-                  <Text key={index} style={styles.emptyCell}></Text>
+                  <Text
+                    key={index}
+                    style={[styles.tableCell, styles.categoryCell, styles.dateCell, { borderRight: 0 }]}
+                  ></Text>
                 ))}
               </View>
 
@@ -150,17 +159,28 @@ export const CheckListPDF = ({
                 <View key={`${category}_${budgetItemIndex}`} wrap={false}>
                   {/* Budget Item Row */}
                   <View style={styles.tableRow}>
-                    <Text style={[styles.tableCell, styles.categoryCell, { width: `${dynamicWidth}%` }]}>
+                    <Text
+                      style={[styles.tableCell, styles.categoryCell, { width: `${dynamicWidth}%`, borderRight: 0 }]}
+                    >
                       {budgetItem}
                     </Text>
-                    <Text style={[styles.emptyCell, { width: `${dynamicWidth}%` }]}></Text>
-                    <Text style={[styles.emptyCell, styles.dateCell]}></Text>
-                    <Text style={[styles.emptyCell, { width: `${dynamicWidth}%` }]}></Text>
-                    <Text style={[styles.tableCell, { width: `${dynamicWidth}%`, borderRight: 0 }]}>
+                    <Text
+                      style={[styles.tableCell, styles.categoryCell, { width: `${dynamicWidth}%`, borderRight: 0 }]}
+                    ></Text>
+                    <Text style={[styles.tableCell, styles.categoryCell, styles.dateCell, { borderRight: 0 }]}></Text>
+                    <Text
+                      style={[styles.tableCell, styles.categoryCell, { width: `${dynamicWidth}%`, borderRight: 0 }]}
+                    ></Text>
+                    <Text
+                      style={[styles.tableCell, styles.categoryCell, { width: `${dynamicWidth}%`, borderRight: 0 }]}
+                    >
                       {getMonthlyBudgetItem(user, combinedData, category, budgetItem)}
                     </Text>
                     {monthHeaders.map((_, index) => (
-                      <Text key={index} style={styles.emptyCell}></Text>
+                      <Text
+                        key={index}
+                        style={[styles.tableCell, styles.categoryCell, styles.dateCell, { borderRight: 0 }]}
+                      ></Text>
                     ))}
                   </View>
 
