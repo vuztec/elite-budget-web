@@ -239,7 +239,7 @@ export const CheckListPDF = ({
         </View>
 
         <Text
-          render={({ pageNumber, totalPages }) => `${pageNumber} / ${totalPages}`}
+          render={({ pageNumber, totalPages }) => `Page ${pageNumber} of ${totalPages}`}
           fixed
           style={styles.pageNumbers}
         />
