@@ -1,6 +1,11 @@
 import React from 'react';
 import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
-import { getFormattedValueTotal, getMonthlyBudgetCategory, getMonthlyBudgetItem } from '../../utils/budget.calculation';
+import {
+  getFormattedValueTotal,
+  getMonthlyBudgetCategory,
+  getMonthlyBudgetItem,
+  getMonthlyBudgetTotal,
+} from '../../utils/budget.calculation';
 
 const styles = StyleSheet.create({
   page: {
@@ -206,6 +211,24 @@ export const CheckListPDF = ({
               ))}
             </View>
           ))}
+
+          <View style={[styles.tableRow, styles.tableHeader]}>
+            <Text style={[styles.tableCell, styles.headerCell, { width: `${dynamicWidth}%`, borderRight: 0 }]}>
+              OVERALL TOTAL
+            </Text>
+            <Text style={[styles.tableCell, styles.headerCell, { width: `${dynamicWidth}%`, borderRight: 0 }]}></Text>
+            <Text style={[styles.tableCell, styles.headerCell, styles.dateCell, { borderRight: 0 }]}></Text>
+            <Text style={[styles.tableCell, styles.headerCell, { width: `${dynamicWidth}%`, borderRight: 0 }]}></Text>
+            <Text style={[styles.tableCell, styles.headerCell, { width: `${dynamicWidth}%`, borderRight: 0 }]}>
+              {getMonthlyBudgetTotal(user, combinedData)}
+            </Text>
+            {monthHeaders.map((_, index) => (
+              <Text
+                key={index}
+                style={[styles.tableCell, styles.headerCell, styles.dateCell, { borderRight: 0 }]}
+              ></Text>
+            ))}
+          </View>
         </View>
       </Page>
     </Document>
