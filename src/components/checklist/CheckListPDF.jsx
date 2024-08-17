@@ -116,7 +116,7 @@ export const CheckListPDF = ({
         {/* Table Section */}
         <View style={styles.table}>
           {/* Table Header */}
-          <View style={[styles.tableRow, styles.tableHeader]}>
+          <View style={[styles.tableRow, styles.tableHeader]} fixed>
             <Text style={[styles.tableCell, styles.headerCell, { width: `${dynamicWidth}%` }]}>Savings & Spending</Text>
             <Text style={[styles.tableCell, styles.headerCell, { width: `${dynamicWidth}%` }]}>NickName</Text>
             <Text style={[styles.tableCell, styles.headerCell, styles.dateCell]}>Day Due</Text>
