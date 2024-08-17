@@ -82,6 +82,13 @@ const styles = StyleSheet.create({
     fontSize: 10,
     textTransform: 'uppercase',
   },
+  pageNumbers: {
+    position: 'absolute',
+    bottom: 20,
+    left: 0,
+    right: 0,
+    textAlign: 'center',
+  },
 });
 
 export const CheckListPDF = ({
@@ -230,6 +237,12 @@ export const CheckListPDF = ({
             ))}
           </View>
         </View>
+
+        <Text
+          render={({ pageNumber, totalPages }) => `${pageNumber} / ${totalPages}`}
+          fixed
+          style={styles.pageNumbers}
+        />
       </Page>
     </Document>
   );

@@ -278,7 +278,7 @@ export const Checklist = () => {
               </div>
             </div>
           )}
-          {/* <PDFViewer>
+          <PDFViewer>
             <CheckListPDF
               uniqueCategories={uniqueCategories}
               uniqueBudgetItemsByCategory={uniqueBudgetItemsByCategory}
@@ -289,14 +289,14 @@ export const Checklist = () => {
               title={title}
               owner={owner}
             />
-          </PDFViewer> */}
-          <CheckListView
+          </PDFViewer>
+          {/* <CheckListView
             uniqueCategories={uniqueCategories}
             uniqueBudgetItemsByCategory={uniqueBudgetItemsByCategory}
             uniqueDescriptionsByCategory={uniqueDescriptionsByCategory}
             monthHeaders={monthHeaders}
             combinedData={combinedData}
-          />
+          /> */}
         </div>
       )}
     </>
