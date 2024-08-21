@@ -126,7 +126,7 @@ export const AddRetirement = ({ open, setOpen, recordData }) => {
                 className="w-full rounded"
                 register={register('MarketValue', {
                   valueAsNumber: true,
-                  validate: (value) => value >= 0 || 'Amount must be positive or zero.',
+                  validate: (value) => value >= 0 || 'Amount must be greater than or equal to zero',
                 })}
                 error={errors.MarketValue ? errors.MarketValue.message : ''}
               />
@@ -155,7 +155,7 @@ export const AddRetirement = ({ open, setOpen, recordData }) => {
                       valueAsNumber: true,
                       validate: (value) =>
                         recordData?.Description !== 'Retirement (401k, Roth 401k, 403b) Prior Job'
-                          ? value >= 0 || 'Amount must be positive or zero.'
+                          ? value >= 0 || 'Amount must be greater than or equal to zero'
                           : true,
                     })}
                     error={errors.MonthlyBudget ? errors.MonthlyBudget.message : ''}

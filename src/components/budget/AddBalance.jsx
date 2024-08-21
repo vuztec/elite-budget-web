@@ -1,15 +1,15 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { useForm } from "react-hook-form";
-import ModalWrapper from "../ModalWrapper";
-import { Dialog } from "@headlessui/react";
-import Textbox from "../Textbox";
-import Loading from "../Loader";
-import Button from "../Button";
-import { useQueryClient, useQuery } from "react-query";
-import { IoMdSend } from "react-icons/io";
-import { TiCancel } from "react-icons/ti";
-import axios from "../../config/axios";
-import { handleAxiosResponseError } from "../../utils/handleResponseError";
+import React, { useEffect, useMemo, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import ModalWrapper from '../ModalWrapper';
+import { Dialog } from '@headlessui/react';
+import Textbox from '../Textbox';
+import Loading from '../Loader';
+import Button from '../Button';
+import { useQueryClient, useQuery } from 'react-query';
+import { IoMdSend } from 'react-icons/io';
+import { TiCancel } from 'react-icons/ti';
+import axios from '../../config/axios';
+import { handleAxiosResponseError } from '../../utils/handleResponseError';
 
 export const AddBalance = ({ open, setOpen, recordData, type }) => {
   const queryClient = useQueryClient();
@@ -26,7 +26,7 @@ export const AddBalance = ({ open, setOpen, recordData, type }) => {
 
   useEffect(() => {
     if (recordData?.id) {
-      setValue("Balance", recordData.Balance);
+      setValue('Balance', recordData.Balance);
     }
 
     return () => reset();
@@ -37,9 +37,9 @@ export const AddBalance = ({ open, setOpen, recordData, type }) => {
     setIsLoading(() => true);
 
     axios
-      .patch("/api/extra-funds-tracker/excess-balance", data)
+      .patch('/api/extra-funds-tracker/excess-balance', data)
       .then(({ data }) => {
-        queryClient.setQueryData(["excessbalance"], () => data);
+        queryClient.setQueryData(['excessbalance'], () => data);
 
         setIsLoading(() => false);
         setOpen(false);
@@ -53,15 +53,9 @@ export const AddBalance = ({ open, setOpen, recordData, type }) => {
   return (
     <>
       <ModalWrapper open={open} setOpen={setOpen}>
-        <form
-          onSubmit={handleSubmit(handleOnSubmit)}
-          className="w-full h-[70%]"
-        >
-          <Dialog.Title
-            as="h2"
-            className="text-base font-bold leading-6 text-gray-900 mb-4"
-          >
-            {recordData ? "UPDATE PREVIOUS BALANCE" : "ADD PREVIOUS BALANCE"}
+        <form onSubmit={handleSubmit(handleOnSubmit)} className="w-full h-[70%]">
+          <Dialog.Title as="h2" className="text-base font-bold leading-6 text-gray-900 mb-4">
+            {recordData ? 'UPDATE PREVIOUS BALANCE' : 'ADD PREVIOUS BALANCE'}
           </Dialog.Title>
           <div className="mt-2 flex flex-col gap-6 overflow-y-scroll bg-scroll">
             <div className="flex flex-col gap-6 w-full">
@@ -71,16 +65,14 @@ export const AddBalance = ({ open, setOpen, recordData, type }) => {
                 name="Balance"
                 label="* Balance from Previous Month"
                 className="w-full rounded"
-                register={register("Balance", {
+                register={register('Balance', {
                   valueAsNumber: true,
-                  validate: (value) =>
-                    value >= 0 || "Amount must be positive or zero.",
+                  validate: (value) => value >= 0 || 'Amount must be greater than or equal to zero',
                 })}
-                error={errors.Balance ? errors.Balance.message : ""}
+                error={errors.Balance ? errors.Balance.message : ''}
               />
               <p className="text-xs italic text-gray-400">
-                * This is a total amount of excess funds not used in the
-                previous months
+                * This is a total amount of excess funds not used in the previous months
               </p>
             </div>
           </div>

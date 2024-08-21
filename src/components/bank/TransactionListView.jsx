@@ -114,15 +114,16 @@ export const TransactionListView = ({ Data, bankName, banks }) => {
 
   const handleClearTransaction = (data) => {
     setSelected(data.id);
-    if (data.IsCleared) setPrompt(() => 'Do you want to Un-Clear the Bank Transaction?');
-    else setPrompt(() => 'Do you want to Clear the Bank Transaction?');
+    if (data.IsCleared) setPrompt(() => 'Did this transaction clear the bank?');
+    else setPrompt(() => 'Has this transaction cleared the bank?');
     setOpenClearDialog(true);
   };
 
   const handleTaxableTransaction = (data) => {
     setSelected(data.id);
-    if (data.Taxable) setPrompt(() => 'Do you want to un-tax the Bank Transaction?');
-    else setPrompt(() => 'Do you want to tax the Bank Transaction?');
+    // if (data.Taxable) setPrompt(() => 'Do you want to un-tax the Bank Transaction?');
+    // else
+    setPrompt(() => 'Flag as a tax item?');
     setOpenTaxDialog(true);
   };
 
@@ -154,7 +155,7 @@ export const TransactionListView = ({ Data, bankName, banks }) => {
               tab={'transaction'}
               order={order}
               setOrder={setOrder}
-              column={2}
+              column={1}
               name={'Date'}
               data={gridData}
               setData={setGridData}
@@ -169,7 +170,7 @@ export const TransactionListView = ({ Data, bankName, banks }) => {
               tab={'transaction'}
               order={order}
               setOrder={setOrder}
-              column={3}
+              column={2}
               name={'Description'}
               data={gridData}
               setData={setGridData}
@@ -185,8 +186,8 @@ export const TransactionListView = ({ Data, bankName, banks }) => {
               tab={'transaction'}
               order={order}
               setOrder={setOrder}
-              column={7}
-              name={'IsCleared'}
+              column={3}
+              name={'Taxable'}
               data={gridData}
               setData={setGridData}
               defaultData={Data}

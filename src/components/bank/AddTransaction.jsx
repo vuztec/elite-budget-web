@@ -11,6 +11,7 @@ import { IoMdSend } from 'react-icons/io';
 import { TiCancel } from 'react-icons/ti';
 import axios from '../../config/axios';
 import { handleAxiosResponseError } from '../../utils/handleResponseError';
+import { formatDateForForm } from '../../utils';
 
 export const AddTransaction = ({ open, setOpen, recordData, banks }) => {
   const queryClient = useQueryClient();
@@ -27,11 +28,13 @@ export const AddTransaction = ({ open, setOpen, recordData, banks }) => {
   useEffect(() => {
     if (recordData?.id) {
       setValue('BankName', recordData.BankAccountName.id);
-      // setValue("Owner", recordData.Owner);
+      setValue('Date', formatDateForForm(new Date(recordData.Date)));
       setValue('Description', recordData.Description);
       setValue('Type', recordData.Type);
       setValue('Amount', recordData.Amount);
       setValue('IsCleared', recordData.IsCleared);
+    } else {
+      setValue('Date', formatDateForForm(new Date()));
     }
 
     return () => reset();
@@ -138,6 +141,18 @@ export const AddTransaction = ({ open, setOpen, recordData, banks }) => {
                 error={errors.Type ? errors.Type.message : ''}
               />
             </div>
+            <Textbox
+              placeholder="Select Date"
+              type="date"
+              name="Date"
+              label="Date"
+              className="w-full rounded"
+              register={register('Date', {
+                valueAsDate: true,
+                required: 'Date is required!',
+              })}
+              error={errors.Date ? errors.Date.message : ''}
+            />
             <div className="flex flex-col gap-6 w-full">
               <Textbox
                 placeholder="Enter Amount"

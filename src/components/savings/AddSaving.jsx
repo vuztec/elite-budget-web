@@ -1,18 +1,18 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { useForm } from "react-hook-form";
-import ModalWrapper from "../ModalWrapper";
-import { Dialog } from "@headlessui/react";
-import Textbox from "../Textbox";
-import Select from "../Select";
-import Loading from "../Loader";
-import Button from "../Button";
-import { useQueryClient, useQuery } from "react-query";
-import { IoMdSend } from "react-icons/io";
-import { TiCancel } from "react-icons/ti";
-import axios from "../../config/axios";
-import { handleAxiosResponseError } from "../../utils/handleResponseError";
-import { daydues, paymentMethods } from "../../utils/budget.filter";
-import { showMarketValue } from "../../utils/budget.calculation";
+import React, { useEffect, useMemo, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import ModalWrapper from '../ModalWrapper';
+import { Dialog } from '@headlessui/react';
+import Textbox from '../Textbox';
+import Select from '../Select';
+import Loading from '../Loader';
+import Button from '../Button';
+import { useQueryClient, useQuery } from 'react-query';
+import { IoMdSend } from 'react-icons/io';
+import { TiCancel } from 'react-icons/ti';
+import axios from '../../config/axios';
+import { handleAxiosResponseError } from '../../utils/handleResponseError';
+import { daydues, paymentMethods } from '../../utils/budget.filter';
+import { showMarketValue } from '../../utils/budget.calculation';
 
 export const AddSaving = ({ open, setOpen, recordData, chatUsers }) => {
   const queryClient = useQueryClient();
@@ -40,13 +40,13 @@ export const AddSaving = ({ open, setOpen, recordData, chatUsers }) => {
 
   useEffect(() => {
     if (recordData?.id) {
-      setValue("Description", recordData.Description);
-      setValue("NickName", recordData.NickName);
-      setValue("Owner", recordData.Owner);
-      setValue("PaymentMethod", recordData.PaymentMethod);
-      setValue("MarketValue", recordData.MarketValue);
-      setValue("MonthlyBudget", recordData.MonthlyBudget);
-      setValue("DueDate", recordData.DueDate);
+      setValue('Description', recordData.Description);
+      setValue('NickName', recordData.NickName);
+      setValue('Owner', recordData.Owner);
+      setValue('PaymentMethod', recordData.PaymentMethod);
+      setValue('MarketValue', recordData.MarketValue);
+      setValue('MonthlyBudget', recordData.MonthlyBudget);
+      setValue('DueDate', recordData.DueDate);
     }
 
     return () => reset();
@@ -58,12 +58,10 @@ export const AddSaving = ({ open, setOpen, recordData, chatUsers }) => {
     setIsLoading(() => true);
 
     axios
-      .patch("/api/savings-retirements/" + numericSelectedID, data)
+      .patch('/api/savings-retirements/' + numericSelectedID, data)
       .then(({ data }) => {
-        queryClient.setQueryData(["savings"], (prev) =>
-          prev.map((saving) =>
-            saving.id === numericSelectedID ? { ...saving, ...data } : saving
-          )
+        queryClient.setQueryData(['savings'], (prev) =>
+          prev.map((saving) => (saving.id === numericSelectedID ? { ...saving, ...data } : saving)),
         );
         setIsLoading(() => false);
         setOpen(false);
@@ -77,15 +75,9 @@ export const AddSaving = ({ open, setOpen, recordData, chatUsers }) => {
   return (
     <>
       <ModalWrapper open={open} setOpen={setOpen}>
-        <form
-          onSubmit={handleSubmit(handleOnSubmit)}
-          className="w-full h-[70%]"
-        >
-          <Dialog.Title
-            as="h2"
-            className="text-base font-bold leading-6 text-gray-900 mb-4"
-          >
-            {recordData ? "UPDATE SAVING RECORD" : "ADD NEW SAVING RECORD"}
+        <form onSubmit={handleSubmit(handleOnSubmit)} className="w-full h-[70%]">
+          <Dialog.Title as="h2" className="text-base font-bold leading-6 text-gray-900 mb-4">
+            {recordData ? 'UPDATE SAVING RECORD' : 'ADD NEW SAVING RECORD'}
           </Dialog.Title>
           <div className="mt-2 flex flex-col gap-6 overflow-y-scroll bg-scroll">
             <div className="flex flex-col gap-6 w-full">
@@ -96,7 +88,7 @@ export const AddSaving = ({ open, setOpen, recordData, chatUsers }) => {
                 label="Savings Description"
                 disabled={true}
                 className="w-full rounded"
-                register={register("Description")}
+                register={register('Description')}
               />
             </div>
             <div className="flex flex-col gap-6 w-full">
@@ -106,8 +98,8 @@ export const AddSaving = ({ open, setOpen, recordData, chatUsers }) => {
                 name="NickName"
                 label="Nickname"
                 className="w-full rounded"
-                register={register("NickName")}
-                error={errors.NickName ? errors.NickName.message : ""}
+                register={register('NickName')}
+                error={errors.NickName ? errors.NickName.message : ''}
               />
             </div>
 
@@ -117,15 +109,15 @@ export const AddSaving = ({ open, setOpen, recordData, chatUsers }) => {
                 label="Owner"
                 defaultValue="Self"
                 options={[
-                  { value: "Self", label: "Self" },
-                  { value: "Partner", label: "Partner" },
-                  { value: "Joint", label: "Joint" },
+                  { value: 'Self', label: 'Self' },
+                  { value: 'Partner', label: 'Partner' },
+                  { value: 'Joint', label: 'Joint' },
                 ]}
                 className="w-full rounded"
-                register={register("Owner", {
-                  required: "Name is required!",
+                register={register('Owner', {
+                  required: 'Name is required!',
                 })}
-                error={errors.Owner ? errors.Owner.message : ""}
+                error={errors.Owner ? errors.Owner.message : ''}
               />
               <Select
                 name="PaymentMethod"
@@ -133,8 +125,8 @@ export const AddSaving = ({ open, setOpen, recordData, chatUsers }) => {
                 defaultValue="Auto Debit"
                 options={payMethods}
                 className="w-full rounded"
-                register={register("PaymentMethod")}
-                error={errors.PaymentMethod ? errors.PaymentMethod.message : ""}
+                register={register('PaymentMethod')}
+                error={errors.PaymentMethod ? errors.PaymentMethod.message : ''}
               />
             </div>
             {isVisible && (
@@ -145,12 +137,11 @@ export const AddSaving = ({ open, setOpen, recordData, chatUsers }) => {
                   name="MarketValue"
                   label="Market Value"
                   className="w-full rounded"
-                  register={register("MarketValue", {
+                  register={register('MarketValue', {
                     valueAsNumber: true,
-                    validate: (value) =>
-                      value >= 0 || "Amount must be positive or zero.",
+                    validate: (value) => value >= 0 || 'Amount must be greater than or equal to zero',
                   })}
-                  error={errors.MarketValue ? errors.MarketValue.message : ""}
+                  error={errors.MarketValue ? errors.MarketValue.message : ''}
                 />
               </div>
             )}
@@ -161,12 +152,11 @@ export const AddSaving = ({ open, setOpen, recordData, chatUsers }) => {
                 name="MonthlyBudget"
                 label="Monthly Budget"
                 className="w-full rounded"
-                register={register("MonthlyBudget", {
+                register={register('MonthlyBudget', {
                   valueAsNumber: true,
-                  validate: (value) =>
-                    value >= 0 || "Amount must be positive or zero.",
+                  validate: (value) => value >= 0 || 'Amount must be greater than or equal to zero',
                 })}
-                error={errors.MonthlyBudget ? errors.MonthlyBudget.message : ""}
+                error={errors.MonthlyBudget ? errors.MonthlyBudget.message : ''}
               />
               <Select
                 name="DueDate"
@@ -174,8 +164,8 @@ export const AddSaving = ({ open, setOpen, recordData, chatUsers }) => {
                 defaultValue="N/A"
                 options={duedays}
                 className="w-full rounded"
-                register={register("DueDate")}
-                error={errors.DueDate ? errors.DueDate.message : ""}
+                register={register('DueDate')}
+                error={errors.DueDate ? errors.DueDate.message : ''}
               />
             </div>
           </div>

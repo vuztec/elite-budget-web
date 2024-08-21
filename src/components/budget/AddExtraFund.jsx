@@ -1,18 +1,18 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { useForm } from "react-hook-form";
-import ModalWrapper from "../ModalWrapper";
-import { Dialog } from "@headlessui/react";
-import Textbox from "../Textbox";
-import Select from "../Select";
-import Loading from "../Loader";
-import Button from "../Button";
-import { useQueryClient, useQuery } from "react-query";
-import { IoMdSend } from "react-icons/io";
-import { TiCancel } from "react-icons/ti";
-import axios from "../../config/axios";
-import { handleAxiosResponseError } from "../../utils/handleResponseError";
-import { getBankAccountNames } from "../../config/api";
-import { formatDateForForm } from "../../utils";
+import React, { useEffect, useMemo, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import ModalWrapper from '../ModalWrapper';
+import { Dialog } from '@headlessui/react';
+import Textbox from '../Textbox';
+import Select from '../Select';
+import Loading from '../Loader';
+import Button from '../Button';
+import { useQueryClient, useQuery } from 'react-query';
+import { IoMdSend } from 'react-icons/io';
+import { TiCancel } from 'react-icons/ti';
+import axios from '../../config/axios';
+import { handleAxiosResponseError } from '../../utils/handleResponseError';
+import { getBankAccountNames } from '../../config/api';
+import { formatDateForForm } from '../../utils';
 
 export const AddExtraFund = ({ open, setOpen, recordData }) => {
   const queryClient = useQueryClient();
@@ -25,15 +25,19 @@ export const AddExtraFund = ({ open, setOpen, recordData }) => {
     setValue,
     reset,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: { Date: formatDateForForm(new Date()) },
+  });
 
   useEffect(() => {
     if (recordData?.id) {
-      setValue("Owner", recordData.Owner);
-      setValue("Date", formatDateForForm(new Date(recordData.Date)));
-      setValue("Description", recordData.Description);
-      setValue("Type", recordData.Type);
-      setValue("Amount", recordData.Amount);
+      setValue('Owner', recordData.Owner);
+      setValue('Date', formatDateForForm(new Date(recordData.Date)));
+      setValue('Description', recordData.Description);
+      setValue('Type', recordData.Type);
+      setValue('Amount', recordData.Amount);
+    } else {
+      setValue('Date', formatDateForForm(new Date()));
     }
 
     return () => reset();
@@ -46,11 +50,9 @@ export const AddExtraFund = ({ open, setOpen, recordData }) => {
 
     if (!recordData?.id)
       axios
-        .post("/api/extra-funds-tracker", data)
+        .post('/api/extra-funds-tracker', data)
         .then(({ data }) => {
-          queryClient.setQueryData(["extrafunds"], (prev) =>
-            prev ? [...prev, data] : [data]
-          );
+          queryClient.setQueryData(['extrafunds'], (prev) => (prev ? [...prev, data] : [data]));
           setIsLoading(() => false);
           setOpen(false);
         })
@@ -60,12 +62,10 @@ export const AddExtraFund = ({ open, setOpen, recordData }) => {
         });
     else
       axios
-        .patch("/api/extra-funds-tracker/" + numericSelectedID, data)
+        .patch('/api/extra-funds-tracker/' + numericSelectedID, data)
         .then(({ data }) => {
-          queryClient.setQueryData(["extrafunds"], (prev) =>
-            prev.map((fund) =>
-              fund.id === numericSelectedID ? { ...fund, ...data } : fund
-            )
+          queryClient.setQueryData(['extrafunds'], (prev) =>
+            prev.map((fund) => (fund.id === numericSelectedID ? { ...fund, ...data } : fund)),
           );
           setIsLoading(() => false);
           setOpen(false);
@@ -79,17 +79,9 @@ export const AddExtraFund = ({ open, setOpen, recordData }) => {
   return (
     <>
       <ModalWrapper open={open} setOpen={setOpen}>
-        <form
-          onSubmit={handleSubmit(handleOnSubmit)}
-          className="w-full h-[70%]"
-        >
-          <Dialog.Title
-            as="h2"
-            className="text-base font-bold leading-6 text-gray-900 mb-4"
-          >
-            {recordData
-              ? "UPDATE EXTRA FUND RECORD"
-              : "ADD NEW EXTRA FUND RECORD"}
+        <form onSubmit={handleSubmit(handleOnSubmit)} className="w-full h-[70%]">
+          <Dialog.Title as="h2" className="text-base font-bold leading-6 text-gray-900 mb-4">
+            {recordData ? 'UPDATE EXTRA FUND RECORD' : 'ADD NEW EXTRA FUND RECORD'}
           </Dialog.Title>
           <div className="mt-2 flex flex-col gap-6 overflow-y-scroll bg-scroll">
             <div className="flex flex-col gap-6 w-full">
@@ -98,15 +90,15 @@ export const AddExtraFund = ({ open, setOpen, recordData }) => {
                 label="Transaction Owner"
                 defaultValue="Self"
                 options={[
-                  { value: "Self", label: "Self" },
-                  { value: "Partner", label: "Partner" },
-                  { value: "Joint", label: "Joint" },
+                  { value: 'Self', label: 'Self' },
+                  { value: 'Partner', label: 'Partner' },
+                  { value: 'Joint', label: 'Joint' },
                 ]}
                 className="w-full rounded"
-                register={register("Owner", {
-                  required: "Name is required!",
+                register={register('Owner', {
+                  required: 'Name is required!',
                 })}
-                error={errors.Owner ? errors.Owner.message : ""}
+                error={errors.Owner ? errors.Owner.message : ''}
               />
             </div>
             <div className="flex flex-col gap-6 w-full">
@@ -116,11 +108,11 @@ export const AddExtraFund = ({ open, setOpen, recordData }) => {
                 name="Date"
                 label="Date"
                 className="w-full rounded"
-                register={register("Date", {
+                register={register('Date', {
                   valueAsDate: true,
-                  required: "Date is required!",
+                  required: 'Date is required!',
                 })}
-                error={errors.Date ? errors.Date.message : ""}
+                error={errors.Date ? errors.Date.message : ''}
               />
               <Textbox
                 placeholder="Enter a description for this record"
@@ -128,10 +120,10 @@ export const AddExtraFund = ({ open, setOpen, recordData }) => {
                 name="Description"
                 label="Description"
                 className="w-full rounded"
-                register={register("Description", {
-                  required: "Description is required!",
+                register={register('Description', {
+                  required: 'Description is required!',
                 })}
-                error={errors.Description ? errors.Description.message : ""}
+                error={errors.Description ? errors.Description.message : ''}
               />
             </div>
 
@@ -141,14 +133,14 @@ export const AddExtraFund = ({ open, setOpen, recordData }) => {
                 label="Type"
                 defaultValue="Credit"
                 options={[
-                  { value: "Withdrawal", label: "Withdrawal (-)" },
-                  { value: "Credit", label: "Credit (+)" },
+                  { value: 'Withdrawal', label: 'Withdrawal (-)' },
+                  { value: 'Credit', label: 'Credit (+)' },
                 ]}
                 className="w-full rounded"
-                register={register("Type", {
-                  required: "Type is required!",
+                register={register('Type', {
+                  required: 'Type is required!',
                 })}
-                error={errors.Type ? errors.Type.message : ""}
+                error={errors.Type ? errors.Type.message : ''}
               />
             </div>
             <div className="flex flex-col gap-6 w-full">
@@ -158,13 +150,11 @@ export const AddExtraFund = ({ open, setOpen, recordData }) => {
                 name="Amount"
                 label="Amount"
                 className="w-full rounded"
-                register={register("Amount", {
+                register={register('Amount', {
                   valueAsNumber: true,
-                  validate: (value) =>
-                    value > 0 ||
-                    "Amount must be greater than  or equal to zero",
+                  validate: (value) => value > 0 || 'Amount must be greater than  or equal to zero',
                 })}
-                error={errors.Amount ? errors.Amount.message : ""}
+                error={errors.Amount ? errors.Amount.message : ''}
               />
             </div>
           </div>
