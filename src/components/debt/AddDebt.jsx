@@ -42,8 +42,8 @@ export const AddDebt = ({ open, setOpen, recordData }) => {
       setValue('NickName', recordData.NickName);
       setValue('Owner', recordData.Owner);
       setValue('PaymentMethod', recordData.PaymentMethod);
-      setValue('LoanBalance', recordData.LoanBalance);
-      setValue('MonthlyBudget', recordData.MonthlyBudget);
+      setValue('LoanBalance', Number(recordData.LoanBalance));
+      setValue('MonthlyBudget', Number(recordData.MonthlyBudget));
       setValue('DueDate', recordData.DueDate);
     }
 
