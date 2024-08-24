@@ -2,7 +2,7 @@ import { format } from 'date-fns';
 import { FaThumbsDown, FaThumbsUp } from 'react-icons/fa';
 
 export const getFormattedDate = (user, date) => {
-  const formattedDate = date ? format(new Date(date), user.DateFormat) : '';
+  const formattedDate = date ? format(new Date(date.split('T')[0] + 'T00:00:00'), user.DateFormat) : '';
   return formattedDate;
 };
 

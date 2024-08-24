@@ -227,7 +227,7 @@ export const ExtraFundListView = ({
 
       <td className="max-w-[300px] whitespace-normal p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p className="text-black">{formatDate(new Date(record?.Date))}</p>
+          <p className="text-black">{formatDate(new Date(`${record?.Date}T00:00:00`))}</p>
         </div>
       </td>
 
