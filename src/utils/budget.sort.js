@@ -59,7 +59,7 @@ export const defaultTransactionSort = (data) => {
     if (a.Owner === null && b.Owner === null) return 0;
 
     if (a.Owner === b.Owner) {
-      return a.Description.localeCompare(b.Description); // Ascending order for Description
+      return a.Description?.localeCompare(b.Description); // Ascending order for Description
     }
     return a.Owner < b.Owner ? 1 : -1; // Descending order for Owner
   });
@@ -99,7 +99,7 @@ export const defaultDebSort = (data) => {
     if (a.Owner === null && b.Owner === null) {
       // If both have 'Enter' as Description, sort by NickName in ascending order
       if (a.Description === 'Enter' && b.Description === 'Enter') {
-        return a.NickName.localeCompare(b.NickName);
+        return a.NickName?.localeCompare(b.NickName);
       }
 
       // Move the one with 'Enter' as Description to the end
@@ -109,7 +109,7 @@ export const defaultDebSort = (data) => {
       // Otherwise, sort by displayName in ascending order
       const aDisplayName = a.NickName || a.Description;
       const bDisplayName = b.NickName || b.Description;
-      return aDisplayName.localeCompare(bDisplayName);
+      return aDisplayName?.localeCompare(bDisplayName);
     }
 
     // Handle cases where one Owner is null
@@ -123,7 +123,7 @@ export const defaultDebSort = (data) => {
     // If Owners are the same, sort by displayName (NickName or Description)
     const aDisplayName = a.NickName || a.Description;
     const bDisplayName = b.NickName || b.Description;
-    return aDisplayName.localeCompare(bDisplayName);
+    return aDisplayName?.localeCompare(bDisplayName);
   });
 };
 
