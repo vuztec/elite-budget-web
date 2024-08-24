@@ -162,7 +162,7 @@ export const AddTransaction = ({ open, setOpen, recordData, banks }) => {
                 className="w-full rounded"
                 register={register('Amount', {
                   valueAsNumber: true,
-                  validate: (value) => value > 0 || 'Amount must be greater than  or equal to zero',
+                  validate: (value) => value > 0 || 'Amount must be greater than zero',
                 })}
                 error={errors.Amount ? errors.Amount.message : ''}
               />
