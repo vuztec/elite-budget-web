@@ -136,7 +136,7 @@ export const AddDebt = ({ open, setOpen, recordData }) => {
                 className="w-full rounded"
                 register={register('LoanBalance', {
                   valueAsNumber: true,
-                  validate: (value) => value >= 0 || 'Amount must be greater than or equal to zero',
+                  validate: (value) => value > 0 || 'Amount must be greater than zero',
                 })}
                 error={errors.LoanBalance ? errors.LoanBalance.message : ''}
               />
