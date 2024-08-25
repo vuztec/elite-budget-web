@@ -122,7 +122,7 @@ export const Retirement = () => {
       {isDataLoaded && (
         <div className={`w-full ${isShowing ? 'mt-40' : 'mt-10'}`}>
           <div className="w-full">
-            <RetirementListView gridData={gridData} showDelete={!showAll && hasRecords(gridData)} />
+            <RetirementListView gridData={gridData} />
           </div>
         </div>
       )}

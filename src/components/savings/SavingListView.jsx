@@ -1,24 +1,25 @@
-import React, { useEffect, useState } from "react";
-import { RiDeleteBin2Fill } from "react-icons/ri";
-import { FaEdit } from "react-icons/fa";
-import clsx from "clsx";
+import React, { useEffect, useState } from 'react';
+import { RiDeleteBin2Fill } from 'react-icons/ri';
+import { FaEdit } from 'react-icons/fa';
+import clsx from 'clsx';
 
-import useUserStore from "../../app/user";
-import { useQueryClient } from "react-query";
-import ConfirmationDialog from "../Dialogs";
-import axios from "../../config/axios";
-import { handleAxiosResponseError } from "../../utils/handleResponseError";
-import { AddSaving } from "./AddSaving";
+import useUserStore from '../../app/user';
+import { useQueryClient } from 'react-query';
+import ConfirmationDialog from '../Dialogs';
+import axios from '../../config/axios';
+import { handleAxiosResponseError } from '../../utils/handleResponseError';
+import { AddSaving } from './AddSaving';
 import {
+  canDelete,
   getFormattedValue,
   getMarketValueTotal,
   getMonthlyBudgetTotal,
   getYearlyBudgetTotal,
-} from "../../utils/budget.calculation";
-import ToolTip from "../tooltip";
-import Sort from "../sort";
+} from '../../utils/budget.calculation';
+import ToolTip from '../tooltip';
+import Sort from '../sort';
 
-export const SavingListView = ({ gridData, showDelete }) => {
+export const SavingListView = ({ gridData }) => {
   const { user } = useUserStore();
 
   //----------------CRUD----------------//
@@ -27,15 +28,7 @@ export const SavingListView = ({ gridData, showDelete }) => {
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [order, setOrder] = useState([
-    "default",
-    "default",
-    "default",
-    "default",
-    "default",
-    "default",
-    "default",
-  ]);
+  const [order, setOrder] = useState(['default', 'default', 'default', 'default', 'default', 'default', 'default']);
   const [data, setData] = useState(gridData);
 
   useEffect(() => {
@@ -49,10 +42,8 @@ export const SavingListView = ({ gridData, showDelete }) => {
       .delete(`/api/savings-retirements/${selected}`)
       .then(({ data }) => {
         console.log(data);
-        queryClient.setQueryData(["savings"], (prev) =>
-          prev.map((saving) =>
-            saving.id === selected ? { ...saving, ...data } : saving
-          )
+        queryClient.setQueryData(['savings'], (prev) =>
+          prev.map((saving) => (saving.id === selected ? { ...saving, ...data } : saving)),
         );
         setOpenDialog(false);
         setIsLoading(false);
@@ -82,11 +73,11 @@ export const SavingListView = ({ gridData, showDelete }) => {
           <div className="flex justify-between items-center gap-2">
             Owner
             <Sort
-              tab={"saving"}
+              tab={'saving'}
               order={order}
               setOrder={setOrder}
               column={1}
-              name={"Owner"}
+              name={'Owner'}
               data={data}
               setData={setData}
               defaultData={gridData}
@@ -97,11 +88,11 @@ export const SavingListView = ({ gridData, showDelete }) => {
           <div className="flex justify-between items-center gap-2">
             Description
             <Sort
-              tab={"saving"}
+              tab={'saving'}
               order={order}
               setOrder={setOrder}
               column={2}
-              name={"Description"}
+              name={'Description'}
               data={data}
               setData={setData}
               defaultData={gridData}
@@ -112,11 +103,11 @@ export const SavingListView = ({ gridData, showDelete }) => {
           <div className="flex justify-between items-center gap-2">
             Nickname
             <Sort
-              tab={"saving"}
+              tab={'saving'}
               order={order}
               setOrder={setOrder}
               column={2}
-              name={"NickName"}
+              name={'NickName'}
               data={data}
               setData={setData}
               defaultData={gridData}
@@ -130,11 +121,11 @@ export const SavingListView = ({ gridData, showDelete }) => {
               <span className="text-left text-xs">(For Net Worth Calc)</span>
             </div>
             <Sort
-              tab={"saving"}
+              tab={'saving'}
               order={order}
               setOrder={setOrder}
               column={3}
-              name={"MarketValue"}
+              name={'MarketValue'}
               data={data}
               setData={setData}
               defaultData={gridData}
@@ -146,11 +137,11 @@ export const SavingListView = ({ gridData, showDelete }) => {
           <div className="flex justify-between items-center gap-2">
             Day Due
             <Sort
-              tab={"saving"}
+              tab={'saving'}
               order={order}
               setOrder={setOrder}
               column={4}
-              name={"DueDate"}
+              name={'DueDate'}
               data={data}
               setData={setData}
               defaultData={gridData}
@@ -165,11 +156,11 @@ export const SavingListView = ({ gridData, showDelete }) => {
             </div>
 
             <Sort
-              tab={"saving"}
+              tab={'saving'}
               order={order}
               setOrder={setOrder}
               column={5}
-              name={"PaymentMethod"}
+              name={'PaymentMethod'}
               data={data}
               setData={setData}
               defaultData={gridData}
@@ -184,11 +175,11 @@ export const SavingListView = ({ gridData, showDelete }) => {
             </div>
 
             <Sort
-              tab={"saving"}
+              tab={'saving'}
               order={order}
               setOrder={setOrder}
               column={6}
-              name={"MonthlyBudget"}
+              name={'MonthlyBudget'}
               data={data}
               setData={setData}
               defaultData={gridData}
@@ -204,11 +195,11 @@ export const SavingListView = ({ gridData, showDelete }) => {
             </div>
 
             <Sort
-              tab={"saving"}
+              tab={'saving'}
               order={order}
               setOrder={setOrder}
               column={7}
-              name={"MonthlyBudget"}
+              name={'MonthlyBudget'}
               data={data}
               setData={setData}
               defaultData={gridData}
@@ -226,9 +217,7 @@ export const SavingListView = ({ gridData, showDelete }) => {
     <tr className="border border-gray-300 hover:bg-gray-400/10 text-left">
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <span className="flex items-center justify-left gap-2 text-center mb-0 text-gray-900">
-            {record?.Owner}
-          </span>
+          <span className="flex items-center justify-left gap-2 text-center mb-0 text-gray-900">{record?.Owner}</span>
         </div>
       </td>
 
@@ -246,9 +235,7 @@ export const SavingListView = ({ gridData, showDelete }) => {
 
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p className="text-black">
-            {getFormattedValue(user, record?.MarketValue)}
-          </p>
+          <p className="text-black">{getFormattedValue(user, record?.MarketValue)}</p>
         </div>
       </td>
 
@@ -264,17 +251,13 @@ export const SavingListView = ({ gridData, showDelete }) => {
       </td>
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p className="text-black">
-            {getFormattedValue(user, record?.MonthlyBudget)}
-          </p>
+          <p className="text-black">{getFormattedValue(user, record?.MonthlyBudget)}</p>
         </div>
       </td>
 
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p className="text-black">
-            {getFormattedValue(user, 12 * record?.MonthlyBudget)}
-          </p>
+          <p className="text-black">{getFormattedValue(user, 12 * record?.MonthlyBudget)}</p>
         </div>
       </td>
 
@@ -282,22 +265,16 @@ export const SavingListView = ({ gridData, showDelete }) => {
         <div className="flex items-center text-left gap-3 justify-start">
           <div className="group flex relative">
             <FaEdit
-              className={clsx(
-                `text-editcolor`,
-                "hover:text-orange-500 font-semibold cursor-pointer sm:px-0"
-              )}
+              className={clsx(`text-editcolor`, 'hover:text-orange-500 font-semibold cursor-pointer sm:px-0')}
               onClick={() => editClick(record)}
             />
-            <ToolTip text={"Edit"} />
+            <ToolTip text={'Edit'} />
           </div>
 
-          {showDelete && (
+          {canDelete(record) && (
             <div className="group flex relative">
               <RiDeleteBin2Fill
-                className={clsx(
-                  `text-deletecolor`,
-                  "hover:text-red-500 font-semibold cursor-pointer sm:px-0"
-                )}
+                className={clsx(`text-deletecolor`, 'hover:text-red-500 font-semibold cursor-pointer sm:px-0')}
                 onClick={() => deleteClick(record.id)}
               />
               <ToolTip text="Delete" />
@@ -373,12 +350,7 @@ export const SavingListView = ({ gridData, showDelete }) => {
           </div>
         </div>
       )}
-      <AddSaving
-        open={open}
-        setOpen={setOpen}
-        recordData={selected}
-        key={new Date().getTime().toString()}
-      />
+      <AddSaving open={open} setOpen={setOpen} recordData={selected} key={new Date().getTime().toString()} />
       <ConfirmationDialog
         isLoading={isLoading}
         open={openDialog}

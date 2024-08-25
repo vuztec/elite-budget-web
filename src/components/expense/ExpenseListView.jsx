@@ -16,6 +16,7 @@ import {
   getMonthlyBudgetTotal,
   getYearlyBudgetTotal,
   hasRecords,
+  canDelete,
 } from '../../utils/budget.calculation';
 import ToolTip from '../tooltip';
 import Sort from '../sort';
@@ -34,7 +35,6 @@ export const ExpenseListView = ({ Data, category, showColumn, showAll }) => {
     'default',
     'default',
   ]);
-  const showDelete = !showAll && hasRecords(Data);
   useEffect(() => {
     const sortedData = defaultDebSort(Data);
 
@@ -312,7 +312,7 @@ export const ExpenseListView = ({ Data, category, showColumn, showAll }) => {
             />
             <ToolTip text={'Edit'} />
           </div>
-          {showDelete && (
+          {canDelete(record) && (
             <div className="group flex relative">
               <RiDeleteBin2Fill
                 className={clsx(`text-deletecolor`, 'hover:text-red-500 font-semibold cursor-pointer sm:px-0')}

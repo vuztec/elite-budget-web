@@ -8,12 +8,17 @@ import { useQueryClient } from 'react-query';
 import ConfirmationDialog from '../Dialogs';
 import axios from '../../config/axios';
 import { handleAxiosResponseError } from '../../utils/handleResponseError';
-import { getExtraPayCheckTotal, getFormattedDate, getFormattedValueTotal } from '../../utils/budget.calculation';
+import {
+  canDelete,
+  getExtraPayCheckTotal,
+  getFormattedDate,
+  getFormattedValueTotal,
+} from '../../utils/budget.calculation';
 import AddExtraPay from './AddExtraPay';
 import ToolTip from '../tooltip';
 import Sort from '../sort';
 
-export const ExtraPayListView = ({ gridData, showDelete }) => {
+export const ExtraPayListView = ({ gridData }) => {
   const { user } = useUserStore();
 
   //----------------CRUD----------------//
@@ -145,7 +150,7 @@ export const ExtraPayListView = ({ gridData, showDelete }) => {
             />
             <ToolTip text={'Edit'} />
           </div>
-          {showDelete && (
+          {canDelete(record) && (
             <div className="group flex relative">
               <RiDeleteBin2Fill
                 className={clsx(`text-deletecolor`, 'hover:text-red-500 font-semibold cursor-pointer sm:px-0')}

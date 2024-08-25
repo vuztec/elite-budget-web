@@ -15,11 +15,12 @@ import {
   getGrossYearlyTotal,
   getNetYearlyTotal,
   getFormattedValue,
+  canDelete,
 } from '../../utils/budget.calculation';
 import ToolTip from '../tooltip';
 import Sort from '../sort';
 
-export const IncomeListView = ({ gridData, showDelete }) => {
+export const IncomeListView = ({ gridData }) => {
   const { user } = useUserStore();
 
   //----------------CRUD----------------//
@@ -217,7 +218,7 @@ export const IncomeListView = ({ gridData, showDelete }) => {
             />
             <ToolTip text="Edit" />
           </div>
-          {showDelete && (
+          {canDelete(record) && (
             <div className="group flex relative">
               <RiDeleteBin2Fill
                 className={clsx(`text-deletecolor`, 'hover:text-red-500 font-semibold cursor-pointer sm:px-0')}

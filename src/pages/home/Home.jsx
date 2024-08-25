@@ -295,6 +295,60 @@ export const Home = () => {
                 </div>
               </div>
             </div>
+            {/* <div className="flex flex-col xl:flex-row w-full gap-5 xl:gap-10">
+              <div className="flex flex-col w-full gap-5">
+                <div className="w-full">
+                  <YearlyIncome
+                    incomeGridData={incomeGridData}
+                    owner={owner}
+                    selfContribution={selfContribution}
+                    partnerContribution={partnerContribution}
+                  />
+                </div>
+                <div className="w-full">
+                  <MonthlyIncome
+                    incomeGridData={incomeGridData}
+                    owner={owner}
+                    selfContribution={selfContribution}
+                    partnerContribution={partnerContribution}
+                  />
+                </div>
+                <div className="w-full">
+                  <MonthlySavings
+                    savingsGridData={savingsGridData}
+                    incomeGridData={incomeGridData}
+                    maingoals={maingoals}
+                    owner={owner}
+                  />
+                </div>
+                <div className="w-full">
+                  <MonthlyRetirement
+                    retirementGridData={retirementGridData}
+                    incomeGridData={incomeGridData}
+                    maingoals={maingoals}
+                    owner={owner}
+                  />
+                </div>
+              </div>
+              <div className="flex flex-col w-full gap-5">
+                <div className="w-full">
+                  <MonthlyDebtHome
+                    debtGridData={debtGridData}
+                    incomeGridData={incomeGridData}
+                    maingoals={maingoals}
+                    owner={owner}
+                  />
+                </div>
+                <div className="w-full">
+                  <MonthlyExpenseHome
+                    expenseGridData={expenseGridData}
+                    incomeGridData={incomeGridData}
+                    maingoals={maingoals}
+                    owner={owner}
+                  />
+                </div>
+              </div>
+            </div> */}
             <div className="flex flex-col xl:flex-row w-full gap-5 mt-5 xl:gap-10">
               <div className="hidden xl:block w-full"></div>
               <div className="flex flex-col w-full">
