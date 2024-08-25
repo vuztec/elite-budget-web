@@ -116,7 +116,6 @@ export const Transactions = () => {
     setOpen(true);
   };
 
-  console.log('banks', banks);
   const [isShowing, setIsShowing] = useState(true);
 
   return activeAccount ? (

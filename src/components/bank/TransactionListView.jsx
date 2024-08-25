@@ -211,6 +211,7 @@ export const TransactionListView = ({ Data, bankName, banks }) => {
               data={gridData}
               setData={setGridData}
               defaultData={Data}
+              type={'Widthdraw'}
               isNumber
             />
           </div>
@@ -232,6 +233,7 @@ export const TransactionListView = ({ Data, bankName, banks }) => {
               data={gridData}
               setData={setGridData}
               defaultData={Data}
+              type={'Credit'}
               isNumber
             />
           </div>
