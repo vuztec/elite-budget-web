@@ -11,7 +11,7 @@ import {
 } from '../../utils/budget.calculation';
 import useUserStore from '../../app/user';
 
-const MonthlyRetirement = ({ retirementGridData, incomeGridData, maingoals, owner }) => {
+const MonthlyRetirement = ({ retirementGridData, retirementGridDataAll, incomeGridData, maingoals, owner }) => {
   const { user } = useUserStore();
   return (
     <div className="w-full flex flex-col gap-5 text-sm xl:text-[16px]">
@@ -44,12 +44,12 @@ const MonthlyRetirement = ({ retirementGridData, incomeGridData, maingoals, owne
               <td className="px-2 py-2 border-r w-2/3 border-gray-300">
                 Total Annual Retirement Savings (Incl work ded)
               </td>
-              <td className="px-2 font-bold">{getYearlyBudgetTotal(user, retirementGridData)}</td>
+              <td className="px-2 font-bold">{getYearlyBudgetTotal(user, retirementGridDataAll)}</td>
             </tr>
             <tr className="border border-gray-300 text-left p-2">
               <td className="px-2 py-2 border-r w-2/3 border-gray-300">Percentage of Annual Gross Income</td>
               <td className="px-2 font-bold">
-                {owner === 'Joint' ? '' : getActualGoalYearly(incomeGridData, retirementGridData, 'Retirement')}%
+                {owner === 'Joint' ? '' : getActualGoalYearly(incomeGridData, retirementGridDataAll, 'Retirement')}%
               </td>
             </tr>
             <tr className="border border-gray-300 text-left p-2">
@@ -60,12 +60,12 @@ const MonthlyRetirement = ({ retirementGridData, incomeGridData, maingoals, owne
               <td className="px-2 py-2 border-r w-2/3 border-gray-300">
                 {owner === 'Joint'
                   ? 'Over/Under'
-                  : getLabel(incomeGridData, retirementGridData, 'Retirement', maingoals)}
+                  : getLabel(incomeGridData, retirementGridDataAll, 'Retirement', maingoals)}
               </td>
               <td className="px-2 font-bold">
                 {owner === 'Joint'
                   ? ''
-                  : getDifference(incomeGridData, retirementGridData, 'Retirement', maingoals, user)}
+                  : getDifference(incomeGridData, retirementGridDataAll, 'Retirement', maingoals, user)}
               </td>
             </tr>
           </tbody>

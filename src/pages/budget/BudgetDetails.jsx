@@ -38,6 +38,7 @@ export const BudgetDetails = () => {
   const [incomeGridData, setIncomeGridData] = useState([]);
   const [savingsGridData, setSavingsGridData] = useState([]);
   const [retirementGridData, setRetirementGridData] = useState([]);
+  const [retirementGridDataAll, setRetirementGridDataAll] = useState([]);
   const [expenseGridData, setExpenseGridData] = useState([]);
   const [debtGridData, setDebtGridData] = useState([]);
   const [selfContribution, setSelfContribution] = useState(0);
@@ -129,6 +130,9 @@ export const BudgetDetails = () => {
       );
       const retirementData = getOwnerGridData(updatedRetirements, owner);
       setRetirementGridData(retirementData);
+
+      const retirementDataAll = getOwnerGridData(retirements, owner);
+      setRetirementGridDataAll(retirementDataAll);
 
       const expenseData = getOwnerExpenseGridData(expenses, owner);
       setExpenseGridData(expenseData);
@@ -293,6 +297,7 @@ export const BudgetDetails = () => {
                 <div className="w-full">
                   <MonthlyRetirement
                     retirementGridData={retirementGridData}
+                    retirementGridDataAll={retirementGridDataAll}
                     incomeGridData={incomeGridData}
                     maingoals={maingoals}
                     owner={owner}
