@@ -101,7 +101,7 @@ export const getIncomeAmount = (user, amount, frequency, column) => {
 
   let formattedAmount = '-';
   if (Amount !== '-') {
-    formattedAmount = getFormattedValue(user, Amount);
+    formattedAmount = getFormattedValueTotal(user, Amount);
   }
 
   return formattedAmount;
@@ -113,7 +113,7 @@ export const getGrossWeeklyTotal = (user, data) => {
     const amount = record?.GrossAmount || 0;
     return accumulator + Number(amount);
   }, 0);
-  const formattedAmount = getFormattedValue(user, Amount);
+  const formattedAmount = getFormattedValueTotal(user, Amount);
   return formattedAmount;
 };
 
@@ -123,7 +123,7 @@ export const getNetWeeklyTotal = (user, data) => {
     const amount = record?.NetAmount || 0;
     return accumulator + Number(amount);
   }, 0);
-  const formattedAmount = getFormattedValue(user, Amount);
+  const formattedAmount = getFormattedValueTotal(user, Amount);
   return formattedAmount;
 };
 
@@ -133,7 +133,7 @@ export const getGrossBiWeeklyTotal = (user, data) => {
     const amount = record?.GrossAmount || 0;
     return accumulator + Number(amount);
   }, 0);
-  const formattedAmount = getFormattedValue(user, Amount);
+  const formattedAmount = getFormattedValueTotal(user, Amount);
   return formattedAmount;
 };
 
@@ -143,7 +143,7 @@ export const getNetBiWeeklyTotal = (user, data) => {
     const amount = record?.NetAmount || 0;
     return accumulator + Number(amount);
   }, 0);
-  const formattedAmount = getFormattedValue(user, Amount);
+  const formattedAmount = getFormattedValueTotal(user, Amount);
   return formattedAmount;
 };
 
@@ -153,7 +153,7 @@ export const getGrossSemiMonthlyTotal = (user, data) => {
     const amount = record?.GrossAmount || 0;
     return accumulator + Number(amount);
   }, 0);
-  const formattedAmount = getFormattedValue(user, Amount);
+  const formattedAmount = getFormattedValueTotal(user, Amount);
   return formattedAmount;
 };
 
@@ -163,7 +163,7 @@ export const getNetSemiMonthlyTotal = (user, data) => {
     const amount = record?.NetAmount || 0;
     return accumulator + Number(amount);
   }, 0);
-  const formattedAmount = getFormattedValue(user, Amount);
+  const formattedAmount = getFormattedValueTotal(user, Amount);
   return formattedAmount;
 };
 
@@ -304,7 +304,7 @@ export const getMarketValueTotal = (user, data) => {
     const amount = record?.MarketValue || 0;
     return accumulator + Number(amount);
   }, 0);
-  const formattedAmount = getFormattedValue(user, Amount);
+  const formattedAmount = getFormattedValueTotal(user, Amount);
   return formattedAmount;
 };
 
@@ -313,7 +313,7 @@ export const getLoanBalanceTotal = (user, data) => {
     const amount = record?.LoanBalance || 0;
     return accumulator + Number(amount);
   }, 0);
-  const formattedAmount = getFormattedValue(user, Amount);
+  const formattedAmount = getFormattedValueTotal(user, Amount);
   return formattedAmount;
 };
 
@@ -322,7 +322,7 @@ export const getMonthlyBudgetTotal = (user, data) => {
     const amount = record?.MonthlyBudget || 0;
     return accumulator + Number(amount);
   }, 0);
-  const formattedAmount = getFormattedValue(user, Amount);
+  const formattedAmount = getFormattedValueTotal(user, Amount);
   return formattedAmount;
 };
 
@@ -332,7 +332,7 @@ export const getMonthlyBudgetCategory = (user, data, cat) => {
     const amount = record?.MonthlyBudget || 0;
     return accumulator + Number(amount);
   }, 0);
-  const formattedAmount = getFormattedValue(user, Amount);
+  const formattedAmount = getFormattedValueTotal(user, Amount);
   return formattedAmount;
 };
 
@@ -342,7 +342,7 @@ export const getMonthlyBudgetItem = (user, data, cat, budgetItem) => {
     const amount = record?.MonthlyBudget || 0;
     return accumulator + Number(amount);
   }, 0);
-  const formattedAmount = getFormattedValue(user, Amount);
+  const formattedAmount = getFormattedValueTotal(user, Amount);
   return formattedAmount;
 };
 
@@ -353,7 +353,7 @@ export const getYearlyBudgetTotal = (user, data) => {
       const amount = record?.MonthlyBudget || 0;
       return accumulator + Number(amount);
     }, 0);
-  const formattedAmount = getFormattedValue(user, Amount);
+  const formattedAmount = getFormattedValueTotal(user, Amount);
   return formattedAmount;
 };
 
@@ -450,7 +450,7 @@ export const getBankAccountTypeTotal = (user, data, column) => {
     const amount = record?.Amount || 0;
     return accumulator + Number(amount);
   }, 0);
-  const formattedAmount = getFormattedValue(user, Amount);
+  const formattedAmount = getFormattedValueTotal(user, Amount);
   return formattedAmount;
 };
 
@@ -821,6 +821,47 @@ export const getUnformattedNetMonthlyTotal = (data) => {
   return 12 * Number(Amount);
 };
 
+export const getUnformattedNetMonthlyExp = (data) => {
+  const Amount = data?.reduce((accumulator, record) => {
+    const income = record?.NetAmount || 0;
+    const payFrequency = record?.Frequency || '';
+
+    let monthlyIncome = 0;
+
+    switch (payFrequency) {
+      // case "Yearly":
+      //   monthlyIncome = income / 12;
+      //   break;
+      case 'Monthly':
+        monthlyIncome = income;
+        break;
+      case 'Semi-Monthly':
+        monthlyIncome = income * 2;
+        break;
+      case 'Weekly':
+        monthlyIncome = income * 4;
+        break;
+      case 'Bi-Weekly':
+        monthlyIncome = income * 2;
+        break;
+      default:
+        monthlyIncome = 0;
+    }
+
+    return accumulator + Number(monthlyIncome);
+  }, 0);
+
+  return Number(Amount);
+};
+
+export const getUnformattedMonthlyBudgetExp = (data) => {
+  const Amount = data?.reduce((accumulator, record) => {
+    const amount = record?.MonthlyBudget || 0;
+    return accumulator + Number(amount);
+  }, 0);
+  return Amount;
+};
+
 export const getUnformattedYearlyBudgetTotal = (data) => {
   const Amount =
     12 *
@@ -849,6 +890,16 @@ export const getActualGoal = (incomeData, budgetData, category) => {
   return Number(perc).toFixed(2);
 };
 
+export const getActualGoalExp = (incomeData, budgetData, category) => {
+  const budget = getUnformattedMonthlyBudgetExp(budgetData);
+  let income = getUnformattedNetMonthlyExp(incomeData);
+  if (category === 'Retirement') {
+    income = Number(getUnformattedGrossMonthlyTotal(incomeData));
+  }
+  const perc = income > 0 ? (Number(budget) / Number(income)) * 100 : 0;
+  return Number(perc).toFixed(2);
+};
+
 export const getActualGoalYearly = (incomeData, budgetData, category) => {
   const budget = getUnformattedYearlyBudgetTotal(budgetData);
   let income = getUnformattedNetYearlyTotal(incomeData);
@@ -861,8 +912,9 @@ export const getActualGoalYearly = (incomeData, budgetData, category) => {
 
 export const getCatActualGoal = (incomeData, budgetData, category) => {
   const filteredData = budgetData.filter((data) => data.Category === category);
-  const budget = getUnformattedYearlyBudgetTotal(filteredData);
-  const income = getUnformattedNetYearlyTotal(incomeData);
+  const budget = getUnformattedMonthlyBudgetExp(filteredData);
+  const income = getUnformattedNetMonthlyExp(incomeData);
+  console.log(income, 'income');
 
   const perc = income > 0 ? (Number(budget) / Number(income)) * 100 : 0;
   return Number(perc).toFixed(2);
@@ -1149,7 +1201,7 @@ export const getExtraPayCheckTotal = (user, data, owner) => {
       return accumulator + Number(amount);
     }, 0);
   }
-  const formattedAmount = getFormattedValue(user, Amount);
+  const formattedAmount = getFormattedValueTotal(user, Amount);
   return formattedAmount;
 };
 

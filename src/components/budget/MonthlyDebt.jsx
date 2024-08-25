@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import {
   getActualGoal,
+  getActualGoalExp,
   getCatActualGoal,
   getCatIcon,
   getFormattedValueTotal,
@@ -8,16 +9,10 @@ import {
   getMonthlyBudgetTotal,
   getUniqueBudgetItemsWithSum,
   getUniqueDescriptionsWithSumForEachBudgetItem,
-} from "../../utils/budget.calculation";
-import useUserStore from "../../app/user";
+} from '../../utils/budget.calculation';
+import useUserStore from '../../app/user';
 
-const MonthlyDebt = ({
-  debtGridData,
-  incomeGridData,
-  maingoals,
-  debtgoals,
-  owner,
-}) => {
+const MonthlyDebt = ({ debtGridData, incomeGridData, maingoals, debtgoals, owner }) => {
   const { user } = useUserStore();
   const [catData, setCatData] = useState({});
   const [descData, setDescData] = useState({});
@@ -40,11 +35,9 @@ const MonthlyDebt = ({
       return 0;
     });
 
-    const uniqueExpenseBudgetItemsWithSum =
-      getUniqueBudgetItemsWithSum(sortedData);
+    const uniqueExpenseBudgetItemsWithSum = getUniqueBudgetItemsWithSum(sortedData);
     setCatData(uniqueExpenseBudgetItemsWithSum);
-    const uniqueExpenseDescriptionsWithSum =
-      getUniqueDescriptionsWithSumForEachBudgetItem(sortedData);
+    const uniqueExpenseDescriptionsWithSum = getUniqueDescriptionsWithSumForEachBudgetItem(sortedData);
     setDescData(uniqueExpenseDescriptionsWithSum);
   }, [debtGridData]);
 
@@ -63,24 +56,10 @@ const MonthlyDebt = ({
                         {getMonthlyBudgetTotal(user, debtGridData)}
                       </p>
                       <p className="p-2 bg-white border border-gray-300 w-1/5 hidden lg:block">
-                        {owner === "Joint"
-                          ? ""
-                          : getActualGoal(
-                              incomeGridData,
-                              debtGridData,
-                              "Debts"
-                            )}
-                        %
+                        {owner === 'Joint' ? '' : getActualGoalExp(incomeGridData, debtGridData, 'Debts')}%
                       </p>
                       <p className="p-2 hidden lg:block">
-                        {owner === "Joint"
-                          ? ""
-                          : getIcon(
-                              incomeGridData,
-                              debtGridData,
-                              "Debts",
-                              maingoals
-                            )}
+                        {owner === 'Joint' ? '' : getIcon(incomeGridData, debtGridData, 'Debts', maingoals)}
                       </p>
                     </div>
                   </td>
@@ -89,43 +68,21 @@ const MonthlyDebt = ({
             </table>
           </div>
           {catData?.uniqueBudgetItems?.map((budgetItem) => (
-            <div
-              key={budgetItem}
-              className="w-full flex flex-col text-left px-2 py-1 rounded-md font-bold"
-            >
+            <div key={budgetItem} className="w-full flex flex-col text-left px-2 py-1 rounded-md font-bold">
               <table className="w-[99%] bg-[whitesmoke] text-black">
                 <thead>
                   <tr className="border border-gray-300 text-left p-2 font-bold">
-                    <td className="px-2 py-2 w-2/3 lg:w-1/3 border-gray-300">
-                      {budgetItem}
-                    </td>
+                    <td className="px-2 py-2 w-2/3 lg:w-1/3 border-gray-300">{budgetItem}</td>
                     <td className="px-0 lg:px-2">
                       <div className="flex w-full gap-0">
                         <p className="p-2 bg-white border-l border-gray-300 w-full lg:w-2/3 text-black">
-                          {getFormattedValueTotal(
-                            user,
-                            catData.budgetItemValue[budgetItem]
-                          )}
+                          {getFormattedValueTotal(user, catData.budgetItemValue[budgetItem])}
                         </p>
                         <p className="p-2 bg-white border-l border-r border-gray-300 w-1/5 hidden lg:block">
-                          {owner === "Joint"
-                            ? ""
-                            : getCatActualGoal(
-                                incomeGridData,
-                                debtGridData,
-                                budgetItem
-                              )}
-                          %
+                          {owner === 'Joint' ? '' : getCatActualGoal(incomeGridData, debtGridData, budgetItem)}%
                         </p>
                         <p className="p-2 hidden lg:block">
-                          {owner === "Joint"
-                            ? ""
-                            : getCatIcon(
-                                incomeGridData,
-                                debtGridData,
-                                budgetItem,
-                                debtgoals
-                              )}
+                          {owner === 'Joint' ? '' : getCatIcon(incomeGridData, debtGridData, budgetItem, debtgoals)}
                         </p>
                       </div>
                     </td>
@@ -133,31 +90,24 @@ const MonthlyDebt = ({
                 </thead>
               </table>
               {descData?.[budgetItem] &&
-                Object.entries(descData[budgetItem]).map(
-                  ([description, descriptionValue]) => (
-                    <div className="w-full pt-0 pl-2">
-                      <table className="w-[99%] bg-white text-black font-normal">
-                        <tbody>
-                          <tr className="border-r border-b border-l border-gray-300 text-left p-2 bg-white">
-                            <td className="px-2 py-2 border-r w-2/3 border-gray-300">
-                              {description}
-                            </td>
-                            <td className="px-2 bg-white border-l border-gray-300">
-                              <div className="flex w-full gap-0">
-                                <p className="p-2 bg-white w-full lg:w-2/3">
-                                  {getFormattedValueTotal(
-                                    user,
-                                    descriptionValue
-                                  )}
-                                </p>
-                              </div>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  )
-                )}
+                Object.entries(descData[budgetItem]).map(([description, descriptionValue]) => (
+                  <div className="w-full pt-0 pl-2">
+                    <table className="w-[99%] bg-white text-black font-normal">
+                      <tbody>
+                        <tr className="border-r border-b border-l border-gray-300 text-left p-2 bg-white">
+                          <td className="px-2 py-2 border-r w-2/3 border-gray-300">{description}</td>
+                          <td className="px-2 bg-white border-l border-gray-300">
+                            <div className="flex w-full gap-0">
+                              <p className="p-2 bg-white w-full lg:w-2/3">
+                                {getFormattedValueTotal(user, descriptionValue)}
+                              </p>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                ))}
             </div>
           ))}
         </div>
