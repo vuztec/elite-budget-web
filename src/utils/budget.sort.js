@@ -162,14 +162,22 @@ export const defaultDebSort = (data) => {
 //   });
 // };
 
-export const ascendingSort = (data, sortBy, sortBy2, isNumber) => {
+export const ascendingSort = (data, sortBy, sortBy2, isNumber, type) => {
   return data.sort((a, b) => {
     let aDisplayName = a[sortBy] || a[sortBy2];
     let bDisplayName = b[sortBy] || b[sortBy2];
 
     if (isNumber) {
-      aDisplayName = Number(aDisplayName);
-      bDisplayName = Number(bDisplayName);
+      if (type === 'Widthdraw') {
+        aDisplayName = a.Type === 'Withdrawal' ? Number(aDisplayName) : 0;
+        bDisplayName = b.Type === 'Withdrawal' ? Number(bDisplayName) : 0;
+      } else if (type === 'Credit') {
+        aDisplayName = a.Type === 'Credit' ? Number(aDisplayName) : 0;
+        bDisplayName = b.Type === 'Credit' ? Number(bDisplayName) : 0;
+      } else {
+        aDisplayName = Number(aDisplayName);
+        bDisplayName = Number(bDisplayName);
+      }
     }
 
     if (typeof a[sortBy] === 'boolean' || typeof b[sortBy] === 'boolean') {
@@ -184,14 +192,22 @@ export const ascendingSort = (data, sortBy, sortBy2, isNumber) => {
   });
 };
 
-export const descendingSort = (data, sortBy, sortBy2, isNumber) => {
+export const descendingSort = (data, sortBy, sortBy2, isNumber, type) => {
   return data.sort((a, b) => {
     let aDisplayName = a[sortBy] || a[sortBy2];
     let bDisplayName = b[sortBy] || b[sortBy2];
 
     if (isNumber) {
-      aDisplayName = Number(aDisplayName);
-      bDisplayName = Number(bDisplayName);
+      if (type === 'Widthdraw') {
+        aDisplayName = a.Type === 'Withdrawal' ? Number(aDisplayName) : 0;
+        bDisplayName = b.Type === 'Withdrawal' ? Number(bDisplayName) : 0;
+      } else if (type === 'Credit') {
+        aDisplayName = a.Type === 'Credit' ? Number(aDisplayName) : 0;
+        bDisplayName = b.Type === 'Credit' ? Number(bDisplayName) : 0;
+      } else {
+        aDisplayName = Number(aDisplayName);
+        bDisplayName = Number(bDisplayName);
+      }
     }
 
     if (typeof a[sortBy] === 'boolean' || typeof b[sortBy] === 'boolean') {
