@@ -10,6 +10,7 @@ import axios from '../../config/axios';
 import { handleAxiosResponseError } from '../../utils/handleResponseError';
 import AddDebt from './AddDebt';
 import {
+  canDelete,
   getFormattedValue,
   getLoanBalanceTotal,
   getMonthlyBudgetTotal,
@@ -24,7 +25,6 @@ export const DebtListView = ({ Data, category, showAll }) => {
   const { user } = useUserStore();
   const [gridData, setGridData] = useState([]);
   const [order, setOrder] = useState(['default', 'default', 'default', 'default', 'default', 'default', 'default']);
-  const showDelete = !showAll && hasRecords(Data);
   useEffect(() => {
     const sortedData = defaultDebSort(Data);
     setGridData(sortedData);
@@ -270,7 +270,7 @@ export const DebtListView = ({ Data, category, showAll }) => {
             />
             <ToolTip text={'Edit'} />
           </div>
-          {showDelete && (
+          {canDelete(record) && (
             <div className="group flex relative">
               <RiDeleteBin2Fill
                 className={clsx(`text-deletecolor`, 'hover:text-red-500 font-semibold cursor-pointer sm:px-0')}

@@ -136,7 +136,7 @@ export const IncomeRecords = () => {
       {isDataLoaded && (
         <div className={`w-full ${isShowing ? 'mt-40' : 'mt-10'}`}>
           <div className="w-full">
-            <IncomeListView gridData={gridData} showDelete={!showAll && hasRecords(gridData)} />
+            <IncomeListView gridData={gridData} />
           </div>
 
           <div className="w-full gap-4 h-10 md:h-12 px-2 bg-white flex items-center justify-between mt-5 -mb-7">
@@ -154,7 +154,7 @@ export const IncomeRecords = () => {
           </div>
 
           <div className="w-full">
-            <ExtraPayListView gridData={extraGridData} showDelete={!showAll2 && hasRecords(extraGridData)} />
+            <ExtraPayListView gridData={extraGridData} />
           </div>
         </div>
       )}

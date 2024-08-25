@@ -392,12 +392,29 @@ export const hasRecords = (data) => {
       item.MonthlyBudget > 0 ||
       item.SelfAmount > 0 ||
       item.PartnerAmount > 0 ||
-      item.GrossAmount > 0,
+      item.GrossAmount > 0 ||
+      item.NetAmount > 0,
   );
   if (updatedData.length > 0) {
     hasRecords = true;
   }
   return hasRecords;
+};
+
+export const canDelete = (item) => {
+  let canDelete = false;
+  if (
+    item.MarketValue > 0 ||
+    item.LoanBalance > 0 ||
+    item.MonthlyBudget > 0 ||
+    item.SelfAmount > 0 ||
+    item.PartnerAmount > 0 ||
+    item.GrossAmount > 0 ||
+    item.NetAmount > 0
+  ) {
+    canDelete = true;
+  }
+  return canDelete;
 };
 
 /////************************BANK ACCOUNT ********************************************************
