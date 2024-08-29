@@ -28,7 +28,7 @@ export const AddTransaction = ({ open, handleClose, recordData, banks }) => {
   useEffect(() => {
     if (recordData?.id) {
       setValue('BankName', recordData.BankAccountName.id);
-      setValue('Date', formatDateForForm(new Date(recordData.Date + 'T00:00:00')));
+      setValue('Date', formatDateForForm(new Date(recordData.Date.split('T')[0] + 'T00:00:00')));
       setValue('Description', recordData.Description);
       setValue('Type', recordData.Type);
       setValue('Amount', Number(recordData.Amount));
