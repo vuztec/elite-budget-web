@@ -26,7 +26,7 @@ export default function ConfirmationDialog({
 
   return (
     <>
-      <ModalWrapper open={open} setOpen={closeDialog}>
+      <ModalWrapper open={open} handleClose={closeDialog}>
         <div className="py-4 w-full flex flex-col gap-4 items-center justify-center">
           <Dialog.Title as="h3" className="">
             <p

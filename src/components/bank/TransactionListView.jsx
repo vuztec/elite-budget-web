@@ -127,6 +127,11 @@ export const TransactionListView = ({ Data, bankName, banks }) => {
     setOpenTaxDialog(true);
   };
 
+  const handleClose = () => {
+    setOpen(false);
+    setSelected(null);
+  };
+
   //----------------CRUD----------------//
 
   const TableHeader = () => (
@@ -448,13 +453,7 @@ export const TransactionListView = ({ Data, bankName, banks }) => {
           </div>
         </div>
       )}
-      <AddTransaction
-        open={open}
-        setOpen={setOpen}
-        recordData={selected}
-        key={new Date().getTime().toString()}
-        banks={banks}
-      />
+      <AddTransaction open={open} handleClose={handleClose} recordData={selected} banks={banks} />
       <ConfirmationDialog
         isLoading={isLoading}
         open={openDialog}

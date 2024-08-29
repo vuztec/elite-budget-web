@@ -134,9 +134,13 @@ export const AddRootUser = ({ open, setOpen }) => {
     }
   };
 
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
     <>
-      <ModalWrapper open={open} setOpen={setOpen}>
+      <ModalWrapper open={open} handleClose={handleClose}>
         <form onSubmit={handleSubmit(handleOnSubmit)} className="">
           <Dialog.Title as="h2" className="text-base font-bold leading-6 text-gray-900 mb-4">
             {user ? 'USER PROFILE' : 'CREATE NEW ACCOUNT'}

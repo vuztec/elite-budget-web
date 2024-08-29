@@ -76,9 +76,13 @@ export const AddExtraFund = ({ open, setOpen, recordData }) => {
         });
   };
 
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
     <>
-      <ModalWrapper open={open} setOpen={setOpen}>
+      <ModalWrapper open={open} handleClose={handleClose}>
         <form onSubmit={handleSubmit(handleOnSubmit)} className="w-full h-[70%]">
           <Dialog.Title as="h2" className="text-base font-bold leading-6 text-gray-900 mb-4">
             {recordData ? 'UPDATE EXTRA FUND RECORD' : 'ADD NEW EXTRA FUND RECORD'}

@@ -1,12 +1,12 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment, useRef } from 'react';
 
-const ModalWrapper = ({ open, setOpen, children }) => {
+const ModalWrapper = ({ open, handleClose, children }) => {
   const cancelButtonRef = useRef(null);
 
   return (
     <Transition.Root show={open} as={Fragment}>
-      <Dialog as="div" className="relative z-50 w-full" initialFocus={cancelButtonRef} onClose={() => setOpen(false)}>
+      <Dialog as="div" className="relative z-50 w-full" initialFocus={cancelButtonRef} onClose={handleClose}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"

@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import ModalWrapper from "../ModalWrapper";
-import { Dialog } from "@headlessui/react";
-import Textbox from "../Textbox";
-import Loading from "../Loader";
-import Button from "../Button";
-import axios from "../../config/axios";
-import { handleAxiosResponseError } from "../../utils/handleResponseError";
-import { toast } from "react-toastify";
+import React, { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import ModalWrapper from '../ModalWrapper';
+import { Dialog } from '@headlessui/react';
+import Textbox from '../Textbox';
+import Loading from '../Loader';
+import Button from '../Button';
+import axios from '../../config/axios';
+import { handleAxiosResponseError } from '../../utils/handleResponseError';
+import { toast } from 'react-toastify';
 
 export const ChangePassword = ({ open, setOpen }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -19,41 +19,45 @@ export const ChangePassword = ({ open, setOpen }) => {
     formState: { errors },
   } = useForm();
 
-  const newPassword = watch("NewPassword");
+  const newPassword = watch('NewPassword');
 
   // Define handleOnSubmit function to handle form submission
   const handleOnSubmit = async (data) => {
     setIsLoading(() => true);
-    const id = toast.loading("Loading....");
+    const id = toast.loading('Loading....');
 
     axios
-      .patch("/api/auth/password", data)
+      .patch('/api/auth/password', data)
       .then(({ data }) => {
         setIsLoading(() => false);
 
         toast.update(id, {
-          render: "Password Updated Successfully",
-          type: "success",
+          render: 'Password Updated Successfully',
+          type: 'success',
           isLoading: false,
           autoClose: 3000,
         });
-        console.log("Password updated successfully");
+        console.log('Password updated successfully');
         setOpen(false);
       })
       .catch((err) => {
         setIsLoading(() => false);
         toast.update(id, {
           render: handleAxiosResponseError(error),
-          type: "error",
+          type: 'error',
           isLoading: false,
           autoClose: 3000,
         });
       });
   };
 
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
     <>
-      <ModalWrapper open={open} setOpen={setOpen}>
+      <ModalWrapper open={open} handleClose={handleClose}>
         <form onSubmit={handleSubmit(handleOnSubmit)} className="">
           <Dialog.Title as="h2" className="text-base font-bold leading-6 text-gray-900 mb-10">
             CHANGE PASSWORD
@@ -65,10 +69,10 @@ export const ChangePassword = ({ open, setOpen }) => {
               name="CurrentPassword"
               label="Current Password"
               className="w-full rounded"
-              register={register("CurrentPassword", {
-                required: "Current Password is required!",
+              register={register('CurrentPassword', {
+                required: 'Current Password is required!',
               })}
-              error={errors.CurrentPassword ? errors.CurrentPassword.message : ""}
+              error={errors.CurrentPassword ? errors.CurrentPassword.message : ''}
             />
 
             <Textbox
@@ -77,10 +81,10 @@ export const ChangePassword = ({ open, setOpen }) => {
               name="NewPassword"
               label="New Password"
               className="w-full rounded"
-              register={register("NewPassword", {
-                required: "New Password is required!",
+              register={register('NewPassword', {
+                required: 'New Password is required!',
               })}
-              error={errors.NewPassword ? errors.NewPassword.message : ""}
+              error={errors.NewPassword ? errors.NewPassword.message : ''}
             />
 
             <Textbox
@@ -89,11 +93,11 @@ export const ChangePassword = ({ open, setOpen }) => {
               name="ConfirmPassword"
               label="Confirm Password"
               className="w-full rounded"
-              register={register("ConfirmPassword", {
-                required: "Confirm Password is required!",
-                validate: (value) => value === newPassword || "Passwords do not match",
+              register={register('ConfirmPassword', {
+                required: 'Confirm Password is required!',
+                validate: (value) => value === newPassword || 'Passwords do not match',
               })}
-              error={errors.ConfirmPassword ? errors.ConfirmPassword.message : ""}
+              error={errors.ConfirmPassword ? errors.ConfirmPassword.message : ''}
             />
           </div>
 

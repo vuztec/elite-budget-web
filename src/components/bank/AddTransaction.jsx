@@ -13,7 +13,7 @@ import axios from '../../config/axios';
 import { handleAxiosResponseError } from '../../utils/handleResponseError';
 import { formatDateForForm } from '../../utils';
 
-export const AddTransaction = ({ open, setOpen, recordData, banks }) => {
+export const AddTransaction = ({ open, handleClose, recordData, banks }) => {
   const queryClient = useQueryClient();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -51,7 +51,7 @@ export const AddTransaction = ({ open, setOpen, recordData, banks }) => {
         .then(({ data }) => {
           queryClient.setQueryData(['banktransactions'], (prev) => (prev ? [...prev, data] : [data]));
           setIsLoading(() => false);
-          setOpen(false);
+          handleClose();
         })
         .catch((err) => {
           setIsLoading(() => false);
@@ -67,7 +67,7 @@ export const AddTransaction = ({ open, setOpen, recordData, banks }) => {
             ),
           );
           setIsLoading(() => false);
-          setOpen(false);
+          handleClose();
         })
         .catch((err) => {
           setIsLoading(() => false);
@@ -77,7 +77,7 @@ export const AddTransaction = ({ open, setOpen, recordData, banks }) => {
 
   return (
     <>
-      <ModalWrapper open={open} setOpen={setOpen}>
+      <ModalWrapper open={open} handleClose={handleClose}>
         <form onSubmit={handleSubmit(handleOnSubmit)} className="w-full h-[70%]">
           <Dialog.Title as="h2" className="text-base font-bold leading-6 text-gray-900 mb-4">
             {recordData ? 'UPDATE TRANSACTION' : 'ADD NEW TRANSACTION'}
