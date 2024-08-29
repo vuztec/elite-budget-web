@@ -91,7 +91,7 @@ export const AddBank = ({ open, setOpen, recordData }) => {
                 ]}
                 className="w-full rounded"
                 register={register('Owner', {
-                  required: 'Name is required!',
+                  required: 'Owner is required',
                 })}
                 error={errors.Owner ? errors.Owner.message : ''}
               />

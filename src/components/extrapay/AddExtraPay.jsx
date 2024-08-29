@@ -89,6 +89,7 @@ export const AddExtraPay = ({ open, setOpen, recordData }) => {
                 className="w-full rounded"
                 register={register('SelfAmount', {
                   valueAsNumber: true,
+                  validate: (value) => value >= 0 || 'Amount must be greater than or equal to zero',
                 })}
                 error={errors.SelfAmount ? errors.SelfAmount.message : ''}
               />
@@ -100,6 +101,7 @@ export const AddExtraPay = ({ open, setOpen, recordData }) => {
                 className="w-full rounded"
                 register={register('PartnerAmount', {
                   valueAsNumber: true,
+                  validate: (value) => value >= 0 || 'Amount must be greater than or equal to zero',
                 })}
                 error={errors.PartnerAmount ? errors.PartnerAmount.message : ''}
               />

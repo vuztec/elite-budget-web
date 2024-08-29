@@ -119,7 +119,7 @@ export const AddSaving = ({ open, setOpen, recordData, chatUsers }) => {
                 ]}
                 className="w-full rounded"
                 register={register('Owner', {
-                  required: 'Name is required!',
+                  required: 'Owner is required',
                 })}
                 error={errors.Owner ? errors.Owner.message : ''}
               />
