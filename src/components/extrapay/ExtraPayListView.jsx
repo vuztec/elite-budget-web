@@ -29,10 +29,13 @@ export const ExtraPayListView = ({ gridData }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const [order, setOrder] = useState(['default', 'default', 'default']);
-  const [data, setData] = useState(gridData);
+  const [data, setData] = useState([]);
 
   useEffect(() => {
-    setData(gridData);
+    if (gridData) {
+      const sortData = [...gridData];
+      setData(() => sortData);
+    }
   }, [gridData]);
 
   const deleteHandler = async (selected) => {
@@ -80,6 +83,7 @@ export const ExtraPayListView = ({ gridData }) => {
               data={data}
               setData={setData}
               defaultData={gridData}
+              // tab={'extra-pay-checks'}
             />
           </div>
         </th>
@@ -94,6 +98,7 @@ export const ExtraPayListView = ({ gridData }) => {
               data={data}
               setData={setData}
               defaultData={gridData}
+              tab={'extra-pay-checks'}
               isNumber
             />
           </div>
@@ -109,6 +114,7 @@ export const ExtraPayListView = ({ gridData }) => {
               data={data}
               setData={setData}
               defaultData={gridData}
+              tab={'extra-pay-checks'}
               isNumber
             />
           </div>
@@ -201,10 +207,10 @@ export const ExtraPayListView = ({ gridData }) => {
             <table className="w-[97%] m-5 overflow-x-auto">
               <TableHeader />
               <tbody>
-                {gridData?.map((record, index) => (
+                {data?.map((record, index) => (
                   <TableRow key={index} record={record} />
                 ))}
-                <TableTotal gridData={gridData} />
+                <TableTotal gridData={data} />
               </tbody>
             </table>
             <div className="w-[97%] ml-5 mb-5">

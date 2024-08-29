@@ -28,8 +28,8 @@ export const AddExtraPay = ({ open, setOpen, recordData }) => {
   useEffect(() => {
     if (recordData?.id) {
       setValue('Date', formatDateForForm(new Date(recordData.Date ? recordData.Date : new Date())));
-      setValue('SelfAmount', recordData.SelfAmount);
-      setValue('PartnerAmount', recordData.PartnerAmount);
+      setValue('SelfAmount', recordData.SelfAmount ?? '');
+      setValue('PartnerAmount', recordData.PartnerAmount ?? '');
     }
 
     return () => reset();

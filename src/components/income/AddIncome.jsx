@@ -31,8 +31,8 @@ export const AddIncome = ({ open, setOpen, recordData }) => {
       setValue('NickName', recordData.NickName);
       setValue('Owner', recordData.Owner);
       setValue('Frequency', recordData.Frequency);
-      setValue('GrossAmount', recordData.GrossAmount);
-      setValue('NetAmount', recordData.NetAmount);
+      setValue('GrossAmount', recordData.GrossAmount ?? '');
+      setValue('NetAmount', recordData.NetAmount ?? '');
     }
 
     return () => reset();
