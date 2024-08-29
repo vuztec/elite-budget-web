@@ -14,7 +14,7 @@ import { handleAxiosResponseError } from '../../utils/handleResponseError';
 import { getBankAccountNames } from '../../config/api';
 import { formatDateForForm } from '../../utils';
 
-export const AddExtraFund = ({ open, setOpen, recordData }) => {
+export const AddExtraFund = ({ open, handleClose, recordData }) => {
   const queryClient = useQueryClient();
 
   const [isLoading, setIsLoading] = useState(false);
@@ -54,7 +54,7 @@ export const AddExtraFund = ({ open, setOpen, recordData }) => {
         .then(({ data }) => {
           queryClient.setQueryData(['extrafunds'], (prev) => (prev ? [...prev, data] : [data]));
           setIsLoading(() => false);
-          setOpen(false);
+          handleClose();
         })
         .catch((err) => {
           setIsLoading(() => false);
@@ -68,16 +68,12 @@ export const AddExtraFund = ({ open, setOpen, recordData }) => {
             prev.map((fund) => (fund.id === numericSelectedID ? { ...fund, ...data } : fund)),
           );
           setIsLoading(() => false);
-          setOpen(false);
+          handleClose();
         })
         .catch((err) => {
           setIsLoading(() => false);
           console.log(handleAxiosResponseError(err));
         });
-  };
-
-  const handleClose = () => {
-    setOpen(false);
   };
 
   return (

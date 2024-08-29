@@ -83,7 +83,6 @@ export const AddRootUser = ({ open, setOpen }) => {
           });
         })
         .catch((err) => {
-          console.log('Error : ', err);
           setIsLoading(() => false);
 
           toast.update(id, {

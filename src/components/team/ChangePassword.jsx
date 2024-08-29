@@ -37,7 +37,6 @@ export const ChangePassword = ({ open, setOpen }) => {
           isLoading: false,
           autoClose: 3000,
         });
-        console.log('Password updated successfully');
         setOpen(false);
       })
       .catch((err) => {

@@ -55,8 +55,6 @@ export const AddRetirement = ({ open, setOpen, recordData }) => {
     const numericSelectedID = Number(recordData.id);
     setIsLoading(() => true);
 
-    console.log(data);
-
     axios
       .patch('/api/savings-retirements/' + numericSelectedID, data)
       .then(({ data }) => {

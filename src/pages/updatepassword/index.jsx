@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
-import Textbox from "../../components/Textbox";
-import Button from "../../components/Button";
-import axios from "../../config/axios";
-import { toast } from "react-toastify";
-import { handleAxiosResponseError } from "../../utils/handleResponseError";
-import Loading from "../../components/Loader";
-import { useLocation, useNavigate } from "react-router-dom";
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import Textbox from '../../components/Textbox';
+import Button from '../../components/Button';
+import axios from '../../config/axios';
+import { toast } from 'react-toastify';
+import { handleAxiosResponseError } from '../../utils/handleResponseError';
+import Loading from '../../components/Loader';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const useQuery = () => {
   return new URLSearchParams(useLocation().search);
@@ -15,7 +15,7 @@ const UpdatePassword = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const params = useQuery();
-  const email = params.get("email");
+  const email = params.get('email');
 
   const {
     register,
@@ -24,20 +24,19 @@ const UpdatePassword = () => {
     formState: { errors },
   } = useForm();
 
-  const newPassword = watch("password");
+  const newPassword = watch('password');
 
   const submitHandler = (data) => {
-    const id = toast.loading("Loading....");
+    const id = toast.loading('Loading....');
     setIsLoading(true);
     axios
-      .post("/api/auth/updatepassword", { password: data.password, email })
+      .post('/api/auth/updatepassword', { password: data.password, email })
       .then(({ data }) => {
-        console.log(data);
         setIsLoading(false);
-        navigate("/login");
+        navigate('/login');
         toast.update(id, {
           render: data.message,
-          type: "success",
+          type: 'success',
           isLoading: false,
           autoClose: 3000,
         });
@@ -47,7 +46,7 @@ const UpdatePassword = () => {
         setIsLoading(false);
         toast.update(id, {
           render: handleAxiosResponseError(err),
-          type: "error",
+          type: 'error',
           isLoading: false,
           autoClose: 3000,
         });
@@ -73,10 +72,10 @@ const UpdatePassword = () => {
                   name="password"
                   label="New Password"
                   className="w-full rounded"
-                  register={register("password", {
-                    required: "New Password is required!",
+                  register={register('password', {
+                    required: 'New Password is required!',
                   })}
-                  error={errors.password ? errors.password.message : ""}
+                  error={errors.password ? errors.password.message : ''}
                 />
 
                 <Textbox
@@ -85,11 +84,11 @@ const UpdatePassword = () => {
                   name="ConfirmPassword"
                   label="Confirm Password"
                   className="w-full rounded"
-                  register={register("ConfirmPassword", {
-                    required: "Confirm Password is required!",
-                    validate: (value) => value === newPassword || "Passwords do not match",
+                  register={register('ConfirmPassword', {
+                    required: 'Confirm Password is required!',
+                    validate: (value) => value === newPassword || 'Passwords do not match',
                   })}
-                  error={errors.ConfirmPassword ? errors.ConfirmPassword.message : ""}
+                  error={errors.ConfirmPassword ? errors.ConfirmPassword.message : ''}
                 />
               </div>
 

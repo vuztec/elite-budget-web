@@ -2,7 +2,12 @@ import { format } from 'date-fns';
 import { FaThumbsDown, FaThumbsUp } from 'react-icons/fa';
 
 export const getFormattedDate = (user, date) => {
-  const formattedDate = date ? format(new Date(date.split('T')[0] + 'T00:00:00'), user.DateFormat) : '';
+  const formattedDate = date ? format(new Date(date?.split('T')[0] + 'T00:00:00'), user.DateFormat) : '';
+  return formattedDate;
+};
+
+export const getFormattedDateSubscription = (user, date) => {
+  const formattedDate = date ? format(new Date(date), user.DateFormat) : '';
   return formattedDate;
 };
 
@@ -914,7 +919,6 @@ export const getCatActualGoal = (incomeData, budgetData, category) => {
   const filteredData = budgetData.filter((data) => data.Category === category);
   const budget = getUnformattedMonthlyBudgetExp(filteredData);
   const income = getUnformattedNetMonthlyExp(incomeData);
-  console.log(income, 'income');
 
   const perc = income > 0 ? (Number(budget) / Number(income)) * 100 : 0;
   return Number(perc).toFixed(2);

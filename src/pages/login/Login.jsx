@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import Textbox from "../../components/Textbox";
-import Button from "../../components/Button";
-import useUserStore from "../../app/user";
-import axios from "../../config/axios";
-import clsx from "clsx";
-import { toast } from "react-toastify";
-import { handleAxiosResponseError } from "../../utils/handleResponseError";
-import { AddRootUser } from "../../components/team";
+import React, { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import Textbox from '../../components/Textbox';
+import Button from '../../components/Button';
+import useUserStore from '../../app/user';
+import axios from '../../config/axios';
+import clsx from 'clsx';
+import { toast } from 'react-toastify';
+import { handleAxiosResponseError } from '../../utils/handleResponseError';
+import { AddRootUser } from '../../components/team';
 
 export const Login = () => {
   //const user = false
@@ -24,36 +24,35 @@ export const Login = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    user && navigate("/");
+    user && navigate('/');
   }, [user]);
 
   const submitHandler = async (data) => {
     const Email = data.email;
     const Password = data.password;
-    const id = toast.loading("Loading....");
+    const id = toast.loading('Loading....');
 
     // Perform API call to check if the username and password match
     axios
-      .post("/api/auth/login", {
+      .post('/api/auth/login', {
         Email,
         Password,
       })
       .then(({ data }) => {
-        console.log(data);
         setUser(data.user);
         setJwt(data.jwt);
         toast.update(id, {
           render: data.message,
-          type: "success",
+          type: 'success',
           isLoading: false,
           autoClose: 3000,
         });
-        navigate("/");
+        navigate('/');
       })
       .catch((err) => {
         toast.update(id, {
           render: handleAxiosResponseError(err),
-          type: "error",
+          type: 'error',
           isLoading: false,
           autoClose: 3000,
         });
@@ -92,12 +91,8 @@ export const Login = () => {
               className="form-container w-full md:w-[400px] flex flex-col gap-y-8 bg-white px-10 pt-14 pb-14"
             >
               <div className="">
-                <p className="text-black text-3xl font-bold text-center">
-                  Welcome back!
-                </p>
-                <p className="text-center text-base text-gray-700 ">
-                  Keep your login credentials safe.
-                </p>
+                <p className="text-black text-3xl font-bold text-center">Welcome back!</p>
+                <p className="text-center text-base text-gray-700 ">Keep your login credentials safe.</p>
               </div>
 
               <div className="flex flex-col gap-y-5">
@@ -107,10 +102,10 @@ export const Login = () => {
                   name="email"
                   label="Email Address"
                   className="w-full rounded-full"
-                  register={register("email", {
-                    required: "Email Address is required!",
+                  register={register('email', {
+                    required: 'Email Address is required!',
                   })}
-                  error={errors.email ? errors.email.message : ""}
+                  error={errors.email ? errors.email.message : ''}
                 />
                 <Textbox
                   placeholder="your password"
@@ -118,19 +113,14 @@ export const Login = () => {
                   name="password"
                   label="Password"
                   className="w-full rounded-full"
-                  register={register("password", {
-                    required: "Password is required!",
+                  register={register('password', {
+                    required: 'Password is required!',
                   })}
-                  error={errors.password ? errors.password.message : ""}
+                  error={errors.password ? errors.password.message : ''}
                 />
 
                 <div className="flex justify-between">
-                  <a
-                    href="/forgetpassword"
-                    className={clsx(
-                      "text-sm text-gray-500 hover:underline cursor-pointer"
-                    )}
-                  >
+                  <a href="/forgetpassword" className={clsx('text-sm text-gray-500 hover:underline cursor-pointer')}>
                     Forget Password?
                   </a>
                 </div>
@@ -138,9 +128,7 @@ export const Login = () => {
                 <Button
                   type="submit"
                   label="Submit"
-                  className={clsx(
-                    "w-full h-10 hover:bg-green-800 text-white rounded-full bg-black"
-                  )}
+                  className={clsx('w-full h-10 hover:bg-green-800 text-white rounded-full bg-black')}
                 />
                 {/* <div
                   onClick={() => addClick()}
@@ -154,12 +142,7 @@ export const Login = () => {
         </div>
       </div>
       <div>
-        <AddRootUser
-          setUser={setUser}
-          open={open}
-          setOpen={setOpen}
-          key={`UP${new Date().getTime().toString()}`}
-        />
+        <AddRootUser setUser={setUser} open={open} setOpen={setOpen} key={`UP${new Date().getTime().toString()}`} />
       </div>
     </>
   );

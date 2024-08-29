@@ -43,7 +43,6 @@ export const DebtListView = ({ Data, category, showAll }) => {
     axios
       .delete(`/api/debt/${selected}`)
       .then(({ data }) => {
-        console.log(data);
         queryClient.setQueryData(['debts'], (prev) =>
           prev.map((debt) => (debt.id === selected ? { ...debt, ...data } : debt)),
         );

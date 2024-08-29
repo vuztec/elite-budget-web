@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import { PaymentElement, useStripe, useElements } from "@stripe/react-stripe-js";
-import axios from "../../config/axios";
-import useUserStore from "../../app/user";
-import { useNavigate } from "react-router-dom";
-import Loading from "../../components/Loader";
+import React, { useState } from 'react';
+import { PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import axios from '../../config/axios';
+import useUserStore from '../../app/user';
+import { useNavigate } from 'react-router-dom';
+import Loading from '../../components/Loader';
 
 export default function CheckoutForm() {
   const stripe = useStripe();
@@ -31,16 +31,15 @@ export default function CheckoutForm() {
       //   // Make sure to change this to your payment completion page
       //   // return_url: "https://app.elitecashflowconsulting.com/packages",
       // },
-      redirect: "if_required",
+      redirect: 'if_required',
     });
 
-    if (paymentIntent?.status === "succeeded") {
+    if (paymentIntent?.status === 'succeeded') {
       axios
-        .patch("/api/payment")
+        .patch('/api/payment')
         .then(({ data }) => {
-          console.log(data);
           setUser(data);
-          navigate("/");
+          navigate('/');
 
           setIsLoading(false);
         })
@@ -56,7 +55,7 @@ export default function CheckoutForm() {
   };
 
   const paymentElementOptions = {
-    layout: "tabs",
+    layout: 'tabs',
   };
 
   return (
@@ -68,7 +67,7 @@ export default function CheckoutForm() {
         <button
           disabled={isLoading || !stripe || !elements}
           id="submit"
-          className={"px-4 py-1 rounded-full font-semibold bg-black text-white w-full my-2"}
+          className={'px-4 py-1 rounded-full font-semibold bg-black text-white w-full my-2'}
         >
           <span id="button-text">{`Pay now $${Number(7.99 * 12).toFixed(2)}`}</span>
         </button>

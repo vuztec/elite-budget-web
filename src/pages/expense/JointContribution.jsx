@@ -108,7 +108,6 @@ export const JointContribution = () => {
     axios
       .delete(`/api/joint-split/${selected}`)
       .then(({ data }) => {
-        console.log(data);
         queryClient.setQueryData(['jointsplits'], (prev) => prev.filter((joint) => joint.id !== selected));
         setOpenDialog(false);
         setIsLoading(false);

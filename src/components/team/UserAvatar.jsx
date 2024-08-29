@@ -31,7 +31,6 @@ export const UserAvatar = () => {
   };
 
   const editPasswordClick = (el) => {
-    console.log('User:', el);
     setSelected(el);
     setOpenPassword(true);
   };

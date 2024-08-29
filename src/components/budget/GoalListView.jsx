@@ -31,7 +31,6 @@ export const GoalListView = ({ gridData, goal, maingoals }) => {
     axios
       .delete(`/api/project/${selected}`)
       .then(({ data }) => {
-        console.log(data);
         queryClient.setQueryData(['projects'], (prev) => prev.filter((project) => project.id !== selected));
         setOpenDialog(false);
         setIsLoading(false);

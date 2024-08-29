@@ -41,7 +41,6 @@ export const SavingListView = ({ gridData }) => {
     axios
       .delete(`/api/savings-retirements/${selected}`)
       .then(({ data }) => {
-        console.log(data);
         queryClient.setQueryData(['savings'], (prev) =>
           prev.map((saving) => (saving.id === selected ? { ...saving, ...data } : saving)),
         );

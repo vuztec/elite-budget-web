@@ -1,11 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useForm } from "react-hook-form";
-import Button from "../../components/Button";
-import axios from "../../config/axios";
-import clsx from "clsx";
-import { toast } from "react-toastify";
-import { handleAxiosResponseError } from "../../utils/handleResponseError";
-import { useLocation, useNavigate } from "react-router-dom";
+import React, { useEffect, useRef, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import Button from '../../components/Button';
+import axios from '../../config/axios';
+import clsx from 'clsx';
+import { toast } from 'react-toastify';
+import { handleAxiosResponseError } from '../../utils/handleResponseError';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const useQuery = () => {
   return new URLSearchParams(useLocation().search);
@@ -13,10 +13,10 @@ const useQuery = () => {
 
 const VerifyOtp = () => {
   const { handleSubmit } = useForm();
-  const [otp, setOtp] = useState(new Array(6).fill(""));
+  const [otp, setOtp] = useState(new Array(6).fill(''));
   const inputRefs = useRef([]);
   const params = useQuery();
-  const email = params.get("email");
+  const email = params.get('email');
   const navigate = useNavigate();
 
   const [expiryTime, setExpiryTime] = useState(3 * 60); // 3 minutes in seconds
@@ -35,14 +35,14 @@ const VerifyOtp = () => {
     setOtp([...otp.map((d, idx) => (idx === index ? element.value : d))]);
 
     // Focus next input
-    if (element.nextSibling && element.value !== "") {
+    if (element.nextSibling && element.value !== '') {
       element.nextSibling.focus();
     }
   };
 
   const handleKeyDown = (event, index) => {
-    if (event.key === "Backspace") {
-      setOtp([...otp.map((d, idx) => (idx === index ? "" : d))]);
+    if (event.key === 'Backspace') {
+      setOtp([...otp.map((d, idx) => (idx === index ? '' : d))]);
 
       // Focus previous input
       if (event.target.previousSibling) {
@@ -56,25 +56,24 @@ const VerifyOtp = () => {
   }, []);
 
   const submitHandler = () => {
-    const id = toast.loading("Loading....");
+    const id = toast.loading('Loading....');
 
     axios
-      .post("/api/auth/verifyotp", { otp: otp.join(""), email })
+      .post('/api/auth/verifyotp', { otp: otp.join(''), email })
       .then(({ data }) => {
-        console.log(data);
         toast.update(id, {
           render: data.message,
-          type: "success",
+          type: 'success',
           isLoading: false,
           autoClose: 3000,
         });
-        navigate("/updatepassword?email=" + email);
+        navigate('/updatepassword?email=' + email);
       })
       .catch((err) => {
         console.log(handleAxiosResponseError(err));
         toast.update(id, {
           render: handleAxiosResponseError(err),
-          type: "error",
+          type: 'error',
           isLoading: false,
           autoClose: 3000,
         });
@@ -118,7 +117,7 @@ const VerifyOtp = () => {
                 <Button
                   type="submit"
                   label="Verify"
-                  className={clsx("my-4 w-full h-10 hover:bg-green-800 text-white rounded-full bg-black")}
+                  className={clsx('my-4 w-full h-10 hover:bg-green-800 text-white rounded-full bg-black')}
                 />
                 {/* <div className="flex justify-center text-center mt-5">
                   <a className="flex items-center text-blue-700 hover:text-blue-900 cursor-pointer">

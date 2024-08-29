@@ -110,6 +110,11 @@ export const ExtraFundListView = ({
     setBalOpen(true);
   };
 
+  const handleClose = () => {
+    setOpen(false);
+    setSelected(null);
+  };
+
   //----------------CRUD----------------//
 
   const TableHeader = () => (
@@ -397,7 +402,7 @@ export const ExtraFundListView = ({
         </div>
       </div>
 
-      <AddExtraFund open={open} setOpen={setOpen} recordData={selected} />
+      <AddExtraFund open={open} recordData={selected} handleClose={handleClose} />
       <AddBalance open={balOpen} setOpen={setBalOpen} recordData={excessBal} />
       <ConfirmationDialog
         isLoading={isLoading}

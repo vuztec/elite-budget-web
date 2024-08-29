@@ -42,7 +42,6 @@ export const BankListView = ({ gridData }) => {
         queryClient.setQueryData(['banktransactions'], (prev) =>
           prev ? prev?.filter((transaction) => transaction?.BankAccountName?.id !== selected) : [],
         );
-        console.log('coming 3');
         setOpenDialog(false);
         setIsLoading(false);
       })

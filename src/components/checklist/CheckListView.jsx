@@ -15,7 +15,6 @@ export const CheckListView = ({
   combinedData,
 }) => {
   const { user } = useUserStore();
-  console.log(combinedData, 'combinedData');
 
   return (
     <div className="w-full h-fit bg-white py-2 mt-4 shadow-md rounded">

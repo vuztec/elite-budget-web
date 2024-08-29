@@ -1,12 +1,12 @@
-import React from "react";
-import { useForm } from "react-hook-form";
-import Textbox from "../../components/Textbox";
-import Button from "../../components/Button";
-import axios from "../../config/axios";
-import clsx from "clsx";
-import { toast } from "react-toastify";
-import { handleAxiosResponseError } from "../../utils/handleResponseError";
-import { useNavigate } from "react-router-dom";
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import Textbox from '../../components/Textbox';
+import Button from '../../components/Button';
+import axios from '../../config/axios';
+import clsx from 'clsx';
+import { toast } from 'react-toastify';
+import { handleAxiosResponseError } from '../../utils/handleResponseError';
+import { useNavigate } from 'react-router-dom';
 
 const ForgetPassword = () => {
   const {
@@ -17,25 +17,24 @@ const ForgetPassword = () => {
   const navigate = useNavigate();
 
   const submitHandler = (postdata) => {
-    const id = toast.loading("Loading....");
+    const id = toast.loading('Loading....');
 
     axios
-      .post("/api/auth/forgetpassword", postdata)
+      .post('/api/auth/forgetpassword', postdata)
       .then(({ data }) => {
-        console.log(data);
         toast.update(id, {
           render: data.message,
-          type: "success",
+          type: 'success',
           isLoading: false,
           autoClose: 3000,
         });
-        navigate("/verifyotp?email=" + postdata.email);
+        navigate('/verifyotp?email=' + postdata.email);
       })
       .catch((err) => {
         console.log(handleAxiosResponseError(err));
         toast.update(id, {
           render: handleAxiosResponseError(err),
-          type: "error",
+          type: 'error',
           isLoading: false,
           autoClose: 3000,
         });
@@ -63,13 +62,17 @@ const ForgetPassword = () => {
                   name="email"
                   label="Email Address"
                   className="w-full rounded-full"
-                  register={register("email", {
-                    required: "Email Address is required!",
+                  register={register('email', {
+                    required: 'Email Address is required!',
                   })}
-                  error={errors.email ? errors.email.message : ""}
+                  error={errors.email ? errors.email.message : ''}
                 />
 
-                <Button type="submit" label="Submit" className={clsx("w-full h-10 hover:bg-green-800 text-white rounded-full bg-black")} />
+                <Button
+                  type="submit"
+                  label="Submit"
+                  className={clsx('w-full h-10 hover:bg-green-800 text-white rounded-full bg-black')}
+                />
               </div>
             </form>
           </div>
