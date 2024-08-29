@@ -42,8 +42,8 @@ export const AddDebt = ({ open, setOpen, recordData }) => {
       setValue('NickName', recordData.NickName);
       setValue('Owner', recordData.Owner);
       setValue('PaymentMethod', recordData.PaymentMethod);
-      setValue('LoanBalance', Number(recordData.LoanBalance));
-      setValue('MonthlyBudget', Number(recordData.MonthlyBudget));
+      setValue('LoanBalance', recordData.LoanBalance);
+      setValue('MonthlyBudget', recordData.MonthlyBudget);
       setValue('DueDate', recordData.DueDate);
     }
 
@@ -150,7 +150,7 @@ export const AddDebt = ({ open, setOpen, recordData }) => {
                 className="w-full rounded"
                 register={register('MonthlyBudget', {
                   valueAsNumber: true,
-                  validate: (value) => value >= 0 || 'Amount must be greater than or equal to zero',
+                  validate: (value) => value > 0 || 'Amount must be greater than zero',
                 })}
                 error={errors.MonthlyBudget ? errors.MonthlyBudget.message : ''}
               />
