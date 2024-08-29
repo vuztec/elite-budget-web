@@ -55,8 +55,14 @@ export const AddExpense = ({ open, setOpen, recordData }) => {
 
   // Define handleOnSubmit function to handle form submission
   const handleOnSubmit = async (data) => {
+    console.log(data);
     const numericSelectedID = Number(recordData.id);
     setIsLoading(() => true);
+
+    if (!isVisible) {
+      delete data.MarketValue;
+      delete data.LoanBalance;
+    }
 
     axios
       .patch('/api/expenses/' + numericSelectedID, data)
