@@ -32,7 +32,7 @@ export const TermsAndConditions = () => {
         </p>
 
         <h2 className="font-semibold text-lg">3. Use of the App</h2>
-        <ul className="list-disc list-inside">
+        <ul className="list-disc list-outside">
           <li>
             You agree to use the App in a manner that is lawful and in accordance with these Terms and Conditions.
           </li>
@@ -44,7 +44,7 @@ export const TermsAndConditions = () => {
         </ul>
 
         <h2 className="font-semibold text-lg">4. User Accounts</h2>
-        <ul className="list-disc list-inside">
+        <ul className="list-disc list-outside">
           <li>
             You are responsible for maintaining the confidentiality of your account and password and for restricting
             access to your computer.
@@ -57,7 +57,7 @@ export const TermsAndConditions = () => {
         </ul>
 
         <h2 className="font-semibold text-lg">5. Subscription and Payment</h2>
-        <ul className="list-disc list-inside">
+        <ul className="list-disc list-outside">
           <li>
             Subscriptions are handled through Stripe, and by purchasing a subscription, you agree to Stripe's terms and
             conditions as well.
