@@ -92,7 +92,7 @@ export const Login = () => {
             >
               <div className="">
                 <p className="text-black text-3xl font-bold text-center">Welcome back!</p>
-                <p className="text-center text-base text-gray-700 ">Keep your login credentials safe.</p>
+                <p className="text-center text-base text-gray-700 ">Keep your login credentials safe</p>
               </div>
 
               <div className="flex flex-col gap-y-5">
@@ -118,11 +118,21 @@ export const Login = () => {
                   })}
                   error={errors.password ? errors.password.message : ''}
                 />
-
-                <div className="flex justify-between">
-                  <a href="/forgetpassword" className={clsx('text-sm text-gray-500 hover:underline cursor-pointer')}>
-                    Forget Password?
-                  </a>
+                <div className="flex items-center justify-center gap-5 xl:gap-10 w-full">
+                  <div className="flex justify-between">
+                    <a
+                      href="/forgetpassword"
+                      className="text-sm text-gray-500 hover:text-blue-500 underline cursor-pointer"
+                    >
+                      Forgot Password?
+                    </a>
+                  </div>
+                  {/* <div
+                    onClick={() => addClick()}
+                    className="flex items-center justify-center text-sm text-gray-500 hover:text-blue-500 underline cursor-pointer"
+                  >
+                    Create New Account?
+                  </div> */}
                 </div>
 
                 <Button
@@ -130,12 +140,30 @@ export const Login = () => {
                   label="Submit"
                   className={clsx('w-full h-10 hover:bg-green-800 text-white rounded-full bg-black')}
                 />
-                {/* <div
-                  onClick={() => addClick()}
-                  className={clsx("flex items-center justify-center text-sm text-gray-500 hover:underline cursor-pointer")}
-                >
-                  Create New Account?
-                </div> */}
+
+                <div className="flex items-center justify-center gap-5 mt-5">
+                  <a
+                    href="/privacy-policy"
+                    // target="_blank"
+                    className="flex items-center justify-center text-sm text-gray-500 hover:text-blue-500 underline cursor-pointer"
+                  >
+                    Privacy Policy
+                  </a>
+                  <a
+                    href="/terms-and-conditions"
+                    // target="_blank"
+                    className="flex items-center justify-center text-sm text-gray-500 hover:text-blue-500 underline cursor-pointer"
+                  >
+                    Terms & Conditions
+                  </a>
+                  <a
+                    href="https://www.elitecashflowconsulting.com/"
+                    target="_blank"
+                    className="flex items-center justify-center text-sm text-gray-500 hover:text-blue-500 underline cursor-pointer"
+                  >
+                    About Us
+                  </a>
+                </div>
               </div>
             </form>
           </div>

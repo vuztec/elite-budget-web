@@ -32,7 +32,7 @@ export const Assets = ({ savingsGridData, retirementGridData, expenseGridData, t
                   Checking, Savings & Investment Accounts
                 </td>
                 <td className="px-2">
-                  {getFormattedValue(
+                  {getFormattedValueTotal(
                     user,
                     Number(totalSavMarketValue) + Number(totalOpeningBalance) + Number(totalBankBalance),
                   )}

@@ -16,6 +16,8 @@ import {
   Networth,
   BudgetGoals,
   Subscription,
+  PrivacyPolicy,
+  TermsAndConditions,
 } from './pages';
 
 import Navbar from './components/Navbar';
@@ -104,6 +106,8 @@ function App() {
         <Route path="/forgetpassword" element={<ForgetPassword />} />
         <Route path="/verifyotp" element={<VerifyOtp />} />
         <Route path="/updatepassword" element={<UpdatePassword />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
       </Routes>
       <ToastContainer
         position="top-right"
