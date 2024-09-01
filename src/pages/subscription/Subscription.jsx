@@ -11,9 +11,15 @@ import CheckoutForm from './CheckoutForm';
 import './Package.css';
 import Loading from '../../components/Loader';
 import { getPaymentMethods } from '../../config/api';
-import { useQuery } from 'react-query';
+import { useQuery, useQueryClient } from 'react-query';
 import AddPaymentMethod from './AddPaymentMethod';
 import ChargeCustomer from './ChargeCustomer';
+import Mastercard from '../../components/cards/MasterCard';
+import VisaCard from '../../components/cards/VisaCard';
+import GeneralCard from '../../components/cards/GeneralCard';
+import DiscoverCard from '../../components/cards/DiscoverCard';
+import AmexCard from '../../components/cards/AmericanCard';
+import ConfirmationDialog from '../../components/Dialogs';
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
@@ -26,6 +32,9 @@ export const Subscription = () => {
   const [openCharge, setOpenCharge] = useState(false);
   const [card, setCard] = useState(false);
   const [openPayment, setOpenPayment] = useState(false);
+  const [isDeleteLoading, setIsDeleteLoading] = useState(false);
+  const [deleteOpen, setDeleteOpen] = useState(false);
+  const queryClient = useQueryClient();
 
   const { data: paymentmethods, status: isPaymentMethodLoaded } = useQuery({
     queryKey: ['payment-methods'],
@@ -67,6 +76,21 @@ export const Subscription = () => {
       });
   };
 
+  const deleteHandler = () => {
+    setIsDeleteLoading(true);
+    axios
+      .delete('/api/payment/payment-method/' + card.id)
+      .then(({ data }) => {
+        queryClient.setQueryData(['payment-methods'], (prev) => prev.filter((method) => method.id !== card.id));
+        setDeleteOpen(() => false);
+        setIsDeleteLoading(false);
+      })
+      .catch((err) => {
+        setIsDeleteLoading(false);
+        console.log(err);
+      });
+  };
+
   const options = {
     clientSecret: clientSecret,
     appearance: {
@@ -90,6 +114,11 @@ export const Subscription = () => {
   const handlePaymentClose = () => {
     setOpenCharge(false);
     setCard(null);
+  };
+
+  const handleDelete = (item) => {
+    setDeleteOpen(true);
+    setCard(item);
   };
 
   return (
@@ -155,8 +184,8 @@ export const Subscription = () => {
           </table>
         </div>
 
-        <div className="flex flex-wrap">
-          {paymentmethods?.data?.map((item, index) => (
+        <div className="flex flex-wrap gap-6">
+          {/* {paymentmethods?.data?.map((item, index) => (
             <div
               key={index}
               className="w-80 h-44 bg-red-100 rounded-xl relative text-white shadow-2xl transition-transform transform hover:scale-110 hover:cursor-pointer"
@@ -189,7 +218,19 @@ export const Subscription = () => {
                 </div>
               </div>
             </div>
-          ))}
+          ))} */}
+          {paymentmethods?.map((item, index) => {
+            if (item.card.brand === 'visa')
+              return <VisaCard card={item} key={index} handlePayment={handlePayment} handleDelete={handleDelete} />;
+            else if (item.card.brand === 'mastercard')
+              return <Mastercard card={item} key={index} handlePayment={handlePayment} handleDelete={handleDelete} />;
+            else if (item.card.brand === 'discover')
+              return <DiscoverCard card={item} key={index} handlePayment={handlePayment} handleDelete={handleDelete} />;
+            else if (item.card.brand === 'amex')
+              return <AmexCard card={item} key={index} handlePayment={handlePayment} handleDelete={handleDelete} />;
+            else
+              return <GeneralCard card={item} key={index} handlePayment={handlePayment} handleDelete={handleDelete} />;
+          })}
         </div>
         <div className="flex items-center justify-center mb-5 -mt-3">
           {/* {loading ? (
@@ -220,13 +261,22 @@ export const Subscription = () => {
       </ModalWrapper>
       <ModalWrapper open={openPayment} handleClose={handleClosePaymentMethod}>
         <Elements stripe={stripePromise}>
-          <AddPaymentMethod />
+          <AddPaymentMethod handleClose={handleClosePaymentMethod} />
         </Elements>
       </ModalWrapper>
 
       <ModalWrapper open={openCharge} handleClose={handlePaymentClose}>
         <ChargeCustomer card={card} handleClose={handlePaymentClose} />
       </ModalWrapper>
+
+      <ConfirmationDialog
+        isLoading={isDeleteLoading}
+        open={deleteOpen}
+        setOpen={setDeleteOpen}
+        msg={'Do you want to delete your card?'}
+        buttonText={'Yes'}
+        onClick={() => deleteHandler()}
+      />
     </div>
   );
 };

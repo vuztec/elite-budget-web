@@ -3,12 +3,14 @@ import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
 import { handleAxiosResponseError } from '../../utils/handleResponseError';
 import axios from '../../config/axios';
 import Loading from '../../components/Loader';
+import { useQueryClient } from 'react-query';
 
-const AddPaymentMethod = () => {
+const AddPaymentMethod = ({ handleClose }) => {
   const stripe = useStripe();
   const elements = useElements();
   const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const queryClient = useQueryClient();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -39,7 +41,8 @@ const AddPaymentMethod = () => {
           // setUser(data);
           // navigate('/');
           console.log(data);
-
+          queryClient.setQueryData(['payment-methods'], (prev) => (prev ? [...prev, paymentMethod] : [paymentMethod]));
+          handleClose();
           setIsLoading(false);
         })
         .catch((err) => {
