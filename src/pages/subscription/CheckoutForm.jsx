@@ -4,6 +4,7 @@ import axios from '../../config/axios';
 import useUserStore from '../../app/user';
 import { useNavigate } from 'react-router-dom';
 import Loading from '../../components/Loader';
+import { handleAxiosResponseError } from '../../utils/handleResponseError';
 
 export default function CheckoutForm() {
   const stripe = useStripe();
@@ -23,7 +24,7 @@ export default function CheckoutForm() {
       return;
     }
 
-    setIsLoading(true);
+    // setIsLoading(true);
 
     const { error, paymentIntent } = await stripe.confirmPayment({
       elements,
@@ -36,7 +37,7 @@ export default function CheckoutForm() {
 
     if (paymentIntent?.status === 'succeeded') {
       axios
-        .patch('/api/payment')
+        .patch('/api/payment', { PaymentMethodId: paymentIntent.payment_method })
         .then(({ data }) => {
           setUser(data);
           navigate('/');
@@ -45,6 +46,7 @@ export default function CheckoutForm() {
         })
         .catch((err) => {
           console.log(err);
+          console.log(handleAxiosResponseError(err));
           setIsLoading(false);
         });
     } else setIsLoading(false);

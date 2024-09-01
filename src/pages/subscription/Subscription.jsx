@@ -10,6 +10,10 @@ import ModalWrapper from '../../components/ModalWrapper';
 import CheckoutForm from './CheckoutForm';
 import './Package.css';
 import Loading from '../../components/Loader';
+import { getPaymentMethods } from '../../config/api';
+import { useQuery } from 'react-query';
+import AddPaymentMethod from './AddPaymentMethod';
+import ChargeCustomer from './ChargeCustomer';
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
@@ -19,10 +23,21 @@ export const Subscription = () => {
   const [clientSecret, setClientSecret] = useState(null);
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
+  const [openCharge, setOpenCharge] = useState(false);
+  const [card, setCard] = useState(false);
+  const [openPayment, setOpenPayment] = useState(false);
+
+  const { data: paymentmethods, status: isPaymentMethodLoaded } = useQuery({
+    queryKey: ['payment-methods'],
+    queryFn: getPaymentMethods,
+    staleTime: 1000 * 60 * 60,
+  });
 
   function isLeapYear(year) {
     return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
   }
+
+  // console.log(paymentmethods);
 
   const today = new Date();
   const subscription = new Date(user?.SubscribeDate);
@@ -61,6 +76,20 @@ export const Subscription = () => {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleClosePaymentMethod = () => {
+    setOpenPayment(false);
+  };
+
+  const handlePayment = (card) => {
+    setCard(card);
+    setOpenCharge(true);
+  };
+
+  const handlePaymentClose = () => {
+    setOpenCharge(false);
+    setCard(null);
   };
 
   return (
@@ -125,8 +154,45 @@ export const Subscription = () => {
             </tbody>
           </table>
         </div>
+
+        <div className="flex flex-wrap">
+          {paymentmethods?.data?.map((item, index) => (
+            <div
+              key={index}
+              className="w-80 h-44 bg-red-100 rounded-xl relative text-white shadow-2xl transition-transform transform hover:scale-110 hover:cursor-pointer"
+              onClick={() => handlePayment(item)}
+            >
+              <img className="relative object-cover w-full h-full rounded-xl" src="https://i.imgur.com/kGkSg1v.png" />
+
+              <div className="w-full px-8 absolute top-4">
+                <div className="pt-1 flex justify-between">
+                  <div>
+                    <p className="font-light">Card Number</p>
+                    <p className="font-medium tracking-more-wider">**** **** **** {item.card.last4}</p>
+                  </div>
+                  <img className="w-14 h-14" src="https://i.imgur.com/bbPHJVe.png" />
+                </div>
+                <div className="pt-6 pr-6">
+                  <div className="flex justify-between">
+                    <div className="">
+                      <p className="font-light text-xs">Expiry</p>
+                      <p className="font-medium tracking-wider text-sm">
+                        {item.card.exp_month}/{item.card.exp_year}
+                      </p>
+                    </div>
+
+                    <div className="">
+                      <p className="font-light text-xs">CVV</p>
+                      <p className="font-bold tracking-more-wider text-sm">···</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
         <div className="flex items-center justify-center mb-5 -mt-3">
-          {loading ? (
+          {/* {loading ? (
             <Loading />
           ) : (
             <button
@@ -135,7 +201,13 @@ export const Subscription = () => {
             >
               <MdOutlinePayment className="text-2xl" /> Subscribe Now
             </button>
-          )}
+          )} */}
+          <button
+            className="w-fit flex gap-3 items-center justify-center bg-black text-white hover:bg-[whitesmoke] hover:text-black px-2 py-1 rounded-full cursor-pointer"
+            onClick={() => setOpenPayment(true)}
+          >
+            <MdOutlinePayment className="text-2xl" /> Add Card
+          </button>
         </div>
       </div>
 
@@ -145,6 +217,15 @@ export const Subscription = () => {
             <CheckoutForm />
           </Elements>
         )}
+      </ModalWrapper>
+      <ModalWrapper open={openPayment} handleClose={handleClosePaymentMethod}>
+        <Elements stripe={stripePromise}>
+          <AddPaymentMethod />
+        </Elements>
+      </ModalWrapper>
+
+      <ModalWrapper open={openCharge} handleClose={handlePaymentClose}>
+        <ChargeCustomer card={card} handleClose={handlePaymentClose} />
       </ModalWrapper>
     </div>
   );

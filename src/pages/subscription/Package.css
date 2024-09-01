@@ -14,6 +14,54 @@
   margin-bottom: 24px;
 }
 
+.custom-card-form {
+  max-width: 400px;
+  margin: auto;
+  padding: 20px;
+  background-color: #f7f7f7;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #32325d;
+}
+
+.custom-stripe-element {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: white;
+  font-size: 16px;
+}
+
+.custom-stripe-element:focus {
+  border-color: #5a5a9d;
+}
+
+.submit-button {
+  width: 100%;
+  padding: 12px 20px;
+  background-color: #32325d;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+  background-color: #5a5a9d;
+}
+
 /* spinner/processing state, errors */
 .spinner,
 .spinner:before,
@@ -38,7 +86,7 @@
 .spinner:before,
 .spinner:after {
   position: absolute;
-  content: "";
+  content: '';
 }
 
 .spinner:before {
