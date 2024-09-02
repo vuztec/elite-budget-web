@@ -92,7 +92,7 @@ export const DateFormats = [
 export const getOwnerGridData = (data, owner) => {
   let ownerFilteredData;
   if (owner !== 'Household' && owner !== 'All' && parseInt(owner) !== 0) {
-    ownerFilteredData = data?.filter((item) => item.Owner === owner);
+    ownerFilteredData = data?.filter((item) => item.Owner === owner || item.Owner === null);
   } else {
     ownerFilteredData = data;
   }
@@ -114,7 +114,7 @@ export const getOwnerTransGridData = (data, owner) => {
 export const getOwnerExpenseGridData = (data, owner) => {
   let ownerFilteredData;
   if (owner !== 'Household' && owner !== 'All' && parseInt(owner) !== 0) {
-    ownerFilteredData = data?.filter((item) => item.Owner === owner);
+    ownerFilteredData = data?.filter((item) => item.Owner === owner || item.Owner === null);
   } else {
     ownerFilteredData = data.filter((item) => item.Category !== 'Joint Contribution');
   }
