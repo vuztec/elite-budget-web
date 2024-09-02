@@ -20,11 +20,12 @@ import GeneralCard from '../../components/cards/GeneralCard';
 import DiscoverCard from '../../components/cards/DiscoverCard';
 import AmexCard from '../../components/cards/AmericanCard';
 import ConfirmationDialog from '../../components/Dialogs';
+import { handleAxiosResponseError } from '../../utils/handleResponseError';
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
 export const Subscription = () => {
-  const { user } = useUserStore();
+  const { user, setUser } = useUserStore();
   const activeAccount = getActiveAccount(user);
   const [clientSecret, setClientSecret] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -34,6 +35,8 @@ export const Subscription = () => {
   const [openPayment, setOpenPayment] = useState(false);
   const [isDeleteLoading, setIsDeleteLoading] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
+  const [isChecked, setIsChecked] = useState(user?.Auto_Renewal);
+
   const queryClient = useQueryClient();
 
   const { data: paymentmethods, status: isPaymentMethodLoaded } = useQuery({
@@ -121,6 +124,20 @@ export const Subscription = () => {
     setCard(item);
   };
 
+  const handleCheckboxChange = () => {
+    setIsChecked(!isChecked);
+
+    axios
+      .patch('/api/rootusers/renewal', { Auto_Renewal: !isChecked })
+      .then(({ data }) => {
+        setUser(data);
+      })
+      .catch((err) => {
+        console.log(err);
+        console.log(handleAxiosResponseError(err));
+      });
+  };
+
   return (
     <div className="w-full flex flex-col gap-5 xl:gap-10 bg-white p-5 mt-4  text-sm xl:text-[16px]">
       <div className="w-full xl:w-1/2 flex flex-col gap-5">
@@ -178,6 +195,15 @@ export const Subscription = () => {
                 <td className="min-w-fit whitespace-nowrap p-2">Renewal Date</td>
                 <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200 font-bold">
                   {activeAccount ? getFormattedDateSubscription(user, renewal) : ''}
+                </td>
+              </tr>
+              <tr>
+                <td className="min-w-fit whitespace-nowrap p-2">Auto Renewal</td>
+                <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200 font-bold">
+                  <label class="inline-flex items-center cursor-pointer">
+                    <input type="checkbox" checked={isChecked} onChange={handleCheckboxChange} class="sr-only peer" />
+                    <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-gray-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-gray-600"></div>
+                  </label>
                 </td>
               </tr>
             </tbody>
