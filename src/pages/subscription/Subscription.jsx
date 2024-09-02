@@ -214,41 +214,12 @@ export const Subscription = () => {
           </table>
         </div>
 
+        <div className="-mt-5 flex gap-2">
+          <p className="italic font-bold">Note:</p>
+          <p className="italic">For manual payment or renewal, click the card to pay.</p>
+        </div>
+
         <div className="flex flex-wrap gap-6">
-          {/* {paymentmethods?.data?.map((item, index) => (
-            <div
-              key={index}
-              className="w-80 h-44 bg-red-100 rounded-xl relative text-white shadow-2xl transition-transform transform hover:scale-110 hover:cursor-pointer"
-              onClick={() => handlePayment(item)}
-            >
-              <img className="relative object-cover w-full h-full rounded-xl" src="https://i.imgur.com/kGkSg1v.png" />
-
-              <div className="w-full px-8 absolute top-4">
-                <div className="pt-1 flex justify-between">
-                  <div>
-                    <p className="font-light">Card Number</p>
-                    <p className="font-medium tracking-more-wider">**** **** **** {item.card.last4}</p>
-                  </div>
-                  <img className="w-14 h-14" src="https://i.imgur.com/bbPHJVe.png" />
-                </div>
-                <div className="pt-6 pr-6">
-                  <div className="flex justify-between">
-                    <div className="">
-                      <p className="font-light text-xs">Expiry</p>
-                      <p className="font-medium tracking-wider text-sm">
-                        {item.card.exp_month}/{item.card.exp_year}
-                      </p>
-                    </div>
-
-                    <div className="">
-                      <p className="font-light text-xs">CVV</p>
-                      <p className="font-bold tracking-more-wider text-sm">···</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))} */}
           {paymentmethods?.map((item, index) => {
             if (item.card.brand === 'visa')
               return <VisaCard card={item} key={index} handlePayment={handlePayment} handleDelete={handleDelete} />;

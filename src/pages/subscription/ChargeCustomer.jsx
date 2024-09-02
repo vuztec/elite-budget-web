@@ -4,11 +4,32 @@ import axios from '../../config/axios';
 import Loading from '../../components/Loader';
 import { useNavigate } from 'react-router-dom';
 import useUserStore from '../../app/user';
+import { getActiveAccount } from '../../utils/permissions';
+import { getFormattedDateSubscription } from '../../utils/budget.calculation';
 
 const ChargeCustomer = ({ card, handleClose }) => {
   const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const { user } = useUserStore();
+  const activeAccount = getActiveAccount(user);
+  function isLeapYear(year) {
+    return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
+  }
+
+  // console.log(paymentmethods);
+
+  const today = new Date();
+  const subscription = new Date(user?.SubscribeDate);
+  const todayYear = today.getFullYear();
+  const subscriptionYear = subscription.getFullYear();
+  let totalDaysInYears = 0;
+
+  // Calculate total days in subscription years
+  for (let year = subscriptionYear; year <= todayYear; year++) {
+    totalDaysInYears += isLeapYear(year) ? 366 : 365;
+  }
+  // Calculate the renewal date
+  const renewal = new Date(subscription.getTime() + totalDaysInYears * 24 * 60 * 60 * 1000);
 
   const navigate = useNavigate();
 
@@ -81,7 +102,7 @@ const ChargeCustomer = ({ card, handleClose }) => {
           />
         </div>
       </div>
-      {user.IsExpired && (
+      {user.IsExpired ? (
         <>
           {isLoading ? (
             <Loading />
@@ -94,6 +115,8 @@ const ChargeCustomer = ({ card, handleClose }) => {
             </button>
           )}
         </>
+      ) : (
+        <div>Subscription is still active until {activeAccount ? getFormattedDateSubscription(user, renewal) : ''}</div>
       )}
       {message && <div id="payment-message">{message}</div>}
     </form>
