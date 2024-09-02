@@ -42,8 +42,8 @@ export const AddRetirement = ({ open, setOpen, recordData }) => {
       setValue('NickName', recordData.NickName);
       setValue('Owner', recordData.Owner);
       setValue('PaymentMethod', recordData.PaymentMethod);
-      setValue('MarketValue', recordData.MarketValue ?? '');
-      setValue('MonthlyBudget', recordData.MonthlyBudget ?? '');
+      setValue('MarketValue', recordData.MarketValue ? Number(recordData.MarketValue).toFixed(2) : '');
+      setValue('MonthlyBudget', recordData.MonthlyBudget ? Number(recordData.MonthlyBudget).toFixed(2) : '');
       setValue('DueDate', recordData.DueDate);
     }
 
