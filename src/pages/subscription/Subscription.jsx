@@ -20,6 +20,7 @@ import DiscoverCard from '../../components/cards/DiscoverCard';
 import AmexCard from '../../components/cards/AmericanCard';
 import ConfirmationDialog from '../../components/Dialogs';
 import { handleAxiosResponseError } from '../../utils/handleResponseError';
+import Loading from '../../components/Loader';
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
@@ -234,22 +235,24 @@ export const Subscription = () => {
           })}
         </div>
         <div className="flex items-center justify-center mb-5 -mt-3">
-          {/* {loading ? (
+          {loading ? (
             <Loading />
           ) : (
-            <button
-              className="w-fit flex gap-3 items-center justify-center bg-black text-white hover:bg-[whitesmoke] hover:text-black px-2 py-1 rounded-full cursor-pointer"
-              onClick={PayNow}
-            >
-              <MdOutlinePayment className="text-2xl" /> Subscribe Now
-            </button>
-          )} */}
-          <button
-            className="w-fit flex gap-3 items-center justify-center bg-black text-white hover:bg-[whitesmoke] hover:text-black px-2 py-1 rounded-full cursor-pointer"
-            onClick={() => setOpenPayment(true)}
-          >
-            <MdOutlinePayment className="text-2xl" /> Add Card
-          </button>
+            <>
+              <button
+                className="w-fit flex gap-3 items-center justify-center bg-black text-white hover:bg-[whitesmoke] hover:text-black px-2 py-1 rounded-full cursor-pointer"
+                onClick={PayNow}
+              >
+                <MdOutlinePayment className="text-2xl" /> Subscribe Now
+              </button>
+              <button
+                className="w-fit flex gap-3 items-center justify-center bg-black text-white hover:bg-[whitesmoke] hover:text-black px-2 py-1 rounded-full cursor-pointer"
+                onClick={() => setOpenPayment(true)}
+              >
+                <MdOutlinePayment className="text-2xl" /> Add Card
+              </button>
+            </>
+          )}
         </div>
       </div>
 
