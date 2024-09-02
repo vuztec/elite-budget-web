@@ -238,7 +238,7 @@ export const Subscription = () => {
           {loading ? (
             <Loading />
           ) : (
-            <>
+            <div className="flex gap-5">
               <button
                 className="w-fit flex gap-3 items-center justify-center bg-black text-white hover:bg-[whitesmoke] hover:text-black px-2 py-1 rounded-full cursor-pointer"
                 onClick={PayNow}
@@ -251,7 +251,7 @@ export const Subscription = () => {
               >
                 <MdOutlinePayment className="text-2xl" /> Add Card
               </button>
-            </>
+            </div>
           )}
         </div>
       </div>
