@@ -116,7 +116,10 @@ const ChargeCustomer = ({ card, handleClose }) => {
           )}
         </>
       ) : (
-        <div>Subscription is still active until {activeAccount ? getFormattedDateSubscription(user, renewal) : ''}</div>
+        <div>
+          Subscription is still active until{' '}
+          <strong>{activeAccount ? getFormattedDateSubscription(user, renewal) : ''}.</strong>
+        </div>
       )}
       {message && <div id="payment-message">{message}</div>}
     </form>
