@@ -11,6 +11,7 @@ import {
   getUniqueBudgetItemsWithSum,
   getUniqueDescriptionsWithSumForEachBudgetItem,
 } from '../../utils/budget.calculation';
+import clsx from 'clsx';
 
 const MonthlyExpenses = ({ expenseGridData, incomeGridData, maingoals, expensegoals, owner }) => {
   const { user } = useUserStore();
@@ -55,7 +56,12 @@ const MonthlyExpenses = ({ expenseGridData, incomeGridData, maingoals, expensego
                       <p className="p-2 bg-white border border-gray-300 w-full lg:w-2/3">
                         {getMonthlyBudgetTotal(user, expenseGridData)}
                       </p>
-                      <p className="p-2 bg-white border border-gray-300 w-1/5 hidden lg:block">
+                      <p
+                        className={clsx(
+                          'p-2 border border-gray-300 w-1/5 hidden lg:block',
+                          owner === 'Joint' ? 'bg-[whitesmoke]' : 'bg-white',
+                        )}
+                      >
                         {owner === 'Joint' ? '' : getActualGoalExp(incomeGridData, expenseGridData, 'Expenses')}%
                       </p>
                       <p className="p-1 hidden lg:block">
@@ -78,7 +84,12 @@ const MonthlyExpenses = ({ expenseGridData, incomeGridData, maingoals, expensego
                         <p className="p-2 bg-white border-l border-gray-300 w-full lg:w-2/3 text-black">
                           {getFormattedValueTotal(user, catData.budgetItemValue[budgetItem])}
                         </p>
-                        <p className="p-2 bg-white border-l border-r border-gray-300 w-1/5 hidden lg:block">
+                        <p
+                          className={clsx(
+                            'p-2 border-l border-r border-gray-300 w-1/5 hidden lg:block',
+                            owner === 'Joint' ? 'bg-[whitesmoke]' : 'bg-white',
+                          )}
+                        >
                           {owner === 'Joint' ? '' : getCatActualGoal(incomeGridData, expenseGridData, budgetItem)}%
                         </p>
                         <p className="p-2 hidden lg:block">

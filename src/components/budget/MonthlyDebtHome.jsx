@@ -10,6 +10,7 @@ import {
   getYearlyBudgetTotal,
 } from '../../utils/budget.calculation';
 import useUserStore from '../../app/user';
+import clsx from 'clsx';
 
 const MonthlyDebtHome = ({ debtGridData, incomeGridData, maingoals, owner }) => {
   const { user } = useUserStore();
@@ -27,7 +28,12 @@ const MonthlyDebtHome = ({ debtGridData, incomeGridData, maingoals, owner }) => 
                     <p className="p-2 bg-white border border-gray-300 w-full lg:w-2/3">
                       {getMonthlyBudgetTotal(user, debtGridData)}
                     </p>
-                    <p className="p-2 bg-white border border-gray-300 w-1/5 hidden lg:block">
+                    <p
+                      className={clsx(
+                        'p-2 border border-gray-300 w-1/5 hidden lg:block',
+                        owner === 'Joint' ? 'bg-[whitesmoke]' : 'bg-white',
+                      )}
+                    >
                       {owner === 'Joint' ? '' : getActualGoal(incomeGridData, debtGridData, 'Debts')}%
                     </p>
                     <p className="p-2 hidden lg:block">
@@ -47,13 +53,15 @@ const MonthlyDebtHome = ({ debtGridData, incomeGridData, maingoals, owner }) => 
             </tr>
             <tr className="border border-gray-300 text-left p-2">
               <td className="px-2 py-2 border-r w-2/3 border-gray-300">Percentage of Annual Net Income</td>
-              <td className="px-2  font-bold">
+              <td className={clsx('px-2  font-bold', owner === 'Joint' ? 'bg-[whitesmoke]' : 'bg-white')}>
                 {owner === 'Joint' ? '' : getActualGoalYearly(incomeGridData, debtGridData, 'Debts')}%
               </td>
             </tr>
             <tr className="border border-gray-300 text-left p-2">
               <td className="px-2 py-2 border-r w-2/3 border-gray-300">Goal</td>
-              <td className="px-2 font-bold">{owner === 'Joint' ? '' : getBudgetGoal(maingoals, 'Debts')}%</td>
+              <td className={clsx('px-2 font-bold', owner === 'Joint' ? 'bg-[whitesmoke]' : 'bg-white')}>
+                {owner === 'Joint' ? '' : getBudgetGoal(maingoals, 'Debts')}%
+              </td>
             </tr>
             <tr className="border border-gray-300 text-left p-2">
               <td className="px-2 py-2 border-r w-2/3 border-gray-300">
