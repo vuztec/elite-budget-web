@@ -9,7 +9,6 @@ import axios from '../../config/axios';
 import ModalWrapper from '../../components/ModalWrapper';
 import CheckoutForm from './CheckoutForm';
 import './Package.css';
-import Loading from '../../components/Loader';
 import { getPaymentMethods } from '../../config/api';
 import { useQuery, useQueryClient } from 'react-query';
 import AddPaymentMethod from './AddPaymentMethod';

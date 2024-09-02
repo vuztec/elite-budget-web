@@ -3,10 +3,13 @@ import { handleAxiosResponseError } from '../../utils/handleResponseError';
 import axios from '../../config/axios';
 import Loading from '../../components/Loader';
 import { useNavigate } from 'react-router-dom';
+import useUserStore from '../../app/user';
 
 const ChargeCustomer = ({ card, handleClose }) => {
   const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const { user } = useUserStore();
+
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
@@ -26,6 +29,7 @@ const ChargeCustomer = ({ card, handleClose }) => {
         console.log(err);
         handleClose();
         console.log(handleAxiosResponseError(err));
+        setMessage(handleAxiosResponseError(err));
         setIsLoading(false);
       });
   };
@@ -77,16 +81,21 @@ const ChargeCustomer = ({ card, handleClose }) => {
           />
         </div>
       </div>
-      {isLoading ? (
-        <Loading />
-      ) : (
-        <button
-          type="submit"
-          className="flex w-full items-center justify-center rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4  focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-        >
-          Pay now ${Number(7.99 * 12).toFixed(2)}
-        </button>
+      {user.IsExpired && (
+        <>
+          {isLoading ? (
+            <Loading />
+          ) : (
+            <button
+              type="submit"
+              className="flex w-full items-center justify-center rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4  focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+            >
+              Pay now ${Number(7.99 * 12).toFixed(2)}
+            </button>
+          )}
+        </>
       )}
+      {message && <div id="payment-message">{message}</div>}
     </form>
   );
 };
