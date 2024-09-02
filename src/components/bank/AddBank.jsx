@@ -28,7 +28,7 @@ export const AddBank = ({ open, setOpen, recordData }) => {
     if (recordData?.id) {
       setValue('Owner', recordData.Owner);
       setValue('Name', recordData.Name);
-      setValue('OpeningBalance', recordData.OpeningBalance);
+      setValue('OpeningBalance', recordData.OpeningBalance ? Number(recordData.OpeningBalance).toFixed(2) : '');
     }
 
     return () => reset();

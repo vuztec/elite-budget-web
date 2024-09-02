@@ -31,7 +31,7 @@ export const AddTransaction = ({ open, handleClose, recordData, banks }) => {
       setValue('Date', formatDateForForm(new Date(recordData.Date.split('T')[0] + 'T00:00:00')));
       setValue('Description', recordData.Description);
       setValue('Type', recordData.Type);
-      setValue('Amount', Number(recordData.Amount));
+      setValue('Amount', recordData.Amount ? Number(recordData.Amount).toFixed(2) : '');
       setValue('IsCleared', recordData.IsCleared);
     } else {
       setValue('Date', formatDateForForm(new Date()));
