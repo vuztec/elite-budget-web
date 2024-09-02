@@ -116,6 +116,11 @@ export const Transactions = () => {
     setOpen(true);
   };
 
+  const handleClose = () => {
+    setOpen(false);
+    setSelected(null);
+  };
+
   const [isShowing, setIsShowing] = useState(true);
 
   return activeAccount ? (
@@ -214,7 +219,7 @@ export const Transactions = () => {
           ))}
           <AddTransaction
             open={open}
-            setOpen={setOpen}
+            handleClose={handleClose}
             recordData={''}
             key={new Date().getTime().toString()}
             banks={banks}

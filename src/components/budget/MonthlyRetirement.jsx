@@ -27,10 +27,10 @@ const MonthlyRetirement = ({ retirementGridData, retirementGridDataAll, incomeGr
                       {getMonthlyBudgetTotal(user, retirementGridData)}
                     </p>
                     <p className="p-2 bg-white border border-gray-300 w-1/5 hidden lg:block">
-                      {owner === 'Joint' ? '' : getActualGoal(incomeGridData, retirementGridData, 'Retirement')}%
+                      {owner === 'Joint' ? '' : getActualGoal(incomeGridData, retirementGridData, 'Savings')}%
                     </p>
                     <p className="p-2 hidden lg:block">
-                      {owner === 'Joint' ? '' : getIcon(incomeGridData, retirementGridData, 'Retirement', maingoals)}
+                      {owner === 'Joint' ? '' : getIcon(incomeGridData, retirementGridData, 'Savings', maingoals)}
                     </p>
                   </div>
                 </td>

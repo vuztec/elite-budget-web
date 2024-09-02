@@ -121,9 +121,8 @@ export const TransactionListView = ({ Data, bankName, banks }) => {
 
   const handleTaxableTransaction = (data) => {
     setSelected(data.id);
-    // if (data.Taxable) setPrompt(() => 'Do you want to un-tax the Bank Transaction?');
-    // else
-    setPrompt(() => 'Flag as a tax item?');
+    if (data.Taxable) setPrompt(() => 'Are you sure you want to uncheck?');
+    else setPrompt(() => 'Flag as a tax item?');
     setOpenTaxDialog(true);
   };
 
