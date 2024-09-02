@@ -160,8 +160,9 @@ export const AddRootUser = ({ open, setOpen }) => {
                 />
               </div>
               <p className="text-[11px] text-gray-500">
-                NOTE: If you didn't start working until you completed an advanced degree, served in the military or were
-                disabled, you can deduct the years spent on those things from your age.
+                Option: To adjust the Expected Net Worth Calculation; If you didn't start working until you completed an
+                advanced degree, served in the military or were disabled, you can deduct the years spent on those things
+                from your age.
               </p>
               <div className="w-full">
                 <Textbox
