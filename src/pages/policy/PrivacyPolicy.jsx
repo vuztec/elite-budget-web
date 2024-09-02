@@ -25,7 +25,7 @@ export const PrivacyPolicy = () => {
         </p>
 
         <h2 className="font-semibold text-lg">2. Information We Collect</h2>
-        <ul className="list-disc list-outside">
+        <ul className="pl-8 list-disc list-outside">
           <li>
             <strong>Personal Information:</strong> When you register for an account on our App, we collect personal
             details such as your name, email address, country, and age.
@@ -47,7 +47,7 @@ export const PrivacyPolicy = () => {
         </ul>
 
         <h2 className="font-semibold text-lg">3. How We Use Your Information</h2>
-        <ul className="list-disc list-outside">
+        <ul className="pl-8 list-disc list-outside">
           <li>
             <strong>Personal Information:</strong> Your email and other personal details are used to create and manage
             your account, communicate with you, and provide you with the services you have requested.
@@ -68,7 +68,7 @@ export const PrivacyPolicy = () => {
         </ul>
 
         <h2 className="font-semibold text-lg">4. How We Protect Your Information</h2>
-        <ul className="list-disc list-outside">
+        <ul className="pl-8 list-disc list-outside">
           <li>
             <strong>Encryption:</strong> All sensitive information, including passwords and payment details, is
             encrypted to ensure your privacy and security.
@@ -84,7 +84,7 @@ export const PrivacyPolicy = () => {
         </ul>
 
         <h2 className="font-semibold text-lg">5. Third-Party Services</h2>
-        <ul className="list-disc list-outside">
+        <ul className="pl-8 list-disc list-outside">
           <li>
             <strong>Stripe:</strong> Payment processing for subscriptions is handled by Stripe. They adhere to strict
             privacy and security standards to protect your financial information. Please review Stripe's privacy policy
@@ -93,7 +93,7 @@ export const PrivacyPolicy = () => {
         </ul>
 
         <h2 className="font-semibold text-lg">6. Your Rights</h2>
-        <ul className="list-disc list-outside">
+        <ul className="pl-8 list-disc list-outside">
           <li>
             <strong>Access and Correction:</strong> You can access and update your personal information at any time
             through your account settings.
@@ -105,13 +105,13 @@ export const PrivacyPolicy = () => {
         </ul>
 
         <h2 className="font-semibold text-lg">7. Changes to This Privacy Policy</h2>
-        <p>
+        <p className="pl-6">
           We may update this Privacy Policy from time to time. Any changes will be posted on this page, and we encourage
           you to review it periodically.
         </p>
 
         <h2 className="font-semibold text-lg">8. Contact Us</h2>
-        <p>If you have any questions about this Privacy Policy, please contact us at:</p>
+        <p className="pl-6">If you have any questions about this Privacy Policy, please contact us at:</p>
         <p>
           <strong>Elite Cashflow Consulting</strong>
         </p>
