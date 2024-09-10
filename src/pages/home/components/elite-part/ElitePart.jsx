@@ -5,7 +5,7 @@ function ElitePart() {
   const features = [
     {
       id: 1,
-      icon: '../../../../assets/icon/enhanceResponsibility.png',
+      icon: 'src/assets/icon/enhanceResponsibility.png',
       title: 'Enhance transparency',
       highlighted: 'and responsibility',
       description:
@@ -15,7 +15,7 @@ function ElitePart() {
     },
     {
       id: 2,
-      icon: '../../../../assets/icon/saveTime.png',
+      icon: 'src/assets/icon/saveTime.png',
       title: 'Save time, seamlessly',
       highlighted: 'manage your budget',
       description:
@@ -25,7 +25,7 @@ function ElitePart() {
     },
     {
       id: 3,
-      icon: '../../../../assets/icon/boostEficiency.png',
+      icon: 'src/assets/icon/boostEficiency.png',
       title: 'Boost',
       highlighted: 'efficiency',
       description:
@@ -35,7 +35,7 @@ function ElitePart() {
     },
     {
       id: 4,
-      icon: '../../../../assets/icon/optimizeWorkflow.png',
+      icon: 'src/assets/icon/optimizeWorkflow.png',
       title: 'Optimize',
       highlighted: 'Workflow',
       description:

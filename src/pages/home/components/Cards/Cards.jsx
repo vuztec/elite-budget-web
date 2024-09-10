@@ -5,28 +5,28 @@ function Cards() {
   const cardData = [
     {
       id: 1,
-      iconSrc: '../../../../assets/icon/home.png',
+      iconSrc: 'src/assets/icon/home.png',
       title: 'Home',
       description: 'Track your savings with clarity and precision by monitoring both yearly and monthly totals.',
       bgColor: '#FF7452', // Unique background color for each card
     },
     {
       id: 2,
-      iconSrc: '../../../../assets/icon/doller.png',
+      iconSrc: 'src/assets/icon/doller.png',
       title: 'Income',
       description: 'Monitor your income sources and understand your earning trends with detailed reports.',
       bgColor: '#2684FF',
     },
     {
       id: 3,
-      iconSrc: '../../../../assets/icon/cart.png',
+      iconSrc: 'src/assets/icon/cart.png',
       title: 'Savings',
       description: 'Keep track of your savings goals and ensure financial security for the future.',
       bgColor: '#57D9A3',
     },
     {
       id: 4,
-      iconSrc: '../../../../assets/icon/folder.png',
+      iconSrc: 'src/assets/icon/folder.png',
       title: 'Investments',
       description: 'Analyze your investments and stay on top of your portfolio for long-term growth.',
       bgColor: '#FFC400',

@@ -1,5 +1,5 @@
 import { IoIosArrowRoundForward } from 'react-icons/io';
-import Retirement from '../../../../assets/image/retirement.png';
+import Retirement from '../../../../assets/image/retirment.png';
 
 function RetirementSec() {
   return (
@@ -23,7 +23,7 @@ function RetirementSec() {
       {/* Image Section */}
       <div className="w-full lg:w-1/2">
         <img
-          src="src/assets/image/retirment.png" // Correct image import
+          src={Retirement} // Correct image import
           alt="Other Debts"
           className="w-full h-auto"
         />

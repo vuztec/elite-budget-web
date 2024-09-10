@@ -1,4 +1,5 @@
-import FinalBudget from '../../../../assets/image/finalbudget.png';
+// import FinalBudget from '../../../../assets/image/finalbudget.png';
+import FinalBudget from '../../../../assets/icon/finalbudget.png';
 import Dashboard from '../../../../assets/image/dashboard.png';
 import BankRegister from '../../../../assets/image/bankRegister.png';
 

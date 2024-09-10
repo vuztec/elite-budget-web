@@ -1,6 +1,6 @@
 import { IoIosArrowRoundForward } from 'react-icons/io';
 import IncomeRecordCard from '../income/IncomeCards';
-import BankRegister from '../../../../assets/image/bankRegister.png';
+import Bank from '../../../../assets/image/bankRegister.png';
 
 function BankRegister() {
   // Array of record data to be rendered dynamically
@@ -36,7 +36,7 @@ function BankRegister() {
           </p>
         </div>
         <div className="w-full lg:w-1/2 flex justify-center">
-          <img src={BankRegister} alt="Income" className="max-w-full h-auto" />
+          <img src={Bank} alt="Income" className="max-w-full h-auto" />
         </div>
       </div>
 
