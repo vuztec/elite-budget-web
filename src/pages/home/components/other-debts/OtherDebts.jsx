@@ -23,7 +23,7 @@ function OtherDebts() {
       {/* Image Section */}
       <div className="w-full lg:w-1/2">
         <img
-          src="src/assets/image/otherDebet.png" // Correct image import
+          src={Debt} // Correct image import
           alt="Other Debts"
           className="w-full h-auto"
         />
