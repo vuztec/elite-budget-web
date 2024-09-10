@@ -1,32 +1,36 @@
 import React from 'react';
+import Home from '../../../../assets/icon/home.png';
+import Dollar from '../../../../assets/icon/doller.png';
+import Cart from '../../../../assets/icon/cart.png';
+import Folder from '../../../../assets/icon/folder.png';
 
 function Cards() {
   // Array of card data
   const cardData = [
     {
       id: 1,
-      iconSrc: 'src/assets/icon/home.png',
+      iconSrc: Home,
       title: 'Home',
       description: 'Track your savings with clarity and precision by monitoring both yearly and monthly totals.',
       bgColor: '#FF7452', // Unique background color for each card
     },
     {
       id: 2,
-      iconSrc: 'src/assets/icon/doller.png',
+      iconSrc: Dollar,
       title: 'Income',
       description: 'Monitor your income sources and understand your earning trends with detailed reports.',
       bgColor: '#2684FF',
     },
     {
       id: 3,
-      iconSrc: 'src/assets/icon/cart.png',
+      iconSrc: Cart,
       title: 'Savings',
       description: 'Keep track of your savings goals and ensure financial security for the future.',
       bgColor: '#57D9A3',
     },
     {
       id: 4,
-      iconSrc: 'src/assets/icon/folder.png',
+      iconSrc: Folder,
       title: 'Investments',
       description: 'Analyze your investments and stay on top of your portfolio for long-term growth.',
       bgColor: '#FFC400',

@@ -1,12 +1,14 @@
 import { IoIosArrowRoundForward } from 'react-icons/io';
 import IncomeRecordCard from '../income/IncomeCards';
 import Bank from '../../../../assets/image/bankRegister.png';
+import BankAccount from '../../../../assets/icon/bankAccount.png';
+import Transaction from '../../../../assets/icon/bankTransaction.png';
 
 function BankRegister() {
   // Array of record data to be rendered dynamically
   const bankRecord = [
     {
-      iconSrc: 'src/assets/icon/bankAccount.png',
+      iconSrc: BankAccount,
       title: 'Bank Account',
       records: [
         'Bank Account tracks all transactions for accurate financial management.',
@@ -14,7 +16,7 @@ function BankRegister() {
       ],
     },
     {
-      iconSrc: 'src/assets/icon/bankTransaction.png',
+      iconSrc: Transaction,
       title: 'Bank Transactions',
       records: [
         'Bank Transaction logs and categorizes all transactions for easy tracking.',

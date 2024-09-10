@@ -1,11 +1,15 @@
 import React from 'react';
+import Enhance from '../../../../assets/icon/enhanceResponsibility.png';
+import SaveTime from '../../../../assets/icon/saveTime.png';
+import Boost from '../../../../assets/icon/boostEficiency.png';
+import Optimize from '../../../../assets/icon/optimizeWorkflow.png';
 
 function ElitePart() {
   // Data for the feature cards
   const features = [
     {
       id: 1,
-      icon: 'src/assets/icon/enhanceResponsibility.png',
+      icon: Enhance,
       title: 'Enhance transparency',
       highlighted: 'and responsibility',
       description:
@@ -15,7 +19,7 @@ function ElitePart() {
     },
     {
       id: 2,
-      icon: 'src/assets/icon/saveTime.png',
+      icon: SaveTime,
       title: 'Save time, seamlessly',
       highlighted: 'manage your budget',
       description:
@@ -25,7 +29,7 @@ function ElitePart() {
     },
     {
       id: 3,
-      icon: 'src/assets/icon/boostEficiency.png',
+      icon: Boost,
       title: 'Boost',
       highlighted: 'efficiency',
       description:
@@ -35,7 +39,7 @@ function ElitePart() {
     },
     {
       id: 4,
-      icon: 'src/assets/icon/optimizeWorkflow.png',
+      icon: Optimize,
       title: 'Optimize',
       highlighted: 'Workflow',
       description:

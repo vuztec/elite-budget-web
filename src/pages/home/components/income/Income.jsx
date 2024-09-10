@@ -1,12 +1,14 @@
 import IncomeRecordCard from './IncomeCards.jsx'; // Ensure proper import
 import { IoIosArrowRoundForward } from 'react-icons/io';
 import IncomeImage from '../../../../assets/image/income.png';
+import IncomeRecord from '../../../../assets/icon/incomeRecord.png';
+import ExtraPay from '../../../../assets/icon/extraPay.png';
 
 function Income() {
   // Array of record data to be rendered dynamically
   const incomeRecords = [
     {
-      iconSrc: 'src/assets/icon/incomeRecord.png',
+      iconSrc: IncomeRecord,
       title: 'Income Records',
       records: [
         'Budgeted monthly income for someone paid weekly is based on 4 pay periods per month',
@@ -14,7 +16,7 @@ function Income() {
       ],
     },
     {
-      iconSrc: 'src/assets/icon/extraPay.png',
+      iconSrc: ExtraPay,
       title: 'Extra Pay Dates',
       records: [
         'Budgeted monthly income for someone paid weekly is based on 4 pay periods per month',
