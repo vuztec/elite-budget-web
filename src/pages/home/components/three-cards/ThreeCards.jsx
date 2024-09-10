@@ -6,7 +6,7 @@ import World from '../../../../assets/icon/world.png';
 import Recycle from '../../../../assets/icon/recylceArrow.png';
 import WordCap from '../../../../assets/icon/worldwithCap.png';
 import Tree from '../../../../assets/icon/tree.png';
-import Dashboard from '../../../../assets/icon/dashboard.png';
+import Dashboard from '../../../../assets/image/dashboard.png';
 
 const cardData = [
   {
