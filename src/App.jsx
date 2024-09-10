@@ -18,6 +18,7 @@ import {
   Subscription,
   PrivacyPolicy,
   TermsAndConditions,
+  Dashboard,
 } from './pages';
 
 import Navbar from './components/Navbar';
@@ -85,8 +86,8 @@ function App() {
     <main className="w-full min-h-screen bg-[#f3f4f6]">
       <Routes>
         <Route element={<Layout />}>
-          <Route path="/" element={<Home />} />
-          <Route path="//income/income-records" element={<IncomeRecords />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/income/income-records" element={<IncomeRecords />} />
           <Route path="/income/extra-pay-dates" element={<ExtraPayDates />} />
           <Route path="/expenses/expense-records" element={<ExpenseRecords />} />
           <Route path="/expenses/joint-contribution" element={<JointContribution />} />
@@ -102,6 +103,7 @@ function App() {
           <Route path="/net-worth" element={<Networth />} />
           <Route path="/subscription" element={<Subscription />} />
         </Route>
+        <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/forgetpassword" element={<ForgetPassword />} />
         <Route path="/verifyotp" element={<VerifyOtp />} />

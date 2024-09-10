@@ -1,4 +1,5 @@
-import { Home } from './home/Home';
+import { Dashboard } from './dashboard/Dashboard';
+import { Home } from './home/home';
 import { Login } from './login/Login';
 import { IncomeRecords } from './income/IncomeRecords';
 import { ExtraPayDates } from './income/ExtraPayDates';
@@ -21,6 +22,7 @@ import { TermsAndConditions } from './policy/TermsAndConditions';
 
 export {
   Home,
+  Dashboard,
   Login,
   IncomeRecords,
   ExtraPayDates,

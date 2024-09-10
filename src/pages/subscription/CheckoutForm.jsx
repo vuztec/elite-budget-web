@@ -40,7 +40,7 @@ export default function CheckoutForm() {
         .patch('/api/payment', { PaymentMethodId: paymentIntent.payment_method })
         .then(({ data }) => {
           setUser(data);
-          navigate('/');
+          navigate('/dashboard');
 
           setIsLoading(false);
         })
