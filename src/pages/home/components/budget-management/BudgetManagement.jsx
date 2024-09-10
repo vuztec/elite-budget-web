@@ -1,3 +1,7 @@
+import FinalBudget from '../../../../assets/image/finalbudget.png';
+import Dashboard from '../../../../assets/image/dashboard.png';
+import BankRegister from '../../../../assets/image/bankRegister.png';
+
 const BudgetManagement = () => {
   return (
     <div className="bg-gradient-to-b from-[#066B7E] to-blue-300 min-h-screen flex flex-col items-center">
@@ -17,7 +21,7 @@ const BudgetManagement = () => {
           {/* Mobile View */}
           <div className="block md:hidden">
             <div className="flex gap-3 items-center mb-2">
-              <img src="src/assets/icon/finalbudget.png" className="h-8 w-8" alt="Final Budget Icon" />
+              <img src={FinalBudget} className="h-8 w-8" alt="Final Budget Icon" />
               <h2 className="text-xl font-semibold uppercase">Final Budget</h2>
             </div>
             <p className="text-gray-600 text-justify">
@@ -28,15 +32,11 @@ const BudgetManagement = () => {
             </p>
           </div>
           {/* Image */}
-          <img
-            src="/src/assets/image/dashboard.png"
-            alt="Final Budget Screenshot"
-            className="w-full md:w-1/2 mb-4 md:mb-0 rounded-md"
-          />
+          <img src={Dashboard} alt="Final Budget Screenshot" className="w-full md:w-1/2 mb-4 md:mb-0 rounded-md" />
           {/* Desktop View */}
           <div className="hidden md:block">
             <div className="flex gap-3 items-center mb-2">
-              <img src="src/assets/icon/finalbudget.png" className="h-8 w-8" alt="Final Budget Icon" />
+              <img src={FinalBudget} className="h-8 w-8" alt="Final Budget Icon" />
               <h2 className="text-xl font-semibold uppercase">Final Budget</h2>
             </div>
             <p className="text-gray-600 text-justify">
@@ -53,7 +53,7 @@ const BudgetManagement = () => {
           {/* Content */}
           <div>
             <div className="flex gap-3 items-center mb-2">
-              <img src="src/assets/icon/bankregister.png" className="h-8 w-8" alt="Bank Register Icon" />
+              <img src={BankRegister} className="h-8 w-8" alt="Bank Register Icon" />
               <h2 className="text-xl font-semibold uppercase">Bank Register</h2>
             </div>
             <p className="text-gray-600 text-justify">
@@ -63,11 +63,7 @@ const BudgetManagement = () => {
             </p>
           </div>
           {/* Image */}
-          <img
-            src="/src/assets/image/dashboard.png"
-            alt="Bank Register Screenshot"
-            className="w-full md:w-1/2 mb-4 md:mb-0 rounded-md"
-          />
+          <img src={Dashboard} alt="Bank Register Screenshot" className="w-full md:w-1/2 mb-4 md:mb-0 rounded-md" />
         </div>
       </div>
     </div>

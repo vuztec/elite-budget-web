@@ -1,4 +1,5 @@
 import { IoIosArrowRoundForward } from 'react-icons/io';
+import Retirement from '../../../../assets/image/retirement.png';
 
 function RetirementSec() {
   return (

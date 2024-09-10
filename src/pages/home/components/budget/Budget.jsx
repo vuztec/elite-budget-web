@@ -1,3 +1,5 @@
+import Dashboard from '../../../../assets/image/dashboard.png';
+
 function Budget() {
   return (
     <div className="w-full min-h-screen bg-[#2F2F2F] flex flex-col items-center p-8 md:p-16">
@@ -49,7 +51,7 @@ function Budget() {
 
       {/* Dashboard Image */}
       <div className="w-full flex justify-center ">
-        <img src="src/assets/image/dashboard.png" alt="Dashboard" className="w-[90%] md:w-auto max-w-full h-auto" />
+        <img src={Dashboard} alt="Dashboard" className="w-[90%] md:w-auto max-w-full h-auto" />
       </div>
 
       {/* Call-to-action */}

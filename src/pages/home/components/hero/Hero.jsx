@@ -1,5 +1,6 @@
 import { GoStarFill } from 'react-icons/go';
 import { TiStarHalfOutline } from 'react-icons/ti';
+import HomeImage from '../../../../assets/image/homeImage.png';
 
 function Hero() {
   return (
@@ -46,7 +47,7 @@ function Hero() {
       <div className="right relative w-full lg:w-1/2 flex justify-center items-center mt-8 lg:mt-0">
         {/* Large screen mockup */}
         <div className="relative w-full max-w-[500px] md:max-w-none">
-          <img src="src/assets/image/homeImage.png" alt="Laptop mockup" className="w-full h-auto" />
+          <img src={HomeImage} alt="Laptop mockup" className="w-full h-auto" />
         </div>
       </div>
     </div>

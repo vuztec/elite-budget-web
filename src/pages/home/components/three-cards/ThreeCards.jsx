@@ -4,10 +4,10 @@ const cardData = [
     description:
       'Cash on Consulting offers enterprise-class security across all plans, ensuring complete peace of mind. Integrate with your existing security functions and customize protection with features like double encryption, role-based access control, user authentication, and privacy verifications. For added security, use Cash on Consulting Lock to manage your own encryption keys.',
     icons: [
-      'src/assets/icon/safegrad.png',
-      'src/assets/icon/lock.png',
-      'src/assets/icon/personlock.png',
-      'src/assets/icon/key.png',
+      '../../../../assets/icon/safegrad.png',
+      '../../../../assets/icon/lock.png',
+      '../../../../assets/icon/personlock.png',
+      '../../../../assets/icon/key.png',
     ],
     bgColor: 'bg-[#FFEDED]',
     iconBgColor: 'bg-[#FFBBBB]',
@@ -17,10 +17,10 @@ const cardData = [
     description:
       'Cash on Consulting provides award-winning, 24/7 global support across all time zones. Select a package tailored to your needs and budget. Enhance your experience with comprehensive guides, articles, webinars, and demos on the latest productivity features.',
     icons: [
-      'src/assets/icon/world.png',
-      'src/assets/icon/recylceArrow.png',
-      'src/assets/icon/worldwithCap.png',
-      'src/assets/icon/tree.png',
+      '../../../../assets/icon/world.png',
+      '../../../../assets/icon/recylceArrow.png',
+      '../../../../assets/icon/worldwithCap.png',
+      '../../../../assets/icon/tree.png',
     ],
     bgColor: 'bg-[#EBFFFB]',
     iconBgColor: 'bg-[#BBFFDA]',
@@ -31,7 +31,7 @@ const cardData = [
       'Start with Cash on Consulting in minutes using its intuitive interface and seamless adoption. Our professional services team will facilitate a smooth onboarding, including migration from existing tools, sharing best practices, and offering support as needed.',
     bgColor: 'bg-[#FFF8C5]',
     iconBgColor: 'bg-[#FFE4BB]',
-    image: 'src/assets/image/dashboard.png',
+    image: '../../../../assets/image/dashboard.png',
   },
 ];
 

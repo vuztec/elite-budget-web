@@ -1,4 +1,5 @@
 import { IoIosArrowRoundForward } from 'react-icons/io';
+import Debt from '../../../../assets/image/otherDebet.png';
 
 function OtherDebts() {
   return (

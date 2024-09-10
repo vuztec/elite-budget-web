@@ -4,11 +4,11 @@ import Logo from '../../../../assets/logo.png';
 
 function Footer() {
   const paymentMethod = [
-    { name: 'masterCard', link: 'src/assets/icon/mastercard.png' },
+    { name: 'masterCard', link: '../../../../assets/icon/mastercard.png' },
     // { name: 'bitPay', link: 'src/assets/icon/bitpay.png' },
-    { name: 'visa', link: 'src/assets/icon/visa.png' },
-    { name: 'american express', link: 'src/assets/icon/amiricanexpress.png' },
-    { name: 'discover', link: 'src/assets/icon/discover.png' },
+    { name: 'visa', link: '../../../../assets/icon/visa.png' },
+    { name: 'american express', link: '../../../../assets/icon/amiricanexpress.png' },
+    { name: 'discover', link: '../../../../assets/icon/discover.png' },
     // { name: 'sofort', link: 'src/assets/icon/sofort.png' },
     // { name: 'google pay', link: 'src/assets/icon/googlepay.png' },
     // { name: 'apple pay', link: 'src/assets/icon/applepay.png' },
