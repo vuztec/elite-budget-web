@@ -3,7 +3,6 @@ import Background from '../../../../assets/image/bgimage.png';
 function EliteSignup() {
   return (
     <div className="relative bg-gray-800 text-white flex justify-center items-center min-h-screen w-full">
-      {/* Background Image */}
       <div
         className="absolute inset-0 bg-cover bg-center z-0"
         style={{
