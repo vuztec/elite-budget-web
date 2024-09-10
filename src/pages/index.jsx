@@ -1,5 +1,4 @@
 import { Dashboard } from './dashboard/Dashboard';
-import { Home } from './home/home';
 import { Login } from './login/Login';
 import { IncomeRecords } from './income/IncomeRecords';
 import { ExtraPayDates } from './income/ExtraPayDates';
@@ -7,7 +6,7 @@ import { ExpenseRecords } from './expense/ExpenseRecords';
 import { JointContribution } from './expense/JointContribution';
 import { OtherDebts } from './debt/OtherDebts';
 import { Retirement } from './retirement/Retirement';
-
+import { Home } from './home';
 import { Savings } from './savings/Savings';
 import { Transactions } from './bank/Transactions';
 import { BankAccounts } from './bank/BankAccounts';
