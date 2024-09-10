@@ -1,12 +1,14 @@
 import IncomeRecordCard from '../income/IncomeCards'; // Ensure proper import
 import { IoIosArrowRoundForward } from 'react-icons/io';
 import Income from '../../../../assets/image/income.png';
+import ExpenseImage from '../../../../assets/icon/expensesRecord.png';
+import Joint from '../../../../assets/icon/jointContribution.png';
 
 function Expenses() {
   // Array of record data to be rendered dynamically
   const incomeRecords = [
     {
-      iconSrc: 'src/assets/icon/expensesRecord.png',
+      iconSrc: ExpenseImage,
       title: 'Expense Records',
       records: [
         'Track and manage your expenses efficiently with detailed records and insights ',
@@ -14,7 +16,7 @@ function Expenses() {
       ],
     },
     {
-      iconSrc: 'src/assets/icon/jointContribution.png',
+      iconSrc: Joint,
       title: 'Joint Contribution',
       records: [
         'Joint Contribution is the total combined financial input from all contributors.',

@@ -1,19 +1,23 @@
 import { IoIosArrowRoundForward } from 'react-icons/io';
 import IncomeRecordCard from '../income/IncomeCards';
 import Retirement from '../../../../assets/image/retirement2.png';
+import BudgetGoal from '../../../../assets/icon/budgetGoal.png';
+import BudgetDetail from '../../../../assets/icon/budgetDetail.png';
+import Checklist from '../../../../assets/icon/checklist.png';
+import ExtraFound from '../../../../assets/icon/extraFound.png';
 
 function Retirment() {
   // Array of record data to be rendered dynamically
   const bankRecord = [
     {
-      iconSrc: 'src/assets/icon/budgetGoal.png',
+      iconSrc: BudgetGoal,
       title: 'Budget Goals',
       records: [
         'Monitor and control spending to ensure it aligns with budget limits for effective financial oversight.',
       ],
     },
     {
-      iconSrc: 'src/assets/icon/budgetDetail.png',
+      iconSrc: BudgetDetail,
       title: 'Budget Details',
       records: [
         ' List income sources and expenses for a clear view of financial allocations.',
@@ -21,12 +25,12 @@ function Retirment() {
       ],
     },
     {
-      iconSrc: 'src/assets/icon/checklist.png',
+      iconSrc: Checklist,
       title: 'Check List  ',
       records: ['Regularly review and update income and expenses for accurate tracking and budget adherence.'],
     },
     {
-      iconSrc: 'src/assets/icon/extraFound.png',
+      iconSrc: ExtraFound,
       title: 'Extra Fund Tracker',
       records: [
         'Track additional funds beyond the budget; manage surplus effectively and adjust financial plans as needed.',

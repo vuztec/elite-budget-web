@@ -1,14 +1,18 @@
 import { FaFacebookF, FaTwitter, FaInstagram, FaYoutube, FaWhatsapp } from 'react-icons/fa';
 import { MdLocationOn, MdEmail, MdPhone } from 'react-icons/md';
 import Logo from '../../../../assets/logo.png';
+import MasterCard from '../../../../assets/icon/mastercard.png';
+import Visa from '../../../../assets/icon/visa.png';
+import American from '../../../../assets/icon/amiricanexpress.png';
+import Discover from '../../../../assets/icon/discover.png';
 
 function Footer() {
   const paymentMethod = [
-    { name: 'masterCard', link: '../../../../assets/icon/mastercard.png' },
+    { name: 'masterCard', link: MasterCard },
     // { name: 'bitPay', link: 'src/assets/icon/bitpay.png' },
-    { name: 'visa', link: '../../../../assets/icon/visa.png' },
-    { name: 'american express', link: '../../../../assets/icon/amiricanexpress.png' },
-    { name: 'discover', link: '../../../../assets/icon/discover.png' },
+    { name: 'visa', link: Visa },
+    { name: 'american express', link: American },
+    { name: 'discover', link: Discover },
     // { name: 'sofort', link: 'src/assets/icon/sofort.png' },
     // { name: 'google pay', link: 'src/assets/icon/googlepay.png' },
     // { name: 'apple pay', link: 'src/assets/icon/applepay.png' },
