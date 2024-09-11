@@ -1,8 +1,11 @@
-import Dashboard from '../../../../assets/image/dashboard.png';
-
 function Budget() {
+  const scrollToSection = (id) => {
+    const section = document.getElementById(id);
+    section?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
-    <div className="w-full min-h-screen bg-[#2F2F2F] flex flex-col items-center p-8 md:p-16">
+    <div className="w-full bg-[#2F2F2F] flex flex-col items-center p-8 md:p-16">
       {/* Heading */}
       <div className="w-full lg:px-2">
         <h1 className="text-[#FFFFFF] text-3xl md:text-[32px] text-center font-semibold">
@@ -21,39 +24,55 @@ function Budget() {
 
       {/* Navigation Buttons */}
       <div className="flex flex-wrap gap-2 p-6 md:p-10 justify-center">
-        <button className="p-2 md:p-4 rounded-lg bg-[#FF7452] text-white w-full max-w-[150px] flex-grow">Home</button>
-        <button className="p-2 md:p-4 rounded-lg bg-[#2684FF] text-white w-full max-w-[150px] flex-grow">Income</button>
-        <button className="p-2 md:p-4 rounded-lg bg-[#57D9A3] text-white w-full max-w-[150px] flex-grow">
-          Expenses
+        <button
+          onClick={() => scrollToSection('home')}
+          className="p-2 md:p-4 rounded-lg bg-[#FF7452] text-white w-full max-w-[150px] flex-wrap"
+        >
+          Budget Summary
         </button>
-        <button className="p-2 md:p-4 rounded-lg bg-[#FFC400] text-white w-full max-w-[150px] flex-grow">
-          Other Debts
+        <button
+          onClick={() => scrollToSection('budget-detail')}
+          className="p-2 md:p-4 rounded-lg bg-[#2684FF] text-white w-full max-w-[150px] flex-grow"
+        >
+          Budget Details
         </button>
-        <button className="p-2 md:p-4 rounded-lg bg-[#00C7E5] text-white w-full max-w-[150px] flex-grow">
-          Retirement
+        <button
+          onClick={() => scrollToSection('checklist')}
+          className="p-2 md:p-4 rounded-lg bg-[#57D9A3] text-white w-full max-w-[150px] flex-grow"
+        >
+          Checklist
         </button>
-        <button className="p-2 md:p-4 rounded-lg bg-[#F99CDB] text-white w-full max-w-[150px] flex-grow">
-          Savings
+        <button
+          onClick={() => scrollToSection('networth')}
+          className="p-2 md:p-4 rounded-lg bg-[#FFC400] text-white w-full max-w-[150px] flex-grow"
+        >
+          Networth
         </button>
-        <button className="p-2 md:p-4 rounded-lg bg-[#FF820E] text-white w-full max-w-[150px] flex-grow">
-          Bank Register
+        <button
+          onClick={() => scrollToSection('extra-pay-dates')}
+          className="p-2 md:p-4 rounded-lg bg-[#00C7E5] text-white w-full max-w-[150px] flex-grow"
+        >
+          Extra Pay Dates
         </button>
-        <button className="p-2 md:p-4 rounded-lg bg-[#00AE5B] text-white w-full max-w-[150px] flex-grow">
-          Final Budget
+        <button
+          onClick={() => scrollToSection('joint')}
+          className="p-2 md:p-4 rounded-lg bg-[#F99CDB] text-white w-full max-w-[150px] flex-grow"
+        >
+          Joint Contribution
         </button>
-        <button className="p-2 md:p-4 rounded-lg bg-[#B601BA] text-white w-full max-w-[150px] flex-grow">
-          Net Worth
+        <button
+          onClick={() => scrollToSection('extra-fund-tracker')}
+          className="p-2 md:p-4 rounded-lg bg-[#FF820E] text-white w-full max-w-[150px] flex-grow"
+        >
+          Extra Fund Tracker
         </button>
-        <button className="p-2 md:p-4 rounded-lg bg-[#D44F5F] text-white w-full max-w-[150px] flex-grow">
-          Subscription
+        <button
+          onClick={() => scrollToSection('bank-transaction')}
+          className="p-2 md:p-4 rounded-lg bg-[#00AE5B] text-white w-full max-w-[150px] flex-grow"
+        >
+          Bank Transaction
         </button>
       </div>
-
-      {/* Dashboard Image */}
-      <div className="w-full flex justify-center ">
-        <img src={Dashboard} alt="Dashboard" className="w-[90%] md:w-auto max-w-full h-auto" />
-      </div>
-
       {/* Call-to-action */}
       <div className="flex flex-col gap-4 items-center mt-6 md:mt-8">
         <a

@@ -19,6 +19,7 @@ import {
   PrivacyPolicy,
   TermsAndConditions,
   Dashboard,
+  OldHome,
 } from './pages';
 
 import Navbar from './components/Navbar';
@@ -104,6 +105,7 @@ function App() {
           <Route path="/subscription" element={<Subscription />} />
         </Route>
         <Route path="/" element={<Home />} />
+        <Route path="/old" element={<OldHome />} />
         <Route path="/login" element={<Login />} />
         <Route path="/forgetpassword" element={<ForgetPassword />} />
         <Route path="/verifyotp" element={<VerifyOtp />} />

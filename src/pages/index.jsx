@@ -7,6 +7,7 @@ import { JointContribution } from './expense/JointContribution';
 import { OtherDebts } from './debt/OtherDebts';
 import { Retirement } from './retirement/Retirement';
 import { Home } from './home';
+import { OldHome } from './oldhome';
 import { Savings } from './savings/Savings';
 import { Transactions } from './bank/Transactions';
 import { BankAccounts } from './bank/BankAccounts';
@@ -21,6 +22,7 @@ import { TermsAndConditions } from './policy/TermsAndConditions';
 
 export {
   Home,
+  OldHome,
   Dashboard,
   Login,
   IncomeRecords,
