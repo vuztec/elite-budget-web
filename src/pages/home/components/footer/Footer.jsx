@@ -67,12 +67,12 @@ function Footer() {
                 </a>
               </li>
               <li>
-                <a href="/privacy-policy" className="text-gray-700 hover:underline">
+                <a href="/privacy-policy?page=home" className="text-gray-700 hover:underline">
                   Privacy Policy
                 </a>
               </li>
               <li>
-                <a href="/terms-and-conditions" className="text-gray-700 hover:underline">
+                <a href="/terms-and-conditions?page=home" className="text-gray-700 hover:underline">
                   Terms and Conditions
                 </a>
               </li>

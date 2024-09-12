@@ -1,11 +1,17 @@
 import React from 'react';
 import Logo from '../../assets/logo.png';
+import { useSearchParams } from 'react-router-dom';
 
 export const TermsAndConditions = () => {
+  const [searchParams] = useSearchParams();
+  const page = searchParams.get('page');
   return (
     <div className="w-full xl:w-1/2 flex flex-col items-center justify-center text-justify bg-white p-5 xl:p-10">
       <div className="flex justify-between mb-5 bg-black px-3 py-1 rounded-full">
-        <a href="/login" className="text-sm text-white hover:text-blue-500 underline cursor-pointer">
+        <a
+          href={page === 'home' ? '/' : '/login'}
+          className="text-sm text-white hover:text-blue-500 underline cursor-pointer"
+        >
           Return to Login or Create Account
         </a>
       </div>
