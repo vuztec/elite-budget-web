@@ -22,7 +22,7 @@ export const Home = () => {
         <Budget />
         <div id="home" className="flex flex-col lg:flex-row items-center justify-center my-10 gap-8 lg:gap-12 p-8">
           <div className="w-full lg:w-1/3 flex flex-col gap-6">
-            <h1 className="text-[#171717] font-semibold text-[32px] lg:text-[42px]">Home</h1>
+            <h1 className="text-[#171717] font-semibold text-[32px] lg:text-[42px]">Budget Summary</h1>
             <p className="text-lg lg:text-2xl font-normal text-[#171717]">
               Retirement planning encompasses all future financial needs, including savings, investments, and
               expectedexpenses. Tracking your retirement goals is essential for effective budgeting, long-term financial
@@ -50,7 +50,7 @@ export const Home = () => {
         </div>
         <div
           id="budget-detail"
-          className="flex flex-col lg:flex-row items-center justify-center my-10 gap-8 lg:gap-12 p-8"
+          className="flex flex-col lg:flex-row-reverse items-center justify-center my-10 gap-8 lg:gap-12 p-8"
         >
           <div className="w-full lg:w-1/3 flex flex-col gap-6">
             <h1 className="text-[#171717] font-semibold text-[32px] lg:text-[42px]">Budget Details</h1>
@@ -79,10 +79,7 @@ export const Home = () => {
             </a>
           </div>
         </div>
-        <div
-          id="checklist"
-          className="flex flex-col lg:flex-row-reverse items-center justify-center my-10 gap-8 lg:gap-12 p-8"
-        >
+        <div id="checklist" className="flex flex-col lg:flex-row items-center justify-center my-10 gap-8 lg:gap-12 p-8">
           <div className="w-full lg:w-1/3 flex flex-col gap-6">
             <h1 className="text-[#171717] font-semibold text-[32px] lg:text-[42px]">Checklist</h1>
             <p className="text-lg lg:text-2xl font-normal text-[#171717]">
@@ -110,7 +107,10 @@ export const Home = () => {
             </a>
           </div>
         </div>
-        <div id="networth" className="flex flex-col lg:flex-row items-center justify-center my-10 gap-8 lg:gap-12 p-8">
+        <div
+          id="networth"
+          className="flex flex-col lg:flex-row-reverse items-center justify-center my-10 gap-8 lg:gap-12 p-8"
+        >
           <div className="w-full lg:w-1/3 flex flex-col gap-6">
             <h1 className="text-[#171717] font-semibold text-[32px] lg:text-[42px]">Networth</h1>
             <p className="text-lg lg:text-2xl font-normal text-[#171717]">
@@ -140,7 +140,7 @@ export const Home = () => {
         </div>
         <div
           id="extra-pay-dates"
-          className="flex flex-col lg:flex-row-reverse items-center justify-center my-10 gap-8 lg:gap-12 p-8"
+          className="flex flex-col lg:flex-row items-center justify-center my-10 gap-8 lg:gap-12 p-8"
         >
           <div className="w-full lg:w-1/3 flex flex-col gap-6">
             <h1 className="text-[#171717] font-semibold text-[32px] lg:text-[42px]">Extra Pay Dates</h1>
@@ -169,9 +169,12 @@ export const Home = () => {
             </a>
           </div>
         </div>
-        <div id="joint" className="flex flex-col lg:flex-row items-center justify-center my-10 gap-8 lg:gap-12 p-8">
+        <div
+          id="joint"
+          className="flex flex-col lg:flex-row-reverse items-center justify-center my-10 gap-8 lg:gap-12 p-8"
+        >
           <div className="w-full lg:w-1/3 flex flex-col gap-6">
-            <h1 className="text-[#171717] font-semibold text-[32px] lg:text-[42px]">Joint Split Calc</h1>
+            <h1 className="text-[#171717] font-semibold text-[32px] lg:text-[42px]">Joint Contribution Calculation</h1>
             <p className="text-lg lg:text-2xl font-normal text-[#171717]">
               Retirement planning encompasses all future financial needs, including savings, investments, and
               expectedexpenses. Tracking your retirement goals is essential for effective budgeting, long-term financial
