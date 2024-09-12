@@ -62,7 +62,7 @@ function Footer() {
                 </a>
               </li>
               <li>
-                <a href="/about-us" className="text-gray-700 hover:underline">
+                <a href="https://www.elitecashflowconsulting.com/" className="text-gray-700 hover:underline">
                   About Us
                 </a>
               </li>
@@ -72,7 +72,7 @@ function Footer() {
                 </a>
               </li>
               <li>
-                <a href="/terms" className="text-gray-700 hover:underline">
+                <a href="/terms-and-conditions" className="text-gray-700 hover:underline">
                   Terms and Conditions
                 </a>
               </li>

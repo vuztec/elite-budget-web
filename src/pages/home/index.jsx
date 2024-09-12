@@ -32,7 +32,7 @@ export const Home = () => {
               href="/login"
               className="hidden lg:flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-white shadow-md text-black rounded-md"
             >
-              Try Elite <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
+              Try the App Now <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
             </a>
           </div>
 
@@ -44,7 +44,7 @@ export const Home = () => {
               href="/login"
               className="flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-black shadow-md text-white rounded-md lg:hidden"
             >
-              Try Elite <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
+              Try the App Now <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
             </a>
           </div>
         </div>
@@ -63,7 +63,7 @@ export const Home = () => {
               href="/login"
               className="hidden lg:flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-white shadow-md text-black rounded-md"
             >
-              Try Elite <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
+              Try the App Now <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
             </a>
           </div>
 
@@ -75,7 +75,7 @@ export const Home = () => {
               href="/login"
               className="flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-black shadow-md text-white rounded-md lg:hidden"
             >
-              Try Elite <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
+              Try the App Now <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
             </a>
           </div>
         </div>
@@ -91,7 +91,7 @@ export const Home = () => {
               href="/login"
               className="hidden lg:flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-white shadow-md text-black rounded-md"
             >
-              Try Elite <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
+              Try the App Now <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
             </a>
           </div>
 
@@ -103,7 +103,7 @@ export const Home = () => {
               href="/login"
               className="flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-black shadow-md text-white rounded-md lg:hidden"
             >
-              Try Elite <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
+              Try the App Now <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
             </a>
           </div>
         </div>
@@ -122,7 +122,7 @@ export const Home = () => {
               href="/login"
               className="hidden lg:flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-white shadow-md text-black rounded-md"
             >
-              Try Elite <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
+              Try the App Now <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
             </a>
           </div>
 
@@ -134,7 +134,7 @@ export const Home = () => {
               href="/login"
               className="flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-black shadow-md text-white rounded-md lg:hidden"
             >
-              Try Elite <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
+              Try the App Now <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
             </a>
           </div>
         </div>
@@ -153,7 +153,7 @@ export const Home = () => {
               href="/login"
               className="hidden lg:flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-white shadow-md text-black rounded-md"
             >
-              Try Elite <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
+              Try the App Now <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
             </a>
           </div>
 
@@ -165,7 +165,7 @@ export const Home = () => {
               href="/login"
               className="flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-black shadow-md text-white rounded-md lg:hidden"
             >
-              Try Elite <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
+              Try the App Now <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
             </a>
           </div>
         </div>
@@ -184,7 +184,7 @@ export const Home = () => {
               href="/login"
               className="hidden lg:flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-white shadow-md text-black rounded-md"
             >
-              Try Elite <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
+              Try the App Now <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
             </a>
           </div>
 
@@ -196,7 +196,7 @@ export const Home = () => {
               href="/login"
               className="flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-black shadow-md text-white rounded-md lg:hidden"
             >
-              Try Elite <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
+              Try the App Now <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
             </a>
           </div>
         </div>
@@ -216,7 +216,7 @@ export const Home = () => {
               href="/login"
               className="hidden lg:flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-white shadow-md text-black rounded-md"
             >
-              Try Elite <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
+              Try the App Now <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
             </a>
           </div>
 
@@ -228,7 +228,7 @@ export const Home = () => {
               href="/login"
               className="flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-black shadow-md text-white rounded-md lg:hidden"
             >
-              Try Elite <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
+              Try the App Now <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
             </a>
           </div>
         </div>
@@ -247,7 +247,7 @@ export const Home = () => {
               href="/login"
               className="hidden lg:flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-white shadow-md text-black rounded-md"
             >
-              Try Elite <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
+              Try the App Now <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
             </a>
           </div>
 
@@ -259,7 +259,7 @@ export const Home = () => {
               href="/login"
               className="flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-black shadow-md text-white rounded-md lg:hidden"
             >
-              Try Elite <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
+              Try the App Now <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
             </a>
           </div>
         </div>
