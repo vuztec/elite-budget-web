@@ -20,6 +20,7 @@ import {
   TermsAndConditions,
   OldHome,
   Advert,
+  Faqs,
 } from './pages';
 
 import Navbar from './components/Navbar';
@@ -112,6 +113,7 @@ function App() {
         <Route path="/updatepassword" element={<UpdatePassword />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+        <Route path="/faqs" element={<Faqs />} />
       </Routes>
       <ToastContainer
         position="top-right"

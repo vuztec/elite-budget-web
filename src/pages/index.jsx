@@ -17,8 +17,9 @@ import { Networth } from './networth/Networth';
 import { Subscription } from './subscription/Subscription';
 import { PrivacyPolicy } from './policy/PrivacyPolicy';
 import { TermsAndConditions } from './policy/TermsAndConditions';
+import { Faqs } from './policy/faqs';
 import { Home } from './home/Home';
-import { Advert } from './advert';
+import { Advert } from './advert/Advert';
 
 export {
   Home,
@@ -42,4 +43,5 @@ export {
   Subscription,
   PrivacyPolicy,
   TermsAndConditions,
+  Faqs,
 };
