@@ -12,7 +12,7 @@ export const TermsAndConditions = () => {
           href={page === 'advert' ? '/advert' : '/login'}
           className="text-sm text-white hover:text-blue-500 underline cursor-pointer"
         >
-          Return to Login or Create Account
+          {page === 'advert' ? 'Return to Advert' : 'Return to Login or Create Account'}
         </a>
       </div>
       <h1 className="flex items-start justify-start mb-4">
@@ -105,8 +105,11 @@ export const TermsAndConditions = () => {
         <p>Address: [Your Business Address]</p>
       </div>
       <div className="flex justify-between mt-10 bg-black px-3 py-1 rounded-full">
-        <a href="/login" className="text-sm text-white hover:text-blue-500 underline cursor-pointer">
-          Return to Login or Create Account
+        <a
+          href={page === 'advert' ? '/advert' : '/login'}
+          className="text-sm text-white hover:text-blue-500 underline cursor-pointer"
+        >
+          {page === 'advert' ? 'Return to Advert' : 'Return to Login or Create Account'}
         </a>
       </div>
     </div>

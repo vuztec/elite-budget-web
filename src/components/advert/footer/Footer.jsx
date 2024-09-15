@@ -1,10 +1,10 @@
 import { FaFacebookF, FaTwitter, FaInstagram, FaYoutube, FaWhatsapp } from 'react-icons/fa';
 import { MdLocationOn, MdEmail, MdPhone } from 'react-icons/md';
-import Logo from '../../../../assets/logo.png';
-import MasterCard from '../../../../assets/icon/mastercard.png';
-import Visa from '../../../../assets/icon/visa.png';
-import American from '../../../../assets/icon/amiricanexpress.png';
-import Discover from '../../../../assets/icon/discover.png';
+import Logo from '../../../assets/logo.png';
+import MasterCard from '../../../assets/icon/mastercard.png';
+import Visa from '../../../assets/icon/visa.png';
+import American from '../../../assets/icon/amiricanexpress.png';
+import Discover from '../../../assets/icon/discover.png';
 
 function Footer() {
   const paymentMethod = [

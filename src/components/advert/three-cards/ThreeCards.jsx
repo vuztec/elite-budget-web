@@ -1,12 +1,13 @@
-import Safegrad from '../../../../assets/icon/safegrad.png';
-import Lock from '../../../../assets/icon/lock.png';
-import PersonLock from '../../../../assets/icon/personlock.png';
-import Key from '../../../../assets/icon/key.png';
-import World from '../../../../assets/icon/world.png';
-import Recycle from '../../../../assets/icon/recylceArrow.png';
-import WordCap from '../../../../assets/icon/worldwithCap.png';
-import Tree from '../../../../assets/icon/tree.png';
-import Dashboard from '../../../../assets/image/dashboard.png';
+import Safegrad from '../../../assets/icon/safegrad.png';
+// import Safegrad from '../../../../assets/icon/safegrad.png';
+import Lock from '../../../assets/icon/lock.png';
+import PersonLock from '../../../assets/icon/personlock.png';
+import Key from '../../../assets/icon/key.png';
+import World from '../../../assets/icon/world.png';
+import Recycle from '../../../assets/icon/recylceArrow.png';
+import WordCap from '../../../assets/icon/worldwithCap.png';
+import Tree from '../../../assets/icon/tree.png';
+import Dashboard from '../../../assets/image/dashboard.png';
 
 const cardData = [
   {

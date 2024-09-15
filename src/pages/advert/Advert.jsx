@@ -1,8 +1,3 @@
-import Navbar from './components/navbar/Navbar.jsx';
-import Budget from './components/budget/Budget.jsx';
-import ThreeCards from './components/three-cards/ThreeCards.jsx';
-import Footer from './components/footer/Footer.jsx';
-import Hero from './components/hero/Hero.jsx';
 import { IoIosArrowRoundForward } from 'react-icons/io';
 import BudgetDetails from '../../assets/image/budget-detail.png';
 import BankTransaction from '../../assets/image/bank-transactions.png';
@@ -12,6 +7,11 @@ import ExtraPayDates from '../../assets/image/extra-pay-dates.png';
 import JointContribution from '../../assets/image/joint-contribution.png';
 import NetWork from '../../assets/image/net-worth.png';
 import HomeImage from '../../assets/image/home.png';
+import Navbar from '../../components/advert/navbar/Navbar';
+import Hero from '../../components/advert/hero/Hero';
+import ThreeCards from '../../components/advert/three-cards/ThreeCards';
+import Footer from '../../components/advert/footer/Footer';
+import Budget from '../../components/advert/budget/Budget';
 
 export const Advert = () => {
   return (

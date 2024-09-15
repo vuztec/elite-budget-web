@@ -1,7 +1,6 @@
 import { GoStarFill } from 'react-icons/go';
 import { TiStarHalfOutline } from 'react-icons/ti';
-import HomeImage from '../../../../assets/image/homeImage.png';
-import Networth from '../../../../assets/image/net-worth.png';
+import Networth from '../../../assets/image/net-worth.png';
 
 function Hero() {
   return (

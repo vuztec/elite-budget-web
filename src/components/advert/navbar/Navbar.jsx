@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { IoMenu } from 'react-icons/io5'; // Importing Menu icon
 import { IoClose } from 'react-icons/io5'; // Importing Close icon
 import CustomDropdown from './Customdropdown.jsx';
-import Logo from '../../../../assets/logo.png';
+import Logo from '../../../assets/logo.png';
 
 function Navbar() {
   // State for drawer open/close
