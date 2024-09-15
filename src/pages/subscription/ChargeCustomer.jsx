@@ -41,7 +41,7 @@ const ChargeCustomer = ({ card, handleClose }) => {
       .post('/api/payment/invoice', { PaymentMethodId: card.id })
       .then(({ data }) => {
         // setUser(data);
-        navigate('/dashboard');
+        navigate('/');
         console.log(data);
         handleClose();
         setIsLoading(false);

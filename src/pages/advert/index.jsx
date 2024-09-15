@@ -13,7 +13,7 @@ import JointContribution from '../../assets/image/joint-contribution.png';
 import NetWork from '../../assets/image/net-worth.png';
 import HomeImage from '../../assets/image/home.png';
 
-export const Home = () => {
+export const Advert = () => {
   return (
     <>
       <div className="w-full bg-white">
