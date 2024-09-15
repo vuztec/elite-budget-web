@@ -118,7 +118,7 @@ export const Login = () => {
                   })}
                   error={errors.password ? errors.password.message : ''}
                 />
-                <div className="flex items-center justify-center gap-5 xl:gap-10 w-full">
+                <div className="flex items-center justify-center gap-5 xl:gap-10 w-full mt-5">
                   <div className="flex justify-between">
                     <a
                       href="/forgetpassword"
@@ -127,12 +127,12 @@ export const Login = () => {
                       Forgot Password?
                     </a>
                   </div>
-                  {/* <div
+                  <div
                     onClick={() => addClick()}
                     className="flex items-center justify-center text-sm text-gray-500 hover:text-blue-500 underline cursor-pointer"
                   >
                     Create New Account?
-                  </div> */}
+                  </div>
                 </div>
 
                 <Button
