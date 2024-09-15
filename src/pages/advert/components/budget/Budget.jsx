@@ -73,11 +73,11 @@ function Budget() {
           Bank Transaction
         </button>
       </div>
-      {/* Call-to-action */}
+
       <div className="flex flex-col gap-4 items-center mt-6 md:mt-8">
         <a
           href="/login"
-          className="bg-[#00AE5B] text-xl md:text-2xl whitespace-nowrap text-white font-semibold px-6 md:px-8 text-center py-3 md:py-4 w-full md:w-3/4 rounded-lg"
+          className="bg-[#00AE5B] text-xl md:text-2xl whitespace-nowrap text-white font-semibold px-6 md:px-8 text-center py-3 md:py-4 rounded-lg"
         >
           Try the App Now
         </a>

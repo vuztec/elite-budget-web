@@ -127,12 +127,12 @@ export const Login = () => {
                       Forgot Password?
                     </a>
                   </div>
-                  <div
+                  {/* <div
                     onClick={() => addClick()}
                     className="flex items-center justify-center text-sm text-gray-500 hover:text-blue-500 underline cursor-pointer"
                   >
                     Create New Account?
-                  </div>
+                  </div> */}
                 </div>
 
                 <Button

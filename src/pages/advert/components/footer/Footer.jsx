@@ -62,17 +62,21 @@ function Footer() {
                 </a>
               </li>
               <li>
-                <a href="https://www.elitecashflowconsulting.com/" className="text-gray-700 hover:underline">
+                <a
+                  href="https://www.elitecashflowconsulting.com/"
+                  target="_blank"
+                  className="text-gray-700 hover:underline"
+                >
                   About Us
                 </a>
               </li>
               <li>
-                <a href="/privacy-policy?page=home" className="text-gray-700 hover:underline">
+                <a href="/privacy-policy?page=advert" className="text-gray-700 hover:underline">
                   Privacy Policy
                 </a>
               </li>
               <li>
-                <a href="/terms-and-conditions?page=home" className="text-gray-700 hover:underline">
+                <a href="/terms-and-conditions?page=advert" className="text-gray-700 hover:underline">
                   Terms and Conditions
                 </a>
               </li>

@@ -9,7 +9,7 @@ export const TermsAndConditions = () => {
     <div className="w-full xl:w-1/2 flex flex-col items-center justify-center text-justify bg-white p-5 xl:p-10">
       <div className="flex justify-between mb-5 bg-black px-3 py-1 rounded-full">
         <a
-          href={page === 'home' ? '/' : '/login'}
+          href={page === 'advert' ? '/advert' : '/login'}
           className="text-sm text-white hover:text-blue-500 underline cursor-pointer"
         >
           Return to Login or Create Account
