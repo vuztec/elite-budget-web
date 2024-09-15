@@ -18,8 +18,8 @@ import {
   Subscription,
   PrivacyPolicy,
   TermsAndConditions,
-  Dashboard,
   OldHome,
+  Advert,
 } from './pages';
 
 import Navbar from './components/Navbar';
@@ -79,7 +79,7 @@ function Layout() {
       </div>
     </div>
   ) : (
-    <Navigate to="/login" state={{ from: location }} replace />
+    <Navigate to="/advert" state={{ from: location }} replace />
   );
 }
 function App() {
@@ -87,7 +87,7 @@ function App() {
     <main className="w-full min-h-screen bg-[#f3f4f6]">
       <Routes>
         <Route element={<Layout />}>
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/" element={<Home />} />
           <Route path="/income/income-records" element={<IncomeRecords />} />
           <Route path="/income/extra-pay-dates" element={<ExtraPayDates />} />
           <Route path="/expenses/expense-records" element={<ExpenseRecords />} />
@@ -104,7 +104,7 @@ function App() {
           <Route path="/net-worth" element={<Networth />} />
           <Route path="/subscription" element={<Subscription />} />
         </Route>
-        <Route path="/" element={<Home />} />
+        <Route path="/advert" element={<Advert />} />
         <Route path="/old" element={<OldHome />} />
         <Route path="/login" element={<Login />} />
         <Route path="/forgetpassword" element={<ForgetPassword />} />

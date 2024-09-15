@@ -23,7 +23,7 @@ import useUserStore from '../../app/user';
 import { SidebarLinks } from '../../utils/sidebar.data';
 import { useLocation } from 'react-router-dom';
 
-export const Dashboard = () => {
+export const Home = () => {
   const { user } = useUserStore();
 
   const [isDataLoaded, setIsDataLoaded] = useState(false);
@@ -380,4 +380,4 @@ export const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default Home;

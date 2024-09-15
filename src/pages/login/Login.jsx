@@ -24,7 +24,7 @@ export const Login = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    user && navigate('/dashboard');
+    user && navigate('/');
   }, [user]);
 
   const submitHandler = async (data) => {
@@ -47,7 +47,7 @@ export const Login = () => {
           isLoading: false,
           autoClose: 3000,
         });
-        navigate('/dashboard');
+        navigate('/');
       })
       .catch((err) => {
         toast.update(id, {
