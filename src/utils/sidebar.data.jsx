@@ -8,7 +8,7 @@ import { CiMoneyBill } from 'react-icons/ci';
 export const SidebarLinks = [
   {
     label: 'Home',
-    link: '/dashboard',
+    link: '/',
     title: 'Budget Summary',
     icon: <IoHome />,
     dropdown: false,
