@@ -12,7 +12,7 @@ export const SidebarLinks = [
     title: 'Budget Summary',
     icon: <IoHome />,
     dropdown: false,
-    activename: 'dashboard',
+    activename: 'home',
   },
   {
     label: 'Income',
