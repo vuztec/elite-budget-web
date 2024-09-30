@@ -55,7 +55,6 @@ export const AddExpense = ({ open, setOpen, recordData }) => {
 
   // Define handleOnSubmit function to handle form submission
   const handleOnSubmit = async (data) => {
-    console.log(data);
     const numericSelectedID = Number(recordData.id);
     setIsLoading(() => true);
 
