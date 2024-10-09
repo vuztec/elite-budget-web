@@ -50,9 +50,9 @@ jobs:
           username: ubuntu
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            # sudo docker stop ${{env.CONTAINER_NAME}}
-            # sudo docker rm ${{env.CONTAINER_NAME}}
+            sudo docker stop ${{env.CONTAINER_NAME}}
+            sudo docker rm ${{env.CONTAINER_NAME}}
             sudo docker login -u AWS -p $(aws ecr get-login-password --region ${{ env.AWS_REGION }}) ${{env.ECR_REGISTRY}}/${{env.ECR_REPOSITORY}}
             sudo docker pull ${{env.ECR_REGISTRY}}/${{env.ECR_REPOSITORY}}:${{env.IMAGE_TAG}}
             sudo docker run -d --name ${{env.CONTAINER_NAME}} -p 3000:3000 ${{env.ECR_REGISTRY}}/${{env.ECR_REPOSITORY}}:${{env.IMAGE_TAG}}
-            # sudo docker rmi $(sudo docker images -q --filter "dangling=true")
+            sudo docker rmi $(sudo docker images -q --filter "dangling=true")
