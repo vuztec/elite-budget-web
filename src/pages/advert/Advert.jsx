@@ -23,11 +23,16 @@ export const Advert = () => {
         <div id="home" className="flex flex-col lg:flex-row items-center justify-center my-10 gap-8 lg:gap-12 p-8">
           <div className="w-full lg:w-1/3 flex flex-col gap-6">
             <h1 className="text-[#171717] font-semibold text-[32px] lg:text-[42px]">Budget Summary</h1>
-            <p className="text-lg lg:text-2xl font-normal text-[#171717]">
-              Retirement planning encompasses all future financial needs, including savings, investments, and
-              expectedexpenses. Tracking your retirement goals is essential for effective budgeting, long-term financial
-              planning,and ensuring financial security.
-            </p>
+
+            <ul className="text-lg font-normal text-[#171717] list-decimal">
+              <li>
+                The Budget Summary report is a summary of the budget. Use this report when you need a budget overview.
+              </li>
+              <li>
+                Point to the section above where it indicates all the items listed under: The Elite Budget app
+                streamlines the budget management process in one easy-to-use platform.
+              </li>
+            </ul>
             <a
               href="/login"
               className="hidden lg:flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-white shadow-md text-black rounded-md"
@@ -54,11 +59,16 @@ export const Advert = () => {
         >
           <div className="w-full lg:w-1/3 flex flex-col gap-6">
             <h1 className="text-[#171717] font-semibold text-[32px] lg:text-[42px]">Budget Details</h1>
-            <p className="text-lg lg:text-2xl font-normal text-[#171717]">
-              Retirement planning encompasses all future financial needs, including savings, investments, and
-              expectedexpenses. Tracking your retirement goals is essential for effective budgeting, long-term financial
-              planning,and ensuring financial security.
-            </p>
+            <ul className="text-lg font-normal text-[#171717] list-decimal">
+              <li>
+                The Budget Detail report is a detailed list of all budget items included in each category. Use this
+                report when you need a detailed view of your budget.
+              </li>
+              <li>
+                Point to the section above where it indicates all the items listed under: The Elite Budget app
+                streamlines the budget management process in one easy-to-use platform.
+              </li>
+            </ul>
             <a
               href="/login"
               className="hidden lg:flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-white shadow-md text-black rounded-md"
@@ -82,11 +92,17 @@ export const Advert = () => {
         <div id="checklist" className="flex flex-col lg:flex-row items-center justify-center my-10 gap-8 lg:gap-12 p-8">
           <div className="w-full lg:w-1/3 flex flex-col gap-6">
             <h1 className="text-[#171717] font-semibold text-[32px] lg:text-[42px]">Checklist</h1>
-            <p className="text-lg lg:text-2xl font-normal text-[#171717]">
-              Retirement planning encompasses all future financial needs, including savings, investments, and
-              expectedexpenses. Tracking your retirement goals is essential for effective budgeting, long-term financial
-              planning,and ensuring financial security.
-            </p>
+            <ul className="text-lg font-normal text-[#171717] list-decimal">
+              <li>
+                Creating a checklist to track budget items is an excellent way to maintain control and ensure that no
+                aspect of your financial plan is overlooked.{' '}
+              </li>
+              <li>
+                Point to the section above where it indicates that the app includes budgeting tool add-ons: A handy
+                checklist to use when you enter your budget items into your checkbook register so nothing is forgotten
+                or overlooked
+              </li>
+            </ul>
             <a
               href="/login"
               className="hidden lg:flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-white shadow-md text-black rounded-md"
@@ -113,11 +129,12 @@ export const Advert = () => {
         >
           <div className="w-full lg:w-1/3 flex flex-col gap-6">
             <h1 className="text-[#171717] font-semibold text-[32px] lg:text-[42px]">Networth</h1>
-            <p className="text-lg lg:text-2xl font-normal text-[#171717]">
-              Retirement planning encompasses all future financial needs, including savings, investments, and
-              expectedexpenses. Tracking your retirement goals is essential for effective budgeting, long-term financial
-              planning,and ensuring financial security.
-            </p>
+            <ul className="text-lg font-normal text-[#171717] list-decimal">
+              <li>
+                Point to the section above where it indicates that the app includes budgeting tool add-ons: Net worth
+                Report (what you own less what you owe){' '}
+              </li>
+            </ul>
             <a
               href="/login"
               className="hidden lg:flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-white shadow-md text-black rounded-md"
@@ -144,11 +161,16 @@ export const Advert = () => {
         >
           <div className="w-full lg:w-1/3 flex flex-col gap-6">
             <h1 className="text-[#171717] font-semibold text-[32px] lg:text-[42px]">Extra Pay Dates</h1>
-            <p className="text-lg lg:text-2xl font-normal text-[#171717]">
-              Retirement planning encompasses all future financial needs, including savings, investments, and
-              expectedexpenses. Tracking your retirement goals is essential for effective budgeting, long-term financial
-              planning,and ensuring financial security.
-            </p>
+            <ul className="text-lg font-normal text-[#171717] list-decimal">
+              <li>
+                Extra pay dates refer to additional pay periods per year that happen when you receive your paycheck on a
+                weekly or biweekly basis which can provide a financial boost for budgeting.{' '}
+              </li>
+              <li>
+                Point to the section above where it indicates that the app includes budgeting tool add-ons: Extra pay
+                dates calendar for automatic savings (or debt reduction)
+              </li>
+            </ul>
             <a
               href="/login"
               className="hidden lg:flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-white shadow-md text-black rounded-md"
@@ -175,11 +197,12 @@ export const Advert = () => {
         >
           <div className="w-full lg:w-1/3 flex flex-col gap-6">
             <h1 className="text-[#171717] font-semibold text-[32px] lg:text-[42px]">Joint Contribution Calculation</h1>
-            <p className="text-lg lg:text-2xl font-normal text-[#171717]">
-              Retirement planning encompasses all future financial needs, including savings, investments, and
-              expectedexpenses. Tracking your retirement goals is essential for effective budgeting, long-term financial
-              planning,and ensuring financial security.
-            </p>
+            <ul className="text-lg font-normal text-[#171717] list-decimal">
+              <li>
+                Point to the section above where it indicates that the app includes budgeting tool add-ons: Joint
+                expense split calculator when couples wish to split their joint costs{' '}
+              </li>
+            </ul>
             <a
               href="/login"
               className="hidden lg:flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-white shadow-md text-black rounded-md"
@@ -207,11 +230,12 @@ export const Advert = () => {
         >
           <div className="w-full lg:w-1/3 flex flex-col gap-6">
             <h1 className="text-[#171717] font-semibold text-[32px] lg:text-[42px]">Extra Fund Tracker</h1>
-            <p className="text-lg lg:text-2xl font-normal text-[#171717]">
-              Retirement planning encompasses all future financial needs, including savings, investments, and
-              expectedexpenses. Tracking your retirement goals is essential for effective budgeting, long-term financial
-              planning,and ensuring financial security.
-            </p>
+            <ul className="text-lg font-normal text-[#171717] list-decimal">
+              <li>
+                Point to the section above where it indicates that the app includes budgeting tool add-ons: An extra
+                funds tracker to manage the budget buffer (the money that exceeds your budget){' '}
+              </li>
+            </ul>
             <a
               href="/login"
               className="hidden lg:flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-white shadow-md text-black rounded-md"
@@ -238,11 +262,12 @@ export const Advert = () => {
         >
           <div className="w-full lg:w-1/3 flex flex-col gap-6">
             <h1 className="text-[#171717] font-semibold text-[32px] lg:text-[42px]">Bank Transaction</h1>
-            <p className="text-lg lg:text-2xl font-normal text-[#171717]">
-              Retirement planning encompasses all future financial needs, including savings, investments, and
-              expectedexpenses. Tracking your retirement goals is essential for effective budgeting, long-term financial
-              planning,and ensuring financial security.
-            </p>
+            <ul className="text-lg font-normal text-[#171717] list-decimal">
+              <li>
+                Point to the section above where it indicates that the app includes budgeting tool add-ons: Bank account
+                registers so you can enter your bank transactions and reconcile your bank accounts{' '}
+              </li>
+            </ul>
             <a
               href="/login"
               className="hidden lg:flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-white shadow-md text-black rounded-md"

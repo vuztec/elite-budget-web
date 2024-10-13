@@ -20,7 +20,7 @@ function Budget() {
           they need. Project progress remains transparent, helping everyone stay aligned, focused, and stress-free, no
           matter where they work.
         </p> */}
-        <ul className="list-disc">
+        <ul className="ml-12 list-disc">
           <li>Step one is to enter all your data. That’s the hardest part but just for the first time!</li>
           <li>All reports and accounts are available by Individual, Partner, Joint or Household.</li>
           <li>
@@ -53,6 +53,58 @@ function Budget() {
           </li>
           <li>Easy to make changes</li>
           <li>All reports are automatically updated instantly.</li>
+        </ul>
+
+        <ul className="list-disc mt-6">
+          <li>
+            <span className="font-bold">Elite Problem Solving:</span> For those who demand more from their financial
+            tools. Achieve complete control over your finances with a budgeting app designed for individuals, couples
+            and households that seek premium performance. Finally, a budget process where you can gain control over your
+            finances and improve your long-term financial well-being.{' '}
+          </li>
+          <li>
+            <span className="font-bold">Simple Interface:</span> The Elite budget app offers an intuitive design, making
+            budgeting accessible for everyone, whether you're a beginner or a seasoned saver. All you need is the
+            internet to log into your account. No spreadsheets!
+          </li>
+          <li>
+            <span className="font-bold"> Luxurious Design:</span> Experience a sleek, elegant interface that reflects
+            your premium lifestyle—simple, stylish, and effective.
+          </li>
+          <li>
+            <span className="font-bold">Customizable Budgets:</span> Create tailored budgets based on your expense
+            categories with just a few clicks. The App provides a budget process tailored to elite savers and spenders.
+            All key components of a budget are listed, prepopulated with a list of income and spending categories to
+            choose from with the flexibility to make changes and add recognizable nicknames.
+          </li>
+          <li>
+            <span className="font-bold">Financial Insights:</span> Summary & Detail Budget reports and a handy checklist
+            lets you know where your money is going and how to save more. There’s also a net worth report too!
+          </li>
+          <li>
+            <span className="font-bold">Multi-Device Support:</span> Access your budget from your phone, tablet, or
+            desktop seamlessly.
+          </li>
+          <li>
+            <span className="font-bold">Data Security:</span> Your data is encrypted and secure, ensuring your financial
+            information stays safe.
+          </li>
+          <li>
+            <span className="font-bold">Free Trial or Signup:</span> Try the budgeting portion of the app for a free
+            7-day trial (banking and net worth are included with a paid subscription) and start taking control of your
+            finances today!
+          </li>
+          <li>
+            <span className="font-bold">Ease of Onboarding:</span> Sign up in seconds and start budgeting immediately!
+          </li>
+          <li>
+            <span className="font-bold">Exclusive Membership:</span> Join a select group of elite users who trust the
+            Elite Budget app for their financial planning needs.
+          </li>
+          <li>
+            <span className="font-bold">Upgrade Your Finances:</span> Elevate your budgeting experience and enjoy the
+            perks of a smarter financial life. Sign up today to unlock premium features.
+          </li>
         </ul>
       </div>
 

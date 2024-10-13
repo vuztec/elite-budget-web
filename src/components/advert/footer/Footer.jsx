@@ -56,11 +56,11 @@ function Footer() {
           <div>
             <h3 className="font-semibold mb-4">Company</h3>
             <ul className="space-y-2">
-              <li>
+              {/* <li>
                 <a href="/faqs" className="text-gray-700 hover:underline">
                   FAQs
                 </a>
-              </li>
+              </li> */}
               <li>
                 <a
                   href="https://www.elitecashflowconsulting.com/"
