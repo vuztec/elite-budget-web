@@ -14,16 +14,50 @@ function Budget() {
       </div>
 
       {/* Description */}
-      <div className="w-[95%] md:w-[85%] text-justify my-4 md:my-2">
-        <p className="text-[#FFFFFF] font-normal text-lg md:text-lg lg:leading-[28px] md:text-center">
+      <div className="text-white w-[95%] md:w-[85%] text-justify my-4 md:my-2">
+        {/* <p className="text-[#FFFFFF] font-normal text-lg md:text-lg lg:leading-[28px] md:text-center">
           With everything neatly organized and easily accessible, your team can quickly find and share the information
           they need. Project progress remains transparent, helping everyone stay aligned, focused, and stress-free, no
           matter where they work.
-        </p>
+        </p> */}
+        <ul className="list-disc">
+          <li>Step one is to enter all your data. That’s the hardest part but just for the first time!</li>
+          <li>All reports and accounts are available by Individual, Partner, Joint or Household.</li>
+          <li>
+            The app includes budgeting tool add-ons:
+            <ul className="list-disc ml-6">
+              <li>
+                <span className="font-bold"> Extra pay dates calendar</span> for automatic savings (or debt reduction)
+              </li>
+              <li>
+                <span className="font-bold">A handy checklist</span> to use when you enter your budget items into your
+                checkbook register so nothing is forgotten or overlooked
+              </li>
+              <li>
+                {' '}
+                <span className="font-bold">Joint expense split calculator</span> when couples wish to split their joint
+                costs
+              </li>
+              <li>
+                <span className="font-bold">An extra funds tracker</span> to manage the budget buffer (the money that
+                exceeds your budget)
+              </li>
+              <li>
+                <span className="font-bold">Bank account registers</span> so you can enter your bank transactions and
+                reconcile your bank accounts
+              </li>
+              <li>
+                <span className="font-bold">Net worth Report</span> (what you own less what you owe)
+              </li>
+            </ul>
+          </li>
+          <li>Easy to make changes</li>
+          <li>All reports are automatically updated instantly.</li>
+        </ul>
       </div>
 
       {/* Navigation Buttons */}
-      <div className="flex flex-wrap gap-2 p-6 md:p-10 justify-center">
+      <div className="flex sm:flex-wrap md:flex-nowrap gap-2 p-6 md:p-10 justify-center">
         <button
           onClick={() => scrollToSection('home')}
           className="p-2 md:p-4 rounded-lg bg-[#FF7452] text-white w-full max-w-[150px] flex-wrap"
@@ -42,12 +76,7 @@ function Budget() {
         >
           Checklist
         </button>
-        <button
-          onClick={() => scrollToSection('networth')}
-          className="p-2 md:p-4 rounded-lg bg-[#FFC400] text-white w-full max-w-[150px] flex-grow"
-        >
-          Networth
-        </button>
+
         <button
           onClick={() => scrollToSection('extra-pay-dates')}
           className="p-2 md:p-4 rounded-lg bg-[#00C7E5] text-white w-full max-w-[150px] flex-grow"
@@ -71,6 +100,12 @@ function Budget() {
           className="p-2 md:p-4 rounded-lg bg-[#00AE5B] text-white w-full max-w-[150px] flex-grow"
         >
           Bank Transaction
+        </button>
+        <button
+          onClick={() => scrollToSection('networth')}
+          className="p-2 md:p-4 rounded-lg bg-[#FFC400] text-white w-full max-w-[150px] flex-grow"
+        >
+          Networth
         </button>
       </div>
 

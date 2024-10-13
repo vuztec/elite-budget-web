@@ -15,9 +15,8 @@ function Hero() {
         </p>
 
         {/* Star Ratings */}
-        <div className="mt-4 flex flex-col gap-2 md:justify-center lg:justify-start">
+        {/* <div className="mt-4 flex flex-col gap-2 md:justify-center lg:justify-start">
           <div className="flex md:justify-center lg:justify-start">
-            {/* Render 4 full stars and 1 half star using React Icons */}
             <GoStarFill className="text-[#FFC700] text-2xl" />
             <GoStarFill className="text-[#FFC700] text-2xl" />
             <GoStarFill className="text-[#FFC700] text-2xl" />
@@ -27,7 +26,7 @@ function Hero() {
           <p className="text-sm font-medium text-[#6B7280] md:text-center lg:text-left">
             Top Rated Budget Management Software
           </p>
-        </div>
+        </div> */}
 
         {/* Buttons */}
         <div className="flex gap-4 mt-6 md:justify-center lg:justify-start">
