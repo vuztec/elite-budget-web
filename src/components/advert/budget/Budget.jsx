@@ -21,44 +21,8 @@ function Budget() {
           they need. Project progress remains transparent, helping everyone stay aligned, focused, and stress-free, no
           matter where they work.
         </p> */}
-          <div className="grid lg:grid-cols-2 mt-6">
-            <ul className="list-inside list-disc">
-              <li>Step one is to enter all your data. That’s the hardest part but just for the first time!</li>
-              <li>All reports and accounts are available by Individual, Partner, Joint or Household.</li>
-              <li>
-                The app includes budgeting tool add-ons:
-                <ul className="list-disc ml-6">
-                  <li>
-                    <span className="font-bold"> Extra pay dates calendar</span> for automatic savings (or debt
-                    reduction)
-                  </li>
-                  <li>
-                    <span className="font-bold">A handy checklist</span> to use when you enter your budget items into
-                    your checkbook register so nothing is forgotten or overlooked
-                  </li>
-                  <li>
-                    {' '}
-                    <span className="font-bold">Joint expense split calculator</span> when couples wish to split their
-                    joint costs
-                  </li>
-                  <li>
-                    <span className="font-bold">An extra funds tracker</span> to manage the budget buffer (the money
-                    that exceeds your budget)
-                  </li>
-                  <li>
-                    <span className="font-bold">Bank account registers</span> so you can enter your bank transactions
-                    and reconcile your bank accounts
-                  </li>
-                  <li>
-                    <span className="font-bold">Net worth Report</span> (what you own less what you owe)
-                  </li>
-                </ul>
-              </li>
-              <li>Easy to make changes</li>
-              <li>All reports are automatically updated instantly.</li>
-            </ul>
-
-            <ul className="list-inside list-disc">
+          <div className="grid lg:grid-cols-2 gap-6 mt-6">
+            <ul className="list-outside list-disc">
               <li>
                 <span className="font-bold">Elite Problem Solving:</span> For those who demand more from their financial
                 tools. Achieve complete control over your finances with a budgeting app designed for individuals,
@@ -110,6 +74,41 @@ function Budget() {
                 <span className="font-bold">Upgrade Your Finances:</span> Elevate your budgeting experience and enjoy
                 the perks of a smarter financial life. Sign up today to unlock premium features.
               </li>
+            </ul>
+            <ul className="list-outside list-disc">
+              <li>Step one is to enter all your data. That’s the hardest part but just for the first time!</li>
+              <li>All reports and accounts are available by Individual, Partner, Joint or Household.</li>
+              <li>
+                The app includes budgeting tool add-ons:
+                <ul className="list-disc ml-6">
+                  <li>
+                    <span className="font-bold"> Extra pay dates calendar</span> for automatic savings (or debt
+                    reduction)
+                  </li>
+                  <li>
+                    <span className="font-bold">A handy checklist</span> to use when you enter your budget items into
+                    your checkbook register so nothing is forgotten or overlooked
+                  </li>
+                  <li>
+                    {' '}
+                    <span className="font-bold">Joint expense split calculator</span> when couples wish to split their
+                    joint costs
+                  </li>
+                  <li>
+                    <span className="font-bold">An extra funds tracker</span> to manage the budget buffer (the money
+                    that exceeds your budget)
+                  </li>
+                  <li>
+                    <span className="font-bold">Bank account registers</span> so you can enter your bank transactions
+                    and reconcile your bank accounts
+                  </li>
+                  <li>
+                    <span className="font-bold">Net worth Report</span> (what you own less what you owe)
+                  </li>
+                </ul>
+              </li>
+              <li>Easy to make changes</li>
+              <li>All reports are automatically updated instantly.</li>
             </ul>
           </div>
         </div>
