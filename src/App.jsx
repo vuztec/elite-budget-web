@@ -69,7 +69,7 @@ function Layout() {
       {/* <MobileSidebar/> */}
       <div className="flex-1 overflow-auto">
         <Navbar />
-        <div className="p-4 2xl:px-10">
+        <div className="p-4">
           <Outlet />
           <div className="fixed bottom-4 right-4">
             <button className="text-black font-bold p-4 bg-gray-300 rounded-full shadow-lg" onClick={scrollToTop}>
