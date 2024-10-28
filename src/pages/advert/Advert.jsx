@@ -14,6 +14,8 @@ import Footer from '../../components/advert/footer/Footer';
 import Budget from '../../components/advert/budget/Budget';
 import { useState } from 'react';
 import ModalWrapper from '../../components/ModalWrapper';
+import Button from '../../components/Button';
+import { TiCancel } from 'react-icons/ti';
 
 export const Advert = () => {
   const [open, setOpen] = useState(false);
@@ -359,6 +361,16 @@ export const Advert = () => {
           <li>Easy to make changes</li>
           <li>All reports are automatically updated instantly.</li>
         </ul>
+
+        <div className=" py-3 flex justify-center gap-4">
+          <Button
+            type="button"
+            className="bg-gray-100 flex flex-row-reverse items-center gap-1 px-8 text-sm font-semibold text-gray-900 sm:w-auto border"
+            onClick={handleModal}
+            label="Close"
+            icon={<TiCancel />}
+          />
+        </div>
       </ModalWrapper>
     </>
   );
