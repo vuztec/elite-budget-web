@@ -295,7 +295,7 @@ export const Networth = () => {
             </div>
             <div className="flex flex-col w-full">
               <h1 className="w-full bg-[whitesmoke] text-black flex items-center justify-center p-2 rounded-md font-bold border border-gray-300">
-                * EXPECTED NET WORTH
+                EXPECTED NET WORTH
               </h1>
               <div>
                 <ExpectedNetworth
@@ -311,10 +311,10 @@ export const Networth = () => {
               </div>
             </div>
             <div className="w-full pt-5 text-xs xl:text-sm text-left italic">
-              <p>
+              {/* <p>
                 *Source: Stanley, T, & Danko, W. (1996, 2010). The Millionaire Next Door, Page 13, Formula referenced in
                 the section: How to Determine If You're Wealthy. Taylor Trade Publishing, Maryland.
-              </p>
+              </p> */}
             </div>
           </div>
         </div>

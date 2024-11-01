@@ -261,7 +261,7 @@ export const AddRootUser = ({ open, setOpen }) => {
                   placeholder="enter currency"
                   type="text"
                   name="Currency"
-                  label="Currency (e.g. $ or USD)"
+                  label="Currency Symbol (e.g. $ or USD)"
                   className="w-full rounded"
                   register={register('Currency', {
                     required: 'Currency is required!',

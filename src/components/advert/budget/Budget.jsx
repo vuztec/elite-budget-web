@@ -38,13 +38,13 @@ function Budget() {
             onClick={() => scrollToSection('joint')}
             className="p-2 md:p-4 rounded-lg bg-[#F99CDB] text-white w-full max-w-[150px] flex-grow"
           >
-            Joint Contribution
+            Joint Calculator
           </button>
           <button
             onClick={() => scrollToSection('extra-fund-tracker')}
             className="p-2 md:p-4 rounded-lg bg-[#FF820E] text-white w-full max-w-[150px] flex-grow"
           >
-            Extra Fund Tracker
+            Extra Funds Tracker
           </button>
           <button
             onClick={() => scrollToSection('bank-transaction')}

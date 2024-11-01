@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   getAge,
   getFormattedValueTotal,
@@ -8,8 +8,8 @@ import {
   getUnformattedLoanBalanceTotal,
   getUnformattedMarketValueTotal,
   getUnformattedOpeningBalanceTotal,
-} from "../../utils/budget.calculation";
-import useUserStore from "../../app/user";
+} from '../../utils/budget.calculation';
+import useUserStore from '../../app/user';
 
 export const ExpectedNetworth = ({
   incomeGridData,
@@ -23,16 +23,14 @@ export const ExpectedNetworth = ({
 }) => {
   const { user } = useUserStore();
   const totalSavMarketValue = getUnformattedMarketValueTotal(savingsGridData);
-  const totalRetMarketValue =
-    getUnformattedMarketValueTotal(retirementGridData);
+  const totalRetMarketValue = getUnformattedMarketValueTotal(retirementGridData);
   const totalExpMarketValue = getUnformattedMarketValueTotal(expenseGridData);
   const totalOpeningBalance = getUnformattedOpeningBalanceTotal(bankGridData);
   const totalBankBalance = getUnformattedBankBalanceTotal(transactionGridData);
   const totalDebLoanBalance = getUnformattedLoanBalanceTotal(debtGridData);
   const totalExpLoanBalance = getUnformattedLoanBalanceTotal(expenseGridData);
   const age = getAge(user, owner);
-  const expectedNet =
-    (age / 10) * getUnformattedGrossYearlyTotal(incomeGridData);
+  const expectedNet = (age / 10) * getUnformattedGrossYearlyTotal(incomeGridData);
 
   return (
     <div className="w-full flex flex-col">
@@ -41,9 +39,7 @@ export const ExpectedNetworth = ({
           <table className="w-[99%]">
             <tbody>
               <tr className="border border-gray-300 text-sm xl:text-[16px]  text-left p-2 font-bold">
-                <td className="px-2 py-2 border-r w-2/3 border-gray-300 font-normal">
-                  Net Worth
-                </td>
+                <td className="px-2 py-2 border-r w-2/3 border-gray-300 font-normal">Net Worth</td>
                 <td className="px-2">
                   {getFormattedValueTotal(
                     user,
@@ -53,17 +49,15 @@ export const ExpectedNetworth = ({
                       Number(totalRetMarketValue) +
                       Number(totalExpMarketValue) -
                       Number(totalDebLoanBalance) -
-                      Number(totalExpLoanBalance)
+                      Number(totalExpLoanBalance),
                   )}
                 </td>
               </tr>
               <tr className="border border-gray-300 text-sm xl:text-[16px]  text-left p-2 font-bold">
                 <td className="px-2 py-2 border-r w-2/3 border-gray-300 font-normal">
-                  * Expected Net Worth for Age & Annual household Income
+                  Expected Net Worth for Age & Annual household Income
                 </td>
-                <td className="px-2">
-                  {getFormattedValueTotal(user, expectedNet)}
-                </td>
+                <td className="px-2">{getFormattedValueTotal(user, expectedNet)}</td>
               </tr>
             </tbody>
           </table>
@@ -85,7 +79,7 @@ export const ExpectedNetworth = ({
                       Number(totalExpMarketValue) -
                       Number(totalDebLoanBalance) -
                       Number(totalExpLoanBalance) -
-                      Number(expectedNet)
+                      Number(expectedNet),
                   )}
                 </td>
               </tr>
@@ -108,12 +102,9 @@ export const ExpectedNetworth = ({
             <tbody>
               <tr className="xl:border-t border-l border-r border-b border-gray-300 text-sm xl:text-[16px] bg-gray-400/10 text-left p-2 font-bold">
                 <td className="px-2 py-2 border-r w-2/3 border-gray-300 font-normal">
-                  Gross Annual Household Income from all sources (Excl
-                  inheritance)
+                  Gross Annual Household Income from all sources (Excl inheritance)
                 </td>
-                <td className="px-2">
-                  {getGrossYearlyTotal(user, incomeGridData)}
-                </td>
+                <td className="px-2">{getGrossYearlyTotal(user, incomeGridData)}</td>
               </tr>
             </tbody>
           </table>
