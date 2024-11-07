@@ -28,6 +28,7 @@ import { SidebarLinks } from '../../utils/sidebar.data';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import { CheckListPDF } from '../../components/checklist/CheckListPDF';
 import { PDFViewer } from '@react-pdf/renderer';
+import { getPageTitle } from '../../utils';
 
 export const Checklist = () => {
   const { user } = useUserStore();
@@ -183,9 +184,11 @@ export const Checklist = () => {
         onClick={() => setIsDropdownOpen(false)}
       >
         <div className="w-full flex item-center justify-end pr-6">
-          <div className="w-fit gap-4 h-10 md:h-12 px-2 rounded-full bg-white flex items-center">
+          <div className="w-full gap-4 h-10 md:h-12 px-2 rounded-full bg-white flex items-center justify-between">
+            <div className=""></div>
+            <div className="">{getPageTitle('Budget Checklist', user)}</div>
             <div className="flex items-center gap-2">
-              <div className="text-sm">
+              <div className="text-sm min-w-fit whitespace-nowrap">
                 <Button
                   label={!isShowing ? 'Show Filters' : 'Hide Filters'}
                   icon={!isShowing ? <MdFilterAlt className="text-lg" /> : <MdFilterAltOff className="text-lg" />}
@@ -222,15 +225,16 @@ export const Checklist = () => {
                   />
                 )}
               </PDFDownloadLink>
-
-              <MultiSelectDropdown
-                options={months}
-                placeholder={'Filter Months'}
-                value={monthsName}
-                setValue={setMonthsName}
-                toggleDropdown={toggleDropdown}
-                isDropdownOpen={isDropdownOpen}
-              />
+              <div className="text-sm min-w-fit whitespace-nowrap hidden md:block">
+                <MultiSelectDropdown
+                  options={months}
+                  placeholder={'Filter Months'}
+                  value={monthsName}
+                  setValue={setMonthsName}
+                  toggleDropdown={toggleDropdown}
+                  isDropdownOpen={isDropdownOpen}
+                />
+              </div>
             </div>
           </div>
         </div>

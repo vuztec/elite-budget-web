@@ -31,6 +31,7 @@ import { getJointContribution } from '../../utils/budget.calculation';
 import useUserStore from '../../app/user';
 import { SidebarLinks } from '../../utils/sidebar.data';
 import { useLocation } from 'react-router-dom';
+import { getPageTitle } from '../../utils';
 
 export const BudgetDetails = () => {
   const { user } = useUserStore();
@@ -200,7 +201,9 @@ export const BudgetDetails = () => {
     <>
       <div className="fixed bg-white w-[calc(100vw-40px)] lg:w-[calc(100vw-270px)] -mt-4 rounded px-4 z-9">
         <div className="w-full flex item-center justify-end">
-          <div className="w-fit gap-4 h-10 md:h-12 px-2 rounded-full bg-white flex items-center">
+          <div className="w-full gap-4 h-10 md:h-12 px-2 rounded-full bg-white flex items-center justify-between">
+            <div></div>
+            <div>{getPageTitle('Budget Details', user)}</div>
             <div className="flex items-center gap-2">
               <div className="text-sm">
                 <Button

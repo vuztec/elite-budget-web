@@ -13,6 +13,7 @@ import { getBankGridData, incomeOwners } from '../../utils/budget.filter';
 import { TransactionListView } from '../../components/bank/TransactionListView';
 import AddTransaction from '../../components/bank/AddTransaction';
 import useUserStore from '../../app/user';
+import { getPageTitle } from '../../utils';
 
 export const Transactions = () => {
   const { user } = useUserStore();
@@ -127,7 +128,7 @@ export const Transactions = () => {
     <>
       <div className="fixed bg-white w-[calc(100vw-40px)] lg:w-[calc(100vw-270px)] -mt-4 rounded px-4 z-9">
         <div className="w-full gap-4 h-10 md:h-12 px-2 rounded-full bg-white flex items-center justify-between">
-          <div className="text-sm">
+          <div className="text-sm min-w-fit whitespace-nowrap">
             <Button
               label="Add New"
               icon={<IoMdAdd className="text-lg" />}
@@ -138,7 +139,8 @@ export const Transactions = () => {
               onClick={() => addNewClick()}
             />
           </div>
-          <div className="text-sm">
+          <div>{getPageTitle('Bank Register(s)', user)}</div>
+          <div className="text-sm min-w-fit whitespace-nowrap">
             <Button
               label={!isShowing ? 'Show Filters' : 'Hide Filters'}
               icon={!isShowing ? <MdFilterAlt className="text-lg" /> : <MdFilterAltOff className="text-lg" />}

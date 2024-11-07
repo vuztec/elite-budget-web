@@ -22,6 +22,7 @@ import { getJointContribution } from '../../utils/budget.calculation';
 import useUserStore from '../../app/user';
 import { SidebarLinks } from '../../utils/sidebar.data';
 import { useLocation } from 'react-router-dom';
+import { getPageTitle } from '../../utils';
 
 export const Home = () => {
   const { user } = useUserStore();
@@ -174,9 +175,11 @@ export const Home = () => {
   return activeAccount ? (
     <>
       <div className="fixed bg-white w-[calc(100vw-40px)] lg:w-[calc(100vw-270px)] -mt-4 rounded px-4 z-9">
-        <div className="w-full flex item-center justify-end">
+        <div className="w-full gap-4 h-10 md:h-12 px-2 rounded-full bg-white flex items-center justify-between">
+          <div></div>
+          <div>{getPageTitle('Budget Summary', user)}</div>
           <div className="w-fit gap-4 h-10 md:h-12 px-2 rounded-full bg-white flex items-center ">
-            <div className="text-sm flex gap-2">
+            <div className="text-sm min-w-fit whitespace-nowrap">
               <Button
                 label={!isShowing ? 'Show Filters' : 'Hide Filters'}
                 icon={!isShowing ? <MdFilterAlt className="text-lg" /> : <MdFilterAltOff className="text-lg" />}
@@ -186,6 +189,8 @@ export const Home = () => {
                 )}
                 onClick={() => setIsShowing((old) => !old)}
               />
+            </div>
+            <div className="text-sm min-w-fit whitespace-nowrap">
               <Button
                 onClick={handlePdf}
                 icon={<PiPrinter />}

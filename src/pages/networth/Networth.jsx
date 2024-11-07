@@ -34,6 +34,7 @@ import { PiPrinter } from 'react-icons/pi';
 import useUserStore from '../../app/user';
 import { SidebarLinks } from '../../utils/sidebar.data';
 import { useLocation } from 'react-router-dom';
+import { getPageTitle } from '../../utils';
 
 export const Networth = () => {
   const { user } = useUserStore();
@@ -187,29 +188,29 @@ export const Networth = () => {
   return activeAccount ? (
     <>
       <div className="fixed bg-white w-[calc(100vw-40px)] lg:w-[calc(100vw-270px)] -mt-4 rounded px-4 z-9">
-        <div className="w-full flex item-center justify-end">
+        <div className="w-full gap-4 h-10 md:h-12 px-2 rounded-full bg-white flex items-center justify-between">
+          <div></div>
+          <div>{getPageTitle('NET WORTH', user)}</div>
           <div className="w-fit gap-4 h-10 md:h-12 px-2 rounded-full bg-white flex items-center">
-            <div className="flex items-center gap-2">
-              <div className="text-sm">
-                <Button
-                  label={!isShowing ? 'Show Filters' : 'Hide Filters'}
-                  icon={!isShowing ? <MdFilterAlt className="text-lg" /> : <MdFilterAltOff className="text-lg" />}
-                  className={clsx(
-                    'flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:text-black',
-                    !isShowing ? 'bg-green-800' : 'bg-red-800',
-                  )}
-                  onClick={() => setIsShowing((old) => !old)}
-                />
-              </div>
+            <div className="text-sm min-w-fit whitespace-nowrap">
               <Button
-                onClick={handlePdf}
-                icon={<PiPrinter />}
-                label={'Print'}
-                className={
-                  'flex flex-row-reverse justify-center items-center bg-black text-white text-lg gap-2 hover:bg-[whitesmoke] hover:text-black'
-                }
+                label={!isShowing ? 'Show Filters' : 'Hide Filters'}
+                icon={!isShowing ? <MdFilterAlt className="text-lg" /> : <MdFilterAltOff className="text-lg" />}
+                className={clsx(
+                  'flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:text-black',
+                  !isShowing ? 'bg-green-800' : 'bg-red-800',
+                )}
+                onClick={() => setIsShowing((old) => !old)}
               />
             </div>
+            <Button
+              onClick={handlePdf}
+              icon={<PiPrinter />}
+              label={'Print'}
+              className={
+                'flex flex-row-reverse justify-center items-center bg-black text-white text-lg gap-2 hover:bg-[whitesmoke] hover:text-black'
+              }
+            />
           </div>
         </div>
         <div

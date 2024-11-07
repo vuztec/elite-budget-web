@@ -1,19 +1,20 @@
-import React, { useEffect, useState } from "react";
-import { MdFilterAlt, MdFilterAltOff } from "react-icons/md";
-import Button from "../../components/Button";
-import { IoMdAdd } from "react-icons/io";
-import Loading from "../../components/Loader";
-import { useQuery } from "react-query";
-import clsx from "clsx";
-import Select from "../../components/Select";
-import { getActiveAccount } from "../../utils/permissions";
-import Package from "../../package/Package";
-import { getBankAccountNames } from "../../config/api";
-import { getOwnerGridData, incomeOwners } from "../../utils/budget.filter";
-import AddBank from "../../components/bank/AddBank";
-import { BankListView } from "../../components/bank/BankListView";
-import { defaultBankSort } from "../../utils/budget.sort";
-import useUserStore from "../../app/user";
+import React, { useEffect, useState } from 'react';
+import { MdFilterAlt, MdFilterAltOff } from 'react-icons/md';
+import Button from '../../components/Button';
+import { IoMdAdd } from 'react-icons/io';
+import Loading from '../../components/Loader';
+import { useQuery } from 'react-query';
+import clsx from 'clsx';
+import Select from '../../components/Select';
+import { getActiveAccount } from '../../utils/permissions';
+import Package from '../../package/Package';
+import { getBankAccountNames } from '../../config/api';
+import { getOwnerGridData, incomeOwners } from '../../utils/budget.filter';
+import AddBank from '../../components/bank/AddBank';
+import { BankListView } from '../../components/bank/BankListView';
+import { defaultBankSort } from '../../utils/budget.sort';
+import useUserStore from '../../app/user';
+import { getPageTitle } from '../../utils';
 
 export const BankAccounts = () => {
   const { user } = useUserStore();
@@ -23,10 +24,10 @@ export const BankAccounts = () => {
   const activeAccount = getActiveAccount(user);
 
   // Filters
-  const [owner, setOwner] = useState("Household");
+  const [owner, setOwner] = useState('Household');
 
   const { data: accountnames, status: isNamesLoaded } = useQuery({
-    queryKey: ["accountnames"],
+    queryKey: ['accountnames'],
     queryFn: getBankAccountNames,
     staleTime: 1000 * 60 * 60,
   });
@@ -40,7 +41,7 @@ export const BankAccounts = () => {
   ///-------------END Filters Data Source --------------------------------///
 
   useEffect(() => {
-    if (isNamesLoaded === "success") {
+    if (isNamesLoaded === 'success') {
       const accountData = getOwnerGridData(accountnames, owner);
 
       // Sort the data by Owner property
@@ -72,25 +73,20 @@ export const BankAccounts = () => {
             label="Add New"
             icon={<IoMdAdd className="text-lg" />}
             className={clsx(
-              "flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:bg-viewcolor",
-              `bg-black hover:text-black`
+              'flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:bg-viewcolor',
+              `bg-black hover:text-black`,
             )}
             onClick={() => addNewClick()}
           />
         </div>
+        <div>{getPageTitle('Bank Account(s)', user)}</div>
         <div className="text-sm">
           <Button
-            label={!isShowing ? "Show Filters" : "Hide Filters"}
-            icon={
-              !isShowing ? (
-                <MdFilterAlt className="text-lg" />
-              ) : (
-                <MdFilterAltOff className="text-lg" />
-              )
-            }
+            label={!isShowing ? 'Show Filters' : 'Hide Filters'}
+            icon={!isShowing ? <MdFilterAlt className="text-lg" /> : <MdFilterAltOff className="text-lg" />}
             className={clsx(
-              "flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:text-black hover:bg-viewcolor",
-              !isShowing ? "bg-green-800" : "bg-red-800"
+              'flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:text-black hover:bg-viewcolor',
+              !isShowing ? 'bg-green-800' : 'bg-red-800',
             )}
             onClick={() => setIsShowing((old) => !old)}
           />
@@ -98,8 +94,8 @@ export const BankAccounts = () => {
       </div>
       <div
         className={clsx(
-          "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3 pb-5",
-          isShowing ? "block" : "hidden"
+          'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3 pb-5',
+          isShowing ? 'block' : 'hidden',
         )}
       >
         <div className="w-full">
@@ -126,12 +122,7 @@ export const BankAccounts = () => {
             <BankListView gridData={gridData} />
           </div>
 
-          <AddBank
-            open={open}
-            setOpen={setOpen}
-            recordData={""}
-            key={new Date().getTime().toString()}
-          />
+          <AddBank open={open} setOpen={setOpen} recordData={''} key={new Date().getTime().toString()} />
         </div>
       )}
     </>

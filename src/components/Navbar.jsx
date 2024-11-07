@@ -39,11 +39,7 @@ const Navbar = () => {
           ☰
         </button>
 
-        <div className="w-full flex justify-center items-center py-2 px-3 gap-2 rounded-full text-3xl">
-          <h1 className="font-bold uppercase hidden md:block">
-            {' '}
-            {title === 'Home' ? title : title + ' for ' + (user?.FullName || '')}
-          </h1>
+        <div className="w-full flex justify-center items-center py-2 px-3 gap-2 rounded-full text-xl">
           <h1 className="font-bold uppercase md:hidden"> {title}</h1>
         </div>
       </div>

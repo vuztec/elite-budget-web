@@ -27,6 +27,7 @@ import {
 import { FaEdit, FaRegThumbsUp } from 'react-icons/fa';
 import axios from '../../config/axios';
 import { handleAxiosResponseError } from '../../utils/handleResponseError';
+import { getPageTitle } from '../../utils';
 
 export const JointContribution = () => {
   const { user } = useUserStore();
@@ -140,11 +141,18 @@ export const JointContribution = () => {
 
       {isDataLoaded && (
         <>
-          <p className="text-xs px-5">
+          <div className="hidden md:block">
+            <div className="w-full gap-4 h-10 md:h-12 px-2 rounded-full bg-white flex items-center justify-between">
+              <div></div>
+              <div>{getPageTitle('JOINT CONTRIBUTIONS', user)}</div>
+              <div></div>
+            </div>
+          </div>
+          <p className="text-xs p-5">
             NOTE: Couples can choose to contribute to the joint expenses based on their percentage of total gross income
             or override the calculated split.
           </p>
-          <div className="w-full h-fit bg-white p-5 mt-4 shadow-md rounded text-xs md:text-sm">
+          <div className="w-full h-fit bg-white p-5 shadow-md rounded-md text-xs md:text-sm">
             <div className="flex flex-col gap-5 xl:gap-10 w-full p-5">
               <div className="w-full xl:w-fit flex flex-col overflow-x-auto">
                 <table className="w-[97%]">

@@ -16,6 +16,7 @@ import { hasRecords } from '../../utils/budget.calculation';
 import { ExtraPayListView } from '../../components/extrapay/ExtraPayListView';
 import { defaultIncomeSort } from '../../utils/budget.sort';
 import useUserStore from '../../app/user';
+import { getPageTitle } from '../../utils';
 
 export const IncomeRecords = () => {
   const { user } = useUserStore();
@@ -85,7 +86,7 @@ export const IncomeRecords = () => {
     <>
       <div className="fixed bg-white w-[calc(100vw-40px)] lg:w-[calc(100vw-270px)] -mt-4 rounded px-4 z-9">
         <div className="w-full gap-4 h-10 md:h-12 px-2 rounded-full bg-white flex items-center justify-between">
-          <div className="text-sm">
+          <div className="text-sm min-w-fit whitespace-nowrap">
             <Button
               label={!showAll ? 'Add New' : 'Completed'}
               icon={!showAll && <IoMdAdd className="text-lg" />}
@@ -96,7 +97,8 @@ export const IncomeRecords = () => {
               onClick={() => setShowAll((old) => !old)}
             />
           </div>
-          <div className="text-sm">
+          <div>{getPageTitle('Income Sources', user)}</div>
+          <div className="text-sm min-w-fit whitespace-nowrap">
             <Button
               label={!isShowing ? 'Show Filters' : 'Hide Filters'}
               icon={!isShowing ? <MdFilterAlt className="text-lg" /> : <MdFilterAltOff className="text-lg" />}

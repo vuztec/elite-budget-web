@@ -7,6 +7,7 @@ import Package from '../../package/Package';
 import { getActiveAccount } from '../../utils/permissions';
 import { useLocation } from 'react-router-dom';
 import { SidebarLinks } from '../../utils/sidebar.data';
+import { getPageTitle } from '../../utils';
 
 // color for each row in
 export const colors = ['#FFFFFF', 'whitesmoke', '#FFFFFF', 'whitesmoke', '#FFFFFF'];
@@ -221,15 +222,19 @@ export const ExtraPayDates = () => {
       )}
       <div className="flex flex-col">
         <div className="flex flex-col gap-5">
-          <div className="flex justify-end">
-            <Button
-              onClick={handlePdf}
-              icon={<PiPrinter />}
-              label={'Print'}
-              className={
-                'flex flex-row-reverse h-min w-max justify-center items-center bg-black text-white text-lg gap-2 hover:bg-[whitesmoke] hover:text-black'
-              }
-            />
+          <div className="w-full gap-4 h-10 md:h-12 px-2 rounded-full bg-white flex items-center justify-between">
+            <div></div>
+            <div>{getPageTitle('Extra Pay Dates', user)}</div>
+            <div className="text-sm min-w-fit whitespace-nowrap">
+              <Button
+                onClick={handlePdf}
+                icon={<PiPrinter />}
+                label={'Print'}
+                className={
+                  'flex flex-row-reverse h-min w-max justify-center items-center bg-black text-white text-lg gap-2 hover:bg-[whitesmoke] hover:text-black'
+                }
+              />
+            </div>
           </div>
           <div>
             <p className="text-xs">

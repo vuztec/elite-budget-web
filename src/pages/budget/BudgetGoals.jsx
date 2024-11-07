@@ -6,6 +6,7 @@ import Package from '../../package/Package';
 import { getDebtGoals, getExpenseGoals, getMainGoals } from '../../config/api';
 import { GoalListView } from '../../components/budget/GoalListView';
 import useUserStore from '../../app/user';
+import { getPageTitle } from '../../utils';
 
 export const BudgetGoals = () => {
   const { user } = useUserStore();
@@ -42,6 +43,14 @@ export const BudgetGoals = () => {
 
   return activeAccount ? (
     <>
+      <div className="hidden md:block">
+        <div className="w-full gap-4 h-10 md:h-12 px-2 rounded-full bg-white flex items-center justify-between">
+          <div></div>
+          <div>{getPageTitle('Budget Goal', user)}</div>
+          <div></div>
+        </div>
+      </div>
+
       {!isDataLoaded && (
         <div className="py-10">
           <Loading />

@@ -16,6 +16,7 @@ import { ExpenseSummary } from '../../components/expense/ExpenseSummary';
 import { hasRecords } from '../../utils/budget.calculation';
 import useUserStore from '../../app/user';
 import { defaultDebSort } from '../../utils/budget.sort';
+import { getPageTitle } from '../../utils';
 
 export const ExpenseRecords = () => {
   const { user } = useUserStore();
@@ -95,7 +96,7 @@ export const ExpenseRecords = () => {
     <>
       <div className="fixed bg-white w-[calc(100vw-40px)] lg:w-[calc(100vw-270px)] -mt-4 rounded px-4 z-9">
         <div className="w-full gap-4 h-10 md:h-12 px-2 rounded-full bg-white flex items-center justify-between">
-          <div className="text-sm">
+          <div className="text-sm min-w-fit whitespace-nowrap">
             <Button
               label={!showAll ? 'Add New' : 'Completed'}
               icon={!showAll && <IoMdAdd className="text-lg" />}
@@ -106,7 +107,8 @@ export const ExpenseRecords = () => {
               onClick={() => setShowAll((old) => !old)}
             />
           </div>
-          <div className="text-sm">
+          <div>{getPageTitle('Expenses', user)}</div>
+          <div className="text-sm min-w-fit whitespace-nowrap">
             <Button
               label={!isShowing ? 'Show Filters' : 'Hide Filters'}
               icon={!isShowing ? <MdFilterAlt className="text-lg" /> : <MdFilterAltOff className="text-lg" />}
