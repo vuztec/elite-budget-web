@@ -81,7 +81,7 @@ export const AddRetirement = ({ open, setOpen, recordData }) => {
           <Dialog.Title as="h2" className="text-base font-bold leading-6 text-gray-900 mb-4">
             {recordData ? 'UPDATE RETIREMENT RECORD' : 'ADD NEW RETIREMENT RECORD'}
           </Dialog.Title>
-          <div className="mt-2 flex flex-col gap-6 overflow-y-scroll bg-scroll">
+          <div className="mt-2 flex flex-col gap-6 overflow-y-auto">
             <div className="flex flex-col gap-6 w-full">
               <Textbox
                 placeholder=""
