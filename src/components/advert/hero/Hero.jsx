@@ -7,28 +7,21 @@ function Hero() {
     <div className="flex lg:flex-row lg:h-auto w-full mt-4 flex-col">
       {/* Left Section */}
       <div className="left w-full md:w-full lg:w-1/2 pl-4 md:pl-16 pt-10 flex flex-col justify-center">
-        <h1 className="text-[#131924] font-bold text-4xl md:text-5xl leading-tight md:text-center lg:text-left">
-          Cash flow consulting unifies tasks, team, and tools for better organization.
+        <h1 className="text-[#131924] font-bold text-xl md:text-3xl leading-tight md:text-center lg:text-left">
+          The Elite Budget Web App………… A NEW WAY TO BUDGET!
+        </h1>
+        <h1 className="text-[#131924] font-bold text-xl mt-4 md:text-2xl leading-tight md:text-center lg:text-left">
+          DESIGNED BY A CPA with a busy person in mind.
         </h1>
         <p className="mt-4 text-lg font-medium text-[#4B5563] md:text-center lg:text-left">
-          Centralize all your operations, regardless of where your team members are located.
+          Take control of your finances with this simple, user-friendly money management tool.
+        </p>
+        <p className="mt-4 text-lg font-medium text-[#4B5563] md:text-center lg:text-left">
+          Crafted for those who want to simplify their personal finances. Know what your budget is without it being so
+          complicated! Join an exclusive group of elite budgeters and elevate your financial status. Sign up today and
+          unlock the power of premium budgeting.
         </p>
 
-        {/* Star Ratings */}
-        {/* <div className="mt-4 flex flex-col gap-2 md:justify-center lg:justify-start">
-          <div className="flex md:justify-center lg:justify-start">
-            <GoStarFill className="text-[#FFC700] text-2xl" />
-            <GoStarFill className="text-[#FFC700] text-2xl" />
-            <GoStarFill className="text-[#FFC700] text-2xl" />
-            <GoStarFill className="text-[#FFC700] text-2xl" />
-            <TiStarHalfOutline className="text-[#FFC700] text-2xl" />
-          </div>
-          <p className="text-sm font-medium text-[#6B7280] md:text-center lg:text-left">
-            Top Rated Budget Management Software
-          </p>
-        </div> */}
-
-        {/* Buttons */}
         <div className="flex gap-4 mt-6 md:justify-center lg:justify-start">
           <a
             href="/login"
@@ -36,9 +29,6 @@ function Hero() {
           >
             Try Now
           </a>
-          {/* <button className="px-6 py-3 rounded-lg bg-[#FFFFFF] font-semibold text-gray-700 text-lg border border-gray-300 whitespace-nowrap">
-            Start Free Trial
-          </button> */}
         </div>
       </div>
 

@@ -103,3 +103,13 @@
     box-shadow: 0 0 0 0 rgba(178, 212, 252, 0.7);
   }
 }
+
+.custom-list {
+  list-style-type: none;
+}
+
+.custom-list li::marker {
+  content: '✓'; /* Replace with any symbol or Unicode */
+  color: #000; /* Set color if needed */
+  font-size: 1.2em; /* Adjust size */
+}
