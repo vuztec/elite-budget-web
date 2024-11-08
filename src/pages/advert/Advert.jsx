@@ -101,7 +101,7 @@ export const Advert = () => {
             </a>
           </div>
 
-          <div className="w-full lg:w-1/2" onClick={() => handleOpenModal(BudgetDetails)}>
+          <div className="w-full lg:w-1/2 cursor-pointer" onClick={() => handleOpenModal(BudgetDetails)}>
             <img src={BudgetDetails} alt="Budget Details" className="w-full h-auto" />
           </div>
           <div className="w-full lg:hidden justify-center">
@@ -138,7 +138,7 @@ export const Advert = () => {
             </a>
           </div>
 
-          <div className="w-full lg:w-1/2" onClick={() => handleOpenModal(Checklist)}>
+          <div className="w-full lg:w-1/2 cursor-pointer" onClick={() => handleOpenModal(Checklist)}>
             <img src={Checklist} alt="Budget Details" className="w-full h-auto" />
           </div>
           <div className="w-full lg:hidden justify-center">
@@ -173,7 +173,7 @@ export const Advert = () => {
             </a>
           </div>
 
-          <div className="w-full lg:w-1/2" onClick={() => handleOpenModal(NetWork)}>
+          <div className="w-full lg:w-1/2 cursor-pointer" onClick={() => handleOpenModal(NetWork)}>
             <img src={NetWork} alt="Budget Details" className="w-full h-auto" />
           </div>
           <div className="w-full lg:hidden justify-center">
@@ -212,7 +212,7 @@ export const Advert = () => {
             </a>
           </div>
 
-          <div className="w-full lg:w-1/2" onClick={() => handleOpenModal(ExtraPayDates)}>
+          <div className="w-full lg:w-1/2 cursor-pointer" onClick={() => handleOpenModal(ExtraPayDates)}>
             <img src={ExtraPayDates} alt="Budget Details" className="w-full h-auto" />
           </div>
           <div className="w-full lg:hidden justify-center">
@@ -247,7 +247,7 @@ export const Advert = () => {
             </a>
           </div>
 
-          <div className="w-full lg:w-1/2" onClick={() => handleOpenModal(JointContribution)}>
+          <div className="w-full lg:w-1/2 cursor-pointer" onClick={() => handleOpenModal(JointContribution)}>
             <img src={JointContribution} alt="Budget Details" className="w-full h-auto" />
           </div>
           <div className="w-full lg:hidden justify-center">
@@ -283,7 +283,7 @@ export const Advert = () => {
             </a>
           </div>
 
-          <div className="w-full lg:w-1/2" onClick={() => handleOpenModal(ExtraFundTracker)}>
+          <div className="w-full lg:w-1/2 cursor-pointer" onClick={() => handleOpenModal(ExtraFundTracker)}>
             <img src={ExtraFundTracker} alt="Budget Details" className="w-full h-auto" />
           </div>
           <div className="w-full lg:hidden justify-center">
@@ -318,7 +318,7 @@ export const Advert = () => {
             </a>
           </div>
 
-          <div className="w-full lg:w-1/2" onClick={() => handleOpenModal(BankTransaction)}>
+          <div className="w-full lg:w-1/2 cursor-pointer" onClick={() => handleOpenModal(BankTransaction)}>
             <img src={BankTransaction} alt="Budget Details" className="w-full h-auto" />
           </div>
           <div className="w-full lg:hidden justify-center">
