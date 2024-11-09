@@ -141,7 +141,7 @@ export const Subscription = () => {
 
   return (
     <>
-      <div className="bg-white">
+      <div className="">
         <div className="hidden md:block">
           <div className="w-full gap-4 h-10 md:h-12 px-2 rounded-full bg-white flex items-center justify-between">
             <div></div>
