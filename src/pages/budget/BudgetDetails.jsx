@@ -252,10 +252,9 @@ export const BudgetDetails = () => {
         </div>
       )}
       {isDataLoaded && (
-        <>
+        <div ref={targetRef}>
           <div
             className={`w-full flex flex-col items-center gap-5 xl:gap-10 bg-white p-5 ${isShowing ? 'mt-40' : 'mt-10'}`}
-            ref={targetRef}
           >
             {showPdfContent && (
               <div className="w-full">
@@ -351,7 +350,7 @@ export const BudgetDetails = () => {
           <div className="w-full bg-white rounded-lg border-t mt-8 p-6 text-center justify-center">
             <p>{getPageCopyright()}</p>
           </div>
-        </>
+        </div>
       )}
     </>
   ) : (

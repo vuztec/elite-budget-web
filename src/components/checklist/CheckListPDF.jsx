@@ -89,6 +89,11 @@ const styles = StyleSheet.create({
     right: 0,
     textAlign: 'center',
   },
+  footerContainer: {
+    marginTop: 20,
+    textAlign: 'center',
+    fontSize: 10,
+  },
 });
 
 export const CheckListPDF = ({
@@ -236,6 +241,11 @@ export const CheckListPDF = ({
               ></Text>
             ))}
           </View>
+        </View>
+
+        <View style={styles.footerContainer}>
+          <Text>Copyright © 2024 Elite Cash Flow Products, LLC</Text>
+          <Text>All Rights Reserved</Text>
         </View>
 
         <Text

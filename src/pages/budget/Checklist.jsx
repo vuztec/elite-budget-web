@@ -22,12 +22,10 @@ import useUserStore from '../../app/user';
 import { CheckListView } from '../../components/checklist/CheckListView';
 import MultiSelectDropdown from '../../components/MultiSelect';
 import { PiPrinter } from 'react-icons/pi';
-import { Margin, usePDF } from 'react-to-pdf';
 import { useLocation } from 'react-router-dom';
 import { SidebarLinks } from '../../utils/sidebar.data';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import { CheckListPDF } from '../../components/checklist/CheckListPDF';
-import { PDFViewer } from '@react-pdf/renderer';
 import { getPageCopyright, getPageTitle } from '../../utils';
 
 export const Checklist = () => {
@@ -43,11 +41,6 @@ export const Checklist = () => {
   const uniqueCategories = getUniqueCategories(combinedData);
   const uniqueBudgetItemsByCategory = getUniqueBudgetItemsByCategory(combinedData);
   const uniqueDescriptionsByCategory = getDescriptionsByCategory(combinedData);
-  const { toPDF, targetRef } = usePDF({
-    filename: 'checklist.pdf',
-    page: { margin: Margin.MEDIUM, orientation: 'landscape' },
-  });
-  const [showPdfContent, setShowPdfContent] = useState(false);
   const [title, setTitle] = useState('');
   const location = useLocation();
 
@@ -167,14 +160,6 @@ export const Checklist = () => {
     } else setTitle(data?.title);
   }, [location.pathname]);
 
-  const handlePdf = () => {
-    setShowPdfContent(true);
-    setTimeout(() => {
-      toPDF();
-      setShowPdfContent(false);
-    }, 10);
-  };
-
   const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
 
   return activeAccount ? (
@@ -263,26 +248,7 @@ export const Checklist = () => {
         </div>
       )}
       {isDataLoaded && (
-        <div
-          className={`w-full ${isShowing ? 'mt-40' : 'mt-10'}`}
-          ref={targetRef}
-          onClick={() => setIsDropdownOpen(false)}
-        >
-          {showPdfContent && (
-            <div className="w-full">
-              <div className="w-full flex justify-center items-center py-2 px-3 gap-2 rounded-full">
-                <h1 className="font-bold uppercase hidden md:block">{title + ' for ' + (user?.FullName || '')}</h1>
-                <h1 className="font-bold uppercase md:hidden"> {title}</h1>
-              </div>
-
-              <div className="w-full">
-                <h1 className="font-medium text-left">
-                  Account Owner: <span className="italic font-bold"> {owner === '0' ? 'Household' : owner}</span>
-                </h1>
-              </div>
-            </div>
-          )}
-
+        <div className={`w-full ${isShowing ? 'mt-40' : 'mt-10'}`} onClick={() => setIsDropdownOpen(false)}>
           <CheckListView
             uniqueCategories={uniqueCategories}
             uniqueBudgetItemsByCategory={uniqueBudgetItemsByCategory}
