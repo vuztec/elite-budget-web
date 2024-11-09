@@ -189,7 +189,7 @@ export const Networth = () => {
     <>
       <div className="fixed bg-white w-[calc(100vw-40px)] lg:w-[calc(100vw-270px)] -mt-4 rounded px-4 z-9">
         <div className="w-full gap-4 h-10 md:h-12 px-2 rounded-full bg-white flex items-center justify-between">
-          <div></div>
+          <div className="w-[250px] hidden lg:block"></div>
           <div>{getPageTitle('NET WORTH', user)}</div>
           <div className="w-fit gap-4 h-10 md:h-12 px-2 rounded-full bg-white flex items-center">
             <div className="text-sm min-w-fit whitespace-nowrap">
