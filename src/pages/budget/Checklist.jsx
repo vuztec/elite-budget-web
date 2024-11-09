@@ -184,7 +184,7 @@ export const Checklist = () => {
         onClick={() => setIsDropdownOpen(false)}
       >
         <div className="w-full flex item-center justify-end pr-6">
-          <div className="w-full gap-4 h-10 md:h-12 px-2 rounded-full bg-white flex items-center justify-between">
+          <div className="w-full gap-4 h-10 md:h-12 px-0 md:px-2 rounded-full bg-white flex items-center justify-between">
             <div className="w-[330px] hidden lg:block"></div>
             <div className="hidden md:block">{getPageTitle('Budget Checklist', user)}</div>
             <div className="flex w-[330px] items-center gap-2">
