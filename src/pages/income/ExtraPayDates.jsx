@@ -19,7 +19,6 @@ export const ExtraPayDates = () => {
     page: { margin: Margin.MEDIUM, orientation: 'landscape' },
   });
   const activeAccount = getActiveAccount(user);
-  const [showPdfContent, setShowPdfContent] = useState(false);
   const [title, setTitle] = useState('');
   const location = useLocation();
 
@@ -203,23 +202,13 @@ export const ExtraPayDates = () => {
   }, [location.pathname]);
 
   const handlePdf = () => {
-    setShowPdfContent(true);
     setTimeout(() => {
       toPDF();
-      setShowPdfContent(false);
     }, 10);
   };
 
   return activeAccount ? (
     <div ref={targetRef}>
-      {showPdfContent && (
-        <div className="w-full">
-          <div className="w-full flex justify-center items-center py-2 px-3 gap-2 rounded-full">
-            <h1 className="font-bold uppercase hidden md:block">{title + ' for ' + (user?.FullName || '')}</h1>
-            <h1 className="font-bold uppercase md:hidden"> {title}</h1>
-          </div>
-        </div>
-      )}
       <div className="flex flex-col">
         <div className="flex flex-col gap-5">
           <div className="w-full gap-4 h-10 md:h-12 px-2 rounded-full bg-white flex items-center justify-between">
