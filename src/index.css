@@ -106,10 +106,36 @@
 
 .custom-list {
   list-style-type: none;
+  padding-left: 0; /* Remove default padding */
 }
 
-.custom-list li::marker {
-  content: '✓'; /* Replace with any symbol or Unicode */
+.custom-list li {
+  position: relative;
+  padding-left: 60px; /* Add padding for spacing */
+}
+
+.custom-list li::before {
+  content: '\27A4'; /* Replace with any symbol or Unicode */
   color: #000; /* Set color if needed */
-  font-size: 1.2em; /* Adjust size */
+  position: absolute;
+  left: 40px; /* Position at the start */
+  margin-right: 10px; /* Add space between the icon and text */
+}
+
+.custom-list2 {
+  list-style-type: none;
+  padding-left: 0; /* Remove default padding */
+}
+
+.custom-list2 li {
+  position: relative;
+  padding-left: 20px; /* Add padding for spacing */
+}
+
+.custom-list2 li::before {
+  content: '\2022'; /* Replace with any symbol or Unicode */
+  color: #000; /* Set color if needed */
+  position: absolute;
+  left: 0; /* Position at the start */
+  margin-right: 10px; /* Add space between the icon and text */
 }

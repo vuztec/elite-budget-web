@@ -76,7 +76,7 @@ function Budget() {
             <h1 className="text-[#131924] font-bold text-xl md:text-xl leading-tight md:text-center lg:text-left px-10">
               The Elite Budget app streamlines the budget management process in one easy-to-use platform.
             </h1>
-            <ul className="list-outside list-disc px-20 flex flex-col gap-5">
+            <ul className="list-outside custom-list px-20 flex flex-col gap-5">
               <li className="">
                 It’s all about the budget! Step one is to enter all of your Income, expenses, debt and the market value
                 of your assets. That’s the hardest part but just the first time!
@@ -84,7 +84,7 @@ function Budget() {
               <li>All reports and accounts are available by Individual, Partner, Joint or Household.</li>
               <li>
                 The app includes budgeting tool add-ons:
-                <ul className="list-disc ml-10 mt-3 flex flex-col gap-3">
+                <ul className="custom-list2 ml-10 mt-3 flex flex-col gap-3">
                   <li>
                     <span className="font-bold"> Extra pay dates calendar</span> for automatic savings (or debt
                     reduction)
@@ -117,7 +117,7 @@ function Budget() {
           </div>
 
           <div className="grid xl:grid-cols-1 gap-6 mt-6 shadow-lg py-5">
-            <ul className="list-outside list-disc px-10 py-5  flex flex-col gap-5">
+            <ul className="list-outside custom-list px-14 py-5  flex flex-col gap-5">
               <li>
                 <span className="font-bold">Elite Problem Solving:</span> For those who demand a simple solution to the
                 budget process. Achieve complete control over your finances with a budgeting app designed for
