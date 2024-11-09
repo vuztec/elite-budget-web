@@ -28,7 +28,7 @@ import { SidebarLinks } from '../../utils/sidebar.data';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import { CheckListPDF } from '../../components/checklist/CheckListPDF';
 import { PDFViewer } from '@react-pdf/renderer';
-import { getPageTitle } from '../../utils';
+import { getPageCopyright, getPageTitle } from '../../utils';
 
 export const Checklist = () => {
   const { user } = useUserStore();
@@ -282,18 +282,7 @@ export const Checklist = () => {
               </div>
             </div>
           )}
-          {/* <PDFViewer>
-            <CheckListPDF
-              uniqueCategories={uniqueCategories}
-              uniqueBudgetItemsByCategory={uniqueBudgetItemsByCategory}
-              uniqueDescriptionsByCategory={uniqueDescriptionsByCategory}
-              monthHeaders={monthHeaders}
-              combinedData={combinedData}
-              user={user}
-              title={title}
-              owner={owner}
-            />
-          </PDFViewer> */}
+
           <CheckListView
             uniqueCategories={uniqueCategories}
             uniqueBudgetItemsByCategory={uniqueBudgetItemsByCategory}
@@ -301,6 +290,9 @@ export const Checklist = () => {
             monthHeaders={monthHeaders}
             combinedData={combinedData}
           />
+          <div className="w-full bg-white rounded-lg border-t mt-8 p-6 text-center justify-center">
+            <p>{getPageCopyright()}</p>
+          </div>
         </div>
       )}
     </>

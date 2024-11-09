@@ -27,7 +27,7 @@ import {
 import { FaEdit, FaRegThumbsUp } from 'react-icons/fa';
 import axios from '../../config/axios';
 import { handleAxiosResponseError } from '../../utils/handleResponseError';
-import { getPageTitle } from '../../utils';
+import { getPageCopyright, getPageTitle } from '../../utils';
 
 export const JointContribution = () => {
   const { user } = useUserStore();
@@ -306,6 +306,9 @@ export const JointContribution = () => {
                 </table>
               </div>
             </div>
+          </div>
+          <div className="w-full bg-white rounded-lg border-t mt-8 p-6 text-center justify-center">
+            <p>{getPageCopyright()}</p>
           </div>
         </>
       )}

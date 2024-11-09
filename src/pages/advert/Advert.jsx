@@ -9,11 +9,9 @@ import NetWork from '../../assets/image/net-worth.png';
 import HomeImage from '../../assets/image/home.png';
 import Navbar from '../../components/advert/navbar/Navbar';
 import Hero from '../../components/advert/hero/Hero';
-import ThreeCards from '../../components/advert/three-cards/ThreeCards';
 import Footer from '../../components/advert/footer/Footer';
 import Budget from '../../components/advert/budget/Budget';
 import { useState } from 'react';
-import ModalWrapper from '../../components/ModalWrapper';
 import Button from '../../components/Button';
 import { TiCancel } from 'react-icons/ti';
 import ModalWrapperFull from '../../components/ModalWrapperFull';
@@ -308,7 +306,7 @@ export const Advert = () => {
             </a>
           </div>
 
-          <div className="w-full lg:w-1/2" onClick={() => handleOpenModal(NetWork)}>
+          <div className="w-full lg:w-1/2 cursor-pointer" onClick={() => handleOpenModal(NetWork)}>
             <img src={NetWork} alt="Budget Details" className="w-full h-auto" />
           </div>
           <div className="w-full lg:hidden justify-center">

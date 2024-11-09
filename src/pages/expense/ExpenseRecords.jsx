@@ -16,7 +16,7 @@ import { ExpenseSummary } from '../../components/expense/ExpenseSummary';
 import { hasRecords } from '../../utils/budget.calculation';
 import useUserStore from '../../app/user';
 import { defaultDebSort } from '../../utils/budget.sort';
-import { getPageTitle } from '../../utils';
+import { getPageCopyright, getPageTitle } from '../../utils';
 
 export const ExpenseRecords = () => {
   const { user } = useUserStore();
@@ -312,6 +312,9 @@ export const ExpenseRecords = () => {
 
           <div className="w-full">
             <ExpenseSummary gridData={gridData} />
+          </div>
+          <div className="w-full bg-white rounded-lg border-t mt-8 p-6 text-center justify-center">
+            <p>{getPageCopyright()}</p>
           </div>
         </div>
       )}

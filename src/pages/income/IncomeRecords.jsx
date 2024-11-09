@@ -16,7 +16,7 @@ import { hasRecords } from '../../utils/budget.calculation';
 import { ExtraPayListView } from '../../components/extrapay/ExtraPayListView';
 import { defaultIncomeSort } from '../../utils/budget.sort';
 import useUserStore from '../../app/user';
-import { getPageTitle } from '../../utils';
+import { getPageCopyright, getPageTitle } from '../../utils';
 
 export const IncomeRecords = () => {
   const { user } = useUserStore();
@@ -157,6 +157,9 @@ export const IncomeRecords = () => {
 
           <div className="w-full">
             <ExtraPayListView gridData={extraGridData} />
+          </div>
+          <div className="w-full bg-white rounded-lg border-t mt-8 p-6 text-center justify-center">
+            <p>{getPageCopyright()}</p>
           </div>
         </div>
       )}

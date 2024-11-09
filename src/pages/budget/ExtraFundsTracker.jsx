@@ -23,7 +23,7 @@ import AddExtraFund from '../../components/budget/AddExtraFund';
 import { defaultFundSort } from '../../utils/budget.sort';
 import useUserStore from '../../app/user';
 import { getJointContribution } from '../../utils/budget.calculation';
-import { getPageTitle } from '../../utils';
+import { getPageCopyright, getPageTitle } from '../../utils';
 
 export const ExtraFundsTracker = () => {
   const { user } = useUserStore();
@@ -238,7 +238,9 @@ export const ExtraFundsTracker = () => {
               excessBal={excessBal}
             />
           </div>
-
+          <div className="w-full bg-white rounded-lg border-t mt-8 p-6 text-center justify-center">
+            <p>{getPageCopyright()}</p>
+          </div>
           <AddExtraFund open={open} setOpen={setOpen} recordData={''} />
         </div>
       )}

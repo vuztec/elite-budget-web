@@ -121,7 +121,7 @@ const Sidebar = () => {
 
   return (
     <div
-      className="w-72 bg-white h-screen lg:h-auto overflow-y-auto lg:w-full flex flex-col py-5 pt-0 lg:px-5 overflow-auto"
+      className="w-72 bg-white h-screen lg:h-auto overflow-y-auto lg:w-full flex flex-col py-5 pt-6 lg:px-5 overflow-auto"
       onClick={(e) => e.stopPropagation()}
     >
       <div className="flex justify-between">
@@ -133,7 +133,7 @@ const Sidebar = () => {
         </button>
       </div>
 
-      <div className="flex-1 flex flex-col gap-y-3 py-2 mt-6 lg:mt-0">
+      <div className="flex-1 flex flex-col gap-y-3 py-2 mt-6">
         {sidebarData.map((item, index) => (
           <NavLinks el={item} key={index} />
         ))}

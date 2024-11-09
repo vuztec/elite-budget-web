@@ -6,7 +6,7 @@ import Package from '../../package/Package';
 import { getDebtGoals, getExpenseGoals, getMainGoals } from '../../config/api';
 import { GoalListView } from '../../components/budget/GoalListView';
 import useUserStore from '../../app/user';
-import { getPageTitle } from '../../utils';
+import { getPageCopyright, getPageTitle } from '../../utils';
 
 export const BudgetGoals = () => {
   const { user } = useUserStore();
@@ -69,6 +69,9 @@ export const BudgetGoals = () => {
 
           <div className="w-full">
             <GoalListView gridData={debtgoals} goal="Debt" maingoals={maingoals} />
+          </div>
+          <div className="w-full bg-white rounded-lg border-t mt-8 p-6 text-center justify-center">
+            <p>{getPageCopyright()}</p>
           </div>
         </div>
       )}

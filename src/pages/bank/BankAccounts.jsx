@@ -14,7 +14,7 @@ import AddBank from '../../components/bank/AddBank';
 import { BankListView } from '../../components/bank/BankListView';
 import { defaultBankSort } from '../../utils/budget.sort';
 import useUserStore from '../../app/user';
-import { getPageTitle } from '../../utils';
+import { getPageCopyright, getPageTitle } from '../../utils';
 
 export const BankAccounts = () => {
   const { user } = useUserStore();
@@ -121,7 +121,9 @@ export const BankAccounts = () => {
           <div className="w-full">
             <BankListView gridData={gridData} />
           </div>
-
+          <div className="w-full bg-white rounded-lg border-t mt-8 p-6 text-center justify-center">
+            <p>{getPageCopyright()}</p>
+          </div>
           <AddBank open={open} setOpen={setOpen} recordData={''} key={new Date().getTime().toString()} />
         </div>
       )}

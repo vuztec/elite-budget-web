@@ -31,7 +31,7 @@ import { getJointContribution } from '../../utils/budget.calculation';
 import useUserStore from '../../app/user';
 import { SidebarLinks } from '../../utils/sidebar.data';
 import { useLocation } from 'react-router-dom';
-import { getPageTitle } from '../../utils';
+import { getPageCopyright, getPageTitle } from '../../utils';
 
 export const BudgetDetails = () => {
   const { user } = useUserStore();
@@ -252,101 +252,106 @@ export const BudgetDetails = () => {
         </div>
       )}
       {isDataLoaded && (
-        <div
-          className={`w-full flex flex-col items-center gap-5 xl:gap-10 bg-white p-5 ${isShowing ? 'mt-40' : 'mt-10'}`}
-          ref={targetRef}
-        >
-          {showPdfContent && (
-            <div className="w-full">
-              <div className="w-full flex justify-center items-center py-2 px-3 gap-2 rounded-full">
-                <h1 className="font-bold uppercase hidden md:block">{title + ' for ' + (user?.FullName || '')}</h1>
-                <h1 className="font-bold uppercase md:hidden"> {title}</h1>
-              </div>
-
+        <>
+          <div
+            className={`w-full flex flex-col items-center gap-5 xl:gap-10 bg-white p-5 ${isShowing ? 'mt-40' : 'mt-10'}`}
+            ref={targetRef}
+          >
+            {showPdfContent && (
               <div className="w-full">
-                <h1 className="font-medium text-left">
-                  Account Owner: <span className="italic font-bold"> {owner === '0' ? 'Household' : owner}</span>
-                </h1>
-              </div>
-            </div>
-          )}
-          <div className="w-full 2xl:w-[90%] flex flex-col items-center justify-center gap-5">
-            <div className="flex flex-col xl:flex-row w-full gap-5 xl:gap-10">
-              <div className="flex flex-col w-full gap-5">
-                <div className="w-full">
-                  <YearlyIncome
-                    incomeGridData={incomeGridData}
-                    owner={owner}
-                    selfContribution={selfContribution}
-                    partnerContribution={partnerContribution}
-                  />
+                <div className="w-full flex justify-center items-center py-2 px-3 gap-2 rounded-full">
+                  <h1 className="font-bold uppercase hidden md:block">{title + ' for ' + (user?.FullName || '')}</h1>
+                  <h1 className="font-bold uppercase md:hidden"> {title}</h1>
                 </div>
+
                 <div className="w-full">
-                  <MonthlyIncome
-                    incomeGridData={incomeGridData}
-                    owner={owner}
-                    selfContribution={selfContribution}
-                    partnerContribution={partnerContribution}
-                  />
-                </div>
-                <div className="w-full">
-                  <MonthlySavings
-                    savingsGridData={savingsGridData}
-                    incomeGridData={incomeGridData}
-                    maingoals={maingoals}
-                    owner={owner}
-                  />
-                </div>
-                <div className="w-full">
-                  <MonthlyRetirement
-                    retirementGridData={retirementGridData}
-                    retirementGridDataAll={retirementGridDataAll}
-                    incomeGridData={incomeGridData}
-                    maingoals={maingoals}
-                    owner={owner}
-                  />
-                </div>
-                <div className="w-full">
-                  <MonthlyDebt
-                    debtGridData={debtGridData}
-                    incomeGridData={incomeGridData}
-                    debtgoals={debtgoals}
-                    maingoals={maingoals}
-                    owner={owner}
-                  />
+                  <h1 className="font-medium text-left">
+                    Account Owner: <span className="italic font-bold"> {owner === '0' ? 'Household' : owner}</span>
+                  </h1>
                 </div>
               </div>
-              <div className="flex flex-col w-full">
-                <div className="w-full">
-                  <MonthlyExpenses
-                    expenseGridData={expenseGridData}
-                    incomeGridData={incomeGridData}
-                    expensegoals={expensegoals}
-                    maingoals={maingoals}
-                    owner={owner}
-                  />
+            )}
+            <div className="w-full 2xl:w-[90%] flex flex-col items-center justify-center gap-5">
+              <div className="flex flex-col xl:flex-row w-full gap-5 xl:gap-10">
+                <div className="flex flex-col w-full gap-5">
+                  <div className="w-full">
+                    <YearlyIncome
+                      incomeGridData={incomeGridData}
+                      owner={owner}
+                      selfContribution={selfContribution}
+                      partnerContribution={partnerContribution}
+                    />
+                  </div>
+                  <div className="w-full">
+                    <MonthlyIncome
+                      incomeGridData={incomeGridData}
+                      owner={owner}
+                      selfContribution={selfContribution}
+                      partnerContribution={partnerContribution}
+                    />
+                  </div>
+                  <div className="w-full">
+                    <MonthlySavings
+                      savingsGridData={savingsGridData}
+                      incomeGridData={incomeGridData}
+                      maingoals={maingoals}
+                      owner={owner}
+                    />
+                  </div>
+                  <div className="w-full">
+                    <MonthlyRetirement
+                      retirementGridData={retirementGridData}
+                      retirementGridDataAll={retirementGridDataAll}
+                      incomeGridData={incomeGridData}
+                      maingoals={maingoals}
+                      owner={owner}
+                    />
+                  </div>
+                  <div className="w-full">
+                    <MonthlyDebt
+                      debtGridData={debtGridData}
+                      incomeGridData={incomeGridData}
+                      debtgoals={debtgoals}
+                      maingoals={maingoals}
+                      owner={owner}
+                    />
+                  </div>
+                </div>
+                <div className="flex flex-col w-full">
+                  <div className="w-full">
+                    <MonthlyExpenses
+                      expenseGridData={expenseGridData}
+                      incomeGridData={incomeGridData}
+                      expensegoals={expensegoals}
+                      maingoals={maingoals}
+                      owner={owner}
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="flex flex-col xl:flex-row w-full gap-5 mt-5 xl:gap-10">
-              <div className="hidden xl:block w-full"></div>
-              <div className="flex flex-col w-full">
-                <div className="w-full">
-                  <MonthlySummary
-                    incomeGridData={incomeGridData}
-                    savingsGridData={savingsGridData}
-                    retirementGridData={retirementGridData}
-                    debtGridData={debtGridData}
-                    expenseGridData={expenseGridData}
-                    owner={owner}
-                    selfContribution={selfContribution}
-                    partnerContribution={partnerContribution}
-                  />
+              <div className="flex flex-col xl:flex-row w-full gap-5 mt-5 xl:gap-10">
+                <div className="hidden xl:block w-full"></div>
+                <div className="flex flex-col w-full">
+                  <div className="w-full">
+                    <MonthlySummary
+                      incomeGridData={incomeGridData}
+                      savingsGridData={savingsGridData}
+                      retirementGridData={retirementGridData}
+                      debtGridData={debtGridData}
+                      expenseGridData={expenseGridData}
+                      owner={owner}
+                      selfContribution={selfContribution}
+                      partnerContribution={partnerContribution}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+          <div className="w-full bg-white rounded-lg border-t mt-8 p-6 text-center justify-center">
+            <p>{getPageCopyright()}</p>
+          </div>
+        </>
       )}
     </>
   ) : (

@@ -15,7 +15,7 @@ import { DebtListView } from '../../components/debt/DebtListView';
 import { DebtSummary } from '../../components/debt/DebtSummary';
 import { hasRecords } from '../../utils/budget.calculation';
 import useUserStore from '../../app/user';
-import { getPageTitle } from '../../utils';
+import { getPageCopyright, getPageTitle } from '../../utils';
 
 export const OtherDebts = () => {
   const { user } = useUserStore();
@@ -206,6 +206,9 @@ export const OtherDebts = () => {
 
           <div className="w-full">
             <DebtSummary gridData={gridData} />
+          </div>
+          <div className="w-full bg-white rounded-lg border-t mt-8 p-6 text-center justify-center">
+            <p>{getPageCopyright()}</p>
           </div>
         </div>
       )}

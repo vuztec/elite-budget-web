@@ -13,7 +13,7 @@ import { getBankGridData, incomeOwners } from '../../utils/budget.filter';
 import { TransactionListView } from '../../components/bank/TransactionListView';
 import AddTransaction from '../../components/bank/AddTransaction';
 import useUserStore from '../../app/user';
-import { getPageTitle } from '../../utils';
+import { getPageCopyright, getPageTitle } from '../../utils';
 
 export const Transactions = () => {
   const { user } = useUserStore();
@@ -217,6 +217,9 @@ export const Transactions = () => {
                 bankName={bankName}
                 banks={banks}
               />
+              <div className="w-full bg-white rounded-lg border-t mt-8 p-6 text-center justify-center">
+                <p>{getPageCopyright()}</p>
+              </div>
             </div>
           ))}
           <AddTransaction

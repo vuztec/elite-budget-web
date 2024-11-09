@@ -15,7 +15,7 @@ import { RetirementListView } from '../../components/retirement/RetirementListVi
 import { hasRecords } from '../../utils/budget.calculation';
 import { defaultDebSort } from '../../utils/budget.sort';
 import useUserStore from '../../app/user';
-import { getPageTitle } from '../../utils';
+import { getPageCopyright, getPageTitle } from '../../utils';
 
 export const Retirement = () => {
   const { user } = useUserStore();
@@ -122,11 +122,16 @@ export const Retirement = () => {
       )}
 
       {isDataLoaded && (
-        <div className={`w-full ${isShowing ? 'mt-40' : 'mt-10'}`}>
-          <div className="w-full">
-            <RetirementListView gridData={gridData} />
+        <>
+          <div className={`w-full ${isShowing ? 'mt-40' : 'mt-10'}`}>
+            <div className="w-full">
+              <RetirementListView gridData={gridData} />
+            </div>
           </div>
-        </div>
+          <div className="w-full bg-white rounded-lg border-t mt-8 p-6 text-center justify-center">
+            <p>{getPageCopyright()}</p>
+          </div>
+        </>
       )}
     </>
   ) : (

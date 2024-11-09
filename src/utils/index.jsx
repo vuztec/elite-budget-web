@@ -59,3 +59,13 @@ export function getPageTitle(title, user) {
   );
   return pageTitle;
 }
+
+export function getPageCopyright() {
+  const pageTitle = (
+    <div className="flex flex-col justify-center items-center py-2 px-3 gap-2 rounded-full text-xs lg:text-sm">
+      <h1 className="min-w-fit whitespace-nowrap ">Copyright © 2024 Elite Cash Flow Products, LLC</h1>
+      <h1 className="min-w-fit whitespace-nowrap ">All Rights Reserved</h1>
+    </div>
+  );
+  return pageTitle;
+}

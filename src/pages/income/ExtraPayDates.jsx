@@ -7,7 +7,7 @@ import Package from '../../package/Package';
 import { getActiveAccount } from '../../utils/permissions';
 import { useLocation } from 'react-router-dom';
 import { SidebarLinks } from '../../utils/sidebar.data';
-import { getPageTitle } from '../../utils';
+import { getPageCopyright, getPageTitle } from '../../utils';
 
 // color for each row in
 export const colors = ['#FFFFFF', 'whitesmoke', '#FFFFFF', 'whitesmoke', '#FFFFFF'];
@@ -236,7 +236,7 @@ export const ExtraPayDates = () => {
               />
             </div>
           </div>
-          <div>
+          <div className="px-6">
             <p className="text-xs">
               * Note 1: When paid weekly, your extra pay dates are listed under the day of the week you are paid.
             </p>
@@ -360,6 +360,9 @@ export const ExtraPayDates = () => {
               </p>
             ))}
           </div>
+        </div>
+        <div className="w-full bg-white rounded-lg border-t mt-8 p-6 text-center justify-center">
+          <p>{getPageCopyright()}</p>
         </div>
       </div>
     </div>

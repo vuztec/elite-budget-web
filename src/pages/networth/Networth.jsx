@@ -34,7 +34,7 @@ import { PiPrinter } from 'react-icons/pi';
 import useUserStore from '../../app/user';
 import { SidebarLinks } from '../../utils/sidebar.data';
 import { useLocation } from 'react-router-dom';
-import { getPageTitle } from '../../utils';
+import { getPageCopyright, getPageTitle } from '../../utils';
 
 export const Networth = () => {
   const { user } = useUserStore();
@@ -238,87 +238,87 @@ export const Networth = () => {
         </div>
       )}
       {isDataLoaded && (
-        <div
-          className={`w-full flex flex-col items-center gap-5 xl:gap-10 bg-white p-5 ${isShowing ? 'mt-40' : 'mt-10'}`}
-          ref={targetRef}
-        >
-          {showPdfContent && (
-            <div className="w-full">
-              <div className="w-full flex justify-center items-center py-2 px-3 gap-2 rounded-full">
-                <h1 className="font-bold uppercase hidden md:block">{title + ' for ' + (user?.FullName || '')}</h1>
-                <h1 className="font-bold uppercase md:hidden"> {title}</h1>
-              </div>
-
+        <>
+          <div
+            className={`w-full flex flex-col items-center gap-5 xl:gap-10 bg-white p-5 ${isShowing ? 'mt-40' : 'mt-10'}`}
+            ref={targetRef}
+          >
+            {showPdfContent && (
               <div className="w-full">
-                <h1 className="font-medium text-left">
-                  Account Owner: <span className="italic font-bold"> {owner === '0' ? 'Household' : owner}</span>
+                <div className="w-full flex justify-center items-center py-2 px-3 gap-2 rounded-full">
+                  <h1 className="font-bold uppercase hidden md:block">{title + ' for ' + (user?.FullName || '')}</h1>
+                  <h1 className="font-bold uppercase md:hidden"> {title}</h1>
+                </div>
+
+                <div className="w-full">
+                  <h1 className="font-medium text-left">
+                    Account Owner: <span className="italic font-bold"> {owner === '0' ? 'Household' : owner}</span>
+                  </h1>
+                </div>
+              </div>
+            )}
+            <div className="w-full 2xl:w-[80%] flex flex-col items-center justify-center gap-5">
+              <div className="flex flex-col w-full">
+                <h1 className="w-full bg-[whitesmoke] text-black flex items-center justify-center p-2 rounded-md font-bold border border-gray-300">
+                  ASSETS (Market Value of What You Own)
                 </h1>
+                <div>
+                  <Assets
+                    savingsGridData={savingsGridData}
+                    retirementGridData={retirementGridData}
+                    expenseGridData={expenseGridData}
+                    transactionGridData={transactionGridData}
+                    bankGridData={bankGridData}
+                  />
+                </div>
               </div>
-            </div>
-          )}
-          <div className="w-full 2xl:w-[80%] flex flex-col items-center justify-center gap-5">
-            <div className="flex flex-col w-full">
-              <h1 className="w-full bg-[whitesmoke] text-black flex items-center justify-center p-2 rounded-md font-bold border border-gray-300">
-                ASSETS (Market Value of What You Own)
-              </h1>
-              <div>
-                <Assets
-                  savingsGridData={savingsGridData}
-                  retirementGridData={retirementGridData}
-                  expenseGridData={expenseGridData}
-                  transactionGridData={transactionGridData}
-                  bankGridData={bankGridData}
-                />
+              <div className="flex flex-col w-full">
+                <h1 className="w-full bg-[whitesmoke] text-black flex items-center justify-center p-2 rounded-md font-bold border border-gray-300">
+                  LIABILITIES (How Much You Owe)
+                </h1>
+                <div>
+                  <Liabilities expenseGridData={expenseGridData} debtGridData={debtGridData} />
+                </div>
               </div>
-            </div>
-            <div className="flex flex-col w-full">
-              <h1 className="w-full bg-[whitesmoke] text-black flex items-center justify-center p-2 rounded-md font-bold border border-gray-300">
-                LIABILITIES (How Much You Owe)
-              </h1>
-              <div>
-                <Liabilities expenseGridData={expenseGridData} debtGridData={debtGridData} />
+              <div className="flex flex-col w-full">
+                <h1 className="w-full bg-[whitesmoke] text-black flex items-center justify-center p-2 rounded-md font-bold border border-gray-300">
+                  NET WORTH (Assets - Liabilities)
+                </h1>
+                <div>
+                  <CurrentNetworth
+                    savingsGridData={savingsGridData}
+                    retirementGridData={retirementGridData}
+                    expenseGridData={expenseGridData}
+                    debtGridData={debtGridData}
+                    transactionGridData={transactionGridData}
+                    bankGridData={bankGridData}
+                  />
+                </div>
               </div>
-            </div>
-            <div className="flex flex-col w-full">
-              <h1 className="w-full bg-[whitesmoke] text-black flex items-center justify-center p-2 rounded-md font-bold border border-gray-300">
-                NET WORTH (Assets - Liabilities)
-              </h1>
-              <div>
-                <CurrentNetworth
-                  savingsGridData={savingsGridData}
-                  retirementGridData={retirementGridData}
-                  expenseGridData={expenseGridData}
-                  debtGridData={debtGridData}
-                  transactionGridData={transactionGridData}
-                  bankGridData={bankGridData}
-                />
+              <div className="flex flex-col w-full">
+                <h1 className="w-full bg-[whitesmoke] text-black flex items-center justify-center p-2 rounded-md font-bold border border-gray-300">
+                  EXPECTED NET WORTH
+                </h1>
+                <div>
+                  <ExpectedNetworth
+                    incomeGridData={incomeGridData}
+                    savingsGridData={savingsGridData}
+                    retirementGridData={retirementGridData}
+                    expenseGridData={expenseGridData}
+                    debtGridData={debtGridData}
+                    transactionGridData={transactionGridData}
+                    bankGridData={bankGridData}
+                    owner={owner}
+                  />
+                </div>
               </div>
-            </div>
-            <div className="flex flex-col w-full">
-              <h1 className="w-full bg-[whitesmoke] text-black flex items-center justify-center p-2 rounded-md font-bold border border-gray-300">
-                EXPECTED NET WORTH
-              </h1>
-              <div>
-                <ExpectedNetworth
-                  incomeGridData={incomeGridData}
-                  savingsGridData={savingsGridData}
-                  retirementGridData={retirementGridData}
-                  expenseGridData={expenseGridData}
-                  debtGridData={debtGridData}
-                  transactionGridData={transactionGridData}
-                  bankGridData={bankGridData}
-                  owner={owner}
-                />
-              </div>
-            </div>
-            <div className="w-full pt-5 text-xs xl:text-sm text-left italic">
-              {/* <p>
-                *Source: Stanley, T, & Danko, W. (1996, 2010). The Millionaire Next Door, Page 13, Formula referenced in
-                the section: How to Determine If You're Wealthy. Taylor Trade Publishing, Maryland.
-              </p> */}
+              <div className="w-full pt-5 text-xs xl:text-sm text-left italic"></div>
             </div>
           </div>
-        </div>
+          <div className="w-full bg-white rounded-lg border-t mt-8 p-6 text-center justify-center">
+            <p>{getPageCopyright()}</p>
+          </div>
+        </>
       )}
     </>
   ) : (
