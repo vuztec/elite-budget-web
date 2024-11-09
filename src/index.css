@@ -115,7 +115,7 @@
 }
 
 .custom-list li::before {
-  content: '\27A4'; /* Replace with any symbol or Unicode */
+  content: '\2022'; /* Replace with any symbol or Unicode */
   color: #000; /* Set color if needed */
   position: absolute;
   left: 40px; /* Position at the start */
@@ -133,7 +133,7 @@
 }
 
 .custom-list2 li::before {
-  content: '\2022'; /* Replace with any symbol or Unicode */
+  content: '\2611'; /* Replace with any symbol or Unicode */
   color: #000; /* Set color if needed */
   position: absolute;
   left: 0; /* Position at the start */
