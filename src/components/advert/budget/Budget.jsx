@@ -50,7 +50,7 @@ function Budget() {
             onClick={() => scrollToSection('bank-transaction')}
             className="p-2 md:p-4 rounded-lg bg-[#00AE5B] text-white w-full max-w-[150px] flex-grow"
           >
-            Bank Transaction
+            Bank Registers
           </button>
           <button
             onClick={() => scrollToSection('networth')}
@@ -74,17 +74,17 @@ function Budget() {
         <div className="w-full xl:w-[60%] mt-4">
           <div className="grid xl:grid-cols-1 gap-2 mt-6 shadow-lg py-5">
             <h1 className="text-[#131924] font-bold text-xl md:text-xl leading-tight md:text-center lg:text-left px-10">
-              Elite streamlines budget management and team collaboration in one easy-to-use platform.
+              The Elite Budget app streamlines the budget management process in one easy-to-use platform.
             </h1>
-            <ul className="list-outside list-disc px-20 flex flex-col gap-2">
+            <ul className="list-outside list-disc px-20 flex flex-col gap-5">
               <li className="">
-                It’s all about the budget! Step one is to enter all of your Income, expenses, debt, market value of your
-                assets. That’s the hardest part but just the first time!
+                It’s all about the budget! Step one is to enter all of your Income, expenses, debt and the market value
+                of your assets. That’s the hardest part but just the first time!
               </li>
               <li>All reports and accounts are available by Individual, Partner, Joint or Household.</li>
               <li>
                 The app includes budgeting tool add-ons:
-                <ul className="list-disc ml-10  flex flex-col gap-1">
+                <ul className="list-disc ml-10 mt-3 flex flex-col gap-3">
                   <li>
                     <span className="font-bold"> Extra pay dates calendar</span> for automatic savings (or debt
                     reduction)
@@ -95,8 +95,8 @@ function Budget() {
                   </li>
                   <li>
                     {' '}
-                    <span className="font-bold">Joint expense split calculator</span> when when couples wish to split
-                    their joint costs
+                    <span className="font-bold">Joint expense split calculator</span> when couples wish to split their
+                    joint costs
                   </li>
                   <li>
                     <span className="font-bold">An extra funds tracker</span> to manage the budget buffer (the amount
@@ -111,13 +111,13 @@ function Budget() {
                   </li>
                 </ul>
               </li>
-              <li>Easy to make changes</li>
+              <li>Easy to make changes.</li>
               <li>All reports are automatically updated instantly.</li>
             </ul>
           </div>
 
           <div className="grid xl:grid-cols-1 gap-6 mt-6 shadow-lg py-5">
-            <ul className="list-outside list-disc px-10 py-5  flex flex-col gap-3">
+            <ul className="list-outside list-disc px-10 py-5  flex flex-col gap-5">
               <li>
                 <span className="font-bold">Elite Problem Solving:</span> For those who demand a simple solution to the
                 budget process. Achieve complete control over your finances with a budgeting app designed for
@@ -148,7 +148,9 @@ function Budget() {
                 <span className="font-bold">Data Security:</span> Your data is encrypted and secure ensuring your
                 financial information stays safe. The app does not interface with your bank institution(s) for extra
                 security. You also have the option to use nicknames for each account to provide you with the extra peace
-                of mind that comes with using generic names instead of using formal institution names.
+                of mind that comes with using generic names instead of using formal institution names. The Elite Budget
+                App offers privacy security ensuring complete peace of mind. Integrate with your existing security
+                functions and customize protection with features like double encryption, and user authentication.
               </li>
               <li>
                 <span className="font-bold">Free Trial:</span> Try the app for <strong>FREE</strong> for 14-days so you

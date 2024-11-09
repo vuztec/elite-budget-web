@@ -11,28 +11,12 @@ import Dashboard from '../../../assets/image/dashboard.png';
 
 const cardData = [
   {
-    title: 'Advanced Enterprise Protection',
+    title: 'App Security',
     description:
-      'Cash on Consulting offers enterprise-class security across all plans, ensuring complete peace of mind. Integrate with your existing security functions and customize protection with features like double encryption, role-based access control, user authentication, and privacy verifications. For added security, use Cash on Consulting Lock to manage your own encryption keys.',
+      'The Elite Budget App offers privacy security ensuring complete peace of mind. Integrate with your existing security functions and customize protection with features like double encryption, and user authentication.',
     icons: [Safegrad, Lock, PersonLock, Key],
     bgColor: 'bg-[#FFEDED]',
     iconBgColor: 'bg-[#FFBBBB]',
-  },
-  {
-    title: '24/7 Worldwide Support',
-    description:
-      'Cash on Consulting provides award-winning, 24/7 global support across all time zones. Select a package tailored to your needs and budget. Enhance your experience with comprehensive guides, articles, webinars, and demos on the latest productivity features.',
-    icons: [World, Recycle, WordCap, Tree],
-    bgColor: 'bg-[#EBFFFB]',
-    iconBgColor: 'bg-[#BBFFDA]',
-  },
-  {
-    title: 'Smooth Onboarding Process',
-    description:
-      'Start with Cash on Consulting in minutes using its intuitive interface and seamless adoption. Our professional services team will facilitate a smooth onboarding, including migration from existing tools, sharing best practices, and offering support as needed.',
-    bgColor: 'bg-[#FFF8C5]',
-    iconBgColor: 'bg-[#FFE4BB]',
-    image: Dashboard,
   },
 ];
 
