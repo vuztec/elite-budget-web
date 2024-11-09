@@ -186,7 +186,7 @@ export const Checklist = () => {
         <div className="w-full flex item-center justify-end pr-6">
           <div className="w-full gap-4 h-10 md:h-12 px-2 rounded-full bg-white flex items-center justify-between">
             <div className="w-[330px] hidden lg:block"></div>
-            <div className="">{getPageTitle('Budget Checklist', user)}</div>
+            <div className="hidden md:block">{getPageTitle('Budget Checklist', user)}</div>
             <div className="flex w-[330px] items-center gap-2">
               <div className="text-sm min-w-fit whitespace-nowrap">
                 <Button
@@ -225,7 +225,7 @@ export const Checklist = () => {
                   />
                 )}
               </PDFDownloadLink>
-              <div className="text-sm min-w-fit whitespace-nowrap hidden md:block">
+              <div className="text-sm min-w-fit whitespace-nowrap">
                 <MultiSelectDropdown
                   options={months}
                   placeholder={'Filter Months'}
