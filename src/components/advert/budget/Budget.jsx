@@ -59,14 +59,16 @@ function Budget() {
             Networth
           </button>
         </div>
-
-        <div className="flex flex-col gap-4 items-center mt-6 md:mt-8">
+        <div className="flex flex-col gap-4 items-center justify-center text-center mt-6 md:mt-8">
           <a
             href="/login"
             className="bg-[#00AE5B] text-xl md:text-2xl whitespace-nowrap text-white font-semibold px-6 md:px-8 text-center py-3 md:py-4 rounded-lg"
           >
             Try the App Now
           </a>
+          <p className="text-yellow-200 text-lg md:text-xl">
+            Enjoy a 14-day free trial, followed by an annual billing at just $7.99 per month.
+          </p>
         </div>
       </div>
       <div className="w-full flex flex-col items-center">
