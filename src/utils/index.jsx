@@ -1,3 +1,5 @@
+import clsx from 'clsx';
+
 export const formatDate = (date) => {
   // Get the month, day, and year
   const month = date.toLocaleString('en-US', { month: 'short' });
@@ -60,9 +62,14 @@ export function getPageTitle(title, user) {
   return pageTitle;
 }
 
-export function getPageCopyright() {
+export function getPageCopyright(textCSS) {
   const pageTitle = (
-    <div className="flex flex-col justify-center items-center py-2 px-3 gap-2 rounded-full text-xs lg:text-sm">
+    <div
+      className={clsx(
+        'flex flex-col py-2 px-3 gap-2 rounded-full text-xs lg:text-sm',
+        textCSS ? 'justify-start items-start' : 'justify-center items-center',
+      )}
+    >
       <h1 className="min-w-fit whitespace-nowrap ">Copyright © 2024 Elite Cash Flow Products, LLC</h1>
       <h1 className="min-w-fit whitespace-nowrap ">All Rights Reserved</h1>
     </div>

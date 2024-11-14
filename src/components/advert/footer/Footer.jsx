@@ -85,7 +85,7 @@ function Footer() {
       </div>
       {/* Footer Bottom */}
       <div className="border-t mt-8 p-6 text-center flex flex-col sm:flex-row justify-between items-center">
-        <p>{getPageCopyright()}</p>
+        <p>{getPageCopyright('true')}</p>
 
         {/* Social Icons */}
         <div className="flex justify-center mt-4 sm:mt-0 space-x-4 text-gray-700">
