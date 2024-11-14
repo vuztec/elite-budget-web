@@ -38,7 +38,7 @@ export const Advert = () => {
         <Budget />
         <div id="home" className="flex flex-col lg:flex-row items-center justify-center my-10 gap-8 lg:gap-12 p-8">
           <div className="w-full lg:w-1/3 flex flex-col gap-6">
-            <h1 className="text-[#171717] font-semibold text-[32px] lg:text-[42px]">Budget Summary</h1>
+            <h1 className="text-[#FF7452] font-semibold text-[32px] lg:text-[42px]">Budget Summary</h1>
 
             <ul className="text-lg font-normal text-[#171717] list-decimal flex flex-col gap-5">
               <li>
@@ -52,7 +52,7 @@ export const Advert = () => {
 
             <a
               href="/login"
-              className="hidden lg:flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-white shadow-md text-black rounded-md"
+              className="hidden lg:flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-tryBg text-tryText shadow-md rounded-md"
             >
               Try the App Now <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
             </a>
@@ -64,7 +64,7 @@ export const Advert = () => {
           <div className="w-full lg:hidden justify-center">
             <a
               href="/login"
-              className="flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-black shadow-md text-white rounded-md lg:hidden"
+              className="flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-tryBg text-tryText shadow-md rounded-md lg:hidden"
             >
               Try the App Now <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
             </a>
@@ -75,7 +75,7 @@ export const Advert = () => {
           className="flex flex-col lg:flex-row-reverse items-center justify-center my-10 gap-8 lg:gap-12 p-8"
         >
           <div className="w-full lg:w-1/3 flex flex-col gap-6">
-            <h1 className="text-[#171717] font-semibold text-[32px] lg:text-[42px]">Budget Details</h1>
+            <h1 className="text-[#2684FF] font-semibold text-[32px] lg:text-[42px]">Budget Details</h1>
             <ul className="text-lg font-normal text-[#171717] list-decimal flex flex-col gap-5">
               <li>
                 The Budget Detail report is a <strong>printable</strong> detailed list of all budget items included in
@@ -88,7 +88,7 @@ export const Advert = () => {
 
             <a
               href="/login"
-              className="hidden lg:flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-white shadow-md text-black rounded-md"
+              className="hidden lg:flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-tryBg text-tryText shadow-md rounded-md"
             >
               Try the App Now <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
             </a>
@@ -100,7 +100,7 @@ export const Advert = () => {
           <div className="w-full lg:hidden justify-center">
             <a
               href="/login"
-              className="flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-black shadow-md text-white rounded-md lg:hidden"
+              className="flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-tryBg text-tryText shadow-md rounded-md lg:hidden"
             >
               Try the App Now <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
             </a>
@@ -108,7 +108,7 @@ export const Advert = () => {
         </div>
         <div id="checklist" className="flex flex-col lg:flex-row items-center justify-center my-10 gap-8 lg:gap-12 p-8">
           <div className="w-full lg:w-1/3 flex flex-col gap-6">
-            <h1 className="text-[#171717] font-semibold text-[32px] lg:text-[42px]">Checklist</h1>
+            <h1 className="text-[#57D9A3] font-semibold text-[32px] lg:text-[42px]">Checklist</h1>
             <ul className="text-lg font-normal text-[#171717] list-decimal flex flex-col gap-3">
               <li>
                 Creating a checklist to track budget items is an excellent way to maintain control and ensure that no
@@ -125,7 +125,7 @@ export const Advert = () => {
             </ul>
             <a
               href="/login"
-              className="hidden lg:flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-white shadow-md text-black rounded-md"
+              className="hidden lg:flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-tryBg text-tryText shadow-md rounded-md"
             >
               Try the App Now <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
             </a>
@@ -137,7 +137,7 @@ export const Advert = () => {
           <div className="w-full lg:hidden justify-center">
             <a
               href="/login"
-              className="flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-black shadow-md text-white rounded-md lg:hidden"
+              className="flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-tryBg text-tryText shadow-md rounded-md lg:hidden"
             >
               Try the App Now <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
             </a>
@@ -149,7 +149,7 @@ export const Advert = () => {
           className="flex flex-col lg:flex-row-reverse items-center justify-center my-10 gap-8 lg:gap-12 p-8"
         >
           <div className="w-full lg:w-1/3 flex flex-col gap-6">
-            <h1 className="text-[#171717] font-semibold text-[32px] lg:text-[42px]">Extra Pay Dates</h1>
+            <h1 className="text-[#00C7E5] font-semibold text-[32px] lg:text-[42px]">Extra Pay Dates</h1>
             <ul className="text-lg font-normal text-[#171717] list-decimal flex flex-col gap-3">
               <li>
                 Extra pay dates refer to the additional pay periods per year that occur when you receive your paycheck
@@ -164,7 +164,7 @@ export const Advert = () => {
 
             <a
               href="/login"
-              className="hidden lg:flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-white shadow-md text-black rounded-md"
+              className="hidden lg:flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-tryBg text-tryText shadow-md rounded-md"
             >
               Try the App Now <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
             </a>
@@ -176,7 +176,7 @@ export const Advert = () => {
           <div className="w-full lg:hidden justify-center">
             <a
               href="/login"
-              className="flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-black shadow-md text-white rounded-md lg:hidden"
+              className="flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-tryBg text-tryText shadow-md rounded-md lg:hidden"
             >
               Try the App Now <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
             </a>
@@ -184,7 +184,7 @@ export const Advert = () => {
         </div>
         <div id="joint" className="flex flex-col lg:flex-row items-center justify-center my-10 gap-8 lg:gap-12 p-8">
           <div className="w-full lg:w-1/3 flex flex-col gap-6">
-            <h1 className="text-[#171717] font-semibold text-[32px] lg:text-[42px]">Joint Split Calculation</h1>
+            <h1 className="text-[#F99CDB] font-semibold text-[32px] lg:text-[42px]">Joint Split Calculation</h1>
             <ul className="text-lg font-normal text-[#171717] list-decimal">
               <li>
                 Provides a <strong>joint expense split calculator</strong> when couples wish to split their joint costs.
@@ -193,7 +193,7 @@ export const Advert = () => {
 
             <a
               href="/login"
-              className="hidden lg:flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-white shadow-md text-black rounded-md"
+              className="hidden lg:flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-tryBg text-tryText shadow-md rounded-md"
             >
               Try the App Now <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
             </a>
@@ -205,7 +205,7 @@ export const Advert = () => {
           <div className="w-full lg:hidden justify-center">
             <a
               href="/login"
-              className="flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-black shadow-md text-white rounded-md lg:hidden"
+              className="flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-tryBg text-tryText shadow-md rounded-md lg:hidden"
             >
               Try the App Now <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
             </a>
@@ -217,7 +217,7 @@ export const Advert = () => {
           className="flex flex-col lg:flex-row-reverse items-center justify-center my-10 gap-8 lg:gap-12 p-8"
         >
           <div className="w-full lg:w-1/3 flex flex-col gap-6">
-            <h1 className="text-[#171717] font-semibold text-[32px] lg:text-[42px]">Extra Fund Tracker</h1>
+            <h1 className="text-[#FF820E] font-semibold text-[32px] lg:text-[42px]">Extra Fund Tracker</h1>
             <ul className="text-lg font-normal text-[#171717] list-decimal">
               <li>
                 Provides an <strong> extra funds tracker</strong> to manage the budget buffer (the money that exceeds
@@ -227,7 +227,7 @@ export const Advert = () => {
 
             <a
               href="/login"
-              className="hidden lg:flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-white shadow-md text-black rounded-md"
+              className="hidden lg:flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-tryBg text-tryText shadow-md rounded-md"
             >
               Try the App Now <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
             </a>
@@ -239,7 +239,7 @@ export const Advert = () => {
           <div className="w-full lg:hidden justify-center">
             <a
               href="/login"
-              className="flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-black shadow-md text-white rounded-md lg:hidden"
+              className="flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-tryBg text-tryText shadow-md rounded-md lg:hidden"
             >
               Try the App Now <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
             </a>
@@ -250,7 +250,7 @@ export const Advert = () => {
           className="flex flex-col lg:flex-row items-center justify-center my-10 gap-8 lg:gap-12 p-8"
         >
           <div className="w-full lg:w-1/3 flex flex-col gap-6">
-            <h1 className="text-[#171717] font-semibold text-[32px] lg:text-[42px]">Bank Registers</h1>
+            <h1 className="text-[#00AE5B] font-semibold text-[32px] lg:text-[42px]">Bank Registers</h1>
             <ul className="text-lg font-normal text-[#171717] list-decimal flex flex-col gap-3">
               <li>
                 Provides <strong>Bank account registers</strong> so you can enter your bank transactions and reconcile
@@ -263,7 +263,7 @@ export const Advert = () => {
 
             <a
               href="/login"
-              className="hidden lg:flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-white shadow-md text-black rounded-md"
+              className="hidden lg:flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-tryBg text-tryText shadow-md rounded-md"
             >
               Try the App Now <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
             </a>
@@ -275,7 +275,7 @@ export const Advert = () => {
           <div className="w-full lg:hidden justify-center">
             <a
               href="/login"
-              className="flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-black shadow-md text-white rounded-md lg:hidden"
+              className="flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-tryBg text-tryText shadow-md rounded-md lg:hidden"
             >
               Try the App Now <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
             </a>
@@ -286,7 +286,7 @@ export const Advert = () => {
           className="flex flex-col lg:flex-row-reverse items-center justify-center my-10 gap-8 lg:gap-12 p-8"
         >
           <div className="w-full lg:w-1/3 flex flex-col gap-6">
-            <h1 className="text-[#171717] font-semibold text-[32px] lg:text-[42px]">Networth</h1>
+            <h1 className="text-[#FFC400] font-semibold text-[32px] lg:text-[42px]">Networth</h1>
             <ul className="text-lg font-normal text-[#171717] list-decimal flex flex-col gap-3">
               <li>
                 Calculating <strong>net worth</strong> is a great way to assess your financial health over time.
@@ -300,7 +300,7 @@ export const Advert = () => {
             </ul>
             <a
               href="/login"
-              className="hidden lg:flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-white shadow-md text-black rounded-md"
+              className="hidden lg:flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-tryBg text-tryText shadow-md rounded-md"
             >
               Try the App Now <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
             </a>
@@ -312,7 +312,7 @@ export const Advert = () => {
           <div className="w-full lg:hidden justify-center">
             <a
               href="/login"
-              className="flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-black shadow-md text-white rounded-md lg:hidden"
+              className="flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-tryBg text-tryText shadow-md rounded-md lg:hidden"
             >
               Try the App Now <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
             </a>
