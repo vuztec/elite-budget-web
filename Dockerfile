@@ -1,5 +1,5 @@
 # Stage 1: Build
-FROM node as build
+FROM node:18 as build
 
 # Set working directory
 WORKDIR /app
@@ -12,10 +12,10 @@ RUN npm install
 COPY . .
 
 # Build the application with increased memory
-RUN NODE_OPTIONS="--max-old-space-size=8192" node_modules/.bin/vite build
+RUN NODE_OPTIONS="--max-old-space-size=8192" npm run build
 
 # Stage 2: Production
-FROM node as production
+FROM node:18 as production
 
 # Set working directory
 WORKDIR /app
@@ -30,5 +30,6 @@ RUN npm install --production
 # Expose port 3000
 EXPOSE 3000
 
-# Command to serve the application
-CMD ["npm", "run", "preview"]
+# Serve the application
+RUN npm install -g serve
+CMD ["serve", "-s", "dist"]
