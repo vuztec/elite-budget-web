@@ -1,5 +1,5 @@
 # Stage 1: Build
-FROM node:18 as build
+FROM node as build
 
 # Set working directory
 WORKDIR /app
@@ -15,7 +15,7 @@ COPY . .
 RUN NODE_OPTIONS="--max-old-space-size=8192" node_modules/.bin/vite build
 
 # Stage 2: Production
-FROM node:18 as production
+FROM node as production
 
 # Set working directory
 WORKDIR /app
