@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Country } from 'country-state-city';
 import { useForm, useWatch } from 'react-hook-form';
-import { Dialog } from '@headlessui/react';
 import Textbox from '../Textbox';
 import Select from '../Select';
 import Loading from '../Loader';
@@ -15,7 +14,7 @@ import { DateFormats } from '../../utils/budget.filter';
 import { handleAxiosResponseError } from '../../utils/handleResponseError';
 import Logo from '../../assets/logo.png';
 
-export const CreateNewAccount = ({}) => {
+export const CreateNewAccount = ({ setNewUser }) => {
   const CountryData = Country.getAllCountries();
   const { setUser, user } = useUserStore();
 
@@ -128,6 +127,10 @@ export const CreateNewAccount = ({}) => {
 
       setValue('Separator', 'en-' + selCountryCode);
     }
+  };
+
+  const userClick = () => {
+    setNewUser(true);
   };
 
   return (
@@ -289,6 +292,33 @@ export const CreateNewAccount = ({}) => {
                       />
                     </div>
                   </div>
+                  <div className="flex flex-col md:flex-row gap-6 w-full">
+                    <div className="w-full">
+                      <Textbox
+                        placeholder="enter currency"
+                        type="text"
+                        name="Currency"
+                        label="Currency Symbol (e.g. $ or USD)"
+                        className="w-full rounded"
+                        register={register('Currency', {
+                          required: 'Currency is required!',
+                        })}
+                        error={errors.Currency ? errors.Currency.message : ''}
+                      />
+                    </div>
+
+                    <div className="w-full">
+                      <Select
+                        name="DateFormat"
+                        label="Date Format"
+                        defaultValue="yyyy-MM-dd"
+                        options={dateFormats}
+                        className="w-full rounded"
+                        register={register('DateFormat')}
+                        error={errors.DateFormat ? errors.DateFormat.message : ''}
+                      />
+                    </div>
+                  </div>
                 </div>
 
                 {isLoading ? (
@@ -297,6 +327,12 @@ export const CreateNewAccount = ({}) => {
                   </div>
                 ) : (
                   <div className="gap-3 p-3 mt-4 flex flex-row-reverse">
+                    <div
+                      onClick={() => userClick()}
+                      className="flex items-center justify-center text-sm text-gray-500 hover:text-blue-500 underline cursor-pointer"
+                    >
+                      Already Have an Account?
+                    </div>
                     <Button
                       type="submit"
                       className="w-fit flex flex-row-reverse items-center gap-1 text-white bg-black"

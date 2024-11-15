@@ -61,8 +61,8 @@ export const Login = ({ isNewUser, setNewUser }) => {
       });
   };
 
-  const addClick = () => {
-    setOpen(true);
+  const userClick = () => {
+    setNewUser(true);
   };
 
   return (
@@ -117,12 +117,12 @@ export const Login = ({ isNewUser, setNewUser }) => {
                         Forgot Password?
                       </a>
                     </div>
-                    {/* <div
-                    onClick={() => addClick()}
-                    className="flex items-center justify-center text-sm text-gray-500 hover:text-blue-500 underline cursor-pointer"
-                  >
-                    Create New Account?
-                  </div> */}
+                    <div
+                      onClick={() => userClick()}
+                      className="flex items-center justify-center text-sm text-gray-500 hover:text-blue-500 underline cursor-pointer"
+                    >
+                      Create New Account?
+                    </div>
                   </div>
 
                   <Button
