@@ -315,7 +315,7 @@ export const Signup = () => {
                         <Loading />
                       </div>
                     ) : (
-                      <div className="gap-3 p-3 mt-4 flex flex-row-reverse">
+                      <div className="p-3 mt-4 flex flex-row-reverse justify-center items-center gap-5">
                         <a
                           href="/login"
                           className="flex items-center justify-center text-sm text-gray-500 hover:text-blue-500 underline cursor-pointer"
@@ -325,8 +325,9 @@ export const Signup = () => {
                         <Button
                           type="submit"
                           className="w-fit flex flex-row-reverse items-center gap-1 text-white bg-black"
-                          label="Enter"
-                          disabled={!privacy || !terms}
+                          label="Sign Up"
+                          disabled={true}
+                          // disabled={!privacy || !terms}
                           icon={<IoMdSend />}
                         />
                       </div>
