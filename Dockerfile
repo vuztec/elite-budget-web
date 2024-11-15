@@ -1,21 +1,31 @@
-# Use a node base image
-FROM node
+# Stage 1: Build
+FROM node:18 as build
 
 # Set working directory
 WORKDIR /app
 
 # Install dependencies
-COPY package.json .
+COPY package.json package-lock.json ./
 RUN npm install
 
 # Copy the rest of the application
 COPY . .
 
-# Increase memory limit for the build process and run the build command
+# Build the application with increased memory
 RUN NODE_OPTIONS="--max-old-space-size=8192" node_modules/.bin/vite build
 
-# Copy the built React application from the previous stage
-# COPY --from=build /app/dist ./dist
+# Stage 2: Production
+FROM node:18 as production
+
+# Set working directory
+WORKDIR /app
+
+# Copy build output from the previous stage
+COPY --from=build /app/dist ./dist
+
+# Install only production dependencies
+COPY package.json package-lock.json ./
+RUN npm install --production
 
 # Expose port 3000
 EXPOSE 3000
