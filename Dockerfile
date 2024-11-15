@@ -12,7 +12,7 @@ RUN npm install
 COPY . .
 
 # Increase memory limit for the build process and run the build command
-RUN node --max-old-space-size=4096 node_modules/.bin/vite build
+RUN node --max-old-space-size=8192 node_modules/.bin/vite build
 
 # Copy the built React application from the previous stage
 # COPY --from=build /app/dist ./dist

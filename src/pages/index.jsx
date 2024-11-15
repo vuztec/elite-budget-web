@@ -20,6 +20,7 @@ import { TermsAndConditions } from './policy/TermsAndConditions';
 import { Faqs } from './policy/faqs';
 import { Home } from './home/Home';
 import { Advert } from './advert/Advert';
+import { Signup } from './signup';
 
 export {
   Home,
@@ -44,4 +45,5 @@ export {
   PrivacyPolicy,
   TermsAndConditions,
   Faqs,
+  Signup,
 };

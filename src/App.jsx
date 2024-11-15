@@ -21,6 +21,7 @@ import {
   OldHome,
   Advert,
   Faqs,
+  Signup,
 } from './pages';
 
 import Navbar from './components/Navbar';
@@ -108,6 +109,7 @@ function App() {
         <Route path="/advert" element={<Advert />} />
         <Route path="/old" element={<OldHome />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
         <Route path="/forgetpassword" element={<ForgetPassword />} />
         <Route path="/verifyotp" element={<VerifyOtp />} />
         <Route path="/updatepassword" element={<UpdatePassword />} />

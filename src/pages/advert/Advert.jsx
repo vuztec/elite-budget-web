@@ -51,7 +51,7 @@ export const Advert = () => {
             </ul>
 
             <a
-              href="/login"
+              href="/signup"
               className="hidden lg:flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-tryBg text-tryText shadow-md rounded-md"
             >
               Try the App Now <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
@@ -63,7 +63,7 @@ export const Advert = () => {
           </div>
           <div className="w-full lg:hidden justify-center">
             <a
-              href="/login"
+              href="/signup"
               className="flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-tryBg text-tryText shadow-md rounded-md lg:hidden"
             >
               Try the App Now <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
@@ -87,7 +87,7 @@ export const Advert = () => {
             </ul>
 
             <a
-              href="/login"
+              href="/signup"
               className="hidden lg:flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-tryBg text-tryText shadow-md rounded-md"
             >
               Try the App Now <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
@@ -99,7 +99,7 @@ export const Advert = () => {
           </div>
           <div className="w-full lg:hidden justify-center">
             <a
-              href="/login"
+              href="/signup"
               className="flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-tryBg text-tryText shadow-md rounded-md lg:hidden"
             >
               Try the App Now <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
@@ -124,7 +124,7 @@ export const Advert = () => {
               <li className="">The checklist can be filtered by selected month(s).</li>
             </ul>
             <a
-              href="/login"
+              href="/signup"
               className="hidden lg:flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-tryBg text-tryText shadow-md rounded-md"
             >
               Try the App Now <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
@@ -136,7 +136,7 @@ export const Advert = () => {
           </div>
           <div className="w-full lg:hidden justify-center">
             <a
-              href="/login"
+              href="/signup"
               className="flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-tryBg text-tryText shadow-md rounded-md lg:hidden"
             >
               Try the App Now <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
@@ -163,7 +163,7 @@ export const Advert = () => {
             </ul>
 
             <a
-              href="/login"
+              href="/signup"
               className="hidden lg:flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-tryBg text-tryText shadow-md rounded-md"
             >
               Try the App Now <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
@@ -175,7 +175,7 @@ export const Advert = () => {
           </div>
           <div className="w-full lg:hidden justify-center">
             <a
-              href="/login"
+              href="/signup"
               className="flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-tryBg text-tryText shadow-md rounded-md lg:hidden"
             >
               Try the App Now <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
@@ -192,7 +192,7 @@ export const Advert = () => {
             </ul>
 
             <a
-              href="/login"
+              href="/signup"
               className="hidden lg:flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-tryBg text-tryText shadow-md rounded-md"
             >
               Try the App Now <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
@@ -204,7 +204,7 @@ export const Advert = () => {
           </div>
           <div className="w-full lg:hidden justify-center">
             <a
-              href="/login"
+              href="/signup"
               className="flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-tryBg text-tryText shadow-md rounded-md lg:hidden"
             >
               Try the App Now <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
@@ -226,7 +226,7 @@ export const Advert = () => {
             </ul>
 
             <a
-              href="/login"
+              href="/signup"
               className="hidden lg:flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-tryBg text-tryText shadow-md rounded-md"
             >
               Try the App Now <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
@@ -238,7 +238,7 @@ export const Advert = () => {
           </div>
           <div className="w-full lg:hidden justify-center">
             <a
-              href="/login"
+              href="/signup"
               className="flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-tryBg text-tryText shadow-md rounded-md lg:hidden"
             >
               Try the App Now <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
@@ -262,7 +262,7 @@ export const Advert = () => {
             </ul>
 
             <a
-              href="/login"
+              href="/signup"
               className="hidden lg:flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-tryBg text-tryText shadow-md rounded-md"
             >
               Try the App Now <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
@@ -274,7 +274,7 @@ export const Advert = () => {
           </div>
           <div className="w-full lg:hidden justify-center">
             <a
-              href="/login"
+              href="/signup"
               className="flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-tryBg text-tryText shadow-md rounded-md lg:hidden"
             >
               Try the App Now <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
@@ -299,7 +299,7 @@ export const Advert = () => {
               <li className="">All reports are automatically updated instantly.</li>
             </ul>
             <a
-              href="/login"
+              href="/signup"
               className="hidden lg:flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-tryBg text-tryText shadow-md rounded-md"
             >
               Try the App Now <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
@@ -311,7 +311,7 @@ export const Advert = () => {
           </div>
           <div className="w-full lg:hidden justify-center">
             <a
-              href="/login"
+              href="/signup"
               className="flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-tryBg text-tryText shadow-md rounded-md lg:hidden"
             >
               Try the App Now <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />

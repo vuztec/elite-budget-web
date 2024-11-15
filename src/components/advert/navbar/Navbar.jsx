@@ -51,10 +51,10 @@ function Navbar() {
 
       {/* Buttons */}
       <div className="hidden lg:w-1/4 lg:flex justify-center lg:justify-end items-center gap-4">
-        <a href="/login" className="px-6 py-2 border rounded-full bg-[#3F3F3F] text-white">
+        {/* <a href="/login" className="px-6 py-2 border rounded-full bg-[#3F3F3F] text-white">
           Login
-        </a>
-        <a href="/login" className="px-6 py-2 border rounded-full bg-[#61BD4F] text-white">
+        </a> */}
+        <a href="/signup" className="px-6 py-2 border rounded-full bg-[#61BD4F] text-white">
           Signup
         </a>
       </div>

@@ -61,7 +61,7 @@ function Budget() {
         </div>
         <div className="flex flex-col gap-4 items-center justify-center text-center mt-6 md:mt-8">
           <a
-            href="/login"
+            href="/signup"
             className="bg-tryBg text-tryText text-xl md:text-2xl whitespace-nowrap font-semibold px-6 md:px-8 text-center py-3 md:py-4 rounded-lg"
           >
             Try the App Now

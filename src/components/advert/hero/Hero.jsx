@@ -24,7 +24,7 @@ function Hero() {
 
         <div className="flex gap-4 mt-6 md:justify-center lg:justify-start">
           <a
-            href="/login"
+            href="/signup"
             className="px-6 py-3 rounded-lg bg-tryBg text-tryText font-semibold text-lg whitespace-nowrap"
           >
             Try Now
