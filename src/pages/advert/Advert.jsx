@@ -217,7 +217,7 @@ export const Advert = () => {
           className="flex flex-col lg:flex-row-reverse items-center justify-center my-10 gap-8 lg:gap-12 p-8"
         >
           <div className="w-full lg:w-1/3 flex flex-col gap-6">
-            <h1 className="text-[#FF820E] font-semibold text-[32px] lg:text-[42px]">Extra Fund Tracker</h1>
+            <h1 className="text-[#FF820E] font-semibold text-[32px] lg:text-[42px]">Extra Funds Tracker</h1>
             <ul className="text-lg font-normal text-[#171717] list-decimal">
               <li>
                 Provides an <strong> extra funds tracker</strong> to manage the budget buffer (the money that exceeds

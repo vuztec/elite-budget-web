@@ -23,8 +23,8 @@
   width: 100px;
   height: 100px;
   border-radius: 50%;
-  background: #20409a;
-  box-shadow: 4px -40px 60px 5px #00abbd inset;
+  background: #040404;
+  box-shadow: 4px -40px 60px 5px #d7a43a inset;
 }
 
 .rotate-in-up-left {
