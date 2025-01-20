@@ -142,9 +142,10 @@ export const Signup = () => {
               <div className="h-full w-full lg:w-[90%] flex flex-col lg:flex-row items-center justify-center gap-24">
                 <div className="w-full lg:w-1/2 flex flex-col items-center justify-center gap-5 md:gap-y-10 2xl:-mt-20">
                   <h1 className="text-3xl font-bold text-gray-900">{'CREATE NEW ACCOUNT'}</h1>
-                  <span className="flex text-center py-1 px-3 border rounded-full text-sm md:text-base border-gray-300 text-tryText bg-tryBg">
-                    Enjoy a 14-day FREE trial followed by an annual billing totaling $95.88 ($7.99/ month)
-                  </span>
+                  <div className="flex flex-col text-center py-1 px-3 border rounded-full text-sm md:text-base border-gray-300 text-tryText bg-tryBg">
+                    <span>Enjoy a 14-day FREE trial followed by an annual billing totaling $95.88 ($7.99/ month)</span>
+                    {/* <span>Enjoy a 14-day FREE trial followed by an annual billing totaling $95.88 ($7.99/ month)</span> */}
+                  </div>
                   <p className="flex flex-col gap-0 md:gap-4 text-xl md:text-2xl xl:text-3xl font-black text-center text-black min-w-fit whitespace-nowrap ">
                     <span>The Elite Budget Web App</span>
                     <span>A NEW WAY TO BUDGET!</span>

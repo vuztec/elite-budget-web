@@ -89,7 +89,7 @@ function Footer() {
 
         {/* Social Icons */}
         <div className="flex justify-center mt-4 sm:mt-0 space-x-4 text-gray-700">
-          <div className="rounded-full p-2 bg-black">
+          {/* <div className="rounded-full p-2 bg-black">
             <FaFacebookF className="text-xl text-white" />
           </div>
           <div className="rounded-full p-2 bg-black">
@@ -100,7 +100,7 @@ function Footer() {
           </div>
           <div className="rounded-full p-2 bg-black">
             <FaYoutube className="text-xl text-white" />
-          </div>
+          </div> */}
         </div>
       </div>
     </footer>
