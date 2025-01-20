@@ -20,12 +20,12 @@ export const PrivacyPolicy = () => {
         <img src={Logo} alt="logo" className="h-8 md:h-16 lg:h-32" />
       </h1>
       <h1 className="font-bold text-xl lg:text-2xl mb-5 text-left">Privacy Policy</h1>
-      <a href="https://www.elitecashflowconsulting.com/" className="text-blue-500 hover:underline">
-        www.elitecashflowconsulting.com
+      <a href="https://www.elitecashflowproducts.com/" className="text-blue-500 hover:underline">
+        www.elitecashflowproducts.com
       </a>
 
-      <a href="https://budget.elitecashflowconsulting.com/" className="text-blue-500 hover:underline">
-        www.budget.elitecashflowconsulting.com
+      <a href="http://www.budget.elitecashflowproducts.com/" className="text-blue-500 hover:underline">
+        www.budget.elitecashflowproducts.com
       </a>
 
       <div className="flex flex-col w-full py-10">
@@ -38,12 +38,12 @@ export const PrivacyPolicy = () => {
         <br />
         <div>
           By using our website{' '}
-          <a href="https://www.elitecashflowconsulting.com/" className="text-blue-500 hover:underline">
-            www.elitecashflowconsulting.com
+          <a href="https://www.elitecashflowproducts.com/" className="text-blue-500 hover:underline">
+            www.elitecashflowproducts.com
           </a>{' '}
           and the budget web application (the “App”){' '}
-          <a href="https://budget.elitecashflowconsulting.com/" className="text-blue-500 hover:underline">
-            www.budget.elitecashflowconsulting.com
+          <a href="http://www.budget.elitecashflowproducts.com/" className="text-blue-500 hover:underline">
+            www.budget.elitecashflowproducts.com
           </a>
           , you signify your consent to the terms of our Privacy Policy. If you do not agree with any terms of this
           Privacy Policy, please do not use this site or the “App” or submit any personal information to us.
@@ -53,37 +53,37 @@ export const PrivacyPolicy = () => {
       <div className="flex flex-col space-y-4">
         <h2 className="font-semibold text-lg">1. Who We Are</h2>
         <p>
-          Elite Cash Flow Consulting operating at www.elitecashflowconsulting.com collects, uses and is responsible for
-          certain personal information about you. Our budget web application (the “App”),
-          www.budget.elitecashflowconsulting.com also collects, uses and is responsible for certain personal information
+          Elite Cash Flow Products, LLC operating at www.elitecashflowproducts.com collects, uses and is responsible for
+          certain personal information about you. Our Elite budget web application (the “App”),
+          www.budget.elitecashflowproducts.com also collects, uses and is responsible for certain personal information
           about you.
         </p>
 
         <h2 className="font-semibold text-lg">2. Children’s Online Privacy Protection Act</h2>
         <p>
           This website and any products and services offered herein are not intended for persons under the age of 13.
-          Elite Cash Flow Consulting does not knowingly collect information from anyone under 13 years of age. Elite
-          Cash Flow Consulting prohibits children under the age of 13 from using all interactive portions of this
+          Elite Cash Flow Products, LLC does not knowingly collect information from anyone under 13 years of age. Elite
+          Cash Flow Products, LLC prohibits children under the age of 13 from using all interactive portions of this
           website, including leaving any comments, filling out forms, or otherwise submitting information. Elite Cash
-          Flow Consulting will not knowingly collect personally identifiable information from children under 13. If
-          Elite Cash Flow Consulting learns it has any information or content from anyone under the age of 13, it will
-          delete that information.
+          Flow Products, LLC will not knowingly collect personally identifiable information from children under 13. If
+          Elite Cash Flow Products, LLC learns it has any information or content from anyone under the age of 13, it
+          will delete that information.
         </p>
 
         <h2 className="font-semibold text-lg">3. The Personal Information We Collect and Use</h2>
         <ul className="pl-8 list-disc list-outside">
           <li>
             <h1 className="font-bold">Information Collected by Us:</h1>
-            Elite Cash Flow Consulting may collect, use, and is responsible for certain personal information that you
-            provide when you voluntarily sign up for the “App” , e-mails or free gifts, register for a class, workshop
-            or presentation, leave comments, order a service or product, fill out any type of form, access private
-            membership pages, or otherwise contact Elite Cash Flow Consulting via an online form or e- mail. The
+            Elite Cash Flow Products, LLC may collect, use, and is responsible for certain personal information that you
+            provide when you voluntarily sign up for the “App”, e-mails or free gifts, register for a class, workshop or
+            presentation, leave comments, order a service or product, fill out any type of form, access private
+            membership pages, or otherwise contact Elite Cash Flow Products, LLC via an online form or e-mail. The
             information collected may include your name, e-mail, address, phone number, and/or billing information. You
             are not required to provide any personally identifiable information to merely access or visit the website
-            www.elitecashflowconsulting.com or the “App”, www.budget.elitecashflowconsulting.com.
+            www.elitecashflowproducts.com or the “App”, www.budget.elitecashflowproducts.com.
             <br />
             <br />
-            Elite Cash Flow Consulting may collect domain information, your numerical IP address, the type of browser
+            Elite Cash Flow Products, LLC may collect domain information, your numerical IP address, the type of browser
             you use, which pages you view, and the files you request. We may also use “cookies” (small files saved on
             your hard drive by your web browser) to analyze website and advertisement performance, track user patterns,
             save information from your previous visits and customize your experience.
@@ -93,11 +93,11 @@ export const PrivacyPolicy = () => {
             website is accessed.
             <br />
             <br />
-            We will ask for your consent to allow us to use cookies. Elite Cash Flow Consulting or its third-party
+            We will ask for your consent to allow us to use cookies. Elite Cash Flow Products, LLC or its third- party
             vendors may collect nonpersonal information through the use of these technologies. Nonpersonal information
             might include the browser you use, the type of computer you use and technical information about your means
             of connection to this website such as the operating systems and the Internet service providers utilized and
-            other similar information. Elite Cash Flow Consulting’s systems may also automatically gather information
+            other similar information. Elite Cash Flow Products, LLC’s systems may also automatically gather information
             about the areas you visit and search terms you use on this website and about the links you may select from
             within this website to other areas of the Internet.
             <br />
@@ -114,23 +114,26 @@ export const PrivacyPolicy = () => {
           <li>
             <h1 className="font-bold">Information Collected from Other Sources</h1>
             We also obtain personal information from the use of other third-party sources on our website such as
-            Calendly, DocuSign and Survey Monkey which then passes the information entered to Elite Cash Flow
-            Consulting.
+            Calendly, DocuSign and Survey Monkey which then passes the information entered to Elite Cash Flow Products,
+            LLC.
           </li>
           <br />
           <li>
             <h1 className="font-bold">How we use your personal information</h1>
-            Elite Cash Flow Consulting collects such information in order to send e-mails, fulfill orders, deliver
+            Elite Cash Flow Products, LLC collects such information in order to send e-mails, fulfill orders, deliver
             services and products, complete customer transactions, oversee contests and promotions and improve website
             performance and customer service.
           </li>
           <br />
           <li>
             <h1 className="font-bold">Who We Share Your Personal Information With</h1>
-            Elite Cash Flow Consulting respects your privacy and will never sell, trade or transfer your personally
+            Elite Cash Flow Products, LLC respects your privacy and will never sell, trade or transfer your personally
             identifiable information to third parties (beyond what is necessary for fulfilling a customer transaction or
-            for the basic functionality of an online service) without your consent. We do, however, share your name and
-            delivery address details with credit card processors or shipping companies.
+            for the basic functionality of an online service) without your consent.
+            <br />
+            <br />
+            We do, however, share your name and delivery address details with credit card processors or shipping
+            companies.
             <br />
             <br />
             This data sharing enables them to deliver the goods you ordered directly to you. Those third-party
@@ -139,18 +142,18 @@ export const PrivacyPolicy = () => {
             below.
             <br />
             <br />
-            Elite Cash Flow Consulting may release personal information to enforce its Website Terms and Conditions of
-            Use, other Terms and Conditions, manage its business, protect users or the general public, or to otherwise
-            comply with legal obligations.
+            Elite Cash Flow Products, LLC may release personal information to enforce its Website Terms and Conditions
+            of Use, other Terms and Conditions, manage its business, protect users or the general public, or to
+            otherwise comply with legal obligations.
             <br />
             <br />
-            If you give Elite Cash Flow Consulting your permission, it may also use personal identification information
-            for internal or external marketing and promotional purposes.
+            If you give Elite Cash Flow Products, LLC your permission, it may also use personal identification
+            information for internal or external marketing and promotional purposes.
             <br />
             <br />
-            On occasion, Elite Cash Flow Consulting may collect personal identification information from you in
-            connection with optional contests, special offers or promotions. Elite Cash Flow Consulting will share such
-            information with necessary third parties for the purpose of carrying out the contest, special offer or
+            On occasion, Elite Cash Flow Products, LLC may collect personal identification information from you in
+            connection with optional contests, special offers or promotions. Elite Cash Flow Products, LLC will share
+            such information with necessary third parties for the purpose of carrying out the contest, special offer or
             promotion. We will ask for your consent to such disclosure and use of such information, prior to your
             participation in the contest, special offer or promotion.
             <br />
@@ -178,7 +181,7 @@ export const PrivacyPolicy = () => {
           <br />
           <li>
             <h1 className="font-bold">Reasons We Can Collect and Use Your Personal Information</h1>
-            Elite Cash Flow Consulting collects and uses your personal information to send e-mails, fulfill orders,
+            Elite Cash Flow Products, LLC collects and uses your personal information to send e-mails, fulfill orders,
             deliver services and products, complete customer transactions, oversee contests and promotions and improve
             website performance and customer service.
           </li>
@@ -188,9 +191,10 @@ export const PrivacyPolicy = () => {
         <p className="pl-6">
           This website is operated in the United States and third parties with whom we might share your personal
           information as explained above are also located in the United States. If you are located in the EEA, the UK,
-          or elsewhere outside of the United States, please be aware that any information you provide will be
-          transferred to the United States. By using this website, participating in any of its services and/or providing
-          your information, you consent to this transfer.
+          or elsewhere outside of the United States, please be aware that{' '}
+          <span className="font-bold">any information you provide will be transferred to the United States.</span>
+          By using this website, participating in any of its services and/or providing your information, you consent to
+          this transfer.
           <br />
           <br />
           These countries do not have the same data protection laws as the EEA or UK. While the European Commission has
@@ -209,8 +213,8 @@ export const PrivacyPolicy = () => {
 
         <h2 className="font-semibold text-lg">5. Your Rights</h2>
         <p className="pl-6">
-          If you want to unsubscribe from receiving e-mails from Elite Cash Flow Consulting, you may do so at any time.
-          Each e-mail from Elite Cash Flow Consulting includes instructions for unsubscribing from these e- mail
+          If you want to unsubscribe from receiving e-mails from Elite Cash Flow Products, LLC, you may do so at any
+          time. Each e-mail from Elite Cash Flow Products, LLC includes instructions for unsubscribing from these e-mail
           communications.
           <br />
           <br />
@@ -299,22 +303,22 @@ export const PrivacyPolicy = () => {
           <br />
           <br />
           For the “App”,{' '}
-          <a href="https://budget.elitecashflowconsulting.com/" className="text-blue-500 hover:underline">
-            www.budget.elitecashflowconsulting.com
+          <a href="http://www.budget.elitecashflowproducts.com/" className="text-blue-500 hover:underline">
+            www.budget.elitecashflowproducts.com
           </a>{' '}
           we implement various security measures, such as SSL encryption, in an attempt to protect your personal
           information from unauthorized access.
           <br />
           <br />
           Please note that any comments or information that you post on the website, including social media pages or
-          groups, become public and third parties may use your information. Elite Cash Flow Consulting is not
+          groups, become public and third parties may use your information. Elite Cash Flow Products, LLC is not
           responsible for any unauthorized uses by third parties in such context. You disclose such information at your
           own risk.
           <br />
           <br />
           The “App”,{' '}
-          <a href="https://budget.elitecashflowconsulting.com/" className="text-blue-500 hover:underline">
-            www.budget.elitecashflowconsulting.com
+          <a href="http://www.budget.elitecashflowproducts.com/" className="text-blue-500 hover:underline">
+            www.budget.elitecashflowproducts.com
           </a>
         </p>
         <ul className="pl-8 list-disc list-outside">
@@ -328,7 +332,7 @@ export const PrivacyPolicy = () => {
             <strong>Financial Information:</strong> Users will enter their age, income, expenses, debts, savings,
             retirement savings as well as the market value of their assets while using the “App” in order to create and
             manage their budgets and calculate their net worth. The data entered in the “App” belongs to the user. Elite
-            Cash Flow Consulting will never access, analyze, or use this information for any reason.
+            Cash Flow Products, LLC will never access, analyze, or use this information for any reason.
           </li>
           <li>
             <strong>Payment Information:</strong> When you purchase a subscription, we collect credit card information
@@ -342,8 +346,8 @@ export const PrivacyPolicy = () => {
         <p className="pl-6">
           You may see advertising or other content on this website that links to the sites and services of our partners,
           suppliers, advertisers, sponsors, licensors or other third parties. Any products or services reached through a
-          third-party link are subject to separate privacy policies. Elite Cash Flow Consulting is not responsible for
-          or liable for any content on or actions taken by such third-party websites.
+          third-party link are subject to separate privacy policies. Elite Cash Flow Products, LLC is not responsible
+          for or liable for any content on or actions taken by such third-party websites.
         </p>
 
         <h2 className="font-semibold text-lg">8. How to Complain</h2>
@@ -358,15 +362,15 @@ export const PrivacyPolicy = () => {
 
         <h2 className="font-semibold text-lg">9. Changes to This Privacy Notice</h2>
         <p className="pl-6">
-          This policy is effective as of September 25, 2024. We may change, modify or update this Privacy Policy at any
+          This policy is effective as of January 14, 2025. We may change, modify or update this Privacy Policy at any
           time and will notify you of any fundamental changes by email or postal mail. Otherwise, we will reflect any
           such modifications to this Privacy Policy on our website{' '}
-          <a href="https://www.elitecashflowconsulting.com/" className="text-blue-500 hover:underline">
-            www.elitecashflowconsulting.com
+          <a href="https://www.elitecashflowproducts.com/" className="text-blue-500 hover:underline">
+            www.elitecashflowproducts.com
           </a>{' '}
           and the sign-in page at{' '}
-          <a href="https://budget.elitecashflowconsulting.com/" className="text-blue-500 hover:underline">
-            www.budget.elitecashflowconsulting.com
+          <a href="http://www.budget.elitecashflowproducts.com/" className="text-blue-500 hover:underline">
+            www.budget.elitecashflowproducts.com
           </a>
           . We suggest that you periodically consult this Privacy Policy. Your continued use of our website after any
           such changes constitutes your acceptance of this Privacy Policy, as revised.
@@ -374,8 +378,8 @@ export const PrivacyPolicy = () => {
         <h2 className="font-semibold text-lg">10. How to Contact Us</h2>
         <p className="pl-6">
           If you have any questions or concerns about this Privacy Policy, the information we hold about you, or you
-          wish to change your personal information in our records, please contact Michelle Romero, CPA, Founder at
-          <span className="text-blue-500 underline">info@elitecashflowconsulting.com</span>.
+          wish to change your personal information in our records, please contact Michelle Romero, CPA, CEO at
+          <span className="text-blue-500 underline">michelle@elitecashflowproducts.com.</span>.
         </p>
         <h2 className="font-semibold text-lg">11. Do You Need Extra Help?</h2>
         <p className="pl-6">
@@ -383,7 +387,7 @@ export const PrivacyPolicy = () => {
           (see “How to contact us” above).
         </p>
 
-        <p className="py-10">Policy Last Updated September 25, 2024</p>
+        <p className="py-10">Policy Last Updated January 14, 2025</p>
       </div>
       <div className="flex justify-between mt-10 bg-black px-3 py-1 rounded-full">
         <a
