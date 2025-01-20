@@ -15,7 +15,7 @@ import { formatDateForForm } from '../../utils';
 
 export const AddExtraPay = ({ open, setOpen, recordData }) => {
   const queryClient = useQueryClient();
-  const [selected, setSelected] = useState('yes');
+  const [selected, setSelected] = useState('no');
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -36,6 +36,9 @@ export const AddExtraPay = ({ open, setOpen, recordData }) => {
       setValue('SelfAmount', recordData.SelfAmount ? Number(recordData.SelfAmount).toFixed(2) : '');
       setValue('PartnerAmount', recordData.PartnerAmount ? Number(recordData.PartnerAmount).toFixed(2) : '');
       setSelected(recordData.IsDateKnown ? 'yes' : 'no');
+    } else {
+      setValue('Date', formatDateForForm(new Date()));
+      setSelected('no');
     }
 
     return () => reset();
@@ -78,7 +81,7 @@ export const AddExtraPay = ({ open, setOpen, recordData }) => {
           <div className="mt-2 flex flex-col gap-6 overflow-y-auto">
             <div className="flex flex-col w-full">
               <label className="text-slate-800 text-xs lg:text-sm text-nowrap">Date known?</label>
-              <div className="flex flex-col ml-1">
+              <div className="flex gap-5 ml-1 mt-1">
                 <div className="flex gap-2">
                   <div>
                     <input

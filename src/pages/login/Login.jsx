@@ -136,7 +136,7 @@ export const Login = () => {
                     Terms & Conditions
                   </a>
                   <a
-                    href="https://www.elitecashflowconsulting.com/"
+                    href="https://www.elitecashflowproducts.com/"
                     target="_blank"
                     className="flex items-center justify-center text-sm text-gray-500 hover:text-blue-500 underline cursor-pointer"
                   >

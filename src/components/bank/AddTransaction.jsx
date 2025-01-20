@@ -17,7 +17,7 @@ import Textbox2 from '../Textbox2';
 export const AddTransaction = ({ open, handleClose, recordData, banks }) => {
   const queryClient = useQueryClient();
   const [isLoading, setIsLoading] = useState(false);
-  const [selected, setSelected] = useState('yes');
+  const [selected, setSelected] = useState('no');
 
   const {
     register,
@@ -39,6 +39,7 @@ export const AddTransaction = ({ open, handleClose, recordData, banks }) => {
       setSelected(recordData.IsDateKnown ? 'yes' : 'no');
     } else {
       setValue('Date', formatDateForForm(new Date()));
+      setSelected('no');
     }
 
     return () => reset();
@@ -147,7 +148,7 @@ export const AddTransaction = ({ open, handleClose, recordData, banks }) => {
 
             <div className="flex flex-col w-full">
               <label className="text-slate-800 text-xs lg:text-sm text-nowrap">Date known?</label>
-              <div className="flex flex-col ml-1">
+              <div className="flex gap-5 ml-1 mt-1">
                 <div className="flex gap-2">
                   <div>
                     <input

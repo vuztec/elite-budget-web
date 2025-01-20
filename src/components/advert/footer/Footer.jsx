@@ -33,7 +33,7 @@ function Footer() {
               <p className="text-[#0A0A0A] font-medium">We’ve got you covered with email support </p>
               <div className="mb-4 flex items-center gap-1">
                 <MdEmail className="inline mr-2 text-lg" />
-                <h1 className="text-[#494949] font-extrabold">appsupport@elitecashflowconsulting.com</h1>
+                <h1 className="text-[#494949] font-extrabold">appsupport@elitecashflowproducts.com</h1>
               </div>
             </div>
           </div>
@@ -55,7 +55,7 @@ function Footer() {
               </li> */}
             <li>
               <a
-                href="https://www.elitecashflowconsulting.com/"
+                href="https://www.elitecashflowproducts.com/"
                 target="_blank"
                 className="text-gray-700 hover:underline"
               >

@@ -18,7 +18,7 @@ export const AddExtraFund = ({ open, handleClose, recordData }) => {
   const queryClient = useQueryClient();
 
   const [isLoading, setIsLoading] = useState(false);
-  const [selected, setSelected] = useState('yes');
+  const [selected, setSelected] = useState('no');
 
   const {
     register,
@@ -40,6 +40,7 @@ export const AddExtraFund = ({ open, handleClose, recordData }) => {
       setSelected(recordData.IsDateKnown ? 'yes' : 'no');
     } else {
       setValue('Date', formatDateForForm(new Date()));
+      setSelected('no');
     }
 
     return () => reset();
@@ -109,7 +110,7 @@ export const AddExtraFund = ({ open, handleClose, recordData }) => {
             <div className="flex flex-col gap-6 w-full">
               <div className="flex flex-col w-full">
                 <label className="text-slate-800 text-xs lg:text-sm text-nowrap">Date known?</label>
-                <div className="flex flex-col ml-1">
+                <div className="flex gap-5 ml-1 mt-1">
                   <div className="flex gap-2">
                     <div>
                       <input

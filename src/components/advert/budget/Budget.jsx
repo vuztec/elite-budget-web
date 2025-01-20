@@ -67,7 +67,7 @@ function Budget() {
             Try the App Now
           </a>
           <p className="text-yellow-200 text-lg md:text-xl">
-            Enjoy a 14-day free trial followed by an annual billing at just $7.99 per month
+            Enjoy a 14-day FREE trial followed by an annual billing totaling $95.88 ($7.99/ month)”
           </p>
         </div>
       </div>

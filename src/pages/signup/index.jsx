@@ -139,11 +139,11 @@ export const Signup = () => {
         <div className="w-full md:w-auto flex gap-0 md:gap-40 flex-col md:flex-row items-center justify-center">
           <div className="w-full min-h-screen flex items-center justify-center flex-col lg:flex-row bg-[#f3f4f6]">
             <div className="w-full flex gap-16 flex-col items-center justify-center">
-              <div className="h-full w-full lg:w-2/3 flex flex-col lg:flex-row items-center justify-center gap-24">
-                <div className="w-full lg:w-1/3 flex flex-col items-center justify-center gap-5 md:gap-y-10 2xl:-mt-20">
+              <div className="h-full w-full lg:w-[90%] flex flex-col lg:flex-row items-center justify-center gap-24">
+                <div className="w-full lg:w-1/2 flex flex-col items-center justify-center gap-5 md:gap-y-10 2xl:-mt-20">
                   <h1 className="text-3xl font-bold text-gray-900">{'CREATE NEW ACCOUNT'}</h1>
                   <span className="flex text-center py-1 px-3 border rounded-full text-sm md:text-base border-gray-300 text-tryText bg-tryBg">
-                    Enjoy a 14-day free trial followed by an annual billing at just $7.99 per month
+                    Enjoy a 14-day FREE trial followed by an annual billing totaling $95.88 ($7.99/ month)
                   </span>
                   <p className="flex flex-col gap-0 md:gap-4 text-xl md:text-2xl xl:text-3xl font-black text-center text-black min-w-fit whitespace-nowrap ">
                     <span>The Elite Budget Web App</span>
@@ -152,8 +152,8 @@ export const Signup = () => {
 
                   <img src={Logo} alt="Logo" className="mb-4 sm:mb-0 h-52 w-auto" />
                 </div>
-                <div className="w-ful lg:w-2/3 flex flex-col justify-center items-center shadow-md py-8 px-10 border rounded-lg">
-                  <form onSubmit={handleSubmit(handleOnSubmit)} className="">
+                <div className="w-full lg:w-1/2 flex flex-col justify-center items-center shadow-md py-8 px-10 border rounded-lg">
+                  <form onSubmit={handleSubmit(handleOnSubmit)} className="w-full">
                     <div className="mt-2 flex flex-col gap-6 overflow-y-auto">
                       <div className="flex flex-col gap-6 w-full">
                         <div className="w-full">
@@ -239,7 +239,7 @@ export const Signup = () => {
                         </div>
                       </div>
                       {!user && (
-                        <div className="flex flex-col md:flex-row gap-6 w-full">
+                        <div className="flex flex-col gap-6 w-full">
                           <Textbox
                             placeholder="Enter Password"
                             type="password"

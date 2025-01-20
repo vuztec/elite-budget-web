@@ -70,7 +70,9 @@ export function getPageCopyright(textCSS) {
         textCSS ? 'justify-start items-start' : 'justify-center items-center',
       )}
     >
-      <h1 className="min-w-fit whitespace-nowrap ">Copyright © 2024 Elite Cash Flow Products, LLC</h1>
+      <h1 className="min-w-fit whitespace-nowrap ">
+        Copyright © {new Date().getFullYear()} Elite Cash Flow™ Products, LLC
+      </h1>
       <h1 className="min-w-fit whitespace-nowrap ">All Rights Reserved</h1>
     </div>
   );
