@@ -28,7 +28,7 @@ export const Signup = () => {
   }));
 
   const [countryCode, setCountryCode] = useState(
-    user ? CountryData.find((country) => country.name === user.Country)?.isoCode : '',
+    user ? CountryData.find((country) => country.name === user.Country)?.isoCode : 'US',
   );
 
   const navigate = useNavigate();
@@ -169,7 +169,7 @@ export const Signup = () => {
                             error={errors.FullName ? errors.FullName.message : ''}
                           />
                         </div>
-                        <p className="text-[11px] text-gray-500">
+                        {/* <p className="text-[11px] text-gray-500">
                           Option: To adjust the Expected Net Worth Calculation; If you didn't start working until you
                           completed an advanced degree, served in the military or were disabled, you can deduct the
                           years spent on those things from your age.
@@ -205,7 +205,7 @@ export const Signup = () => {
                           </div>
                         </div>
                       </div>
-                      <div className="flex flex-col gap-6 w-full">
+                      <div className="flex flex-col gap-6 w-full"> */}
                         <div className="w-full">
                           <Select
                             placeholder="Select Country"
@@ -267,7 +267,7 @@ export const Signup = () => {
                         </div>
                       )}
 
-                      <div className="flex flex-col md:flex-row gap-6 w-full">
+                      {/* <div className="flex flex-col md:flex-row gap-6 w-full">
                         <div className="w-full">
                           <Textbox
                             placeholder="enter currency"
@@ -293,7 +293,7 @@ export const Signup = () => {
                             error={errors.DateFormat ? errors.DateFormat.message : ''}
                           />
                         </div>
-                      </div>
+                      </div> */}
                       <div className="flex flex-col gap-2 w-full">
                         <div>
                           <input type="radio" checked={privacy} onChange={() => setPrivacy((prev) => !prev)} /> Accept
