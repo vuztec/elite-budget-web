@@ -12,10 +12,12 @@ import { TiCancel } from 'react-icons/ti';
 import axios from '../../config/axios';
 import { handleAxiosResponseError } from '../../utils/handleResponseError';
 import { formatDateForForm } from '../../utils';
+import Textbox2 from '../Textbox2';
 
 export const AddTransaction = ({ open, handleClose, recordData, banks }) => {
   const queryClient = useQueryClient();
   const [isLoading, setIsLoading] = useState(false);
+  const [selected, setSelected] = useState('yes');
 
   const {
     register,
@@ -33,6 +35,8 @@ export const AddTransaction = ({ open, handleClose, recordData, banks }) => {
       setValue('Type', recordData.Type);
       setValue('Amount', recordData.Amount ? Number(recordData.Amount).toFixed(2) : '');
       setValue('IsCleared', recordData.IsCleared);
+
+      setSelected(recordData.IsDateKnown ? 'yes' : 'no');
     } else {
       setValue('Date', formatDateForForm(new Date()));
     }
@@ -44,6 +48,9 @@ export const AddTransaction = ({ open, handleClose, recordData, banks }) => {
   const handleOnSubmit = async (data) => {
     const numericSelectedID = Number(recordData.id);
     setIsLoading(() => true);
+
+    if (selected === 'yes') data.IsDateKnown = true;
+    else data.IsDateKnown = false;
 
     if (!recordData?.id)
       axios
@@ -82,7 +89,7 @@ export const AddTransaction = ({ open, handleClose, recordData, banks }) => {
           <Dialog.Title as="h2" className="text-base font-bold leading-6 text-gray-900 mb-4">
             {recordData ? 'UPDATE TRANSACTION' : 'ADD NEW TRANSACTION'}
           </Dialog.Title>
-          <div className="mt-2 flex flex-col gap-6 overflow-y-auto">
+          <div className="mt-2 flex flex-col gap-6 overflow-y-auto w-full">
             <div className="flex flex-col gap-6 w-full">
               <Select
                 name="BankName"
@@ -111,48 +118,80 @@ export const AddTransaction = ({ open, handleClose, recordData, banks }) => {
                 error={errors.Owner ? errors.Owner.message : ""}
               /> */}
             </div>
-            <div className="flex flex-col gap-6 w-full">
-              <Textbox
-                placeholder="Enter a transaction description"
-                type="text"
-                name="Description"
-                label="Description"
-                className="w-full rounded"
-                register={register('Description', {
-                  required: 'Description is required!',
-                })}
-                error={errors.Description ? errors.Description.message : ''}
-              />
-            </div>
-
-            <div className="flex flex-col gap-6 w-full">
-              <Select
-                name="Type"
-                label="Type"
-                defaultValue="Credit"
-                options={[
-                  { value: 'Withdrawal', label: 'Pmt, Fee, Withdrawal (-)' },
-                  { value: 'Credit', label: 'Deposit, Credit (+)' },
-                ]}
-                className="w-full rounded"
-                register={register('Type', {
-                  required: 'Type is required!',
-                })}
-                error={errors.Type ? errors.Type.message : ''}
-              />
-            </div>
             <Textbox
-              placeholder="Select Date"
-              type="date"
-              name="Date"
-              label="Date"
+              placeholder="Enter a transaction description"
+              type="text"
+              name="Description"
+              label="Description"
               className="w-full rounded"
-              register={register('Date', {
-                valueAsDate: true,
-                required: 'Date is required!',
+              register={register('Description', {
+                required: 'Description is required!',
               })}
-              error={errors.Date ? errors.Date.message : ''}
+              error={errors.Description ? errors.Description.message : ''}
             />
+
+            <Select
+              name="Type"
+              label="Type"
+              defaultValue="Credit"
+              options={[
+                { value: 'Withdrawal', label: 'Pmt, Fee, Withdrawal (-)' },
+                { value: 'Credit', label: 'Deposit, Credit (+)' },
+              ]}
+              className="w-full rounded"
+              register={register('Type', {
+                required: 'Type is required!',
+              })}
+              error={errors.Type ? errors.Type.message : ''}
+            />
+
+            <div className="flex flex-col w-full">
+              <label className="text-slate-800 text-xs lg:text-sm text-nowrap">Date known?</label>
+              <div className="flex flex-col ml-1">
+                <div className="flex gap-2">
+                  <div>
+                    <input
+                      type="radio"
+                      name="date-known"
+                      value={'yes'}
+                      checked={selected === 'yes'}
+                      onChange={(e) => setSelected(e.target.value)}
+                      className="w-4 h-4 text-green-600 border-gray-300 focus:ring-green-500"
+                    />
+                  </div>
+                  <label className="text-slate-800 text-xs lg:text-sm text-nowrap">Yes</label>
+                </div>
+                <div className="flex gap-2">
+                  <div>
+                    <input
+                      type="radio"
+                      name="date-known"
+                      value={'no'}
+                      checked={selected === 'no'}
+                      onChange={(e) => setSelected(e.target.value)}
+                      className="w-4 h-4 text-red-600 border-gray-300 focus:ring-red-500"
+                    />
+                  </div>
+                  <label className="text-slate-800 text-xs lg:text-sm text-nowrap">No</label>
+                </div>
+              </div>
+            </div>
+            {selected === 'yes' ? (
+              <Textbox
+                placeholder="Select Date"
+                type="date"
+                name="Date"
+                label="Date"
+                className="w-full rounded"
+                register={register('Date', {
+                  valueAsDate: true,
+                  required: 'Date is required!',
+                })}
+                error={errors.Date ? errors.Date.message : ''}
+              />
+            ) : (
+              <Textbox2 type="text" label="Date" className="w-full rounded" disabled value="TBA" />
+            )}
             <div className="flex flex-col gap-6 w-full">
               <Textbox
                 placeholder="Enter Amount"

@@ -175,7 +175,7 @@ export const AddExtraFund = ({ open, handleClose, recordData }) => {
               <Button
                 type="button"
                 className="bg-gray-300 flex flex-row-reverse items-center gap-1 text-black"
-                onClick={() => setOpen(false)}
+                onClick={handleClose}
                 label="Cancel"
                 icon={<TiCancel />}
               />

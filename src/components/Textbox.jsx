@@ -1,5 +1,5 @@
-import React from "react";
-import clsx from "clsx";
+import React from 'react';
+import clsx from 'clsx';
 
 const Textbox = React.forwardRef(({ type, placeholder, label, className, register, name, error, disabled }, ref) => {
   return (
@@ -19,14 +19,14 @@ const Textbox = React.forwardRef(({ type, placeholder, label, className, registe
           disabled={disabled}
           ref={ref}
           {...register}
-          aria-invalid={error ? "true" : "false"}
+          aria-invalid={error ? 'true' : 'false'}
           className={clsx(
-            "text-xs lg:text-sm px-3 py-2.5 2xl:py-3 border border-gray-300 placeholder-gray-400 text-gray-900 font-bold outline-none focus:ring-2 ring-blue-300",
+            'text-xs lg:text-sm px-3 py-2.5 2xl:py-3 border border-gray-300 placeholder-gray-400 text-gray-900 font-bold outline-none focus:ring-2 ring-blue-300',
             className,
             {
-              "bg-[whitesmoke] cursor-not-allowed": disabled,
-              "bg-transparent": !disabled,
-            }
+              'bg-[whitesmoke] cursor-not-allowed': disabled,
+              'bg-transparent': !disabled,
+            },
           )}
         />
       </div>
