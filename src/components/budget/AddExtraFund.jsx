@@ -1,23 +1,24 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import ModalWrapper from '../ModalWrapper';
 import { Dialog } from '@headlessui/react';
 import Textbox from '../Textbox';
+import Textbox2 from '../Textbox2';
 import Select from '../Select';
 import Loading from '../Loader';
 import Button from '../Button';
-import { useQueryClient, useQuery } from 'react-query';
+import { useQueryClient } from 'react-query';
 import { IoMdSend } from 'react-icons/io';
 import { TiCancel } from 'react-icons/ti';
 import axios from '../../config/axios';
 import { handleAxiosResponseError } from '../../utils/handleResponseError';
-import { getBankAccountNames } from '../../config/api';
 import { formatDateForForm } from '../../utils';
 
 export const AddExtraFund = ({ open, handleClose, recordData }) => {
   const queryClient = useQueryClient();
 
   const [isLoading, setIsLoading] = useState(false);
+  const [selected, setSelected] = useState('yes');
 
   const {
     register,
@@ -36,6 +37,7 @@ export const AddExtraFund = ({ open, handleClose, recordData }) => {
       setValue('Description', recordData.Description);
       setValue('Type', recordData.Type);
       setValue('Amount', recordData.Amount);
+      setSelected(recordData.IsDateKnown ? 'yes' : 'no');
     } else {
       setValue('Date', formatDateForForm(new Date()));
     }
@@ -47,6 +49,9 @@ export const AddExtraFund = ({ open, handleClose, recordData }) => {
   const handleOnSubmit = async (data) => {
     const numericSelectedID = Number(recordData.id);
     setIsLoading(() => true);
+
+    if (selected === 'yes') data.IsDateKnown = true;
+    else data.IsDateKnown = false;
 
     if (!recordData?.id)
       axios
@@ -102,18 +107,54 @@ export const AddExtraFund = ({ open, handleClose, recordData }) => {
               />
             </div>
             <div className="flex flex-col gap-6 w-full">
-              <Textbox
-                placeholder="Select Date"
-                type="date"
-                name="Date"
-                label="Date"
-                className="w-full rounded"
-                register={register('Date', {
-                  valueAsDate: true,
-                  required: 'Date is required!',
-                })}
-                error={errors.Date ? errors.Date.message : ''}
-              />
+              <div className="flex flex-col w-full">
+                <label className="text-slate-800 text-xs lg:text-sm text-nowrap">Date known?</label>
+                <div className="flex flex-col ml-1">
+                  <div className="flex gap-2">
+                    <div>
+                      <input
+                        type="radio"
+                        name="date-known"
+                        value={'yes'}
+                        checked={selected === 'yes'}
+                        onChange={(e) => setSelected(e.target.value)}
+                        className="w-4 h-4 text-green-600 border-gray-300 focus:ring-green-500"
+                      />
+                    </div>
+                    <label className="text-slate-800 text-xs lg:text-sm text-nowrap">Yes</label>
+                  </div>
+                  <div className="flex gap-2">
+                    <div>
+                      <input
+                        type="radio"
+                        name="date-known"
+                        value={'no'}
+                        checked={selected === 'no'}
+                        onChange={(e) => setSelected(e.target.value)}
+                        className="w-4 h-4 text-red-600 border-gray-300 focus:ring-red-500"
+                      />
+                    </div>
+                    <label className="text-slate-800 text-xs lg:text-sm text-nowrap">No</label>
+                  </div>
+                </div>
+              </div>
+              {selected === 'yes' ? (
+                <Textbox
+                  placeholder="Select Date"
+                  type="date"
+                  name="Date"
+                  label="Date"
+                  className="w-full rounded"
+                  register={register('Date', {
+                    valueAsDate: true,
+                    required: 'Date is required!',
+                  })}
+                  error={errors.Date ? errors.Date.message : ''}
+                />
+              ) : (
+                <Textbox2 type="text" label="Date" className="w-full rounded" disabled value="TBA" />
+              )}
+
               <Textbox
                 placeholder="Enter a description for this record"
                 type="text"
