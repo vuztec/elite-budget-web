@@ -22,17 +22,16 @@ function Navbar() {
   };
 
   return (
-    <div className="w-full flex flex-col lg:flex-row items-center justify-between lg:bg-[#E0E0E0] md:bg-[#E0E0E0] bg-white py-2 px-8">
+    <div className="w-full flex flex-row items-center justify-between lg:bg-[#E0E0E0] md:bg-[#E0E0E0] bg-white pt-2 lg:py-2 px-8">
       {/* Mobile View: Logo and Menu Button */}
-      <div className="flex  w-full items-center justify-end lg:hidden mb-4">
-        {/* Mobile menu icon */}
+      {/* <div className="flex  w-full items-center justify-end lg:hidden mb-4">
         <button onClick={toggleDrawer} className="px-4 py-2 border bg-[#3F3F3F] text-white lg:hidden">
           {isDrawerOpen ? <IoClose className="text-xl" /> : <IoMenu className="text-xl" />}
         </button>
-      </div>
+      </div> */}
 
       {/* Logo Section for larger screens */}
-      <div className="hidden lg:flex lg:w-1/4 justify-start">
+      <div className="flex lg:w-1/4 justify-start">
         <img src={Logo} alt="Logo" className="h-20 w-32" />
       </div>
 
@@ -50,7 +49,7 @@ function Navbar() {
       </ul> */}
 
       {/* Buttons */}
-      <div className="hidden lg:w-1/4 lg:flex justify-center lg:justify-end items-center gap-4">
+      <div className=" lg:w-1/4 flex justify-center lg:justify-end items-center gap-4">
         {/* <a href="/login" className="px-6 py-2 border rounded-full bg-[#3F3F3F] text-white">
           Login
         </a> */}

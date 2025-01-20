@@ -4,7 +4,7 @@ import Networth from '../../../assets/image/net-worth.png';
 
 function Hero() {
   return (
-    <div className="flex lg:flex-row lg:h-auto w-full mt-4 flex-col">
+    <div className="flex lg:flex-row lg:h-auto w-full lg:mt-4 flex-col">
       {/* Left Section */}
       <div className="left w-full md:w-full lg:w-1/2 pl-4 md:pl-16 pt-10 flex flex-col justify-center">
         <h1 className="text-[#131924] font-bold text-xl md:text-3xl leading-tight md:text-center lg:text-left">
