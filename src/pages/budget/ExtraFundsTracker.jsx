@@ -167,6 +167,10 @@ export const ExtraFundsTracker = () => {
     setOpen(true);
   };
 
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const [isShowing, setIsShowing] = useState(true);
 
   return activeAccount ? (
@@ -241,7 +245,7 @@ export const ExtraFundsTracker = () => {
           <div className="w-full bg-white rounded-lg border-t mt-8 p-6 text-center justify-center">
             <p>{getPageCopyright()}</p>
           </div>
-          <AddExtraFund open={open} setOpen={setOpen} recordData={''} />
+          <AddExtraFund open={open} handleClose={handleClose} recordData={''} />
         </div>
       )}
     </>

@@ -1,11 +1,12 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import ModalWrapper from '../ModalWrapper';
 import { Dialog } from '@headlessui/react';
 import Textbox from '../Textbox';
+import Textbox2 from '../Textbox2';
 import Loading from '../Loader';
 import Button from '../Button';
-import { useQueryClient, useQuery } from 'react-query';
+import { useQueryClient } from 'react-query';
 import { IoMdSend } from 'react-icons/io';
 import { TiCancel } from 'react-icons/ti';
 import axios from '../../config/axios';
@@ -14,6 +15,7 @@ import { formatDateForForm } from '../../utils';
 
 export const AddExtraPay = ({ open, setOpen, recordData }) => {
   const queryClient = useQueryClient();
+  const [selected, setSelected] = useState('yes');
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -33,6 +35,7 @@ export const AddExtraPay = ({ open, setOpen, recordData }) => {
       );
       setValue('SelfAmount', recordData.SelfAmount ? Number(recordData.SelfAmount).toFixed(2) : '');
       setValue('PartnerAmount', recordData.PartnerAmount ? Number(recordData.PartnerAmount).toFixed(2) : '');
+      setSelected(recordData.IsDateKnown ? 'yes' : 'no');
     }
 
     return () => reset();
@@ -42,6 +45,9 @@ export const AddExtraPay = ({ open, setOpen, recordData }) => {
   const handleOnSubmit = async (data) => {
     const numericSelectedID = Number(recordData.id);
     setIsLoading(() => true);
+
+    if (selected === 'yes') data.IsDateKnown = true;
+    else data.IsDateKnown = false;
 
     axios
       .patch('/api/extra-pay-checks/' + numericSelectedID, data)
@@ -70,7 +76,38 @@ export const AddExtraPay = ({ open, setOpen, recordData }) => {
             {recordData ? 'UPDATE EXTRA PAYCHECK' : 'ADD NEW EXTRA PAYCHECK'}
           </Dialog.Title>
           <div className="mt-2 flex flex-col gap-6 overflow-y-auto">
-            <div className="flex flex-col gap-6 w-full">
+            <div className="flex flex-col w-full">
+              <label className="text-slate-800 text-xs lg:text-sm text-nowrap">Date known?</label>
+              <div className="flex flex-col ml-1">
+                <div className="flex gap-2">
+                  <div>
+                    <input
+                      type="radio"
+                      name="date-known"
+                      value={'yes'}
+                      checked={selected === 'yes'}
+                      onChange={(e) => setSelected(e.target.value)}
+                      className="w-4 h-4 text-green-600 border-gray-300 focus:ring-green-500"
+                    />
+                  </div>
+                  <label className="text-slate-800 text-xs lg:text-sm text-nowrap">Yes</label>
+                </div>
+                <div className="flex gap-2">
+                  <div>
+                    <input
+                      type="radio"
+                      name="date-known"
+                      value={'no'}
+                      checked={selected === 'no'}
+                      onChange={(e) => setSelected(e.target.value)}
+                      className="w-4 h-4 text-red-600 border-gray-300 focus:ring-red-500"
+                    />
+                  </div>
+                  <label className="text-slate-800 text-xs lg:text-sm text-nowrap">No</label>
+                </div>
+              </div>
+            </div>
+            {selected === 'yes' ? (
               <Textbox
                 placeholder="Select Date"
                 type="date"
@@ -82,7 +119,10 @@ export const AddExtraPay = ({ open, setOpen, recordData }) => {
                 })}
                 error={errors.Date ? errors.Date.message : ''}
               />
-            </div>
+            ) : (
+              <Textbox2 type="text" label="Date" className="w-full rounded" disabled value="TBA" />
+            )}
+
             <div className="flex flex-col gap-6 w-full">
               <Textbox
                 placeholder="Enter Amount"
