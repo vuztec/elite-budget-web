@@ -88,3 +88,9 @@ export const getPaymentMethods = async () => {
 
   return res.data;
 };
+
+export const getCoupons = async () => {
+  const res = await axios.get('/api/coupons');
+
+  return res.data;
+};
