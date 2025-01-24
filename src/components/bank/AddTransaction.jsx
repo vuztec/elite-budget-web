@@ -191,7 +191,7 @@ export const AddTransaction = ({ open, handleClose, recordData, banks }) => {
                 error={errors.Date ? errors.Date.message : ''}
               />
             ) : (
-              <Textbox2 type="text" label="Date" className="w-full rounded" disabled value="TBA" />
+              <Textbox2 type="text" label="Date" className="w-full rounded" disabled value="TBD" />
             )}
             <div className="flex flex-col gap-6 w-full">
               <Textbox

@@ -130,7 +130,7 @@ export const ExtraPayListView = ({ gridData }) => {
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
           <span className="flex items-center justify-left gap-2 text-center mb-0 text-gray-900">
-            {record?.Date && record.IsDateKnown ? getFormattedDate(user, record?.Date) : 'TBA'}
+            {record?.Date && record.IsDateKnown ? getFormattedDate(user, record?.Date) : 'TBD'}
           </span>
         </div>
       </td>

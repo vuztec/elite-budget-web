@@ -293,7 +293,7 @@ export const TransactionListView = ({ Data, bankName, banks }) => {
 
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p className="text-black">{record.IsDateKnown ? getFormattedDate(user, record?.Date) : 'TBA'}</p>
+          <p className="text-black">{record.IsDateKnown ? getFormattedDate(user, record?.Date) : 'TBD'}</p>
         </div>
       </td>
 
