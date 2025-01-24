@@ -11,7 +11,7 @@ function Hero() {
           The Elite Budget Web App………… A NEW WAY TO BUDGET!
         </h1>
         <h1 className="text-[#131924] font-bold text-xl mt-4 md:text-2xl leading-tight md:text-center lg:text-left">
-          DESIGNED BY THE CPA with a busy person in mind.
+          DESIGNED BY a CPA with the busy person in mind.
         </h1>
         <p className="mt-4 text-lg font-medium text-[#4B5563] md:text-center lg:text-left">
           Take control of your finances with this simple, user-friendly money management tool.
