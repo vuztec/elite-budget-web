@@ -14,13 +14,12 @@ import { Country } from 'country-state-city';
 import Logo from '../../assets/logo.png';
 import Select from '../../components/Select';
 import { IoMdSend } from 'react-icons/io';
+import { MdOutlineRadioButtonChecked, MdOutlineRadioButtonUnchecked } from 'react-icons/md';
 
 export const Signup = () => {
   const CountryData = Country.getAllCountries();
-  const { setUser, user } = useUserStore();
+  const { setUser, user, acceptPrivacy, acceptTerms } = useUserStore();
   const [open, setOpen] = useState(false);
-  const [privacy, setPrivacy] = useState(false);
-  const [terms, setTerms] = useState(false);
 
   const dateFormats = DateFormats.map((format) => ({
     value: format.value,
@@ -296,15 +295,33 @@ export const Signup = () => {
                         </div>
                       </div> */}
                       <div className="flex flex-col gap-2 w-full">
-                        <div>
-                          <input type="radio" checked={privacy} onChange={() => setPrivacy((prev) => !prev)} /> Accept
-                          <a href="/privacy-policy?page=signup" className="text-blue-500 hover:underline ml-2">
+                        <div className="flex gap-2">
+                          <div className="flex items-center">
+                            {acceptPrivacy ? (
+                              <MdOutlineRadioButtonChecked className="text-green-500" />
+                            ) : (
+                              <MdOutlineRadioButtonUnchecked />
+                            )}
+                          </div>
+                          <p className={acceptPrivacy ? 'text-green-500' : 'text-red-500'}>
+                            {acceptPrivacy ? 'You have read and accepted' : "You haven't read and accepted"}
+                          </p>
+                          <a href="/privacy-policy?page=signup" className="text-blue-500 hover:underline ml-1">
                             Privacy Policy
                           </a>
                         </div>
-                        <div>
-                          <input type="radio" checked={terms} onChange={() => setTerms((prev) => !prev)} /> Accept
-                          <a href="/terms-and-conditions?page=signup" className="text-blue-500 hover:underline ml-2">
+                        <div className="flex gap-2">
+                          <div className="flex items-center">
+                            {acceptTerms ? (
+                              <MdOutlineRadioButtonChecked className="text-green-500" />
+                            ) : (
+                              <MdOutlineRadioButtonUnchecked />
+                            )}
+                          </div>
+                          <p className={acceptTerms ? 'text-green-500' : 'text-red-500'}>
+                            {acceptTerms ? 'You have read and accepted' : "You haven't read and accepted"}
+                          </p>
+                          <a href="/terms-and-conditions?page=signup" className="text-blue-500 hover:underline ml-1">
                             Terms and Condition
                           </a>
                         </div>
@@ -328,7 +345,7 @@ export const Signup = () => {
                           className="w-fit flex flex-row-reverse items-center gap-1 text-white bg-black"
                           label="Sign Up"
                           disabled={true}
-                          // disabled={!privacy || !terms}
+                          //disabled={!acceptPrivacy || !acceptTerms}
                           icon={<IoMdSend />}
                         />
                       </div>

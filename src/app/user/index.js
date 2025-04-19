@@ -1,5 +1,5 @@
-import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 
 const useUserStore = create()(
   persist(
@@ -19,11 +19,15 @@ const useUserStore = create()(
       setSidebar: () => set((state) => ({ sidebar: !state.sidebar })),
 
       setDefaultSidebar: () => set((state) => ({ sidebar: false })),
+
+      setAcceptPrivacy: (acceptPrivacy) => set(() => ({ acceptPrivacy })),
+
+      setAcceptTerms: (acceptTerms) => set(() => ({ acceptTerms })),
     }),
     {
-      name: "elite-budget",
-    }
-  )
+      name: 'elite-budget',
+    },
+  ),
 );
 
 export default useUserStore;

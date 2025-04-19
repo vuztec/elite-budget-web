@@ -22,7 +22,7 @@ import Sort from '../sort';
 
 export const IncomeListView = ({ gridData }) => {
   const { user } = useUserStore();
-
+  console.log(gridData, 'Income');
   //----------------CRUD----------------//
   const queryClient = useQueryClient();
   const [openDialog, setOpenDialog] = useState(false);

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import useUserStore from '../../app/user';
 import { getActiveAccount } from '../../utils/permissions';
 import { getFormattedDateSubscription } from '../../utils/budget.calculation';
-import { MdOutlinePayment } from 'react-icons/md';
+import { MdOutlinePayment, MdOutlineRadioButtonChecked, MdOutlineRadioButtonUnchecked } from 'react-icons/md';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 import axios from '../../config/axios';
@@ -22,11 +22,12 @@ import ConfirmationDialog from '../../components/Dialogs';
 import { handleAxiosResponseError } from '../../utils/handleResponseError';
 import Loading from '../../components/Loader';
 import { getPageCopyright, getPageTitle } from '../../utils';
+import clsx from 'clsx';
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
 export const Subscription = () => {
-  const { user, setUser } = useUserStore();
+  const { user, setUser, acceptPrivacy, acceptTerms } = useUserStore();
   const activeAccount = getActiveAccount(user);
   const [clientSecret, setClientSecret] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -37,6 +38,7 @@ export const Subscription = () => {
   const [isDeleteLoading, setIsDeleteLoading] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [isChecked, setIsChecked] = useState(user?.Auto_Renewal);
+  const isTrial = user?.IsTrial;
 
   const queryClient = useQueryClient();
 
@@ -64,6 +66,7 @@ export const Subscription = () => {
   }
   // Calculate the renewal date
   const renewal = new Date(subscription.getTime() + totalDaysInYears * 24 * 60 * 60 * 1000);
+  const trialEnd = new Date(new Date(user?.SubscribeDate).setDate(new Date(user?.SubscribeDate).getDate() + 14));
 
   const PayNow = () => {
     setLoading(true);
@@ -182,11 +185,14 @@ export const Subscription = () => {
                 <tbody className="border border-gray-300 text-sm xl:text-[16px] text-left">
                   <tr className="border-b border-gray">
                     <td className="min-w-fit whitespace-nowrap p-2">License Type</td>
-                    <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200 font-bold">Full Access</td>
+                    <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200 font-bold">
+                      {isTrial ? '14 Days Trial' : 'Full Access'}
+                    </td>
                   </tr>
                   <tr className="border-b border-gray">
                     <td className="min-w-fit whitespace-nowrap p-2">Monthly Subscription</td>
                     <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200 font-bold">
+                      <p>{isTrial ? 'Free for 14 days, then' : ''}</p>
                       <div className="flex items-start gap-2">
                         <p className=""> $7.99 per month</p>
                         <p className="italic">(Billed Annually)</p>
@@ -196,19 +202,46 @@ export const Subscription = () => {
                   <tr className="border-b border-gray">
                     <td className="min-w-fit whitespace-nowrap p-2">Status</td>
                     <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200 font-bold">
-                      <p>{activeAccount ? 'Active' : 'In-Active'}</p>
+                      <p>
+                        {activeAccount ? (
+                          'Active'
+                        ) : (
+                          <div className="flex items-left justify-left">
+                            {loading ? (
+                              <Loading />
+                            ) : (
+                              <div className="flex gap-5">
+                                <button
+                                  className={clsx(
+                                    'w-fit flex gap-3 items-center justify-center px-2 py-1 rounded-full bg-black text-white',
+                                    !acceptPrivacy || !acceptTerms
+                                      ? 'cursor-not-allowed'
+                                      : 'hover:bg-[whitesmoke] hover:text-black  cursor-pointer',
+                                  )}
+                                  onClick={PayNow}
+                                  disabled={!acceptPrivacy || !acceptTerms}
+                                >
+                                  <MdOutlinePayment className="text-2xl" /> Subscribe Now
+                                </button>
+                              </div>
+                            )}
+                          </div>
+                        )}
+                      </p>
                     </td>
                   </tr>
                   <tr className="border-b border-gray">
-                    <td className="min-w-fit whitespace-nowrap p-2">Subscription Date</td>
+                    <td className="min-w-fit whitespace-nowrap p-2">
+                      {isTrial ? 'Trial Start Start' : 'Subscription Date'}
+                    </td>
                     <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200 font-bold">
                       {activeAccount ? getFormattedDateSubscription(user, subscription) : ''}
                     </td>
                   </tr>
                   <tr>
-                    <td className="min-w-fit whitespace-nowrap p-2">Renewal Date</td>
+                    <td className="min-w-fit whitespace-nowrap p-2">{isTrial ? 'Trial End Date' : 'Renewal Date'}</td>
                     <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200 font-bold">
-                      {activeAccount ? getFormattedDateSubscription(user, renewal) : ''}
+                      {activeAccount ? getFormattedDateSubscription(user, isTrial ? trialEnd : renewal) : ''}
                     </td>
                   </tr>
                   <tr>
@@ -231,10 +264,42 @@ export const Subscription = () => {
 
             <div className="-mt-5 flex gap-2">
               <p className="italic font-bold">Note:</p>
-              <p className="italic">For manual payment or renewal, click the card to pay.</p>
+              <p className="italic">For manual payment or renewal, click the card to pay or Add New Card.</p>
+            </div>
+            <div className="flex flex-col gap-2 w-full">
+              <div className="flex gap-2">
+                <div className="flex items-center">
+                  {acceptPrivacy ? (
+                    <MdOutlineRadioButtonChecked className="text-green-500" />
+                  ) : (
+                    <MdOutlineRadioButtonUnchecked />
+                  )}
+                </div>
+                <p className={acceptPrivacy ? 'text-green-500' : 'text-red-500'}>
+                  {acceptPrivacy ? 'You have read and accepted' : "You haven't read and accepted"}
+                </p>
+                <a href="/privacy-policy?page=subscription" className="text-blue-500 hover:underline ml-1">
+                  Privacy Policy
+                </a>
+              </div>
+              <div className="flex gap-2">
+                <div className="flex items-center">
+                  {acceptTerms ? (
+                    <MdOutlineRadioButtonChecked className="text-green-500" />
+                  ) : (
+                    <MdOutlineRadioButtonUnchecked />
+                  )}
+                </div>
+                <p className={acceptTerms ? 'text-green-500' : 'text-red-500'}>
+                  {acceptTerms ? 'You have read and accepted' : "You haven't read and accepted"}
+                </p>
+                <a href="/terms-and-conditions?page=subscription" className="text-blue-500 hover:underline ml-1">
+                  Terms and Condition
+                </a>
+              </div>
             </div>
 
-            <div className="flex flex-wrap gap-6">
+            <div className="flex flex-wrap gap-6 items-end">
               {paymentmethods?.map((item, index) => {
                 if (item.card.brand === 'visa')
                   return <VisaCard card={item} key={index} handlePayment={handlePayment} handleDelete={handleDelete} />;
@@ -253,26 +318,20 @@ export const Subscription = () => {
                     <GeneralCard card={item} key={index} handlePayment={handlePayment} handleDelete={handleDelete} />
                   );
               })}
-            </div>
-            <div className="flex items-center justify-center mb-5 -mt-3">
-              {loading ? (
-                <Loading />
-              ) : (
-                <div className="flex gap-5">
-                  <button
-                    className="w-fit flex gap-3 items-center justify-center bg-black text-white hover:bg-[whitesmoke] hover:text-black px-2 py-1 rounded-full cursor-pointer"
-                    onClick={PayNow}
-                  >
-                    <MdOutlinePayment className="text-2xl" /> Subscribe Now
-                  </button>
-                  <button
-                    className="w-fit flex gap-3 items-center justify-center bg-black text-white hover:bg-[whitesmoke] hover:text-black px-2 py-1 rounded-full cursor-pointer"
-                    onClick={() => setOpenPayment(true)}
-                  >
-                    <MdOutlinePayment className="text-2xl" /> Add Card
-                  </button>
-                </div>
-              )}
+              <div className="h-fit">
+                <button
+                  className={clsx(
+                    'w-fit flex gap-3 items-center justify-center px-2 py-1 rounded-full bg-black text-white',
+                    !acceptPrivacy || !acceptTerms
+                      ? 'cursor-not-allowed'
+                      : 'hover:bg-[whitesmoke] hover:text-black  cursor-pointer',
+                  )}
+                  onClick={() => setOpenPayment(true)}
+                  disabled={!acceptPrivacy || !acceptTerms}
+                >
+                  <MdOutlinePayment className="text-2xl" /> Add New Card
+                </button>
+              </div>
             </div>
           </div>
 

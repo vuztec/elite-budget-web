@@ -54,12 +54,8 @@ function Footer() {
                 </a>
               </li> */}
             <li>
-              <a
-                href="https://www.elitecashflowproducts.com/"
-                target="_blank"
-                className="text-gray-700 hover:underline"
-              >
-                About Us
+              <a href="/about-elite?page=advert" className="text-gray-700 hover:underline">
+                About Elite
               </a>
             </li>
             <li>

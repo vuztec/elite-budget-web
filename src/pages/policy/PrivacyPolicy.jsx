@@ -1,34 +1,52 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Logo from '../../assets/logo.png';
 import { useSearchParams } from 'react-router-dom';
+import useUserStore from '../../app/user';
+import clsx from 'clsx';
 
 export const PrivacyPolicy = () => {
+  const { user, setAcceptPrivacy } = useUserStore();
   const [searchParams] = useSearchParams();
   const page = searchParams.get('page');
+  const [privacy, setPrivacy] = useState(false);
+  useEffect(() => {
+    privacy ? setAcceptPrivacy(true) : setAcceptPrivacy(false);
+  }, [privacy]);
 
   return (
     <div className="w-full md:w-4/6 mx-auto flex flex-col items-center justify-center text-justify bg-white p-5 xl:p-10">
       <div className="flex justify-between mb-10 bg-black px-3 py-1 rounded-full">
         <a
-          href={page === 'advert' ? '/advert' : page === 'signup' ? '/signup' : '/login'}
+          href={
+            page === 'advert'
+              ? '/advert'
+              : page === 'signup'
+                ? '/signup'
+                : page === 'subscription'
+                  ? '/subscription'
+                  : '/login'
+          }
           className="text-sm text-white hover:text-blue-500 underline cursor-pointer"
         >
-          {page === 'advert' ? 'Return to Advert' : 'Return to Login or Create Account'}
+          {page === 'advert'
+            ? 'Return to Advert'
+            : page === 'signup'
+              ? 'Return to Signup'
+              : page === 'subscription'
+                ? 'Return to Subscription'
+                : 'Return Login'}
         </a>
       </div>
-      <h1 className="flex items-start justify-start mb-4">
-        <img src={Logo} alt="logo" className="h-8 md:h-16 lg:h-32" />
+      <h1 className="flex flex-col items-center justify-start mb-4">
+        <img src={Logo} alt="logo" className="h-32 lg:h-32" />
+        <h1 className="font-bold">Elite Cash Flow Products, LLC</h1>
+        <a href="https://www.elitecashflowproducts.com/" target="_blank" className="text-blue-500 hover:underline">
+          www.elitecashflowproducts.com
+        </a>
       </h1>
-      <h1 className="font-bold text-xl lg:text-2xl mb-5 text-left">Privacy Policy</h1>
-      <a href="https://www.elitecashflowproducts.com/" className="text-blue-500 hover:underline">
-        www.elitecashflowproducts.com
-      </a>
-
-      <a href="http://www.budget.elitecashflowproducts.com/" className="text-blue-500 hover:underline">
-        www.budget.elitecashflowproducts.com
-      </a>
 
       <div className="flex flex-col w-full py-10">
+        <h1 className="font-bold text-xl lg:text-2xl mb-5 text-left">Privacy Policy</h1>
         <div>
           Your privacy is important to Elite Cash Flow Consulting. Please read this privacy notice carefully as it
           contains important information on who we are, how and why we collect, store, use, and share personal
@@ -389,12 +407,35 @@ export const PrivacyPolicy = () => {
 
         <p className="py-10">Policy Last Updated January 14, 2025</p>
       </div>
+      <div
+        className={clsx(
+          'text-xl flex gap-3 w-full px-2 py-1 rounded-md text-white',
+          privacy ? 'bg-green-500' : 'bg-red-500',
+        )}
+      >
+        <input type="radio" checked={privacy} onChange={() => setPrivacy((prev) => !prev)} />
+        {`I, ${user ? user?.FullName : 'the undersigned'}, confirm that I have read, fully understand, and agree to the terms outlined in the Privacy Policy.`}
+      </div>
       <div className="flex justify-between mt-10 bg-black px-3 py-1 rounded-full">
         <a
-          href={page === 'advert' ? '/advert' : page === 'signup' ? '/signup' : '/login'}
+          href={
+            page === 'advert'
+              ? '/advert'
+              : page === 'signup'
+                ? '/signup'
+                : page === 'subscription'
+                  ? '/subscription'
+                  : '/login'
+          }
           className="text-sm text-white hover:text-blue-500 underline cursor-pointer"
         >
-          {page === 'advert' ? 'Return to Advert' : 'Return to Login or Create Account'}
+          {page === 'advert'
+            ? 'Return to Advert'
+            : page === 'signup'
+              ? 'Return to Signup'
+              : page === 'subscription'
+                ? 'Return to Subscription'
+                : 'Return Login'}
         </a>
       </div>
     </div>

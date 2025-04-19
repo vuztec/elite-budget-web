@@ -136,11 +136,11 @@ export const Login = () => {
                     Terms & Conditions
                   </a>
                   <a
-                    href="https://www.elitecashflowproducts.com/"
-                    target="_blank"
+                    href="/about-elite"
+                    //target="_blank"
                     className="flex items-center justify-center text-sm text-gray-500 hover:text-blue-500 underline cursor-pointer"
                   >
-                    About Us
+                    About Elite
                   </a>
                 </div>
               </div>

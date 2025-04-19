@@ -34,6 +34,7 @@ import ForgetPassword from './pages/forgetpassword';
 import VerifyOtp from './pages/verifyotp';
 import UpdatePassword from './pages/updatepassword';
 import { BiArrowToTop } from 'react-icons/bi';
+import About from './pages/policy/About';
 
 function Layout() {
   //const user = false;
@@ -115,6 +116,7 @@ function App() {
         <Route path="/updatepassword" element={<UpdatePassword />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+        <Route path="/about-elite" element={<About />} />
         <Route path="/faqs" element={<Faqs />} />
       </Routes>
       <ToastContainer

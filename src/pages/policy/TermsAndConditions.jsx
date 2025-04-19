@@ -1,30 +1,55 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Logo from '../../assets/logo.png';
 import { useSearchParams } from 'react-router-dom';
+import { FaBriefcase, FaCreditCard, FaGift, FaGifts } from 'react-icons/fa';
+import { FcCalendar, FcDocument } from 'react-icons/fc';
+import { FaPenClip } from 'react-icons/fa6';
+import useUserStore from '../../app/user';
+import clsx from 'clsx';
 
 export const TermsAndConditions = () => {
+  const { user, setAcceptTerms } = useUserStore();
   const [searchParams] = useSearchParams();
   const page = searchParams.get('page');
+  const [terms, setTerms] = useState(false);
+  useEffect(() => {
+    terms ? setAcceptTerms(true) : setAcceptTerms(false);
+  }, [terms]);
+
   return (
     <div className="w-full sm:w-4/6 mx-auto flex flex-col items-center justify-center text-justify bg-white p-5 xl:p-10">
       <div className="flex justify-between mb-5 bg-black px-3 py-1 rounded-full">
         <a
-          href={page === 'advert' ? '/advert' : page === 'signup' ? '/signup' : '/login'}
+          href={
+            page === 'advert'
+              ? '/advert'
+              : page === 'signup'
+                ? '/signup'
+                : page === 'subscription'
+                  ? '/subscription'
+                  : '/login'
+          }
           className="text-sm text-white hover:text-blue-500 underline cursor-pointer"
         >
-          {page === 'advert' ? 'Return to Advert' : 'Return to Login or Create Account'}
+          {page === 'advert'
+            ? 'Return to Advert'
+            : page === 'signup'
+              ? 'Return to Signup'
+              : page === 'subscription'
+                ? 'Return to Subscription'
+                : 'Return Login'}
         </a>
       </div>
-      <h1 className="flex flex-col items-start justify-start mb-4">
-        <img src={Logo} alt="logo" className="h-8 md:h-16 lg:h-32" />
+      <h1 className="flex flex-col items-center justify-start mb-4">
+        <img src={Logo} alt="logo" className="h-32 lg:h-32" />
         <h1 className="font-bold">Elite Cash Flow Products, LLC</h1>
-        <a href="https://www.elitecashflowproducts.com/" className="text-blue-500 hover:underline">
+        <a href="https://www.elitecashflowproducts.com/" target="_blank" className="text-blue-500 hover:underline">
           www.elitecashflowproducts.com
         </a>
       </h1>
-      <h1 className="font-bold text-xl lg:text-2xl mb-5 text-left">Terms and Conditions of Use</h1>
 
       <div>
+        <h1 className="font-bold text-xl lg:text-2xl mb-5 text-left">Terms and Conditions of Use</h1>
         Please read these Terms and Conditions of Use (“TOU”) carefully. You must agree to these TOU{' '}
         <span className="underline">before</span> you are permitted to use any Elite Cash Flow Products, LLC such as the
         digital application or other cash flow products offered for sale by Elite Cash Flow Products, LLC (for any
@@ -92,18 +117,66 @@ export const TermsAndConditions = () => {
           final, and no refunds will be provided.
           <br />
           <br />
-          Your satisfaction with the other Elite Cash Flow products (e.g. the checkbook registers) is important to us.
-          In order to qualify for a refund, you must submit proof of the defective product. To request a refund for a
-          defective product, within 14 days of receiving the product(s), please email{' '}
-          <span className="text-blue-500"> michelle@elitecashflowproducts.com</span>
-          detailing the defect and imbedding a picture in the body of the email (no attachments). Specify if you would
-          like a refund or would prefer to be mailed a replacement. If you request a refund and do not include the
-          detail described above within the time specified, you will not be granted a refund.
+          <div className="flex items-center justify-left gap-2">
+            <FaBriefcase className="text-orange-900" />
+            <p className="font-bold">Return & Refund Policy For Our Signature Checkbook Registers</p>
+          </div>
+          We take pride in offering elegant, high-quality checkbook registers designed to complement your lifestyle and
+          we want you to love your purchase! If for any reason your purchase doesn’t meet expectations, we’ll make it
+          right. Please review our return policy below:
           <br />
           <br />
-          We will NOT provide refunds for any request that comes more than 15 days following the date you received the
-          product. After day 15, all payments are non-refundable and you are responsible for full payment of the fees
-          for the product.
+          <div className="flex items-center justify-left gap-2">
+            <FcCalendar className="text-orange-900" />
+            <p className="font-bold">30-Day Return Window</p>
+          </div>
+          You may return the new, unused item within <strong>30 days of delivery</strong> for a full refund—no questions
+          asked. We kindly ask that the item is unused and returned in its <strong>original packaging.</strong>
+          <br />
+          <br />
+          <div className="flex items-center justify-left gap-2">
+            <FcDocument />
+            <p className="font-bold">Simple Return Process</p>
+          </div>
+          <ul className="custom-list mt-0 flex flex-col gap-1 -ml-4">
+            <li>
+              Contact us at <span className="text-blue-500">info@elitecashflowproducts.com</span> to start your return
+              by providing the reason for the return.
+            </li>
+            <li>
+              A <strong>prepaid return shipping label</strong> will be provided for your convenience.
+            </li>
+            <li>
+              Once we receive the returned item, we will inspect and process your refund within{' '}
+              <strong>2 business days</strong>.
+            </li>
+          </ul>
+          <br />
+          <div className="flex items-center justify-left gap-2">
+            <FaCreditCard className="text-blue-500" />
+            <p className="font-bold">Refunds</p>
+          </div>
+          All refunds are issued to your original payment method. If your item arrives damaged or with any defect,
+          please reach out immediately—we will replace or refund your order at no cost to you.
+          <br />
+          <br />
+          <div className="flex items-center justify-left gap-2">
+            <FaGift className="text-orange-400" />
+            <p className="font-bold">Holiday Returns</p>
+          </div>
+          Orders placed between <strong>November 1 and December 31</strong> qualify for extended returns until{' '}
+          <strong>January 31</strong> of the following year.
+          <br />
+          <br />
+          <div className="flex items-center justify-left gap-2">
+            <FaPenClip className="text-blue-500" />
+            <p className="font-bold">Our Promise</p>
+          </div>
+          Each register is designed with care and built to last. If you’re not fully satisfied, we're committed to
+          making your experience seamless and stress-free.
+          <br />
+          <br />
+          All payments are non-refundable for any request received after <strong>30 days of delivery</strong>.
           <br />
           <br />
           Upon determining that you are entitled to a refund pursuant to this policy, the Company will promptly issue an
@@ -505,14 +578,37 @@ export const TermsAndConditions = () => {
             with these TOU, do not purchase or use the Program or Content.
           </strong>
         </p>
-        <p className="font-bold">Updated on January 13, 2025</p>
+        <p className="py-10">Updated on April 19, 2025</p>
+      </div>
+      <div
+        className={clsx(
+          'text-xl flex gap-3 w-full px-2 py-1 rounded-md text-white',
+          terms ? 'bg-green-500' : 'bg-red-500',
+        )}
+      >
+        <input type="radio" checked={terms} onChange={() => setTerms((prev) => !prev)} />
+        {`I, ${user ? user?.FullName : 'the undersigned'}, confirm that I have read, fully understand, and agree to the terms outlined in the Terms and Conditions.`}
       </div>
       <div className="flex justify-between mt-10 bg-black px-3 py-1 rounded-full">
         <a
-          href={page === 'advert' ? '/advert' : page === 'signup' ? '/signup' : '/login'}
+          href={
+            page === 'advert'
+              ? '/advert'
+              : page === 'signup'
+                ? '/signup'
+                : page === 'subscription'
+                  ? '/subscription'
+                  : '/login'
+          }
           className="text-sm text-white hover:text-blue-500 underline cursor-pointer"
         >
-          {page === 'advert' ? 'Return to Advert' : 'Return to Login or Create Account'}
+          {page === 'advert'
+            ? 'Return to Advert'
+            : page === 'signup'
+              ? 'Return to Signup'
+              : page === 'subscription'
+                ? 'Return to Subscription'
+                : 'Return Login'}
         </a>
       </div>
     </div>
