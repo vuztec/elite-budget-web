@@ -41,9 +41,17 @@ const AddPaymentMethod = ({ handleClose, isTrial }) => {
           // setUser(data);
           // navigate('/');
 
-          if (isTrial) setUser(data);
-
-          queryClient.setQueryData(['payment-methods'], (prev) => ({ ...prev, cards: [...prev, paymentMethod] }));
+          if (isTrial) {
+            setUser(data.user);
+            queryClient.setQueryData(['payment-methods'], (prev) => ({
+              customer: data.customer,
+              cards: [...prev?.cards, paymentMethod],
+            }));
+          } else
+            queryClient.setQueryData(['payment-methods'], (prev) => ({
+              ...prev,
+              cards: [...prev.cards, paymentMethod],
+            }));
 
           handleClose();
           setIsLoading(false);
