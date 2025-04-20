@@ -90,7 +90,10 @@ export const Subscription = () => {
     axios
       .delete('/api/payment/payment-method/' + card.id)
       .then(({ data }) => {
-        queryClient.setQueryData(['payment-methods'], (prev) => prev.filter((method) => method.id !== card.id));
+        queryClient.setQueryData(['payment-methods'], (prev) => ({
+          ...prev,
+          cards: prev?.cards?.filter((method) => method.id !== card.id),
+        }));
         setDeleteOpen(() => false);
         setIsLoading(false);
       })
