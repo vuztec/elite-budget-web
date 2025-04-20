@@ -35,10 +35,10 @@ export const Subscription = () => {
   const [openCharge, setOpenCharge] = useState(false);
   const [card, setCard] = useState(false);
   const [openPayment, setOpenPayment] = useState(false);
-  const [isDeleteLoading, setIsDeleteLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
+  const [paymentOpen, setPaymentOpen] = useState(false);
   const [isChecked, setIsChecked] = useState(user?.Auto_Renewal);
-  const isTrial = user?.IsTrial;
 
   const queryClient = useQueryClient();
 
@@ -65,8 +65,10 @@ export const Subscription = () => {
     totalDaysInYears += isLeapYear(year) ? 366 : 365;
   }
   // Calculate the renewal date
+  const currentDate = new Date();
   const renewal = new Date(subscription.getTime() + totalDaysInYears * 24 * 60 * 60 * 1000);
-  const trialEnd = new Date(new Date(user?.SubscribeDate).setDate(new Date(user?.SubscribeDate).getDate() + 14));
+  const trialEnd = new Date(new Date(user?.CreatedAt).setDate(new Date(user?.CreatedAt).getDate() + 14));
+  const isTrial = currentDate <= trialEnd;
 
   const PayNow = () => {
     setLoading(true);
@@ -84,16 +86,16 @@ export const Subscription = () => {
   };
 
   const deleteHandler = () => {
-    setIsDeleteLoading(true);
+    setIsLoading(true);
     axios
       .delete('/api/payment/payment-method/' + card.id)
       .then(({ data }) => {
         queryClient.setQueryData(['payment-methods'], (prev) => prev.filter((method) => method.id !== card.id));
         setDeleteOpen(() => false);
-        setIsDeleteLoading(false);
+        setIsLoading(false);
       })
       .catch((err) => {
-        setIsDeleteLoading(false);
+        setIsLoading(false);
         console.log(err);
       });
   };
@@ -128,6 +130,11 @@ export const Subscription = () => {
     setCard(item);
   };
 
+  const handlePaymentMethod = (item) => {
+    setPaymentOpen(true);
+    setCard(item);
+  };
+
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
 
@@ -138,6 +145,22 @@ export const Subscription = () => {
       })
       .catch((err) => {
         console.log(err);
+        console.log(handleAxiosResponseError(err));
+      });
+  };
+
+  const handleDefaultPaymentMethod = () => {
+    setIsLoading(true);
+    axios
+      .patch('/api/payment/payment-method', { PaymentMethodId: card.id })
+      .then(({ data }) => {
+        queryClient.setQueryData(['payment-methods'], (prev) => ({ ...prev, customer: data }));
+        setPaymentOpen(false);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setIsLoading(false);
         console.log(handleAxiosResponseError(err));
       });
   };
@@ -211,18 +234,34 @@ export const Subscription = () => {
                               <Loading />
                             ) : (
                               <div className="flex gap-5">
-                                <button
-                                  className={clsx(
-                                    'w-fit flex gap-3 items-center justify-center px-2 py-1 rounded-full bg-black text-white',
-                                    !acceptPrivacy || !acceptTerms
-                                      ? 'cursor-not-allowed'
-                                      : 'hover:bg-[whitesmoke] hover:text-black  cursor-pointer',
-                                  )}
-                                  onClick={PayNow}
-                                  disabled={!acceptPrivacy || !acceptTerms}
-                                >
-                                  <MdOutlinePayment className="text-2xl" /> Subscribe Now
-                                </button>
+                                {isTrial ? (
+                                  <button
+                                    className={clsx(
+                                      'w-fit flex gap-3 items-center justify-center px-2 py-1 rounded-full bg-black text-white',
+                                      !acceptPrivacy || !acceptTerms
+                                        ? 'cursor-not-allowed'
+                                        : 'hover:bg-[whitesmoke] hover:text-black  cursor-pointer',
+                                    )}
+                                    onClick={() => setOpenPayment(true)}
+                                    disabled={!acceptPrivacy || !acceptTerms}
+                                  >
+                                    <MdOutlinePayment className="text-2xl" /> Add Card to Active
+                                  </button>
+                                ) : (
+                                  <button
+                                    className={clsx(
+                                      'w-fit flex gap-3 items-center justify-center px-2 py-1 rounded-full bg-black text-white',
+                                      !acceptPrivacy || !acceptTerms
+                                        ? 'cursor-not-allowed'
+                                        : 'hover:bg-[whitesmoke] hover:text-black  cursor-pointer',
+                                    )}
+                                    onClick={PayNow}
+                                    disabled={!acceptPrivacy || !acceptTerms}
+                                  >
+                                    <MdOutlinePayment className="text-2xl" />{' '}
+                                    {isTrial ? 'Activate Trial' : 'Subscribe Now'}
+                                  </button>
+                                )}
                               </div>
                             )}
                           </div>
@@ -300,22 +339,66 @@ export const Subscription = () => {
             </div>
 
             <div className="flex flex-wrap gap-6 items-end">
-              {paymentmethods?.map((item, index) => {
+              {paymentmethods?.cards?.map((item, index) => {
                 if (item.card.brand === 'visa')
-                  return <VisaCard card={item} key={index} handlePayment={handlePayment} handleDelete={handleDelete} />;
+                  return (
+                    <VisaCard
+                      card={item}
+                      key={index}
+                      handlePayment={handlePayment}
+                      handleDelete={handleDelete}
+                      isTrial={isTrial}
+                      defaultId={paymentmethods?.customer?.invoice_settings?.default_payment_method}
+                      handlePaymentMethod={handlePaymentMethod}
+                    />
+                  );
                 else if (item.card.brand === 'mastercard')
                   return (
-                    <Mastercard card={item} key={index} handlePayment={handlePayment} handleDelete={handleDelete} />
+                    <Mastercard
+                      card={item}
+                      key={index}
+                      handlePayment={handlePayment}
+                      handleDelete={handleDelete}
+                      isTrial={isTrial}
+                      defaultId={paymentmethods?.customer?.invoice_settings?.default_payment_method}
+                      handlePaymentMethod={handlePaymentMethod}
+                    />
                   );
                 else if (item.card.brand === 'discover')
                   return (
-                    <DiscoverCard card={item} key={index} handlePayment={handlePayment} handleDelete={handleDelete} />
+                    <DiscoverCard
+                      card={item}
+                      key={index}
+                      handlePayment={handlePayment}
+                      handleDelete={handleDelete}
+                      isTrial={isTrial}
+                      defaultId={paymentmethods?.customer?.invoice_settings?.default_payment_method}
+                      handlePaymentMethod={handlePaymentMethod}
+                    />
                   );
                 else if (item.card.brand === 'amex')
-                  return <AmexCard card={item} key={index} handlePayment={handlePayment} handleDelete={handleDelete} />;
+                  return (
+                    <AmexCard
+                      card={item}
+                      key={index}
+                      handlePayment={handlePayment}
+                      handleDelete={handleDelete}
+                      isTrial={isTrial}
+                      defaultId={paymentmethods?.customer?.invoice_settings?.default_payment_method}
+                      handlePaymentMethod={handlePaymentMethod}
+                    />
+                  );
                 else
                   return (
-                    <GeneralCard card={item} key={index} handlePayment={handlePayment} handleDelete={handleDelete} />
+                    <GeneralCard
+                      card={item}
+                      key={index}
+                      handlePayment={handlePayment}
+                      handleDelete={handleDelete}
+                      isTrial={isTrial}
+                      defaultId={paymentmethods?.customer?.invoice_settings?.default_payment_method}
+                      handlePaymentMethod={handlePaymentMethod}
+                    />
                   );
               })}
               <div className="h-fit">
@@ -344,7 +427,7 @@ export const Subscription = () => {
           </ModalWrapper>
           <ModalWrapper open={openPayment} handleClose={handleClosePaymentMethod}>
             <Elements stripe={stripePromise}>
-              <AddPaymentMethod handleClose={handleClosePaymentMethod} />
+              <AddPaymentMethod handleClose={handleClosePaymentMethod} isTrial={isTrial} />
             </Elements>
           </ModalWrapper>
 
@@ -353,12 +436,20 @@ export const Subscription = () => {
           </ModalWrapper>
 
           <ConfirmationDialog
-            isLoading={isDeleteLoading}
+            isLoading={isLoading}
             open={deleteOpen}
             setOpen={setDeleteOpen}
             msg={'Do you want to delete your card?'}
             buttonText={'Yes'}
             onClick={() => deleteHandler()}
+          />
+          <ConfirmationDialog
+            isLoading={isLoading}
+            open={paymentOpen}
+            setOpen={setPaymentOpen}
+            msg={'Do you want to make this default payment method?'}
+            type={'card'}
+            onClick={() => handleDefaultPaymentMethod()}
           />
         </div>
       </div>

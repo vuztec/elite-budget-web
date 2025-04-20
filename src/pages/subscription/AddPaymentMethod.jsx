@@ -4,13 +4,15 @@ import { handleAxiosResponseError } from '../../utils/handleResponseError';
 import axios from '../../config/axios';
 import Loading from '../../components/Loader';
 import { useQueryClient } from 'react-query';
+import useUserStore from '../../app/user';
 
-const AddPaymentMethod = ({ handleClose }) => {
+const AddPaymentMethod = ({ handleClose, isTrial }) => {
   const stripe = useStripe();
   const elements = useElements();
   const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const queryClient = useQueryClient();
+  const { setUser } = useUserStore();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -33,14 +35,14 @@ const AddPaymentMethod = ({ handleClose }) => {
     } else {
       // Pass the paymentMethod.id back to parent component or directly to backend
       // onPaymentMethodCreated(paymentMethod.id);
-      console.log(paymentMethod);
-
       axios
         .post('/api/payment/payment-method', { PaymentMethodId: paymentMethod.id })
         .then(({ data }) => {
           // setUser(data);
           // navigate('/');
-          console.log(data);
+
+          if (isTrial) setUser(data);
+
           queryClient.setQueryData(['payment-methods'], (prev) => (prev ? [...prev, paymentMethod] : [paymentMethod]));
           handleClose();
           setIsLoading(false);

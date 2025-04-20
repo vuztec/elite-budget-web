@@ -344,8 +344,8 @@ export const Signup = () => {
                           type="submit"
                           className="w-fit flex flex-row-reverse items-center gap-1 text-white bg-black"
                           label="Sign Up"
-                          disabled={true}
-                          //disabled={!acceptPrivacy || !acceptTerms}
+                          // disabled={true}
+                          disabled={!acceptPrivacy || !acceptTerms}
                           icon={<IoMdSend />}
                         />
                       </div>

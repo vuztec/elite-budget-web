@@ -32,9 +32,11 @@ export default function ConfirmationDialog({
             <p
               className={clsx(
                 'p-3 rounded-full ',
-                type === 'restore' || type === 'restoreAll'
-                  ? 'text-yellow-600 bg-yellow-100'
-                  : 'text-red-600 bg-red-200',
+                type === 'card'
+                  ? 'text-green-600 bg-green-100'
+                  : type === 'restore' || type === 'restoreAll'
+                    ? 'text-yellow-600 bg-yellow-100'
+                    : 'text-red-600 bg-red-200',
               )}
             >
               <FaQuestion size={60} />
@@ -49,16 +51,28 @@ export default function ConfirmationDialog({
             </div>
           ) : (
             <div className="bg-gray-50 py-3 sm:flex sm:flex-row-reverse gap-4">
-              <Button
-                type="button"
-                className={clsx(
-                  'flex flex-row-reverse items-center gap-1 px-8 text-sm font-semibold text-white sm:w-auto',
-                  type === 'restore' || type === 'restoreAll' ? 'bg-yellow-600' : 'bg-red-600 hover:bg-red-500',
-                )}
-                onClick={onClick}
-                label={buttonText ? 'Yes' : type === 'restore' ? 'Restore' : 'Delete'}
-                icon={<RiDeleteBin2Fill />}
-              />
+              {type === 'card' ? (
+                <Button
+                  type="button"
+                  className={clsx(
+                    'flex flex-row-reverse items-center gap-1 px-8 text-sm font-semibold text-white sm:w-auto',
+                    'bg-green-500 hover:bg-green-400',
+                  )}
+                  onClick={onClick}
+                  label={'Yes'}
+                />
+              ) : (
+                <Button
+                  type="button"
+                  className={clsx(
+                    'flex flex-row-reverse items-center gap-1 px-8 text-sm font-semibold text-white sm:w-auto',
+                    type === 'restore' || type === 'restoreAll' ? 'bg-yellow-600' : 'bg-red-600 hover:bg-red-500',
+                  )}
+                  onClick={onClick}
+                  label={buttonText ? 'Yes' : type === 'restore' ? 'Restore' : 'Delete'}
+                  icon={<RiDeleteBin2Fill />}
+                />
+              )}
 
               <Button
                 type="button"
