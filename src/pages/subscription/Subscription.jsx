@@ -23,6 +23,8 @@ import { handleAxiosResponseError } from '../../utils/handleResponseError';
 import Loading from '../../components/Loader';
 import { getPageCopyright, getPageTitle } from '../../utils';
 import clsx from 'clsx';
+import { PrivacyDialog, TermsDialog } from '../../components/DisplayDialogs';
+import { LuMousePointer } from 'react-icons/lu';
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
@@ -39,6 +41,8 @@ export const Subscription = () => {
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [paymentOpen, setPaymentOpen] = useState(false);
   const [isChecked, setIsChecked] = useState(user?.Auto_Renewal);
+  const [openPrivacy, setOpenPrivacy] = useState(false);
+  const [openTerms, setOpenTerms] = useState(false);
 
   const queryClient = useQueryClient();
 
@@ -131,6 +135,14 @@ export const Subscription = () => {
   const handleDelete = (item) => {
     setDeleteOpen(true);
     setCard(item);
+  };
+
+  const handleOpenPrivacy = () => {
+    setOpenPrivacy(true);
+  };
+
+  const handleOpenTerms = () => {
+    setOpenTerms(true);
   };
 
   const handlePaymentMethod = (item) => {
@@ -320,8 +332,11 @@ export const Subscription = () => {
                 <p className={acceptPrivacy ? 'text-green-500' : 'text-red-500'}>
                   {acceptPrivacy ? 'You have read and accepted' : "You haven't read and accepted"}
                 </p>
-                <a href="/privacy-policy?page=subscription" className="text-blue-500 hover:underline ml-1">
-                  Privacy Policy
+                <a
+                  onClick={() => handleOpenPrivacy()}
+                  className="flex items-center justify-center text-blue-500 cursor-pointer hover:underline ml-1"
+                >
+                  Privacy Policy <LuMousePointer />
                 </a>
               </div>
               <div className="flex gap-2">
@@ -335,8 +350,11 @@ export const Subscription = () => {
                 <p className={acceptTerms ? 'text-green-500' : 'text-red-500'}>
                   {acceptTerms ? 'You have read and accepted' : "You haven't read and accepted"}
                 </p>
-                <a href="/terms-and-conditions?page=subscription" className="text-blue-500 hover:underline ml-1">
-                  Terms and Condition
+                <a
+                  onClick={() => handleOpenTerms()}
+                  className="flex items-center justify-center text-blue-500 cursor-pointer hover:underline ml-1"
+                >
+                  Terms and Condition <LuMousePointer />
                 </a>
               </div>
             </div>
@@ -454,6 +472,8 @@ export const Subscription = () => {
             type={'card'}
             onClick={() => handleDefaultPaymentMethod()}
           />
+          <PrivacyDialog open={openPrivacy} setOpen={setOpenPrivacy} />
+          <TermsDialog open={openTerms} setOpen={setOpenTerms} />
         </div>
       </div>
       <div className="w-full bg-white rounded-lg border-t mt-8 p-6 text-center justify-center">

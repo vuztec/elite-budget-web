@@ -7,7 +7,7 @@ import { FaPenClip } from 'react-icons/fa6';
 import useUserStore from '../../app/user';
 import clsx from 'clsx';
 
-export const TermsAndConditions = () => {
+export const TermsAndConditions = ({ isDialog }) => {
   const { user, setAcceptTerms } = useUserStore();
   const [searchParams] = useSearchParams();
   const page = searchParams.get('page');
@@ -17,44 +17,57 @@ export const TermsAndConditions = () => {
   }, [terms]);
 
   return (
-    <div className="w-full sm:w-4/6 mx-auto flex flex-col items-center justify-center text-justify bg-white p-5 xl:p-10">
-      <div className="flex justify-between mb-5 bg-black px-3 py-1 rounded-full">
-        <a
-          href={
-            page === 'advert'
-              ? '/advert'
-              : page === 'signup'
-                ? '/signup'
-                : page === 'subscription'
-                  ? '/subscription'
-                  : '/login'
-          }
-          className="text-sm text-white hover:text-blue-500 underline cursor-pointer"
-        >
-          {page === 'advert'
-            ? 'Return to Advert'
-            : page === 'signup'
-              ? 'Return to Signup'
-              : page === 'subscription'
-                ? 'Return to Subscription'
-                : 'Return Login'}
-        </a>
-      </div>
-      <h1 className="flex flex-col items-center justify-start mb-4">
-        <img src={Logo} alt="logo" className="h-32 lg:h-32" />
-        <h1 className="font-bold">Elite Cash Flow Products, LLC</h1>
-        <a href="https://www.elitecashflowproducts.com/" target="_blank" className="text-blue-500 hover:underline">
-          www.elitecashflowproducts.com
-        </a>
-      </h1>
+    <div
+      className={clsx(
+        'w-full  mx-auto flex flex-col items-center justify-center text-justify bg-white p-5 xl:p-10',
+        isDialog ? '' : 'sm:w-4/6',
+      )}
+    >
+      {!isDialog ? (
+        <>
+          <div className="flex justify-between mb-5 bg-black px-3 py-1 rounded-full">
+            <a
+              href={
+                page === 'advert'
+                  ? '/advert'
+                  : page === 'signup'
+                    ? '/signup'
+                    : page === 'subscription'
+                      ? '/subscription'
+                      : '/login'
+              }
+              className="text-sm text-white hover:text-blue-500 underline cursor-pointer"
+            >
+              {page === 'advert'
+                ? 'Return to Advert'
+                : page === 'signup'
+                  ? 'Return to Signup'
+                  : page === 'subscription'
+                    ? 'Return to Subscription'
+                    : 'Return Login'}
+            </a>
+          </div>
+          <h1 className="flex flex-col items-center justify-start mb-4">
+            <img src={Logo} alt="logo" className="h-32 lg:h-32" />
+            <h1 className="font-bold">Elite Cash Flow Products, LLC</h1>
+            <a href="https://www.elitecashflowproducts.com/" target="_blank" className="text-blue-500 hover:underline">
+              www.elitecashflowproducts.com
+            </a>
+          </h1>
+        </>
+      ) : (
+        ''
+      )}
 
-      <div>
+      <div className={clsx('flex flex-col w-full ', isDialog ? 'pt-0' : 'py-10')}>
         <h1 className="font-bold text-xl lg:text-2xl mb-5 text-left">Terms and Conditions of Use</h1>
-        Please read these Terms and Conditions of Use (“TOU”) carefully. You must agree to these TOU{' '}
-        <span className="underline">before</span> you are permitted to use any Elite Cash Flow Products, LLC such as the
-        digital application or other cash flow products offered for sale by Elite Cash Flow Products, LLC (for any
-        purpose), whether on a website hosted by Elite Cash Flow Products, LLC or a third-party website (collectively
-        <span className="font-bold underline">“the Products”</span>).
+        <p>
+          Please read these Terms and Conditions of Use (“TOU”) carefully. You must agree to these TOU{' '}
+          <span className="font-bold underline">before</span> you are permitted to use any Elite Cash Flow Products, LLC
+          such as the digital application or other cash flow products offered for sale by Elite Cash Flow Products, LLC
+          (for any purpose), whether on a website hosted by Elite Cash Flow Products, LLC or a third-party website
+          (collectively <span className="font-bold underline">“the Products”</span>).
+        </p>
       </div>
 
       <div className="flex flex-col w-full py-10">
@@ -90,9 +103,9 @@ export const TermsAndConditions = () => {
           You agree to the following fees and payment schedule:
           <br />
           <br />
-          After the 14-day free trial of the Elite Web App, you will be billed a total of $95.88, and then billed
-          annually on the anniversary of the date you initially paid, referenced as your anniversary date. All other
-          product prices are posted and offered for sale at the listed prices.
+          After the 14-day free trial of the Elite Web App, you will be billed a total of <strong>$95.88</strong>, and
+          then billed annually on the anniversary of the date you initially paid, referenced as your anniversary date.
+          All other product prices are posted and offered for sale at the listed prices.
           <br />
           <br />
           If paying by debit card or credit card, you give us permission to automatically charge your credit or debit
@@ -589,28 +602,32 @@ export const TermsAndConditions = () => {
         <input type="radio" checked={terms} onChange={() => setTerms((prev) => !prev)} />
         {`I, ${user ? user?.FullName : 'the undersigned'}, confirm that I have read, fully understand, and agree to the terms outlined in the Terms and Conditions.`}
       </div>
-      <div className="flex justify-between mt-10 bg-black px-3 py-1 rounded-full">
-        <a
-          href={
-            page === 'advert'
-              ? '/advert'
+      {!isDialog ? (
+        <div className="flex justify-between mt-10 bg-black px-3 py-1 rounded-full">
+          <a
+            href={
+              page === 'advert'
+                ? '/advert'
+                : page === 'signup'
+                  ? '/signup'
+                  : page === 'subscription'
+                    ? '/subscription'
+                    : '/login'
+            }
+            className="text-sm text-white hover:text-blue-500 underline cursor-pointer"
+          >
+            {page === 'advert'
+              ? 'Return to Advert'
               : page === 'signup'
-                ? '/signup'
+                ? 'Return to Signup'
                 : page === 'subscription'
-                  ? '/subscription'
-                  : '/login'
-          }
-          className="text-sm text-white hover:text-blue-500 underline cursor-pointer"
-        >
-          {page === 'advert'
-            ? 'Return to Advert'
-            : page === 'signup'
-              ? 'Return to Signup'
-              : page === 'subscription'
-                ? 'Return to Subscription'
-                : 'Return Login'}
-        </a>
-      </div>
+                  ? 'Return to Subscription'
+                  : 'Return Login'}
+          </a>
+        </div>
+      ) : (
+        ''
+      )}
     </div>
   );
 };

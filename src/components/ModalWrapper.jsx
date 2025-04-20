@@ -140,3 +140,64 @@ const ModalWrapper = ({ open, handleClose, children }) => {
 };
 
 export default ModalWrapper;
+
+export const ModalWrapper2 = ({ open, handleClose, size, children }) => {
+  const cancelButtonRef = useRef(null);
+  let otherClass = 'sm:w-[99%] max-w-[99%] lg:max-w-[60%] xl:max-w-[50%] 2xl:max-w-[40%]';
+  if (size === 'xs') {
+    otherClass = 'sm:w-[69%] max-w-[99%] lg:max-w-[50%] xl:max-w-[35%] 2xl:max-w-[25%]';
+  } else if (size === 'sm') {
+    otherClass = 'sm:w-[69%] max-w-[99%] lg:max-w-[50%] xl:max-w-[40%] 2xl:max-w-[30%]';
+  } else if (size === 'lg') {
+    otherClass = 'sm:w-[99%] max-w-[99%] lg:max-w-[99%] xl:max-w-[80%] 2xl:max-w-[60%]';
+  } else if (size === 'xl') {
+    otherClass = 'sm:w-[99%] max-w-[99%]';
+  }
+
+  return (
+    <Transition.Root show={open} as={Fragment}>
+      <Dialog as="div" className="relative z-50 w-full" initialFocus={cancelButtonRef} onClose={handleClose}>
+        <Transition.Child
+          as={Fragment}
+          enter="ease-out duration-300"
+          enterFrom="opacity-0"
+          enterTo="opacity-100"
+          leave="ease-in duration-200"
+          leaveFrom="opacity-100"
+          leaveTo="opacity-0"
+        >
+          <div className="fixed inset-0 bg-black bg-opacity-60 transition-opacity" />
+        </Transition.Child>
+
+        <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+          <div className="flex h-full items-center justify-center p-4 text-center sm:p-0">
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+              enterTo="opacity-100 translate-y-0 sm:scale-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+              leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+            >
+              <Dialog.Panel
+                className={clsx(
+                  'w-full h-fit max-h-[90%] sm:h-fit overflow-y-scroll relative transform overflow-auto rounded-xl bg-white text-left shadow-xl transition-all pb-0 sm:my-8',
+                  otherClass,
+                )}
+              >
+                <div className="w-full bg-white px-2 pb-4 pt-5 sm:p-6 sm:pb-4">
+                  <div className="w-full sm:flex sm:items-start">
+                    <div className="w-full mt-3 sm:mt-0 sm:text-left">{children}</div>
+                  </div>
+                </div>
+              </Dialog.Panel>
+            </Transition.Child>
+          </div>
+        </div>
+      </Dialog>
+    </Transition.Root>
+  );
+};
+
+// export default ModalWrapper2;

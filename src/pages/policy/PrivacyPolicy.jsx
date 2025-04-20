@@ -4,7 +4,7 @@ import { useSearchParams } from 'react-router-dom';
 import useUserStore from '../../app/user';
 import clsx from 'clsx';
 
-export const PrivacyPolicy = () => {
+export const PrivacyPolicy = ({ isDialog }) => {
   const { user, setAcceptPrivacy } = useUserStore();
   const [searchParams] = useSearchParams();
   const page = searchParams.get('page');
@@ -14,38 +14,48 @@ export const PrivacyPolicy = () => {
   }, [privacy]);
 
   return (
-    <div className="w-full md:w-4/6 mx-auto flex flex-col items-center justify-center text-justify bg-white p-5 xl:p-10">
-      <div className="flex justify-between mb-10 bg-black px-3 py-1 rounded-full">
-        <a
-          href={
-            page === 'advert'
-              ? '/advert'
-              : page === 'signup'
-                ? '/signup'
-                : page === 'subscription'
-                  ? '/subscription'
-                  : '/login'
-          }
-          className="text-sm text-white hover:text-blue-500 underline cursor-pointer"
-        >
-          {page === 'advert'
-            ? 'Return to Advert'
-            : page === 'signup'
-              ? 'Return to Signup'
-              : page === 'subscription'
-                ? 'Return to Subscription'
-                : 'Return Login'}
-        </a>
-      </div>
-      <h1 className="flex flex-col items-center justify-start mb-4">
-        <img src={Logo} alt="logo" className="h-32 lg:h-32" />
-        <h1 className="font-bold">Elite Cash Flow Products, LLC</h1>
-        <a href="https://www.elitecashflowproducts.com/" target="_blank" className="text-blue-500 hover:underline">
-          www.elitecashflowproducts.com
-        </a>
-      </h1>
-
-      <div className="flex flex-col w-full py-10">
+    <div
+      className={clsx(
+        'w-full  mx-auto flex flex-col items-center justify-center text-justify bg-white p-5 xl:p-10',
+        isDialog ? '' : 'sm:w-4/6',
+      )}
+    >
+      {!isDialog ? (
+        <>
+          <div className="flex justify-between mb-10 bg-black px-3 py-1 rounded-full">
+            <a
+              href={
+                page === 'advert'
+                  ? '/advert'
+                  : page === 'signup'
+                    ? '/signup'
+                    : page === 'subscription'
+                      ? '/subscription'
+                      : '/login'
+              }
+              className="text-sm text-white hover:text-blue-500 underline cursor-pointer"
+            >
+              {page === 'advert'
+                ? 'Return to Advert'
+                : page === 'signup'
+                  ? 'Return to Signup'
+                  : page === 'subscription'
+                    ? 'Return to Subscription'
+                    : 'Return Login'}
+            </a>
+          </div>
+          <h1 className="flex flex-col items-center justify-start mb-4">
+            <img src={Logo} alt="logo" className="h-32 lg:h-32" />
+            <h1 className="font-bold">Elite Cash Flow Products, LLC</h1>
+            <a href="https://www.elitecashflowproducts.com/" target="_blank" className="text-blue-500 hover:underline">
+              www.elitecashflowproducts.com
+            </a>
+          </h1>
+        </>
+      ) : (
+        ''
+      )}
+      <div className={clsx('flex flex-col w-full ', isDialog ? 'pt-0' : 'py-10')}>
         <h1 className="font-bold text-xl lg:text-2xl mb-5 text-left">Privacy Policy</h1>
         <div>
           Your privacy is important to Elite Cash Flow Consulting. Please read this privacy notice carefully as it
@@ -56,11 +66,15 @@ export const PrivacyPolicy = () => {
         <br />
         <div>
           By using our website{' '}
-          <a href="https://www.elitecashflowproducts.com/" className="text-blue-500 hover:underline">
+          <a href="https://www.elitecashflowproducts.com/" target="_blank" className="text-blue-500 hover:underline">
             www.elitecashflowproducts.com
           </a>{' '}
           and the budget web application (the “App”){' '}
-          <a href="http://www.budget.elitecashflowproducts.com/" className="text-blue-500 hover:underline">
+          <a
+            // href="http://www.budget.elitecashflowproducts.com/"
+            // target="_blank"
+            className="text-blue-500 hover:underline"
+          >
             www.budget.elitecashflowproducts.com
           </a>
           , you signify your consent to the terms of our Privacy Policy. If you do not agree with any terms of this
@@ -266,13 +280,14 @@ export const PrivacyPolicy = () => {
           <br />
           <br />
           For further information on each of those rights, including the circumstances in which they apply, visit
-          <a href="https://www.gdpr.eu" className="text-blue-500 hover:underline">
+          <a href="https://www.gdpr.eu" target="_blank" className="text-blue-500 hover:underline">
+            {' '}
             www.gdpr.eu
           </a>
-          ;
+          {' or '}
           <a
-            href="https://ico.org.uk/for-organisations/guide-to-data-protection/guide-to-the-general-data-
-          protection-regulation-gdpr/individual-rights/"
+            href="https://ico.org.uk/for-organisations/guide-to-data-protection/guide-to-the-general-data-protection-regulation-gdpr/individual-rights/"
+            target="_blank"
             className="text-blue-500 hover:underline"
           >
             https://ico.org.uk/for-organisations/guide-to-data-protection/guide-to-the-general-data-
@@ -321,7 +336,11 @@ export const PrivacyPolicy = () => {
           <br />
           <br />
           For the “App”,{' '}
-          <a href="http://www.budget.elitecashflowproducts.com/" className="text-blue-500 hover:underline">
+          <a
+            // href="http://www.budget.elitecashflowproducts.com/"
+            // target="_blank"
+            className="text-blue-500 hover:underline"
+          >
             www.budget.elitecashflowproducts.com
           </a>{' '}
           we implement various security measures, such as SSL encryption, in an attempt to protect your personal
@@ -335,7 +354,11 @@ export const PrivacyPolicy = () => {
           <br />
           <br />
           The “App”,{' '}
-          <a href="http://www.budget.elitecashflowproducts.com/" className="text-blue-500 hover:underline">
+          <a
+            // href="http://www.budget.elitecashflowproducts.com/"
+            // target="_blank"
+            className="text-blue-500 hover:underline"
+          >
             www.budget.elitecashflowproducts.com
           </a>
         </p>
@@ -383,11 +406,15 @@ export const PrivacyPolicy = () => {
           This policy is effective as of January 14, 2025. We may change, modify or update this Privacy Policy at any
           time and will notify you of any fundamental changes by email or postal mail. Otherwise, we will reflect any
           such modifications to this Privacy Policy on our website{' '}
-          <a href="https://www.elitecashflowproducts.com/" className="text-blue-500 hover:underline">
+          <a href="https://www.elitecashflowproducts.com/" target="_blank" className="text-blue-500 hover:underline">
             www.elitecashflowproducts.com
           </a>{' '}
           and the sign-in page at{' '}
-          <a href="http://www.budget.elitecashflowproducts.com/" className="text-blue-500 hover:underline">
+          <a
+            href="http://www.budget.elitecashflowproducts.com/"
+            target="_blank"
+            className="text-blue-500 hover:underline"
+          >
             www.budget.elitecashflowproducts.com
           </a>
           . We suggest that you periodically consult this Privacy Policy. Your continued use of our website after any
@@ -397,7 +424,7 @@ export const PrivacyPolicy = () => {
         <p className="pl-6">
           If you have any questions or concerns about this Privacy Policy, the information we hold about you, or you
           wish to change your personal information in our records, please contact Michelle Romero, CPA, CEO at
-          <span className="text-blue-500 underline">michelle@elitecashflowproducts.com.</span>.
+          <span className="text-blue-500 underline"> michelle@elitecashflowproducts.com.</span>.
         </p>
         <h2 className="font-semibold text-lg">11. Do You Need Extra Help?</h2>
         <p className="pl-6">
@@ -416,28 +443,32 @@ export const PrivacyPolicy = () => {
         <input type="radio" checked={privacy} onChange={() => setPrivacy((prev) => !prev)} />
         {`I, ${user ? user?.FullName : 'the undersigned'}, confirm that I have read, fully understand, and agree to the terms outlined in the Privacy Policy.`}
       </div>
-      <div className="flex justify-between mt-10 bg-black px-3 py-1 rounded-full">
-        <a
-          href={
-            page === 'advert'
-              ? '/advert'
+      {!isDialog ? (
+        <div className="flex justify-between mt-10 bg-black px-3 py-1 rounded-full">
+          <a
+            href={
+              page === 'advert'
+                ? '/advert'
+                : page === 'signup'
+                  ? '/signup'
+                  : page === 'subscription'
+                    ? '/subscription'
+                    : '/login'
+            }
+            className="text-sm text-white hover:text-blue-500 underline cursor-pointer"
+          >
+            {page === 'advert'
+              ? 'Return to Advert'
               : page === 'signup'
-                ? '/signup'
+                ? 'Return to Signup'
                 : page === 'subscription'
-                  ? '/subscription'
-                  : '/login'
-          }
-          className="text-sm text-white hover:text-blue-500 underline cursor-pointer"
-        >
-          {page === 'advert'
-            ? 'Return to Advert'
-            : page === 'signup'
-              ? 'Return to Signup'
-              : page === 'subscription'
-                ? 'Return to Subscription'
-                : 'Return Login'}
-        </a>
-      </div>
+                  ? 'Return to Subscription'
+                  : 'Return Login'}
+          </a>
+        </div>
+      ) : (
+        ''
+      )}
     </div>
   );
 };

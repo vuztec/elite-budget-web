@@ -15,11 +15,15 @@ import Logo from '../../assets/logo.png';
 import Select from '../../components/Select';
 import { IoMdSend } from 'react-icons/io';
 import { MdOutlineRadioButtonChecked, MdOutlineRadioButtonUnchecked } from 'react-icons/md';
+import { PrivacyDialog, TermsDialog } from '../../components/DisplayDialogs';
+import { LuMousePointer } from 'react-icons/lu';
 
 export const Signup = () => {
   const CountryData = Country.getAllCountries();
   const { setUser, user, acceptPrivacy, acceptTerms } = useUserStore();
   const [open, setOpen] = useState(false);
+  const [openPrivacy, setOpenPrivacy] = useState(false);
+  const [openTerms, setOpenTerms] = useState(false);
 
   const dateFormats = DateFormats.map((format) => ({
     value: format.value,
@@ -130,6 +134,14 @@ export const Signup = () => {
 
       setValue('Separator', 'en-' + selCountryCode);
     }
+  };
+
+  const handleOpenPrivacy = () => {
+    setOpenPrivacy(true);
+  };
+
+  const handleOpenTerms = () => {
+    setOpenTerms(true);
   };
 
   return (
@@ -306,8 +318,11 @@ export const Signup = () => {
                           <p className={acceptPrivacy ? 'text-green-500' : 'text-red-500'}>
                             {acceptPrivacy ? 'You have read and accepted' : "You haven't read and accepted"}
                           </p>
-                          <a href="/privacy-policy?page=signup" className="text-blue-500 hover:underline ml-1">
-                            Privacy Policy
+                          <a
+                            onClick={() => handleOpenPrivacy()}
+                            className="flex items-center justify-center text-blue-500 cursor-pointer hover:underline ml-1"
+                          >
+                            Privacy Policy <LuMousePointer />
                           </a>
                         </div>
                         <div className="flex gap-2">
@@ -321,8 +336,11 @@ export const Signup = () => {
                           <p className={acceptTerms ? 'text-green-500' : 'text-red-500'}>
                             {acceptTerms ? 'You have read and accepted' : "You haven't read and accepted"}
                           </p>
-                          <a href="/terms-and-conditions?page=signup" className="text-blue-500 hover:underline ml-1">
-                            Terms and Condition
+                          <a
+                            onClick={() => handleOpenTerms()}
+                            className="flex items-center justify-center text-blue-500 cursor-pointer hover:underline ml-1"
+                          >
+                            Terms and Condition <LuMousePointer />
                           </a>
                         </div>
                       </div>
@@ -359,6 +377,8 @@ export const Signup = () => {
       </div>
       <div>
         <AddRootUser setUser={setUser} open={open} setOpen={setOpen} key={`UP${new Date().getTime().toString()}`} />
+        <PrivacyDialog open={openPrivacy} setOpen={setOpenPrivacy} />
+        <TermsDialog open={openTerms} setOpen={setOpenTerms} />
       </div>
     </>
   );
