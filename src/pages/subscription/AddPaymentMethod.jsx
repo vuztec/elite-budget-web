@@ -85,19 +85,25 @@ const AddPaymentMethod = ({ handleClose, isTrial }) => {
 
   return (
     <form onSubmit={handleSubmit}>
+      <h1 className="mt-2 mb-10 font-semibold flex items-center justify-center uppercase">
+        Enter Card Information below
+      </h1>
       <CardElement options={options} />
 
-      {isLoading ? (
-        <Loading />
-      ) : (
-        <button
-          disabled={isLoading || !stripe || !elements}
-          type="submit"
-          className={'px-4 py-1 rounded-full font-semibold bg-black text-white w-full my-2'}
-        >
-          Add Card
-        </button>
-      )}
+      <div className="mt-10 mb-2">
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <button
+            disabled={isLoading || !stripe || !elements}
+            type="submit"
+            className={'px-4 py-1 rounded-full font-semibold bg-black text-white w-full my-2'}
+          >
+            Add Card
+          </button>
+        )}
+      </div>
+
       {/* Show any error or success messages */}
       {message && <div id="payment-message">{message}</div>}
     </form>

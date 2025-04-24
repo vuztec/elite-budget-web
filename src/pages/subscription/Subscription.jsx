@@ -289,7 +289,9 @@ export const Subscription = () => {
                       {isTrial ? 'Trial Start Start' : 'Subscription Date'}
                     </td>
                     <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200 font-bold">
-                      {activeAccount ? getFormattedDateSubscription(user, subscription) : ''}
+                      {activeAccount
+                        ? getFormattedDateSubscription(user, isTrial ? user?.CreatedAt : subscription)
+                        : ''}
                     </td>
                   </tr>
                   <tr className="border-b border-gray">
