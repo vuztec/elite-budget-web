@@ -224,21 +224,21 @@ export const Subscription = () => {
                   <tr className="border-b border-gray">
                     <td className="min-w-fit whitespace-nowrap p-2">License Type</td>
                     <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200 font-bold">
-                      {isTrial ? '14 Days Trial' : 'Paid License'}
+                      {isTrial ? '14-Day FREE Trial' : 'Paid License'}
                     </td>
                   </tr>
                   <tr className="border-b border-gray">
-                    <td className="min-w-fit whitespace-nowrap p-2">Monthly Subscription</td>
+                    <td className="min-w-fit whitespace-nowrap p-2">Annual Subscription</td>
                     <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200 font-bold">
-                      <p>{isTrial ? 'Free for 14 days, then' : ''}</p>
-                      <div className="flex items-start gap-2">
-                        <p className=""> $7.99 per month</p>
-                        <p className="italic">(Billed Annually)</p>
+                      <p>{isTrial ? 'Start your 14-day FREE Trial! After that, just' : ''}</p>
+                      <div className="flex items-start gap-1">
+                        <p className=""> $95.88 upfront for a year</p>
+                        <p className="italic">(only $7.99/month)</p>
                       </div>
                     </td>
                   </tr>
                   <tr className="border-b border-gray">
-                    <td className="min-w-fit whitespace-nowrap p-2">Status</td>
+                    <td className="min-w-fit whitespace-nowrap p-2">Subscription Status</td>
                     <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200 font-bold">
                       <p>
                         {activeAccount ? (
@@ -260,7 +260,7 @@ export const Subscription = () => {
                                     onClick={() => setOpenPayment(true)}
                                     disabled={!acceptPrivacy || !acceptTerms}
                                   >
-                                    <MdOutlinePayment className="text-2xl" /> Add Card to Active
+                                    <MdOutlinePayment className="text-2xl" /> Add Card to Activate
                                   </button>
                                 ) : (
                                   <button
@@ -286,7 +286,7 @@ export const Subscription = () => {
                   </tr>
                   <tr className="border-b border-gray">
                     <td className="min-w-fit whitespace-nowrap p-2">
-                      {isTrial ? 'Trial Start Start' : 'Subscription Date'}
+                      {isTrial ? 'Trial Start Date' : 'Subscription Date'}
                     </td>
                     <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200 font-bold">
                       {activeAccount
@@ -310,7 +310,7 @@ export const Subscription = () => {
                           onChange={handleCheckboxChange}
                           className="sr-only peer"
                         />
-                        <div className="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-gray-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-gray-600"></div>
+                        <div className="relative w-11 h-6 bg-red-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-gray-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-500"></div>
                       </label>
                     </td>
                   </tr>

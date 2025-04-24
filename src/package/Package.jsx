@@ -1,17 +1,17 @@
-import React from "react";
-import Button from "../components/Button";
-import { useNavigate } from "react-router-dom";
-import { BsFillBagCheckFill } from "react-icons/bs";
+import React from 'react';
+import Button from '../components/Button';
+import { useNavigate } from 'react-router-dom';
+import { BsFillBagCheckFill } from 'react-icons/bs';
 
 export const Package = () => {
   const navigate = useNavigate();
   const viewSubscription = () => {
-    navigate("/subscription");
+    navigate('/subscription');
   };
   return (
     <div className="text-xl flex flex-col items-center justify-center p-5 bg-white">
       <p className="flex flex-col items-center justify-center font-bold text-red-500">
-        You do not have an Active Account.
+        Please subscribe to activate your 14-day free trial
       </p>
 
       <div className="flex flex-col items-center gap-1 pt-3">
