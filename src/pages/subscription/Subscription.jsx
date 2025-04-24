@@ -224,7 +224,7 @@ export const Subscription = () => {
                   <tr className="border-b border-gray">
                     <td className="min-w-fit whitespace-nowrap p-2">License Type</td>
                     <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200 font-bold">
-                      {isTrial ? '14 Days Trial' : 'Full Access'}
+                      {isTrial ? '14 Days Trial' : 'Paid License'}
                     </td>
                   </tr>
                   <tr className="border-b border-gray">
@@ -273,8 +273,8 @@ export const Subscription = () => {
                                     onClick={PayNow}
                                     disabled={!acceptPrivacy || !acceptTerms}
                                   >
-                                    <MdOutlinePayment className="text-2xl" />{' '}
-                                    {isTrial ? 'Activate Trial' : 'Subscribe Now'}
+                                    <MdOutlinePayment className="text-2xl" />
+                                    {'Subscribe Now'}
                                   </button>
                                 )}
                               </div>
@@ -292,7 +292,7 @@ export const Subscription = () => {
                       {activeAccount ? getFormattedDateSubscription(user, subscription) : ''}
                     </td>
                   </tr>
-                  <tr>
+                  <tr className="border-b border-gray">
                     <td className="min-w-fit whitespace-nowrap p-2">{isTrial ? 'Trial End Date' : 'Renewal Date'}</td>
                     <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200 font-bold">
                       {activeAccount ? getFormattedDateSubscription(user, isTrial ? trialEnd : renewal) : ''}
