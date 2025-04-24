@@ -33,6 +33,7 @@ const AddPaymentMethod = ({ handleClose, isTrial }) => {
       setMessage(error.message);
       // Handle error in the UI
     } else {
+      setIsLoading(true);
       // Pass the paymentMethod.id back to parent component or directly to backend
       // onPaymentMethodCreated(paymentMethod.id);
       axios
