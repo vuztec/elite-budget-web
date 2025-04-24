@@ -263,19 +263,22 @@ export const Subscription = () => {
                                     <MdOutlinePayment className="text-2xl" /> Add Card to Activate
                                   </button>
                                 ) : (
-                                  <button
-                                    className={clsx(
-                                      'w-fit flex gap-3 items-center justify-center px-2 py-1 rounded-full bg-black text-white',
-                                      !acceptPrivacy || !acceptTerms
-                                        ? 'cursor-not-allowed'
-                                        : 'hover:bg-[whitesmoke] hover:text-black  cursor-pointer',
-                                    )}
-                                    onClick={PayNow}
-                                    disabled={!acceptPrivacy || !acceptTerms}
-                                  >
-                                    <MdOutlinePayment className="text-2xl" />
-                                    {'Subscribe Now'}
-                                  </button>
+                                  // (
+                                  //   <button
+                                  //     className={clsx(
+                                  //       'w-fit flex gap-3 items-center justify-center px-2 py-1 rounded-full bg-black text-white',
+                                  //       !acceptPrivacy || !acceptTerms
+                                  //         ? 'cursor-not-allowed'
+                                  //         : 'hover:bg-[whitesmoke] hover:text-black  cursor-pointer',
+                                  //     )}
+                                  //     onClick={PayNow}
+                                  //     disabled={!acceptPrivacy || !acceptTerms}
+                                  //   >
+                                  //     <MdOutlinePayment className="text-2xl" />
+                                  //     {'Subscribe Now'}
+                                  //   </button>
+                                  // )
+                                  'In-Active'
                                 )}
                               </div>
                             )}
