@@ -1,5 +1,6 @@
 import { FaFacebookF, FaTwitter, FaInstagram, FaYoutube } from 'react-icons/fa';
 import { MdEmail } from 'react-icons/md';
+import { TbWorldWww } from 'react-icons/tb';
 import Logo from '../../../assets/logo.png';
 import MasterCard from '../../../assets/icon/mastercard.png';
 import Visa from '../../../assets/icon/visa.png';
@@ -32,8 +33,14 @@ function Footer() {
               <p className="text-[#0A0A0A] font-medium text-3xl">Need help?</p>
               <p className="text-[#0A0A0A] font-medium">We’ve got you covered with email support </p>
               <div className="mb-4 flex items-center gap-1">
-                <MdEmail className="inline mr-2 text-lg" />
-                <h1 className="text-[#494949] font-extrabold">appsupport@elitecashflowproducts.com</h1>
+                <TbWorldWww className="inline mr-2 text-lg" />
+                <a
+                  href="https://www.elitecashflowproducts.com/"
+                  target="_blank"
+                  className="text-blue-500 hover:underline"
+                >
+                  www.elitecashflowproducts.com
+                </a>
               </div>
             </div>
           </div>
