@@ -33,13 +33,13 @@ function Footer() {
               <p className="text-[#0A0A0A] font-medium text-3xl">Need help?</p>
               <p className="text-[#0A0A0A] font-medium">We’ve got you covered with email support </p>
               <div className="mb-4 flex items-center gap-1">
-                <TbWorldWww className="inline mr-2 text-lg" />
+                <MdEmail className="inline mr-2 text-lg" />
                 <a
                   href="https://www.elitecashflowproducts.com/"
                   target="_blank"
                   className="text-blue-500 hover:underline"
                 >
-                  www.elitecashflowproducts.com
+                  Click Here for Customer Service
                 </a>
               </div>
             </div>
