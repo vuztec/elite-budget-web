@@ -58,7 +58,7 @@ export const PrivacyPolicy = ({ isDialog }) => {
       <div className={clsx('flex flex-col w-full ', isDialog ? 'pt-0' : 'py-10')}>
         <h1 className="font-bold text-xl lg:text-2xl mb-5 text-left">Privacy Policy</h1>
         <div>
-          Your privacy is important to Elite Cash Flow Consulting. Please read this privacy notice carefully as it
+          Your privacy is important to Elite Cash Flow Products, LLC. Please read this privacy notice carefully as it
           contains important information on who we are, how and why we collect, store, use, and share personal
           information, your rights in relation to your personal information and on how to contact us and supervisory
           authorities in the event you have a complaint.
@@ -69,26 +69,23 @@ export const PrivacyPolicy = ({ isDialog }) => {
           <a href="https://www.elitecashflowproducts.com/" target="_blank" className="text-blue-500 hover:underline">
             www.elitecashflowproducts.com
           </a>{' '}
-          and the budget web application (the “App”){' '}
-          <a
-            // href="http://www.budget.elitecashflowproducts.com/"
-            // target="_blank"
-            className="text-blue-500 hover:underline"
-          >
-            www.budget.elitecashflowproducts.com
-          </a>
-          , you signify your consent to the terms of our Privacy Policy. If you do not agree with any terms of this
-          Privacy Policy, please do not use this site or the “App” or submit any personal information to us.
+          and the Elite Budget web application (the “App”){' '}
+          <a className="text-blue-500 hover:underline">www.budget.elitecashflowproducts.com</a>, you signify your
+          consent to the terms of our Privacy Policy. If you do not agree with any terms of this Privacy Policy, please
+          do not use this site or the “App” or submit any personal information to us.
         </div>
       </div>
 
       <div className="flex flex-col space-y-4">
         <h2 className="font-semibold text-lg">1. Who We Are</h2>
         <p>
-          Elite Cash Flow Products, LLC operating at www.elitecashflowproducts.com collects, uses and is responsible for
-          certain personal information about you. Our Elite budget web application (the “App”),
-          www.budget.elitecashflowproducts.com also collects, uses and is responsible for certain personal information
-          about you.
+          Elite Cash Flow Products, LLC operating at{' '}
+          <a href="https://www.elitecashflowproducts.com/" target="_blank" className="text-blue-500 hover:underline">
+            www.elitecashflowproducts.com
+          </a>{' '}
+          collects, uses and is responsible for certain personal information about you. Our Elite budget web application
+          (the “App”), <a className="text-blue-500 hover:underline">www.budget.elitecashflowproducts.com</a> also
+          collects, uses and is responsible for certain personal information about you.
         </p>
 
         <h2 className="font-semibold text-lg">2. Children’s Online Privacy Protection Act</h2>
@@ -104,15 +101,18 @@ export const PrivacyPolicy = ({ isDialog }) => {
 
         <h2 className="font-semibold text-lg">3. The Personal Information We Collect and Use</h2>
         <ul className="pl-8 list-disc list-outside">
-          <li>
-            <h1 className="font-bold">Information Collected by Us:</h1>
+          <div>
+            <h1 className="font-bold">a. Information Collected by Us:</h1>
             Elite Cash Flow Products, LLC may collect, use, and is responsible for certain personal information that you
             provide when you voluntarily sign up for the “App”, e-mails or free gifts, register for a class, workshop or
             presentation, leave comments, order a service or product, fill out any type of form, access private
             membership pages, or otherwise contact Elite Cash Flow Products, LLC via an online form or e-mail. The
             information collected may include your name, e-mail, address, phone number, and/or billing information. You
-            are not required to provide any personally identifiable information to merely access or visit the website
-            www.elitecashflowproducts.com or the “App”, www.budget.elitecashflowproducts.com.
+            are not required to provide any personally identifiable information to merely access or visit the website{' '}
+            <a href="https://www.elitecashflowproducts.com/" target="_blank" className="text-blue-500 hover:underline">
+              www.elitecashflowproducts.com
+            </a>{' '}
+            or the “App”, <a className="text-blue-500 hover:underline">www.budget.elitecashflowproducts.com</a>.
             <br />
             <br />
             Elite Cash Flow Products, LLC may collect domain information, your numerical IP address, the type of browser
@@ -125,7 +125,7 @@ export const PrivacyPolicy = ({ isDialog }) => {
             website is accessed.
             <br />
             <br />
-            We will ask for your consent to allow us to use cookies. Elite Cash Flow Products, LLC or its third- party
+            We will ask for your consent to allow us to use cookies. Elite Cash Flow Products, LLC or its third-party
             vendors may collect nonpersonal information through the use of these technologies. Nonpersonal information
             might include the browser you use, the type of computer you use and technical information about your means
             of connection to this website such as the operating systems and the Internet service providers utilized and
@@ -141,24 +141,24 @@ export const PrivacyPolicy = ({ isDialog }) => {
             <br />
             If you are located in the United Kingdom (“UK”), we are regulated under UK data regulations known as “UK
             GDPR.”
-          </li>
+          </div>
           <br />
-          <li>
-            <h1 className="font-bold">Information Collected from Other Sources</h1>
+          <div>
+            <h1 className="font-bold">b. Information Collected from Other Sources</h1>
             We also obtain personal information from the use of other third-party sources on our website such as
             Calendly, DocuSign and Survey Monkey which then passes the information entered to Elite Cash Flow Products,
             LLC.
-          </li>
+          </div>
           <br />
-          <li>
-            <h1 className="font-bold">How we use your personal information</h1>
+          <div>
+            <h1 className="font-bold">c. How we use your personal information</h1>
             Elite Cash Flow Products, LLC collects such information in order to send e-mails, fulfill orders, deliver
             services and products, complete customer transactions, oversee contests and promotions and improve website
             performance and customer service.
-          </li>
+          </div>
           <br />
-          <li>
-            <h1 className="font-bold">Who We Share Your Personal Information With</h1>
+          <div>
+            <h1 className="font-bold">d. Who We Share Your Personal Information With</h1>
             Elite Cash Flow Products, LLC respects your privacy and will never sell, trade or transfer your personally
             identifiable information to third parties (beyond what is necessary for fulfilling a customer transaction or
             for the basic functionality of an online service) without your consent.
@@ -196,27 +196,27 @@ export const PrivacyPolicy = ({ isDialog }) => {
             <br />
             <br />
             We will not share your personal information with any other third party.
-          </li>
+          </div>
           <br />
-          <li>
-            <h1 className="font-bold">Whether Information Has to Be Provided by You and Why</h1>
+          <div>
+            <h1 className="font-bold">e. Whether Information Has to Be Provided by You and Why</h1>
             We do not require you to provide any personal data in order to access the public areas of our website. We
             will inform you when we collect it whether you are required to provide the information to us.
-          </li>
+          </div>
           <br />
-          <li>
-            <h1 className="font-bold">How Long Your Personal Information Will Be Kept</h1>
+          <div>
+            <h1 className="font-bold">f. How Long Your Personal Information Will Be Kept</h1>
             We will hold all non-client personal data until you let us know you would like for us to delete it or
             unsubscribe from our marketing contacts, which you are free to do at any time. We will hold all client and
             customer personal data in our files for six years.
-          </li>
+          </div>
           <br />
-          <li>
-            <h1 className="font-bold">Reasons We Can Collect and Use Your Personal Information</h1>
+          <div>
+            <h1 className="font-bold">g. Reasons We Can Collect and Use Your Personal Information</h1>
             Elite Cash Flow Products, LLC collects and uses your personal information to send e-mails, fulfill orders,
             deliver services and products, complete customer transactions, oversee contests and promotions and improve
             website performance and customer service.
-          </li>
+          </div>
         </ul>
 
         <h2 className="font-semibold text-lg">4. Use and Transfer of Your Information Out of the EEA, UK</h2>
@@ -224,9 +224,8 @@ export const PrivacyPolicy = ({ isDialog }) => {
           This website is operated in the United States and third parties with whom we might share your personal
           information as explained above are also located in the United States. If you are located in the EEA, the UK,
           or elsewhere outside of the United States, please be aware that{' '}
-          <span className="font-bold">any information you provide will be transferred to the United States.</span>
-          By using this website, participating in any of its services and/or providing your information, you consent to
-          this transfer.
+          <strong>any information you provide will be transferred to the United States</strong>. By using this website,
+          participating in any of its services and/or providing your information, you consent to this transfer
           <br />
           <br />
           These countries do not have the same data protection laws as the EEA or UK. While the European Commission has
@@ -253,7 +252,7 @@ export const PrivacyPolicy = ({ isDialog }) => {
           If you are covered by the General Data Protection Regulation, or other relevant privacy regulations, you have
           a number of important rights free of charge. In summary, those include rights to:
         </p>
-        <ul className="pl-8 list-disc list-inside">
+        <ul className="custom-list mt-0 flex flex-col gap-1 -ml-4">
           <li>Fair processing of information and transparency over how we use your use personal information</li>
           <li>
             Access to your personal information and to certain other supplementary information that this Privacy Notice
@@ -279,9 +278,8 @@ export const PrivacyPolicy = ({ isDialog }) => {
           laws.
           <br />
           <br />
-          For further information on each of those rights, including the circumstances in which they apply, visit
+          For further information on each of those rights, including the circumstances in which they apply, visit{' '}
           <a href="https://www.gdpr.eu" target="_blank" className="text-blue-500 hover:underline">
-            {' '}
             www.gdpr.eu
           </a>
           {' or '}
@@ -293,8 +291,8 @@ export const PrivacyPolicy = ({ isDialog }) => {
             https://ico.org.uk/for-organisations/guide-to-data-protection/guide-to-the-general-data-
             protection-regulation-gdpr/individual-rights/
           </a>
-          ; or
-          <a href="https://www.priv.gc.ca/en" className="text-blue-500 hover:underline">
+          ; {' or '}
+          <a href="https://www.priv.gc.ca/en" target="_blank" className="text-blue-500 hover:underline">
             https://www.priv.gc.ca/en
           </a>
           .
@@ -303,7 +301,7 @@ export const PrivacyPolicy = ({ isDialog }) => {
           If you would like to exercise any of those rights, please:
         </p>
 
-        <ul className="pl-8 list-disc list-inside">
+        <ul className="custom-list mt-0 flex flex-col gap-1 -ml-4">
           <li>Email, call, or write to us</li>
           <li>
             Provide us enough information to identify you (e.g., first and last name, account number, user name,
@@ -311,7 +309,7 @@ export const PrivacyPolicy = ({ isDialog }) => {
           </li>
           <li>
             Provide us proof of your identity and address (a copy of your driver’s license or passport and a recent
-            utility or credit card bill)
+            utility or credit card bill).
           </li>
           <li>
             Provide us with the information to which your request relates including any account or reference numbers, if
@@ -335,15 +333,8 @@ export const PrivacyPolicy = ({ isDialog }) => {
           information you provide to us.
           <br />
           <br />
-          For the “App”,{' '}
-          <a
-            // href="http://www.budget.elitecashflowproducts.com/"
-            // target="_blank"
-            className="text-blue-500 hover:underline"
-          >
-            www.budget.elitecashflowproducts.com
-          </a>{' '}
-          we implement various security measures, such as SSL encryption, in an attempt to protect your personal
+          For the “App”, <a className="text-blue-500 hover:underline">www.budget.elitecashflowproducts.com</a> we
+          implement various security measures, such as SSL encryption, in an attempt to protect your personal
           information from unauthorized access.
           <br />
           <br />
@@ -353,16 +344,9 @@ export const PrivacyPolicy = ({ isDialog }) => {
           own risk.
           <br />
           <br />
-          The “App”,{' '}
-          <a
-            // href="http://www.budget.elitecashflowproducts.com/"
-            // target="_blank"
-            className="text-blue-500 hover:underline"
-          >
-            www.budget.elitecashflowproducts.com
-          </a>
+          The “App”, <a className="text-blue-500 hover:underline">www.budget.elitecashflowproducts.com</a>
         </p>
-        <ul className="pl-8 list-disc list-outside">
+        <ul className="custom-list mt-0 flex flex-col gap-1 -ml-4">
           <li>
             <strong>Account Security:</strong> The user will create a password, which is encrypted for privacy and
             security allowing the user to access their account. If a user forgets their password, they can reset it
@@ -377,9 +361,9 @@ export const PrivacyPolicy = ({ isDialog }) => {
           </li>
           <li>
             <strong>Payment Information:</strong> When you purchase a subscription, we collect credit card information
-            via a third-party payment processor. Your credit card details are encrypted and handled securely. We do not
-            store this information on our servers. Third-party payments processors are required to adhere to strict
-            privacy and security standards to protect your financial information.
+            via a third-party payment processor. Your credit card details are encrypted and handled securely.
+            Third-party payments processors are required to adhere to strict privacy and security standards to protect
+            your financial information.
           </li>
         </ul>
 
@@ -409,21 +393,14 @@ export const PrivacyPolicy = ({ isDialog }) => {
           <a href="https://www.elitecashflowproducts.com/" target="_blank" className="text-blue-500 hover:underline">
             www.elitecashflowproducts.com
           </a>{' '}
-          and the sign-in page at{' '}
-          <a
-            href="http://www.budget.elitecashflowproducts.com/"
-            target="_blank"
-            className="text-blue-500 hover:underline"
-          >
-            www.budget.elitecashflowproducts.com
-          </a>
-          . We suggest that you periodically consult this Privacy Policy. Your continued use of our website after any
-          such changes constitutes your acceptance of this Privacy Policy, as revised.
+          and the sign-in page at <a className="text-blue-500 hover:underline">www.budget.elitecashflowproducts.com</a>.
+          We suggest that you periodically consult this Privacy Policy. Your continued use of our website after any such
+          changes constitutes your acceptance of this Privacy Policy, as revised.
         </p>
         <h2 className="font-semibold text-lg">10. How to Contact Us</h2>
         <p className="pl-6">
           If you have any questions or concerns about this Privacy Policy, the information we hold about you, or you
-          wish to change your personal information in our records, please contact Michelle Romero, CPA, CEO at
+          wish to change your personal information in our records, please contact Michelle Romero, CPA, CEO at{' '}
           <span className="text-blue-500 underline"> michelle@elitecashflowproducts.com.</span>.
         </p>
         <h2 className="font-semibold text-lg">11. Do You Need Extra Help?</h2>
