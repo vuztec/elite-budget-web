@@ -40,17 +40,18 @@ export const Login = () => {
         Password,
       })
       .then(({ data }) => {
-        setUser(data.user);
-        setJwt(data.jwt);
+        // setUser(data.user);
+        // setJwt(data.jwt);
         toast.update(id, {
-          render: data.message,
+          render: 'Otp sent successfully on your email.',
           type: 'success',
           isLoading: false,
           autoClose: 3000,
         });
-        navigate('/');
+        navigate(`/otp?email=${Email}`);
       })
       .catch((err) => {
+        console.log(err);
         toast.update(id, {
           render: handleAxiosResponseError(err),
           type: 'error',

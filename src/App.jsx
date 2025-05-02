@@ -35,6 +35,7 @@ import VerifyOtp from './pages/verifyotp';
 import UpdatePassword from './pages/updatepassword';
 import { BiArrowToTop } from 'react-icons/bi';
 import About from './pages/policy/About';
+import OtpPage from './pages/otp';
 
 function Layout() {
   //const user = false;
@@ -110,6 +111,7 @@ function App() {
         <Route path="/advert" element={<Advert />} />
         <Route path="/old" element={<OldHome />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/otp" element={<OtpPage />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/forgetpassword" element={<ForgetPassword />} />
         <Route path="/verifyotp" element={<VerifyOtp />} />
