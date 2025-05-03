@@ -92,6 +92,9 @@ const OtpPage = () => {
           If you do not see it in your inbox, please check your <strong>Spam/Junk folder</strong>.
         </p>
         <h1 className="text-2xl font-bold pt-5">Enter the 6-digit OTP</h1>
+        <p className="w-full text-center text-xs">
+          This OTP will <strong>expire in 5 minutes</strong>.
+        </p>
       </div>
 
       <div className="flex gap-2 mb-4">
