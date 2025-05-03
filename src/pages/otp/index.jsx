@@ -83,6 +83,10 @@ const OtpPage = () => {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 px-4">
       <h1 className="text-2xl font-bold mb-4">Enter the 6-digit OTP</h1>
+      <p>
+        A One-Time PIN (OTP) has been sent to <strong>{user.Email}</strong>. If you do not see it in your inbox, please
+        check your <strong>Spam</strong> or <strong>Junk</strong> folder.
+      </p>
 
       <div className="flex gap-2 mb-4">
         {otp.map((digit, index) => (
