@@ -4,6 +4,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import useUserStore from '../../app/user';
 import { toast } from 'react-toastify';
 import { handleAxiosResponseError } from '../../utils/handleResponseError';
+import Logo from '../../assets/logo.png';
 
 const OtpPage = () => {
   const [otp, setOtp] = useState(Array(6).fill(''));
@@ -82,12 +83,15 @@ const OtpPage = () => {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 px-4">
-      <div className="flex flex-col mb-4 items-center">
-        <p className="w-[450px] text-center">
-          A One-Time PIN (OTP) has been sent to <strong>{email}</strong>. If you do not see it in your inbox, please
-          check your <strong>Spam</strong>/<strong>Junk</strong> folder.
+      <div className="w-full flex flex-col mb-4 items-center">
+        <img src={Logo} alt="logo" className="h-32 lg:h-32 pb-5" />
+        <p className="w-full text-center">
+          <strong>A One-Time PIN (OTP)</strong> has been sent to <strong>{email}</strong>.
         </p>
-        <h1 className="text-2xl font-bold ">Enter the 6-digit OTP</h1>
+        <p className="w-full text-center">
+          If you do not see it in your inbox, please check your <strong>Spam/Junk folder</strong>.
+        </p>
+        <h1 className="text-2xl font-bold pt-5">Enter the 6-digit OTP</h1>
       </div>
 
       <div className="flex gap-2 mb-4">
@@ -109,7 +113,7 @@ const OtpPage = () => {
       <button
         onClick={handleSubmit}
         disabled={loading}
-        className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50"
+        className="px-4 py-2 bg-gray-900 text-white rounded hover:bg-gray-700 disabled:opacity-50"
       >
         {loading ? 'Verifying...' : 'Submit'}
       </button>
