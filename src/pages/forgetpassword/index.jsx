@@ -51,7 +51,7 @@ const ForgetPassword = () => {
               className="form-container w-full md:w-[400px] flex flex-col gap-y-8 bg-white px-10 pt-14 pb-14"
             >
               <div className="">
-                <p className="text-[#00ABBD] text-3xl font-bold text-center">Forget Password!</p>
+                <p className="text-black text-3xl font-bold text-center">Forgot Password?</p>
                 <p className="text-center text-base text-gray-700 ">Enter your email.</p>
               </div>
 
