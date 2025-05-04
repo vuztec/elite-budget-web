@@ -20,7 +20,7 @@ const ForgetPassword = () => {
     const id = toast.loading('Loading....');
 
     axios
-      .post('/api/auth/forgetpassword', postdata)
+      .post('/api/auth/forget-password', { Email: postdata.email })
       .then(({ data }) => {
         toast.update(id, {
           render: data.message,
@@ -28,10 +28,10 @@ const ForgetPassword = () => {
           isLoading: false,
           autoClose: 3000,
         });
-        navigate('/verifyotp?email=' + postdata.email);
+        navigate(`/otp?email=${postdata.email}&type=reset`);
       })
       .catch((err) => {
-        console.log(handleAxiosResponseError(err));
+        console.log(err);
         toast.update(id, {
           render: handleAxiosResponseError(err),
           type: 'error',

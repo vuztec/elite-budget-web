@@ -17,6 +17,7 @@ const VerifyOtp = () => {
   const inputRefs = useRef([]);
   const params = useQuery();
   const email = params.get('email');
+  const id = params.get('id');
   const navigate = useNavigate();
 
   const [expiryTime, setExpiryTime] = useState(3 * 60); // 3 minutes in seconds

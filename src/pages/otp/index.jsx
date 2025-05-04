@@ -12,6 +12,7 @@ const OtpPage = () => {
   const { setUser, setJwt, user } = useUserStore();
   const [searchParams] = useSearchParams();
   const email = searchParams.get('email');
+  const type = searchParams.get('type');
   const [timeLeft, setTimeLeft] = useState(300);
 
   const inputs = useRef([]);
@@ -57,18 +58,23 @@ const OtpPage = () => {
       .post('/api/otp/verify', {
         Email: email,
         Code: code,
+        type: type,
       })
       .then(({ data }) => {
-        setLoading(false);
-        setUser(data.user);
-        setJwt(data.jwt);
         toast.update(id, {
           render: 'Otp verified successfully.',
           type: 'success',
           isLoading: false,
           autoClose: 3000,
         });
-        navigate(`/`);
+        if (type === 'reset') {
+          navigate(`/update-password?id=${data.id}`);
+        } else {
+          setUser(data.user);
+          setJwt(data.jwt);
+          navigate(`/`);
+        }
+        setLoading(false);
       })
       .catch((err) => {
         setLoading(false);

@@ -115,7 +115,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/forgetpassword" element={<ForgetPassword />} />
         <Route path="/verifyotp" element={<VerifyOtp />} />
-        <Route path="/updatepassword" element={<UpdatePassword />} />
+        <Route path="/update-password" element={<UpdatePassword />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
         <Route path="/about-elite" element={<About />} />

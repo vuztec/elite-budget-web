@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import { handleAxiosResponseError } from '../../utils/handleResponseError';
 import Loading from '../../components/Loader';
 import { useLocation, useNavigate } from 'react-router-dom';
+import useUserStore from '../../app/user';
 
 const useQuery = () => {
   return new URLSearchParams(useLocation().search);
@@ -14,8 +15,10 @@ const useQuery = () => {
 const UpdatePassword = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const { setUser, setJwt } = useUserStore();
+
   const params = useQuery();
-  const email = params.get('email');
+  const otpId = params.get('id');
 
   const {
     register,
@@ -30,19 +33,21 @@ const UpdatePassword = () => {
     const id = toast.loading('Loading....');
     setIsLoading(true);
     axios
-      .post('/api/auth/updatepassword', { password: data.password, email })
+      .patch('/api/auth/reset-password', { Password: data.password, otpId: Number(otpId) })
       .then(({ data }) => {
         setIsLoading(false);
-        navigate('/login');
+        setUser(data.user);
+        setJwt(data.jwt);
+        navigate(`/`);
         toast.update(id, {
-          render: data.message,
+          render: 'Password changed successfully',
           type: 'success',
           isLoading: false,
           autoClose: 3000,
         });
       })
       .catch((err) => {
-        console.log(handleAxiosResponseError(err));
+        console.log(err);
         setIsLoading(false);
         toast.update(id, {
           render: handleAxiosResponseError(err),
