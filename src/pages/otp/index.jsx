@@ -131,7 +131,11 @@ const OtpPage = () => {
     axios
       .post(`/api/otp`, { Email: email })
       .then(({ data }) => {
-        console.log(data);
+        const expiry = new Date(data.ExpiresAt).getTime(); // Ensure it's a valid date string
+        const now = new Date().getTime();
+        const diff = Math.floor((expiry - now) / 1000);
+
+        setTimeLeft(diff > 0 ? diff : 0);
         queryClient.setQueryData(['otp', email], () => data);
       })
       .catch((err) => {
