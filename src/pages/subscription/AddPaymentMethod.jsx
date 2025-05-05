@@ -88,7 +88,9 @@ const AddPaymentMethod = ({ handleClose, isTrial }) => {
       <h1 className="mt-2 mb-10 font-semibold flex items-center justify-center uppercase">
         Enter Card Information below
       </h1>
-      <CardElement options={options} />
+      <div className="border border-gray-300 rounded-md p-3">
+        <CardElement options={options} />
+      </div>
 
       <div className="mt-10 mb-2">
         {isLoading ? (
