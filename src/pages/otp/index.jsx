@@ -7,6 +7,7 @@ import { handleAxiosResponseError } from '../../utils/handleResponseError';
 import Logo from '../../assets/logo.png';
 import { getOtp } from '../../config/api';
 import { useQuery, useQueryClient } from 'react-query';
+import Loading from '../../components/Loader';
 
 const OtpPage = () => {
   const [otp, setOtp] = useState(Array(6).fill(''));
@@ -128,13 +129,14 @@ const OtpPage = () => {
   };
 
   const handleResend = () => {
+    setLoading(true);
     axios
       .post(`/api/otp`, { Email: email })
       .then(({ data }) => {
         const expiry = new Date(data.ExpiresAt).getTime(); // Ensure it's a valid date string
         const now = new Date().getTime();
         const diff = Math.floor((expiry - now) / 1000);
-
+        setLoading(false);
         setTimeLeft(diff > 0 ? diff : 0);
         queryClient.setQueryData(['otp', email], () => data);
       })
@@ -166,40 +168,48 @@ const OtpPage = () => {
         )}
       </div>
 
-      {timeLeft > 0 && (
+      {loading ? (
+        <div className="py-5">
+          <Loading />
+        </div>
+      ) : (
         <>
-          <div className="flex gap-2 mb-4">
-            {otp.map((digit, index) => (
-              <input
-                key={index}
-                ref={(el) => (inputs.current[index] = el)}
-                type="text"
-                inputMode="numeric"
-                maxLength={1}
-                value={digit}
-                onChange={(e) => handleChange(index, e.target.value)}
-                onKeyDown={(e) => handleKeyDown(index, e)}
-                className="w-12 h-12 text-center text-xl border rounded-md focus:outline-blue-500"
-              />
-            ))}
-          </div>
-          <button
-            onClick={handleSubmit}
-            disabled={loading}
-            className="px-4 py-2 bg-gray-900 text-white rounded hover:bg-gray-700 disabled:opacity-50"
-          >
-            {loading ? 'Verifying...' : 'Submit'}
-          </button>
+          {timeLeft > 0 && (
+            <>
+              <div className="flex gap-2 mb-4">
+                {otp.map((digit, index) => (
+                  <input
+                    key={index}
+                    ref={(el) => (inputs.current[index] = el)}
+                    type="text"
+                    inputMode="numeric"
+                    maxLength={1}
+                    value={digit}
+                    onChange={(e) => handleChange(index, e.target.value)}
+                    onKeyDown={(e) => handleKeyDown(index, e)}
+                    className="w-12 h-12 text-center text-xl border rounded-md focus:outline-blue-500"
+                  />
+                ))}
+              </div>
+              <button
+                onClick={handleSubmit}
+                disabled={loading}
+                className="px-4 py-2 bg-gray-900 text-white rounded hover:bg-gray-700 disabled:opacity-50"
+              >
+                {loading ? 'Verifying...' : 'Submit'}
+              </button>
+            </>
+          )}
+          {timeLeft <= 0 && (
+            <button
+              onClick={handleResend}
+              disabled={loading}
+              className="px-4 py-2 bg-gray-900 text-white rounded hover:bg-gray-700 disabled:opacity-50"
+            >
+              {loading ? 'Sending OTP...' : 'Resend OTP'}
+            </button>
+          )}
         </>
-      )}
-      {timeLeft <= 0 && (
-        <button
-          onClick={handleResend}
-          disabled={loading}
-          className="px-4 py-2 bg-gray-900 text-white rounded hover:bg-gray-700 disabled:opacity-50"
-        >
-          {loading ? 'Sending OTP...' : 'Resend OTP'}
-        </button>
       )}
     </div>
   );
