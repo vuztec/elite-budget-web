@@ -11,48 +11,51 @@ const AddPaymentMethod = ({ handleClose, isTrial }) => {
   const elements = useElements();
   const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
   const queryClient = useQueryClient();
   const { setUser } = useUserStore();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (!stripe || !elements) {
-      return; // Stripe.js hasn't loaded yet
-    }
+    if (!stripe || !elements) return;
 
     const cardElement = elements.getElement(CardElement);
 
     const { error, paymentMethod } = await stripe.createPaymentMethod({
       type: 'card',
       card: cardElement,
+      billing_details: {
+        name,
+        email,
+      },
     });
 
     if (error) {
       console.error(error);
       setMessage(error.message);
-      // Handle error in the UI
     } else {
       setIsLoading(true);
-      // Pass the paymentMethod.id back to parent component or directly to backend
-      // onPaymentMethodCreated(paymentMethod.id);
       axios
-        .post('/api/payment/payment-method', { PaymentMethodId: paymentMethod.id })
+        .post('/api/payment/payment-method', {
+          PaymentMethodId: paymentMethod.id,
+          name,
+          email,
+        })
         .then(({ data }) => {
-          // setUser(data);
-          // navigate('/');
-
           if (isTrial) {
             setUser(data.user);
             queryClient.setQueryData(['payment-methods'], (prev) => ({
               customer: data.customer,
-              cards: [...prev?.cards, paymentMethod],
+              cards: [...(prev?.cards || []), paymentMethod],
             }));
-          } else
+          } else {
             queryClient.setQueryData(['payment-methods'], (prev) => ({
               ...prev,
-              cards: [...prev.cards, paymentMethod],
+              cards: [...(prev?.cards || []), paymentMethod],
             }));
+          }
 
           handleClose();
           setIsLoading(false);
@@ -72,14 +75,9 @@ const AddPaymentMethod = ({ handleClose, isTrial }) => {
         fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
         fontSize: '16px',
         fontSmoothing: 'antialiased',
-        '::placeholder': {
-          color: '#aab7c4',
-        },
+        '::placeholder': { color: '#aab7c4' },
       },
-      invalid: {
-        color: '#fa755a',
-        iconColor: '#fa755a',
-      },
+      invalid: { color: '#fa755a', iconColor: '#fa755a' },
     },
   };
 
@@ -88,8 +86,36 @@ const AddPaymentMethod = ({ handleClose, isTrial }) => {
       <h1 className="mt-2 mb-10 font-semibold flex items-center justify-center uppercase">
         Enter Card Information below
       </h1>
-      <div className="border border-gray-300 rounded-md p-3">
-        <CardElement options={options} />
+
+      <div className="mb-4">
+        <label className="block mb-1 text-sm font-medium text-gray-700">Name</label>
+        <input
+          type="text"
+          className="w-full px-3 py-2 border rounded-md"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder="John Doe"
+          required
+        />
+      </div>
+
+      <div className="mb-4">
+        <label className="block mb-1 text-sm font-medium text-gray-700">Email</label>
+        <input
+          type="email"
+          className="w-full px-3 py-2 border rounded-md"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="john@example.com"
+          required
+        />
+      </div>
+
+      <div className="mb-4">
+        <label className="block mb-1 text-sm font-medium text-gray-700">Card Information (Number, Expiry, CVC)</label>
+        <div className="border border-gray-300 rounded-md p-3">
+          <CardElement options={options} />
+        </div>
       </div>
 
       <div className="mt-10 mb-2">
@@ -99,15 +125,18 @@ const AddPaymentMethod = ({ handleClose, isTrial }) => {
           <button
             disabled={isLoading || !stripe || !elements}
             type="submit"
-            className={'px-4 py-1 rounded-full font-semibold bg-black text-white w-full my-2'}
+            className="px-4 py-1 rounded-full font-semibold bg-black text-white w-full my-2"
           >
             Add Card
           </button>
         )}
       </div>
 
-      {/* Show any error or success messages */}
-      {message && <div id="payment-message">{message}</div>}
+      {message && (
+        <div id="payment-message" className="text-red-500 text-sm">
+          {message}
+        </div>
+      )}
     </form>
   );
 };

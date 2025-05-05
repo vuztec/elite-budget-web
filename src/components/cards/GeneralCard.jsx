@@ -37,23 +37,24 @@ const GeneralCard = ({ card, handlePayment, handleDelete, isTrial, defaultId, ha
           </svg>
         </div>
       </div>
-      <div onClick={(e) => e.stopPropagation()} className="flex justify-between items-center">
+      <div onClick={(e) => e.stopPropagation()} className="flex gap-4 justify-between items-center">
+        <div>{card?.billing_details?.name}</div>
         {!isDefault ? (
-          <>
+          <div className="flex gap-2">
             <button
-              className="font-bold hover:font-extrabold text-gray-300 hover:text-gray-200 pt-4"
+              className="font-bold hover:font-extrabold text-gray-300 hover:text-gray-200 pt-2"
               onClick={() => handleDelete(card)}
               disabled={isTrial && isDefault}
             >
               Delete
             </button>
             <button
-              className="font-bold hover:font-extrabold text-gray-300 hover:text-gray-200 pt-4"
+              className="font-bold hover:font-extrabold text-gray-300 hover:text-gray-200 pt-2"
               onClick={() => handlePaymentMethod(card)}
             >
               Make Default
             </button>
-          </>
+          </div>
         ) : (
           <div className="h-10"></div>
         )}
