@@ -5,6 +5,8 @@ import useUserStore from '../../app/user';
 import { toast } from 'react-toastify';
 import { handleAxiosResponseError } from '../../utils/handleResponseError';
 import Logo from '../../assets/logo.png';
+import { getOtp } from '../../config/api';
+import { useQuery, useQueryClient } from 'react-query';
 
 const OtpPage = () => {
   const [otp, setOtp] = useState(Array(6).fill(''));
@@ -13,7 +15,14 @@ const OtpPage = () => {
   const [searchParams] = useSearchParams();
   const email = searchParams.get('email');
   const type = searchParams.get('type');
-  const [timeLeft, setTimeLeft] = useState(300);
+  const [timeLeft, setTimeLeft] = useState(0);
+  const queryClient = useQueryClient();
+
+  const { data: otpData } = useQuery({
+    queryKey: ['otp', email],
+    queryFn: () => getOtp(email),
+    staleTime: 1000 * 60 * 60,
+  });
 
   const inputs = useRef([]);
   const navigate = useNavigate();
@@ -89,6 +98,16 @@ const OtpPage = () => {
   };
 
   useEffect(() => {
+    if (!otpData?.ExpiresAt) return;
+
+    const expiry = new Date(otpData.ExpiresAt).getTime(); // Ensure it's a valid date string
+    const now = new Date().getTime();
+    const diff = Math.floor((expiry - now) / 1000);
+
+    setTimeLeft(diff > 0 ? diff : 0);
+  }, [otpData]);
+
+  useEffect(() => {
     const interval = setInterval(() => {
       setTimeLeft((prev) => {
         if (prev <= 1) {
@@ -108,7 +127,17 @@ const OtpPage = () => {
     return `${m}:${s}`;
   };
 
-  const handleResend = () => {};
+  const handleResend = () => {
+    axios
+      .post(`/api/otp`, { Email: email })
+      .then(({ data }) => {
+        console.log(data);
+        queryClient.setQueryData(['otp', email], () => data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 px-4">

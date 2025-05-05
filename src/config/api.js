@@ -94,3 +94,11 @@ export const getCoupons = async () => {
 
   return res.data;
 };
+
+export const getOtp = async (email) => {
+  if (!email) return;
+
+  const res = await axios.get(`/api/otp?email=${email}`);
+
+  return res.data;
+};
