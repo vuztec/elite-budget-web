@@ -120,7 +120,7 @@ const OtpPage = () => {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [otpData]);
 
   const formatTime = (secs) => {
     const m = String(Math.floor(secs / 60)).padStart(2, '0');
@@ -150,20 +150,20 @@ const OtpPage = () => {
       <div className="w-full flex flex-col mb-4 items-center">
         <img src={Logo} alt="logo" className="h-32 lg:h-32 pb-5" />
         <p className="w-full text-center">
-          <strong>A One-Time PIN (OTP)</strong> has been sent to <strong>{email}</strong>.
+          <strong>A One-Time PIN (OTP)</strong> has been sent to <strong>{email}</strong>
         </p>
         <p className="w-full text-center">
-          If you do not see it in your inbox, please check your <strong>Spam/Junk folder</strong>.
+          If you do not see it in your inbox, please check your <strong>Spam/Junk folder</strong>
         </p>
         <h1 className="text-2xl font-bold pt-5">Enter the 6-digit OTP</h1>
         {timeLeft > 0 && (
           <p className="w-full text-center">
-            This OTP will expire in <span className="text-red-500 font-extrabold">{formatTime(timeLeft)}</span>.
+            This OTP will expire in <span className="text-red-500 font-extrabold">{formatTime(timeLeft)}</span>
           </p>
         )}
         {timeLeft <= 0 && (
           <p className="w-full text-center">
-            The OTP has <span className="text-red-500 font-extrabold">expired</span>.
+            The OTP has <span className="text-red-500 font-extrabold">expired</span>
           </p>
         )}
       </div>
