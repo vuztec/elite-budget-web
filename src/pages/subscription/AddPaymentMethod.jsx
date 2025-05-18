@@ -40,8 +40,6 @@ const AddPaymentMethod = ({ handleClose, isTrial }) => {
       axios
         .post('/api/payment/payment-method', {
           PaymentMethodId: paymentMethod.id,
-          name,
-          email,
         })
         .then(({ data }) => {
           if (isTrial) {
