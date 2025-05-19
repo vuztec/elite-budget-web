@@ -84,7 +84,7 @@ function Layout() {
       </div>
     </div>
   ) : (
-    <Navigate to="/advert" state={{ from: location }} replace />
+    <Navigate to="/login" state={{ from: location }} replace />
   );
 }
 function App() {

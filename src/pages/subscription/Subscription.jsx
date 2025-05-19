@@ -59,9 +59,9 @@ export const Subscription = () => {
   // console.log(paymentmethods);
 
   const today = new Date();
-  const subscription = new Date(user?.SubscribeDate);
+  const subscription = user?.SubscribeDate ? new Date(user?.SubscribeDate) : '';
   const todayYear = today.getFullYear();
-  const subscriptionYear = subscription.getFullYear();
+  const subscriptionYear = user?.SubscribeDate ? subscription.getFullYear() : '';
   let totalDaysInYears = 0;
 
   // Calculate total days in subscription years
@@ -70,9 +70,9 @@ export const Subscription = () => {
   }
   // Calculate the renewal date
   const currentDate = new Date();
-  const renewal = new Date(subscription.getTime() + totalDaysInYears * 24 * 60 * 60 * 1000);
+  const renewal = user?.SubscribeDate ? new Date(subscription.getTime() + totalDaysInYears * 24 * 60 * 60 * 1000) : '';
   const trialEnd = new Date(new Date(user?.CreatedAt).setDate(new Date(user?.CreatedAt).getDate() + 14));
-  const isTrial = currentDate <= trialEnd;
+  const isTrial = !subscription || currentDate <= trialEnd;
 
   const PayNow = () => {
     setLoading(true);
