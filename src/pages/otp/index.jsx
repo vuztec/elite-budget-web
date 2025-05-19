@@ -71,6 +71,7 @@ const OtpPage = () => {
         type: type,
       })
       .then(({ data }) => {
+        console.log(data);
         toast.update(id, {
           render: 'Otp verified successfully.',
           type: 'success',
