@@ -17,6 +17,7 @@ import { IoMdSend } from 'react-icons/io';
 import { MdOutlineRadioButtonChecked, MdOutlineRadioButtonUnchecked } from 'react-icons/md';
 import { PrivacyDialog, TermsDialog } from '../../components/DisplayDialogs';
 import { LuMousePointer } from 'react-icons/lu';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 export const Signup = () => {
   const CountryData = Country.getAllCountries();
@@ -24,6 +25,8 @@ export const Signup = () => {
   const [open, setOpen] = useState(false);
   const [openPrivacy, setOpenPrivacy] = useState(false);
   const [openTerms, setOpenTerms] = useState(false);
+  const [showPassword1, setShowPassword1] = useState(false);
+  const [showPassword2, setShowPassword2] = useState(false);
 
   const dateFormats = DateFormats.map((format) => ({
     value: format.value,
@@ -254,30 +257,53 @@ export const Signup = () => {
                       </div>
                       {!user && (
                         <div className="flex flex-col gap-6 w-full">
-                          <Textbox
-                            placeholder="Enter Password"
-                            type="password"
-                            name="Password"
-                            label="Password"
-                            className="w-full rounded"
-                            register={register('Password', {
-                              required: 'Password is required!',
-                            })}
-                            error={errors.Password ? errors.Password.message : ''}
-                          />
-
-                          <Textbox
-                            placeholder="Confirm Password"
-                            type="password"
-                            name="ConfirmPassword"
-                            label="Confirm Password"
-                            className="w-full rounded"
-                            register={register('ConfirmPassword', {
-                              required: 'Confirm Password is required!',
-                              validate: (value) => value === Password || 'Passwords do not match',
-                            })}
-                            error={errors.ConfirmPassword ? errors.ConfirmPassword.message : ''}
-                          />
+                          <div className="flex items-center justify-center relative w-full">
+                            <div className="w-full">
+                              <Textbox
+                                placeholder="Enter Password"
+                                type={showPassword1 ? 'text' : 'password'}
+                                name="Password"
+                                label="Password"
+                                className="w-full rounded"
+                                register={register('Password', {
+                                  required: 'Password is required!',
+                                })}
+                                error={errors.Password ? errors.Password.message : ''}
+                              />
+                            </div>
+                            {/* Toggle icon */}
+                            <button
+                              type="button"
+                              onClick={() => setShowPassword1((prev) => !prev)}
+                              className="absolute right-3 top-[40px] lg:top-[45px] transform -translate-y-1/2 text-gray-500 focus:outline-none"
+                            >
+                              {showPassword1 ? <FaEyeSlash size={22} /> : <FaEye size={22} />}
+                            </button>
+                          </div>
+                          <div className="flex items-center justify-center relative w-full">
+                            <div className="w-full">
+                              <Textbox
+                                placeholder="Confirm Password"
+                                type={showPassword2 ? 'text' : 'password'}
+                                name="ConfirmPassword"
+                                label="Confirm Password"
+                                className="w-full rounded"
+                                register={register('ConfirmPassword', {
+                                  required: 'Confirm Password is required!',
+                                  validate: (value) => value === Password || 'Passwords do not match',
+                                })}
+                                error={errors.ConfirmPassword ? errors.ConfirmPassword.message : ''}
+                              />
+                            </div>
+                            {/* Toggle icon */}
+                            <button
+                              type="button"
+                              onClick={() => setShowPassword2((prev) => !prev)}
+                              className="absolute right-3 top-[40px] lg:top-[45px] transform -translate-y-1/2 text-gray-500 focus:outline-none"
+                            >
+                              {showPassword2 ? <FaEyeSlash size={22} /> : <FaEye size={22} />}
+                            </button>
+                          </div>
                         </div>
                       )}
 

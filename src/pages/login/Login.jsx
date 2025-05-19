@@ -9,6 +9,7 @@ import clsx from 'clsx';
 import { toast } from 'react-toastify';
 import { handleAxiosResponseError } from '../../utils/handleResponseError';
 import { AddRootUser } from '../../components/team';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 export const Login = () => {
   //const user = false
@@ -16,6 +17,7 @@ export const Login = () => {
   const setUser = useUserStore((state) => state.setUser);
   const setJwt = useUserStore((state) => state.setJwt);
   const [open, setOpen] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const {
     register,
@@ -87,17 +89,30 @@ export const Login = () => {
                   })}
                   error={errors.email ? errors.email.message : ''}
                 />
-                <Textbox
-                  placeholder="your password"
-                  type="password"
-                  name="password"
-                  label="Password"
-                  className="w-full rounded-full"
-                  register={register('password', {
-                    required: 'Password is required!',
-                  })}
-                  error={errors.password ? errors.password.message : ''}
-                />
+                <div className="flex items-center justify-center relative w-full">
+                  <div className="w-full">
+                    <Textbox
+                      placeholder="your password"
+                      type={showPassword ? 'text' : 'password'}
+                      name="password"
+                      label="Password"
+                      className="w-full rounded-full pr-10" // Add padding for icon
+                      register={register('password', {
+                        required: 'Password is required!',
+                      })}
+                      error={errors.password ? errors.password.message : ''}
+                    />
+                  </div>
+
+                  {/* Toggle icon */}
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword((prev) => !prev)}
+                    className="absolute right-3 top-[40px] lg:top-[45px] transform -translate-y-1/2 text-gray-500 focus:outline-none"
+                  >
+                    {showPassword ? <FaEyeSlash size={22} /> : <FaEye size={22} />}
+                  </button>
+                </div>
                 <div className="flex items-center justify-center gap-5 xl:gap-10 w-full mt-5">
                   <div className="flex justify-between">
                     <a
