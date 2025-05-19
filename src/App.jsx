@@ -36,6 +36,7 @@ import UpdatePassword from './pages/updatepassword';
 import { BiArrowToTop } from 'react-icons/bi';
 import About from './pages/policy/About';
 import OtpPage from './pages/otp';
+import Welcome from './pages/welcome/Welcome';
 
 function Layout() {
   //const user = false;
@@ -120,6 +121,7 @@ function App() {
         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
         <Route path="/about-elite" element={<About />} />
         <Route path="/faqs" element={<Faqs />} />
+        <Route path="/welcome" element={<Welcome />} />
       </Routes>
       <ToastContainer
         position="top-right"
