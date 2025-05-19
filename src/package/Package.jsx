@@ -44,7 +44,7 @@ export const Package = () => {
   return (
     <div className="text-xl flex flex-col items-center justify-center p-5 bg-white">
       <p className="flex flex-col items-center justify-center font-bold text-red-500">
-        Please subscribe to activate your 14-day free trial
+        {isTrial ? 'Please subscribe to activate your 14-day free trial' : 'Please subscribe to activate'}
       </p>
 
       <div className="flex flex-col items-center gap-1 pt-3">

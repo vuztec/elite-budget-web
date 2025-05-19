@@ -81,10 +81,12 @@ const AddPaymentMethod = ({ handleClose, isTrial }) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <h1 className="mt-2 mb-10 font-semibold flex items-center justify-center uppercase">
-        Enter Card Information below
-      </h1>
-
+      <div className="flex flex-col mb-10 items-center justify-center">
+        <h1 className="mt-2 font-semibold  uppercase">Enter Card Information below</h1>
+        <p className="italic text-xs text-red-500">
+          {isTrial ? 'Your card will not be billed for the next 14 days' : ''}
+        </p>
+      </div>
       <div className="mb-4">
         <label className="block mb-1 text-sm font-medium text-gray-700">Name</label>
         <input
