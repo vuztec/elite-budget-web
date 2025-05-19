@@ -110,7 +110,7 @@ export const Signup = () => {
             autoClose: 3000,
           });
           setIsLoading(() => false);
-          navigate('/login');
+          navigate('/welcome');
         })
         .catch((err) => {
           console.log('Error : ', handleAxiosResponseError(err));

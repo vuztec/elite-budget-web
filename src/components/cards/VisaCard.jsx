@@ -3,7 +3,6 @@ import React from 'react';
 const VisaCard = ({ card, handlePayment, handleDelete, isTrial, defaultId, handlePaymentMethod }) => {
   const isDefault = defaultId === card.id;
 
-  console.log(card);
   return (
     <div
       className="bg-gradient-to-r from-blue-600 to-blue-900 p-6 pb-2 rounded-xl shadow-lg max-w-xs text-white hover:cursor-pointer"
