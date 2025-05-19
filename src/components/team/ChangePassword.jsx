@@ -8,9 +8,14 @@ import Button from '../Button';
 import axios from '../../config/axios';
 import { handleAxiosResponseError } from '../../utils/handleResponseError';
 import { toast } from 'react-toastify';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import clsx from 'clsx';
 
 export const ChangePassword = ({ open, setOpen }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [showPassword1, setShowPassword1] = useState(false);
+  const [showPassword2, setShowPassword2] = useState(false);
+  const [showPassword3, setShowPassword3] = useState(false);
 
   const {
     register,
@@ -67,44 +72,77 @@ export const ChangePassword = ({ open, setOpen }) => {
             CHANGE PASSWORD
           </Dialog.Title>
           <div className="h-[90%] mt-2 flex flex-col gap-6 overflow-y-scroll bg-scroll">
-            <Textbox
-              placeholder="Enter Current Password"
-              type="password"
-              name="CurrentPassword"
-              label="Current Password"
-              className="w-full rounded"
-              register={register('CurrentPassword', {
-                required: 'Current Password is required!',
-              })}
-              error={errors.CurrentPassword ? errors.CurrentPassword.message : ''}
-            />
-
-            <Textbox
-              placeholder="Enter New Password"
-              type="password"
-              name="NewPassword"
-              label="New Password"
-              className="w-full rounded"
-              register={register('NewPassword', {
-                required: 'New Password is required!',
-              })}
-              error={errors.NewPassword ? errors.NewPassword.message : ''}
-            />
-
-            <Textbox
-              placeholder="Confirm New Password"
-              type="password"
-              name="ConfirmPassword"
-              label="Confirm Password"
-              className="w-full rounded"
-              register={register('ConfirmPassword', {
-                required: 'Confirm Password is required!',
-                validate: (value) => value === newPassword || 'Passwords do not match',
-              })}
-              error={errors.ConfirmPassword ? errors.ConfirmPassword.message : ''}
-            />
+            <div className="flex items-center justify-center relative w-full">
+              <div className="w-full">
+                <Textbox
+                  placeholder="Enter Current Password"
+                  type={showPassword1 ? 'text' : 'password'}
+                  name="CurrentPassword"
+                  label="Current Password"
+                  className="w-full rounded"
+                  register={register('CurrentPassword', {
+                    required: 'Current Password is required!',
+                  })}
+                  error={errors.CurrentPassword ? errors.CurrentPassword.message : ''}
+                />
+              </div>
+              {/* Toggle icon */}
+              <button
+                type="button"
+                onClick={() => setShowPassword1((prev) => !prev)}
+                className="absolute right-3 top-[40px] lg:top-[45px] transform -translate-y-1/2 text-gray-500 focus:outline-none"
+              >
+                {showPassword1 ? <FaEyeSlash size={22} /> : <FaEye size={22} />}
+              </button>
+            </div>
+            <div className="flex items-center justify-center relative w-full">
+              <div className="w-full">
+                <Textbox
+                  placeholder="Enter New Password"
+                  type={showPassword2 ? 'text' : 'password'}
+                  name="NewPassword"
+                  label="New Password"
+                  className="w-full rounded"
+                  register={register('NewPassword', {
+                    required: 'New Password is required!',
+                  })}
+                  error={errors.NewPassword ? errors.NewPassword.message : ''}
+                />
+              </div>
+              {/* Toggle icon */}
+              <button
+                type="button"
+                onClick={() => setShowPassword2((prev) => !prev)}
+                className="absolute right-3 top-[40px] lg:top-[45px] transform -translate-y-1/2 text-gray-500 focus:outline-none"
+              >
+                {showPassword2 ? <FaEyeSlash size={22} /> : <FaEye size={22} />}
+              </button>
+            </div>
+            <div className="flex items-center justify-center relative w-full">
+              <div className="w-full">
+                <Textbox
+                  placeholder="Confirm New Password"
+                  type={showPassword3 ? 'text' : 'password'}
+                  name="ConfirmPassword"
+                  label="Confirm Password"
+                  className="w-full rounded"
+                  register={register('ConfirmPassword', {
+                    required: 'Confirm Password is required!',
+                    validate: (value) => value === newPassword || 'Passwords do not match',
+                  })}
+                  error={errors.ConfirmPassword ? errors.ConfirmPassword.message : ''}
+                />
+              </div>
+              {/* Toggle icon */}
+              <button
+                type="button"
+                onClick={() => setShowPassword3((prev) => !prev)}
+                className="absolute right-3 top-[40px] lg:top-[45px] transform -translate-y-1/2 text-gray-500 focus:outline-none"
+              >
+                {showPassword3 ? <FaEyeSlash size={22} /> : <FaEye size={22} />}
+              </button>
+            </div>
           </div>
-
           {isLoading ? (
             <div className="py-5">
               <Loading />
@@ -113,7 +151,7 @@ export const ChangePassword = ({ open, setOpen }) => {
             <div className="py-3 mt-4 sm:flex sm:flex-row-reverse">
               <Button
                 type="submit"
-                className="bg-blue-600 px-8 text-sm font-semibold text-white hover:bg-blue-700  sm:w-auto"
+                className={clsx('w-full h-10 hover:bg-green-800 text-white rounded-full bg-black')}
                 label="Submit"
               />
 
