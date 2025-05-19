@@ -8,6 +8,8 @@ import AddPaymentMethod from '../pages/subscription/AddPaymentMethod';
 import useUserStore from '../app/user';
 import { loadStripe } from '@stripe/stripe-js';
 import { isLeapYear } from 'date-fns';
+import { MdOutlinePayment } from 'react-icons/md';
+import clsx from 'clsx';
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
@@ -44,16 +46,40 @@ export const Package = () => {
   return (
     <div className="text-xl flex flex-col items-center justify-center p-5 bg-white">
       <p className="flex flex-col items-center justify-center font-bold text-red-500">
-        {isTrial ? 'Please subscribe to activate your 14-day free trial' : 'Please subscribe to activate'}
+        {isTrial ? (
+          <div className="flex flex-col items-center justify-center mb-5 text-black">
+            <h1>Please add your credit card to activate your 14-day free trial</h1>
+            <p className="italic text-xs text-red-500 p-1 rounded-md">
+              Your card will not be charged during the 14-day free trial.
+            </p>
+            <p className="italic text-xs text-red-500 p-1 rounded-md">
+              Billing will only occur after the trial period if you choose to continue your subscription.
+            </p>
+            <p className="italic text-xs text-red-500 p-1 rounded-md">
+              You can review your renewal details under the Subscription tab.
+            </p>
+          </div>
+        ) : (
+          'Please subscribe to activate'
+        )}
       </p>
 
       <div className="flex flex-col items-center gap-1 pt-3">
-        <Button
-          label="Subscribe"
-          icon={<BsFillBagCheckFill className="text-sm md:text-lg" />}
-          className="w-fit flex gap-3 items-center justify-center bg-black text-white hover:bg-[whitesmoke] hover:text-black px-2 py-1 rounded-full cursor-pointer"
-          onClick={() => viewSubscription()}
-        />
+        {isTrial ? (
+          <Button
+            label="Add Card to Activate"
+            icon={<MdOutlinePayment className="text-sm md:text-lg" />}
+            className="w-fit flex gap-3 items-center justify-center bg-black text-white hover:bg-[whitesmoke] hover:text-black px-2 py-1 rounded-full cursor-pointer"
+            onClick={() => viewSubscription()}
+          />
+        ) : (
+          <Button
+            label="Subscribe"
+            icon={<BsFillBagCheckFill className="text-sm md:text-lg" />}
+            className="w-fit flex gap-3 items-center justify-center bg-black text-white hover:bg-[whitesmoke] hover:text-black px-2 py-1 rounded-full cursor-pointer"
+            onClick={() => viewSubscription()}
+          />
+        )}
       </div>
       <ModalWrapper open={openPayment} handleClose={handleClosePaymentMethod}>
         <Elements stripe={stripePromise}>

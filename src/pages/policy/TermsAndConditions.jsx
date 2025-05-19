@@ -203,7 +203,7 @@ export const TermsAndConditions = ({ isDialog }) => {
           <br />
           <br />
           All refunds are discretionary as determined by the Company. To further clarify, we will not provide refunds
-          for requests made after the 15th day from the date you received the product, excluding the Elite Budget Web
+          for requests made after the 30th day from the date you received the product, excluding the Elite Budget Web
           Application where no refunds are provided.
           <br />
           <br />
@@ -266,11 +266,11 @@ export const TermsAndConditions = ({ isDialog }) => {
             <br />
             <br />
             You may not republish, reproduce, duplicate, copy, sell, display, disclose, distribute to friends, family,
-            or any other third party, or otherwise use any material from the Program or Content for commercial purposes
+            or any other third party, or otherwise use any material from the Products or Content for commercial purposes
             or in any way that earns you or any third-party money (other than by applying them generally in your own
-            business). By downloading, printing, or otherwise using the Program or Content for personal use you in no
+            business). By downloading, printing, or otherwise using the Products or Content for personal use you in no
             way assume any ownership rights of the Content – it is still Company property. Any unauthorized use of any
-            materials found in the Program or Content shall constitute infringement.
+            materials found in the Products or Content shall constitute infringement.
             <br />
             <br />
             You must receive our written permission before using any of the Products or Content for your own commercial
@@ -352,7 +352,7 @@ export const TermsAndConditions = ({ isDialog }) => {
           </li>
         </ul>
 
-        <h2 className="font-semibold text-lg">5. Your Conduct in the Program; Confidentiality</h2>
+        <h2 className="font-semibold text-lg">5. Your Use of the Products; Confidentiality</h2>
         <p className="pl-6">
           Please choose carefully the materials that you upload to, submit to, or embed on any website operated by the
           Company and any third-party forums operated by the Company. Any material you post on the Company’s website or
@@ -414,8 +414,8 @@ export const TermsAndConditions = ({ isDialog }) => {
           <br />
           <br />
           If, in the Company’s sole discretion, your conduct violates these TOU in any way, you agree that the Company
-          may immediately and permanently terminate your participation in the Program and your access to the Content
-          without refund.
+          may immediately and permanently terminate your use of the Products and your access to the Content without
+          refund.
           <br />
           <br />
           The Company does its best to create a safe and welcoming space for all participants, however, Company cannot
@@ -428,14 +428,15 @@ export const TermsAndConditions = ({ isDialog }) => {
 
         <h2 className="font-semibold text-lg">6. Username and Password</h2>
         <p className="pl-6">
-          To access certain features of the Program, including any private membership areas, you may need a username and
-          password. You agree to keep your username and password confidential. During the registration process for any
-          service or product, you agree to provide true, accurate, current and complete information about yourself. If
-          the Company has reasonable grounds to suspect that you have provided false information, shared your username
-          and password with anyone else, or forwarded any non-public material from the Program to any other person, the
-          Company has the right to suspend or terminate your account and refuse any and all current or future use of the
-          Program or any Content, in whole or part, without refund. Any personally identifiable information you provide
-          as part of the registration process is governed by the terms of the Company’s website Privacy Policy.
+          To access certain features of the Products, including any private subscription areas, you may need a username
+          and password. You agree to keep your username and password confidential. During the registration process for
+          any product, you agree to provide true, accurate, current and complete information about yourself. If the
+          Company has reasonable grounds to suspect that you have provided false information, shared your username and
+          password with anyone else other than your spouse, or forwarded any non-public material from the Products to
+          any other person, the Company has the right to suspend or terminate your account and refuse any and all
+          current or future use of the Products or any Content, in whole or part, without refund. Any personally
+          identifiable information you provide as part of the registration process is governed by the terms of the
+          Company’s website Privacy Policy.
         </p>
 
         <h2 className="font-semibold text-lg">7. Termination or Cancellation</h2>
@@ -476,14 +477,14 @@ export const TermsAndConditions = ({ isDialog }) => {
           </li>
           <br />
           <li>
-            The Product and Content provide information and education only, and do not provide any financial, legal,
-            medical or psychological services or advice. None of the Product or Content prevents, cures or treats any
-            mental or medical condition. The Product and Content is not intended to be a substitute for professional
+            The Products and Content provide information and education only, and do not provide any financial, legal,
+            medical or psychological services or advice. None of the Products or Content prevents, cures or treats any
+            mental or medical condition. The Products and Content is not intended to be a substitute for professional
             advice that can be provided by your own accountant, lawyer, financial advisor, or medical professional. You
             are responsible for your own financial, legal, physical, mental and emotional well-being, decisions,
             choices, actions and results. You should consult with a professional if you have specific questions about
             your own unique situation. The Company disclaims any liability for your reliance on any opinions or advice
-            contained in the Product.
+            contained in the Products.
           </li>
           <br />
           <li>

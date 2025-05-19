@@ -84,7 +84,7 @@ const AddPaymentMethod = ({ handleClose, isTrial }) => {
       <div className="flex flex-col mb-10 items-center justify-center">
         <h1 className="mt-2 font-semibold  uppercase">Enter Card Information below</h1>
         <p className="italic text-xs text-red-500">
-          {isTrial ? 'Your card will not be billed for the next 14 days' : ''}
+          {isTrial ? 'Your card will not be charged during the 14-day free trial' : ''}
         </p>
       </div>
       <div className="mb-4">

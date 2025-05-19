@@ -76,7 +76,7 @@ export const PrivacyPolicy = ({ isDialog }) => {
         </div>
       </div>
 
-      <div className="flex flex-col space-y-4">
+      <div className="flex flex-col py-4 space-y-4">
         <h2 className="font-semibold text-lg">1. Who We Are</h2>
         <p>
           Elite Cash Flow Products, LLC operating at{' '}
