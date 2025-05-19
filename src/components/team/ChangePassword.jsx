@@ -26,10 +26,14 @@ export const ChangePassword = ({ open, setOpen }) => {
     setIsLoading(() => true);
     const id = toast.loading('Loading....');
 
+    delete data.ConfirmPassword;
+
     axios
       .patch('/api/auth/password', data)
       .then(({ data }) => {
         setIsLoading(() => false);
+
+        console.log('Data : ', data);
 
         toast.update(id, {
           render: 'Password Updated Successfully',
@@ -40,9 +44,10 @@ export const ChangePassword = ({ open, setOpen }) => {
         setOpen(false);
       })
       .catch((err) => {
+        console.log('Error : ', err);
         setIsLoading(() => false);
         toast.update(id, {
-          render: handleAxiosResponseError(error),
+          render: handleAxiosResponseError(err),
           type: 'error',
           isLoading: false,
           autoClose: 3000,
