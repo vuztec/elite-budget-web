@@ -48,7 +48,9 @@ export const Signup = () => {
     setValue,
     reset,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: { Country: 'US' },
+  });
 
   const Password = useWatch({ control, name: 'Password' });
 
@@ -228,7 +230,7 @@ export const Signup = () => {
                             placeholder="Select Country"
                             name="Country"
                             label="Country"
-                            onChange={handleCountryChange}
+                            //onChange={handleCountryChange}
                             options={CountryData?.map((country) => ({
                               value: country.isoCode,
                               label: country.name,
