@@ -64,6 +64,7 @@ export const PrivacyPolicy = ({ isDialog }) => {
           authorities in the event you have a complaint.
         </div>
         <br />
+        <br />
         <div>
           By using our website{' '}
           <a href="https://www.elitecashflowproducts.com/" target="_blank" className="text-blue-500 hover:underline">

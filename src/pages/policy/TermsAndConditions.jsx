@@ -239,7 +239,7 @@ export const TermsAndConditions = ({ isDialog }) => {
         </p>
 
         <h2 className="font-semibold text-lg">4. Intellectual Property Rights</h2>
-        <ul className="pl-8 list-decimal list-outside">
+        <ul className="pl-8 list-disc list-outside">
           <li>
             <h3 className="font-bold">Ownership of the Content</h3>
             The words, videos, voice and sound recordings, training materials, design, layout, graphics, photos, images,
