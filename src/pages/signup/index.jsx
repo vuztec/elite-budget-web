@@ -33,10 +33,6 @@ export const Signup = () => {
     label: format.label,
   }));
 
-  const [countryCode, setCountryCode] = useState(
-    user ? CountryData.find((country) => country.name === user.Country)?.isoCode : 'US',
-  );
-
   const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState(false);
@@ -61,10 +57,16 @@ export const Signup = () => {
       setValue('Currency', user.Currency);
       setValue('PartnerAge', user.PartnerAge);
       setValue('SelfAge', user.SelfAge);
-      setValue('Country', user.Country);
+      // setValue('Country', user.Country);
 
-      const country = CountryData.find((country) => country.name === user?.Country)?.isoCode;
-      setCountryCode(country);
+      const country = CountryData.find((country) => country.name === user?.Country);
+
+      if (country) {
+        setValue('Country', country?.name);
+        setValue('Currency', country.currency);
+        setValue('Separator', 'en-' + country);
+      }
+      // setCountryCode(country);
     }
 
     return () => reset();
@@ -76,6 +78,10 @@ export const Signup = () => {
 
     const id = toast.loading('Updating User Profile....');
     delete data.ConfirmPassword;
+
+    const country = CountryData.find((country) => country.name === data?.Country);
+
+    data.Country = country?.name;
 
     if (user?.id) {
       delete data.Password;
@@ -128,18 +134,18 @@ export const Signup = () => {
     }
   };
 
-  const handleCountryChange = (e) => {
-    if (e && e.target?.value) {
-      const selCountry = e.target?.value;
-      const targetCountry = CountryData.find((item) => item?.isoCode === selCountry);
-      setValue('Country', targetCountry.name);
-      setValue('Currency', targetCountry.currency);
-      const selCountryCode = targetCountry ? targetCountry.isoCode : '';
-      setCountryCode(selCountryCode);
+  // const handleCountryChange = (e) => {
+  //   if (e && e.target?.value) {
+  //     const selCountry = e.target?.value;
+  //     const targetCountry = CountryData.find((item) => item?.isoCode === selCountry);
+  //     setValue('Country', targetCountry.name);
+  //     setValue('Currency', targetCountry.currency);
+  //     const selCountryCode = targetCountry ? targetCountry.isoCode : '';
+  //     setCountryCode(selCountryCode);
 
-      setValue('Separator', 'en-' + selCountryCode);
-    }
-  };
+  //     setValue('Separator', 'en-' + selCountryCode);
+  //   }
+  // };
 
   const handleOpenPrivacy = () => {
     setOpenPrivacy(true);
@@ -230,13 +236,11 @@ export const Signup = () => {
                             placeholder="Select Country"
                             name="Country"
                             label="Country"
-                            //onChange={handleCountryChange}
                             options={CountryData?.map((country) => ({
                               value: country.isoCode,
                               label: country.name,
                             }))} // Map country array to options
                             className="w-full rounded"
-                            defaultValue={countryCode}
                             register={register('Country', {
                               required: 'User Country is required!',
                             })}
