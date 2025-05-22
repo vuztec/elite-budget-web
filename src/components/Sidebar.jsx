@@ -11,7 +11,7 @@ const Sidebar = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [sidebarData, setSideBarData] = useState(SidebarLinks);
-  const { setSidebar, setDefaultSidebar, sidebar } = useUserStore();
+  const { setSidebar, setDefaultSidebar, sidebar, user } = useUserStore();
 
   const path = location.pathname?.split('/')[1];
 
@@ -30,6 +30,13 @@ const Sidebar = () => {
     };
   }, []);
 
+  useEffect(() => {
+    let sidebar = SidebarLinks;
+    if (user?.id !== 1 && user?.id !== 2 && user?.id !== 3) {
+      sidebar = SidebarLinks?.filter((s) => s?.label !== 'Subscribers');
+    }
+    setSideBarData(sidebar);
+  }, [user, SidebarLinks]);
   useEffect(() => {
     if (width <= 1024 && sidebar) {
       setDefaultSidebar();

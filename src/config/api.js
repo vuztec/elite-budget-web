@@ -105,6 +105,5 @@ export const getOtp = async (email) => {
 
 export const getUsers = async () => {
   const res = await axios.get('/api/rootusers');
-  console.log(res);
   return res.data;
 };

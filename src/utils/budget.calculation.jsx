@@ -1230,3 +1230,30 @@ export const getCategoryTotal = (type, maingoals) => {
 
   return Number(total);
 };
+
+export function isLeapYear(year) {
+  return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
+}
+
+export function getIsTrial(user) {
+  const subscription = user?.SubscribeDate ? new Date(user?.SubscribeDate) : '';
+  const trialEnd = new Date(new Date(user?.CreatedAt).setDate(new Date(user?.CreatedAt).getDate() + 14));
+  const currentDate = new Date();
+  const isTrial = !subscription || currentDate <= trialEnd;
+  return isTrial;
+}
+
+export function getRenewalDate(user) {
+  const today = new Date();
+  const subscription = user?.SubscribeDate ? new Date(user?.SubscribeDate) : '';
+  const todayYear = today.getFullYear();
+  const subscriptionYear = user?.SubscribeDate ? subscription.getFullYear() : '';
+  let totalDaysInYears = 0;
+  // Calculate total days in subscription years
+  for (let year = subscriptionYear; year <= todayYear; year++) {
+    totalDaysInYears += isLeapYear(year) ? 366 : 365;
+  }
+  // Calculate the renewal date
+  const renewal = user?.SubscribeDate ? new Date(subscription.getTime() + totalDaysInYears * 24 * 60 * 60 * 1000) : '';
+  return renewal;
+}
