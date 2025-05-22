@@ -76,14 +76,16 @@ export const Signup = () => {
   const handleOnSubmit = async (data) => {
     setIsLoading(() => true);
 
-    const id = toast.loading('Updating User Profile....');
     delete data.ConfirmPassword;
 
-    const country = CountryData.find((country) => country.name === data?.Country);
+    const country = CountryData.find((country) => country.isoCode === data?.Country);
 
     data.Country = country?.name;
+    data.Currency = country?.currency;
+    data.Separator = 'en-' + country?.isoCode;
 
     if (user?.id) {
+      const id = toast.loading('Updating User Profile....');
       delete data.Password;
       axios
         .patch('/api/rootusers/' + user.id, data)
@@ -108,6 +110,8 @@ export const Signup = () => {
           });
         });
     } else {
+      const id = toast.loading('Loading....');
+
       axios
         .post('/api/auth/signup', data)
         .then(({ data }) => {
@@ -121,6 +125,7 @@ export const Signup = () => {
           navigate('/welcome');
         })
         .catch((err) => {
+          console.log(err);
           console.log('Error : ', handleAxiosResponseError(err));
           setIsLoading(() => false);
 
