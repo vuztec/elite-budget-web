@@ -458,8 +458,8 @@ export const TermsAndConditions = ({ isDialog }) => {
         </p>
 
         <h2 className="font-semibold text-lg">8. Personal Responsibility, Assumption of Risk, Release, Disclaimers</h2>
-
-        <ol className="ml-4 list-decimal list-inside">
+        <ul className="pl-8 list-disc list-outside">
+          {/* <ol className="ml-4 list-decimal list-inside"> */}
           <li>
             You acknowledge that, by engaging with the Company for the Products, you voluntarily assume an element of
             inherent risk, and knowingly and freely assume all risk and responsibility for injuries to any persons or
@@ -525,7 +525,7 @@ export const TermsAndConditions = ({ isDialog }) => {
             THAT RESULT FROM THE USE OF, OR THE INABILITY TO USE, THE PRODUCTS, INCLUDING ITS MATERIALS, PRODUCTS OR
             THIRD- PARTY MATERIALS, PRODUCTS OR SERVICES MADE AVAILABLE THROUGH THE PRODUCTS.{' '}
           </li>
-        </ol>
+        </ul>
 
         <h2 className="font-semibold text-lg">9. Security</h2>
         <p className="pl-6">
