@@ -22,6 +22,7 @@ import {
   Advert,
   Faqs,
   Signup,
+  Users,
 } from './pages';
 
 import Navbar from './components/Navbar';
@@ -108,6 +109,7 @@ function App() {
           <Route path="/budget/extra-funds-tracker" element={<ExtraFundsTracker />} />
           <Route path="/net-worth" element={<Networth />} />
           <Route path="/subscription" element={<Subscription />} />
+          <Route path="/subscribers" element={<Users />} />
         </Route>
         <Route path="/advert" element={<Advert />} />
         <Route path="/old" element={<OldHome />} />

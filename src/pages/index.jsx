@@ -21,6 +21,7 @@ import { Faqs } from './policy/faqs';
 import { Home } from './home/Home';
 import { Advert } from './advert/Advert';
 import { Signup } from './signup';
+import { Users } from './user/Users';
 
 export {
   Home,
@@ -46,4 +47,5 @@ export {
   TermsAndConditions,
   Faqs,
   Signup,
+  Users,
 };

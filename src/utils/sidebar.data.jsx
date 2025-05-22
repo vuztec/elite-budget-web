@@ -1,6 +1,6 @@
-import { MdAreaChart, MdPayment, MdSavings } from 'react-icons/md';
+import { MdAreaChart, MdPayment, MdPeople, MdSavings } from 'react-icons/md';
 import { AiFillDollarCircle } from 'react-icons/ai';
-import { FaCashRegister, FaPiggyBank, FaShoppingCart } from 'react-icons/fa';
+import { FaCashRegister, FaPiggyBank, FaShoppingCart, FaYoutube } from 'react-icons/fa';
 import { IoMdBriefcase } from 'react-icons/io';
 import { IoHome } from 'react-icons/io5';
 import { CiMoneyBill } from 'react-icons/ci';
@@ -138,6 +138,22 @@ export const SidebarLinks = [
     activename: 'subscription',
     link: '/subscription',
     icon: <CiMoneyBill />,
+    dropdown: false,
+  },
+  {
+    label: 'Subscribers',
+    title: 'Subscribers',
+    activename: 'subscribers',
+    link: '/subscribers',
+    icon: <MdPeople />,
+    dropdown: false,
+  },
+  {
+    label: 'Training Videos',
+    title: 'Training Videos',
+    activename: 'training-videos',
+    link: '/training-videos',
+    icon: <FaYoutube className="text-red-600" />,
     dropdown: false,
   },
 ];

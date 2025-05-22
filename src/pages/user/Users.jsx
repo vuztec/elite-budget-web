@@ -1,24 +1,24 @@
-import React, { useEffect, useState } from "react";
-import useUserStore from "../../app/user";
-import Title from "../../components/Title";
-import Button from "../../components/Button";
-import { IoMdAdd, IoMdAttach } from "react-icons/io";
-import Loading from "../../components/Loader";
-import { getInitials, getResourceBirthdayStatus, themeColors } from "../../utils";
-import clsx from "clsx";
-import ConfirmationDialog from "../../components/Dialogs";
-import { AddRegularUser } from "../../components/team";
-import { useQuery, useQueryClient } from "react-query";
+import React, { useEffect, useState } from 'react';
+import useUserStore from '../../app/user';
+import Title from '../../components/Title';
+import Button from '../../components/Button';
+import { IoMdAdd, IoMdAttach } from 'react-icons/io';
+import Loading from '../../components/Loader';
+import { getInitials } from '../../utils';
+import clsx from 'clsx';
+import ConfirmationDialog from '../../components/Dialogs';
+import { useQuery, useQueryClient } from 'react-query';
 
-import { MdEmail, MdPeople } from "react-icons/md";
-import { RiDeleteBin2Fill } from "react-icons/ri";
-import { FaEdit, FaEye, FaPhoneSquare } from "react-icons/fa";
-import useDateCalculator from "../../config/useDateCalculator";
-import { useNavigate } from "react-router-dom";
-import { BiCommentDetail } from "react-icons/bi";
-import axios from "../../config/axios";
-import { AiTwotoneFolderOpen } from "react-icons/ai";
-import Package from "../../package/Package";
+import { MdEmail, MdPeople } from 'react-icons/md';
+import { RiDeleteBin2Fill } from 'react-icons/ri';
+import { FaEdit, FaEye, FaPhoneSquare } from 'react-icons/fa';
+import useDateCalculator from '../../config/useDateCalculator';
+import { useNavigate } from 'react-router-dom';
+import { BiCommentDetail } from 'react-icons/bi';
+import axios from '../../config/axios';
+import { AiTwotoneFolderOpen } from 'react-icons/ai';
+import Package from '../../package/Package';
+import { getUsers } from '../../config/api';
 
 export const Users = () => {
   const dates = useDateCalculator();
@@ -37,13 +37,29 @@ export const Users = () => {
   const [gridData, setGridData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
+  const { data: users, status: isUserLoaded } = useQuery({
+    queryKey: ['users'],
+    queryFn: getUsers,
+    staleTime: 1000 * 60 * 60,
+  });
+  console.log(users);
+
+  useEffect(() => {
+    if (isUserLoaded === 'success') {
+      setGridData(users);
+      setIsDataLoaded(true);
+    } else {
+      setIsDataLoaded(false);
+    }
+  }, [users, isUserLoaded]);
+
   const deleteHandler = async (selected) => {
     try {
       setIsLoading(true);
       await axios.delete(`/api/attachment/delete-file?type=resource_id&id=${selected}`);
     } catch (error) {
       setIsLoading(false);
-      console.error("Error:", error);
+      console.error('Error:', error);
     }
   };
 
@@ -58,7 +74,7 @@ export const Users = () => {
   };
 
   const addClick = () => {
-    setSelected("");
+    setSelected('');
     setOpen(true);
   };
 
@@ -90,7 +106,7 @@ export const Users = () => {
         <th className="border-l border-gray-300 p-2">Company</th>
         <th className="border-l border-gray-300 p-2">Manager</th>
         <th className="border-l border-gray-300 p-2">Manager Contacts</th>
-        {(current_subcription?.Package === "Standard" || current_subcription?.Package === "Premium") && (
+        {(current_subcription?.Package === 'Standard' || current_subcription?.Package === 'Premium') && (
           <th className="border-l border-gray-300 p-2">Assets</th>
         )}
         <th className="border-l border-gray-300 p-2">Actions</th>
@@ -102,7 +118,12 @@ export const Users = () => {
     <tr className="border border-gray-300 text-sm xl:text-[16px] hover:bg-gray-400/10 text-left">
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex items-center gap-3">
-          <div className={clsx("w-9 h-9 rounded-full text-white flex items-center justify-center text-sm", `bg-[${themeColors[0]}]`)}>
+          <div
+            className={clsx(
+              'w-9 h-9 rounded-full text-white flex items-center justify-center text-sm',
+              `bg-[${themeColors[0]}]`,
+            )}
+          >
             <span className="text-xs md:text-sm text-center">{getInitials(user?.FullName)}</span>
           </div>
           <div className="flex flex-col items-start gap-0">
@@ -126,15 +147,26 @@ export const Users = () => {
       </td>
 
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
-        <p className={clsx("w-fit px-4 py-1 rounded-full", user?.Status === "Active" ? "bg-green-200" : "bg-yellow-100")}>{user?.Status}</p>
+        <p
+          className={clsx('w-fit px-4 py-1 rounded-full', user?.Status === 'Active' ? 'bg-green-200' : 'bg-yellow-100')}
+        >
+          {user?.Status}
+        </p>
       </td>
 
-      <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">{getResourceBirthdayStatus(user.DateOfBirth, dates)}</td>
+      <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
+        {getResourceBirthdayStatus(user.DateOfBirth, dates)}
+      </td>
 
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">{user.Company}</td>
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex items-center gap-3">
-          <div className={clsx("w-9 h-9 rounded-full text-white flex items-center justify-center text-sm", `bg-[${themeColors[0]}]`)}>
+          <div
+            className={clsx(
+              'w-9 h-9 rounded-full text-white flex items-center justify-center text-sm',
+              `bg-[${themeColors[0]}]`,
+            )}
+          >
             <span className="text-xs md:text-sm text-center">{getInitials(user?.Manager)}</span>
           </div>
           <div className="flex flex-col items-start gap-0">
@@ -156,13 +188,13 @@ export const Users = () => {
           </div>
         </div>
       </td>
-      {(current_subcription?.Package === "Standard" || current_subcription?.Package === "Premium") && (
+      {(current_subcription?.Package === 'Standard' || current_subcription?.Package === 'Premium') && (
         <td className="min-w-max px-2 whitespace-nowrap border-l border-gray-200">
           <div className="flex gap-1 items-center text-left">
             <div
               className={clsx(
-                "w-fit flex gap-1 items-center hover:bg-viewcolor hover:text-white px-2 py-0 rounded-full cursor-pointer",
-                "bg-gray-200 text-black"
+                'w-fit flex gap-1 items-center hover:bg-viewcolor hover:text-white px-2 py-0 rounded-full cursor-pointer',
+                'bg-gray-200 text-black',
               )}
               onClick={() => viewAttachClick(user)}
             >
@@ -171,8 +203,8 @@ export const Users = () => {
             </div>
             <div
               className={clsx(
-                "w-fit flex gap-1 items-center hover:bg-viewcolor hover:text-white px-2 py-0 rounded-full cursor-pointer",
-                "bg-gray-200 text-black"
+                'w-fit flex gap-1 items-center hover:bg-viewcolor hover:text-white px-2 py-0 rounded-full cursor-pointer',
+                'bg-gray-200 text-black',
               )}
               onClick={() => viewCommentClick(user)}
             >
@@ -184,19 +216,19 @@ export const Users = () => {
       )}
       <td className="min-w-max px-2 border-l border-gray-200">
         <div className="flex items-center text-left gap-3 justify-start">
-          {(current_subcription?.Package === "Standard" || current_subcription?.Package === "Premium") && (
+          {(current_subcription?.Package === 'Standard' || current_subcription?.Package === 'Premium') && (
             <AiTwotoneFolderOpen
-              className={clsx("hover:text-green-500 font-semibold cursor-pointer sm:px-0", "text-viewcolor")}
+              className={clsx('hover:text-green-500 font-semibold cursor-pointer sm:px-0', 'text-viewcolor')}
               onClick={() => viewDetailClick(user.id)}
             />
           )}
           <FaEdit
-            className={clsx("text-editcolor", "hover:text-orange-500 font-semibold cursor-pointer sm:px-0")}
+            className={clsx('text-editcolor', 'hover:text-orange-500 font-semibold cursor-pointer sm:px-0')}
             onClick={() => editClick(user)}
           />
 
           <RiDeleteBin2Fill
-            className={clsx("text-deletecolor", "hover:text-red-500 font-semibold cursor-pointer sm:px-0")}
+            className={clsx('text-deletecolor', 'hover:text-red-500 font-semibold cursor-pointer sm:px-0')}
             onClick={() => deleteClick(user.id)}
           />
         </div>
@@ -216,16 +248,16 @@ export const Users = () => {
             <div className="w-full mt-5 mb-5 shadow-md rounded bg-white">
               <div className="flex items-center justify-between p-5">
                 <div className="flex items-center gap-2">
-                  <MdPeople className={`text-2xl text-[${themeColors[1]}]`} />
-                  <Title title="Team Members" />
+                  <MdPeople className={`text-2xl text-black`} />
+                  <Title title="Subscribers" />
                 </div>
 
                 <Button
                   label="Add New"
                   icon={<IoMdAdd className="text-lg" />}
                   className={clsx(
-                    "flex flex-row-reverse gap-1 items-center text-white hover:bg-viewcolor rounded-full px-2 py-1",
-                    `bg-[${themeColors[1]}] hover:text-[${themeColors[1]}]`
+                    'flex flex-row-reverse gap-1 items-center text-white hover:bg-viewcolor rounded-full px-2 py-1',
+                    // `bg-[${themeColors[1]}] hover:text-[${themeColors[1]}]`,
                   )}
                   onClick={() => addClick()}
                 />
@@ -249,16 +281,12 @@ export const Users = () => {
           <Package />
         ))}
 
-      <AddRegularUser
-        // setResourceData={setResourceData}
-        setUser={setUser}
-        open={open}
-        setOpen={setOpen}
-        recordData={selected}
-        key={new Date().getTime().toString()}
+      <ConfirmationDialog
+        open={openDialog}
+        setOpen={setOpenDialog}
+        isLoading={isLoading}
+        onClick={() => deleteHandler(selected)}
       />
-
-      <ConfirmationDialog open={openDialog} setOpen={setOpenDialog} isLoading={isLoading} onClick={() => deleteHandler(selected)} />
     </>
   );
 };
