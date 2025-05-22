@@ -53,8 +53,15 @@ export const AddRootUser = ({ open, setOpen }) => {
       setValue('SelfAge', user.SelfAge);
       setValue('Country', user.Country);
 
-      const country = CountryData.find((country) => country.name === user?.Country)?.isoCode;
-      setCountryCode(country);
+      // setCountryCode(country);
+
+      const country = CountryData.find((country) => country.name === user?.Country);
+
+      if (country) {
+        setValue('Country', country?.name);
+        setValue('Currency', country.currency);
+        setValue('Separator', 'en-' + country);
+      }
     }
 
     return () => reset();
@@ -64,10 +71,16 @@ export const AddRootUser = ({ open, setOpen }) => {
   const handleOnSubmit = async (data) => {
     setIsLoading(() => true);
 
-    const id = toast.loading('Updating User Profile....');
     delete data.ConfirmPassword;
 
+    const country = CountryData.find((country) => country.isoCode === data?.Country);
+
+    data.Country = country?.name;
+    data.Currency = country?.currency;
+    data.Separator = 'en-' + country?.isoCode;
+
     if (user?.id) {
+      const id = toast.loading('Updating User Profile....');
       delete data.Password;
       axios
         .patch('/api/rootusers/' + user.id, data)
@@ -93,6 +106,8 @@ export const AddRootUser = ({ open, setOpen }) => {
           });
         });
     } else {
+      const id = toast.loading('Loading...');
+
       axios
         .post('/api/auth/signup', data)
         .then(({ data }) => {
@@ -120,18 +135,18 @@ export const AddRootUser = ({ open, setOpen }) => {
     }
   };
 
-  const handleCountryChange = (e) => {
-    if (e && e.target?.value) {
-      const selCountry = e.target?.value;
-      const targetCountry = CountryData.find((item) => item?.isoCode === selCountry);
-      setValue('Country', targetCountry.name);
-      setValue('Currency', targetCountry.currency);
-      const selCountryCode = targetCountry ? targetCountry.isoCode : '';
-      setCountryCode(selCountryCode);
+  // const handleCountryChange = (e) => {
+  //   if (e && e.target?.value) {
+  //     const selCountry = e.target?.value;
+  //     const targetCountry = CountryData.find((item) => item?.isoCode === selCountry);
+  //     setValue('Country', targetCountry.name);
+  //     setValue('Currency', targetCountry.currency);
+  //     const selCountryCode = targetCountry ? targetCountry.isoCode : '';
+  //     setCountryCode(selCountryCode);
 
-      setValue('Separator', 'en-' + selCountryCode);
-    }
-  };
+  //     setValue('Separator', 'en-' + selCountryCode);
+  //   }
+  // };
 
   const handleClose = () => {
     setOpen(false);
@@ -199,7 +214,7 @@ export const AddRootUser = ({ open, setOpen }) => {
                   placeholder="Select Country"
                   name="Country"
                   label="Country"
-                  onChange={handleCountryChange}
+                  // onChange={handleCountryChange}
                   options={CountryData?.map((country) => ({
                     value: country.isoCode,
                     label: country.name,
