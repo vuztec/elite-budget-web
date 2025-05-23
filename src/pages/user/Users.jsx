@@ -40,8 +40,8 @@ export const Users = () => {
 
   useEffect(() => {
     if (isUserLoaded === 'success') {
-      //setGridData(users?.filter((u) => u?.id !== 1 && u?.id !== 2 && u?.id !== 1));
-      setGridData(users);
+      setGridData(users?.filter((u) => u?.id !== 1 && u?.id !== 2 && u?.id !== 1));
+      //setGridData(users);
       setIsDataLoaded(true);
     } else {
       setIsDataLoaded(false);
