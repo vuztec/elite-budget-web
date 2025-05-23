@@ -94,7 +94,7 @@ export function VideoDialog({ open, setOpen, url, title }) {
               className="bg-pink-200 flex flex-row-reverse items-center gap-1 px-8 text-sm font-semibold text-gray-900 sm:w-auto border"
               onClick={handleClose}
               label="Close"
-              icon={<IoMdClose />}
+              icon={<TiCancel />}
             />
           </div>
         </div>

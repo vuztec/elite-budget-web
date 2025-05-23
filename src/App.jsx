@@ -39,6 +39,7 @@ import About from './pages/policy/About';
 import OtpPage from './pages/otp';
 import Welcome from './pages/welcome/Welcome';
 import Denied from './pages/welcome/Denied';
+import Resource from './pages/resource/Resource';
 
 function Layout() {
   //const user = false;
@@ -111,6 +112,7 @@ function App() {
           <Route path="/net-worth" element={<Networth />} />
           <Route path="/subscription" element={<Subscription />} />
           <Route path="/subscribers" element={<Users />} />
+          <Route path="/training-videos" element={<Resource />} />
         </Route>
         <Route path="/advert" element={<Advert />} />
         <Route path="/old" element={<OldHome />} />

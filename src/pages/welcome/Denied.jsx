@@ -13,12 +13,12 @@ const Denied = () => {
       <div className="w-full min-h-screen flex items-center justify-center flex-col lg:flex-row bg-[#f3f4f6]">
         <div className="w-full md:w-auto flex gap-0 md:gap-40 flex-col md:flex-row items-center justify-center">
           <div className="w-full md:w-1/3 p-4 md:p-1 flex flex-col justify-center items-center">
-            <div className="form-container w-full md:w-[700px] flex flex-col items-center gap-y-8 bg-[#C6EFCE] px-10 pt-14 pb-14">
-              <div className="text-center text-[#006100]">
+            <div className="form-container w-full md:w-[700px] flex flex-col items-center gap-y-8 bg-[#FFC7CE] px-10 pt-14 pb-14">
+              <div className="text-center text-[#9C0006]">
                 <p className="text-3xl font-bold">We cannot verify your user account information</p>
-                <p className="text-sm font-bold mt-5">
-                  Please email <strong className="text-blue-500">michelle@elitecashflowproducts.com.</strong> for
-                  assistance.
+                <p className="font-bold mt-5">
+                  Please email <strong className="text-blue-500">michelle@elitecashflowproducts.com</strong> for
+                  assistance
                 </p>
               </div>
               {/* <div className="w-fit">

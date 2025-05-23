@@ -107,3 +107,8 @@ export const getUsers = async () => {
   const res = await axios.get('/api/rootusers');
   return res.data;
 };
+
+export const getResources = async () => {
+  const res = await axios.get('/api/resources');
+  return res.data;
+};
