@@ -4,6 +4,7 @@ import Button from './Button';
 import PrivacyPolicy from '../pages/policy/PrivacyPolicy';
 import { TiCancel } from 'react-icons/ti';
 import TermsAndConditions from '../pages/policy/TermsAndConditions';
+import Video from './resource/Video';
 
 export function PrivacyDialog({ open, setOpen }) {
   const handleClose = () => {
@@ -65,6 +66,35 @@ export function TermsDialog({ open, setOpen }) {
               onClick={() => handleClose()}
               label="Close"
               icon={<TiCancel />}
+            />
+          </div>
+        </div>
+      </ModalWrapper2>
+    </>
+  );
+}
+
+export function VideoDialog({ open, setOpen, url, title }) {
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  return (
+    <>
+      <ModalWrapper2 open={open} handleClose={handleClose} size={'lg'}>
+        <div className="mb-2.5 ml-0 mr-0 mt-0 w-full flex flex-col gap-2 items-center justify-center rounded-xl shadow-md">
+          <p className="w-full font-bold items-left px-3 py-2 rounded-md text-white bg-primary uppercase">{title}</p>
+          <div className="w-full items-left">
+            <Video url={url} />
+          </div>
+
+          <div className="mb-3">
+            <Button
+              type="button"
+              className="bg-pink-200 flex flex-row-reverse items-center gap-1 px-8 text-sm font-semibold text-gray-900 sm:w-auto border"
+              onClick={handleClose}
+              label="Close"
+              icon={<IoMdClose />}
             />
           </div>
         </div>
