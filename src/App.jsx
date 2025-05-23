@@ -38,6 +38,7 @@ import { BiArrowToTop } from 'react-icons/bi';
 import About from './pages/policy/About';
 import OtpPage from './pages/otp';
 import Welcome from './pages/welcome/Welcome';
+import Denied from './pages/welcome/Denied';
 
 function Layout() {
   //const user = false;
@@ -124,6 +125,7 @@ function App() {
         <Route path="/about-elite" element={<About />} />
         <Route path="/faqs" element={<Faqs />} />
         <Route path="/welcome" element={<Welcome />} />
+        <Route path="/denied" element={<Denied />} />
       </Routes>
       <ToastContainer
         position="top-right"

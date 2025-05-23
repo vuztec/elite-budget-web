@@ -54,6 +54,7 @@ export const Login = () => {
       })
       .catch((err) => {
         console.log(err);
+        if (err.response.status === 403) navigate('/denied');
         toast.update(id, {
           render: handleAxiosResponseError(err),
           type: 'error',
