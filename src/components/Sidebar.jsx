@@ -32,7 +32,7 @@ const Sidebar = () => {
 
   useEffect(() => {
     let sidebar = SidebarLinks;
-    if (user?.id !== 1 && user?.id !== 2 && user?.id !== 3) {
+    if (user?.id !== 1 && user?.id !== 2 && user?.id !== 3 && user?.id !== 6) {
       sidebar = SidebarLinks?.filter((s) => s?.label !== 'Subscribers');
     }
     setSideBarData(sidebar);

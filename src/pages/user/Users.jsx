@@ -19,7 +19,7 @@ export const Users = () => {
   const { user: currentUser } = useUserStore();
   const navigate = useNavigate();
   useEffect(() => {
-    currentUser?.id !== 1 && currentUser?.id !== 2 && currentUser?.id !== 3 && navigate('/');
+    currentUser?.id !== 1 && currentUser?.id !== 2 && currentUser?.id !== 3 && currentUser?.id !== 6 && navigate('/');
   }, [currentUser, navigate]);
   const queryClient = useQueryClient();
   const [openDialog, setOpenDialog] = useState(false);
@@ -40,7 +40,7 @@ export const Users = () => {
 
   useEffect(() => {
     if (isUserLoaded === 'success') {
-      setGridData(users?.filter((u) => u?.id !== 1 && u?.id !== 2 && u?.id !== 1));
+      setGridData(users?.filter((u) => u?.id !== 1 && u?.id !== 2 && u?.id !== 14));
       //setGridData(users);
       setIsDataLoaded(true);
     } else {
