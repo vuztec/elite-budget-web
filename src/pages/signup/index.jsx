@@ -22,6 +22,10 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa';
 export const Signup = () => {
   const CountryData = Country.getAllCountries();
   const { setUser, user, acceptPrivacy, acceptTerms } = useUserStore();
+  const navigate = useNavigate();
+  useEffect(() => {
+    user && navigate('/');
+  }, [user, navigate]);
   const [open, setOpen] = useState(false);
   const [openPrivacy, setOpenPrivacy] = useState(false);
   const [openTerms, setOpenTerms] = useState(false);
@@ -32,8 +36,6 @@ export const Signup = () => {
     value: format.value,
     label: format.label,
   }));
-
-  const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -266,57 +268,55 @@ export const Signup = () => {
                           />
                         </div>
                       </div>
-                      {!user && (
-                        <div className="flex flex-col gap-6 w-full">
-                          <div className="flex items-center justify-center relative w-full">
-                            <div className="w-full">
-                              <Textbox
-                                placeholder="Enter Password"
-                                type={showPassword1 ? 'text' : 'password'}
-                                name="Password"
-                                label="Password"
-                                className="w-full rounded"
-                                register={register('Password', {
-                                  required: 'Password is required!',
-                                })}
-                                error={errors.Password ? errors.Password.message : ''}
-                              />
-                            </div>
-                            {/* Toggle icon */}
-                            <button
-                              type="button"
-                              onClick={() => setShowPassword1((prev) => !prev)}
-                              className="absolute right-3 top-[40px] lg:top-[45px] transform -translate-y-1/2 text-gray-500 focus:outline-none"
-                            >
-                              {showPassword1 ? <FaEyeSlash size={22} /> : <FaEye size={22} />}
-                            </button>
+                      <div className="flex flex-col gap-6 w-full">
+                        <div className="flex items-center justify-center relative w-full">
+                          <div className="w-full">
+                            <Textbox
+                              placeholder="Enter Password"
+                              type={showPassword1 ? 'text' : 'password'}
+                              name="Password"
+                              label="Password"
+                              className="w-full rounded"
+                              register={register('Password', {
+                                required: 'Password is required!',
+                              })}
+                              error={errors.Password ? errors.Password.message : ''}
+                            />
                           </div>
-                          <div className="flex items-center justify-center relative w-full">
-                            <div className="w-full">
-                              <Textbox
-                                placeholder="Confirm Password"
-                                type={showPassword2 ? 'text' : 'password'}
-                                name="ConfirmPassword"
-                                label="Confirm Password"
-                                className="w-full rounded"
-                                register={register('ConfirmPassword', {
-                                  required: 'Confirm Password is required!',
-                                  validate: (value) => value === Password || 'Passwords do not match',
-                                })}
-                                error={errors.ConfirmPassword ? errors.ConfirmPassword.message : ''}
-                              />
-                            </div>
-                            {/* Toggle icon */}
-                            <button
-                              type="button"
-                              onClick={() => setShowPassword2((prev) => !prev)}
-                              className="absolute right-3 top-[40px] lg:top-[45px] transform -translate-y-1/2 text-gray-500 focus:outline-none"
-                            >
-                              {showPassword2 ? <FaEyeSlash size={22} /> : <FaEye size={22} />}
-                            </button>
-                          </div>
+                          {/* Toggle icon */}
+                          <button
+                            type="button"
+                            onClick={() => setShowPassword1((prev) => !prev)}
+                            className="absolute right-3 top-[40px] lg:top-[45px] transform -translate-y-1/2 text-gray-500 focus:outline-none"
+                          >
+                            {showPassword1 ? <FaEyeSlash size={22} /> : <FaEye size={22} />}
+                          </button>
                         </div>
-                      )}
+                        <div className="flex items-center justify-center relative w-full">
+                          <div className="w-full">
+                            <Textbox
+                              placeholder="Confirm Password"
+                              type={showPassword2 ? 'text' : 'password'}
+                              name="ConfirmPassword"
+                              label="Confirm Password"
+                              className="w-full rounded"
+                              register={register('ConfirmPassword', {
+                                required: 'Confirm Password is required!',
+                                validate: (value) => value === Password || 'Passwords do not match',
+                              })}
+                              error={errors.ConfirmPassword ? errors.ConfirmPassword.message : ''}
+                            />
+                          </div>
+                          {/* Toggle icon */}
+                          <button
+                            type="button"
+                            onClick={() => setShowPassword2((prev) => !prev)}
+                            className="absolute right-3 top-[40px] lg:top-[45px] transform -translate-y-1/2 text-gray-500 focus:outline-none"
+                          >
+                            {showPassword2 ? <FaEyeSlash size={22} /> : <FaEye size={22} />}
+                          </button>
+                        </div>
+                      </div>
 
                       {/* <div className="flex flex-col md:flex-row gap-6 w-full">
                         <div className="w-full">

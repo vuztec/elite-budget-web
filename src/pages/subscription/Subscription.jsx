@@ -278,7 +278,7 @@ export const Subscription = () => {
                                   //     {'Subscribe Now'}
                                   //   </button>
                                   // )
-                                  'In-Active'
+                                  'Inactive'
                                 )}
                               </div>
                             )}
