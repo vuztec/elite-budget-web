@@ -59,7 +59,8 @@ export const ResourceListView = ({ gridData, hasClass, users, title }) => {
 
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <span className="flex items-center justify-left gap-2 text-center">
-          {record?.UpdatedBy ? record?.UpdatedBy?.FullName : record?.CreatedBy?.FullName}
+          {/* {record?.UpdatedBy ? record?.UpdatedBy?.FullName : record?.CreatedBy?.FullName} */}
+          Elite Admin
         </span>
       </td>
     </tr>
