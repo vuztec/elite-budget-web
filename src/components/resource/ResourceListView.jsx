@@ -10,6 +10,7 @@ export const ResourceListView = ({ gridData, hasClass, users, title }) => {
   const { user } = useUserStore();
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState(null);
+  console.log(gridData);
 
   const openVideo = (url) => {
     //window.open(url, '_blank', 'noreferrer');
@@ -41,7 +42,7 @@ export const ResourceListView = ({ gridData, hasClass, users, title }) => {
             label={'Watch Video'}
             icon={<BsYoutube />}
             className={clsx(
-              'flex flex-row-reverse gap-2 p-1 rounded-full items-center text-white hover:bg-viewcolor',
+              'flex flex-row-reverse gap-2 p-1 rounded-full items-center text-white hover:bg-green-600',
               `bg-red-700 hover:text-white`,
             )}
             onClick={() => openVideo(record)}
@@ -51,14 +52,14 @@ export const ResourceListView = ({ gridData, hasClass, users, title }) => {
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <span className="flex items-center justify-left gap-2 text-center">
           {record?.updatedAt
-            ? getFormattedDateSubscription(user, record?.updatedAt)
-            : getFormattedDateSubscription(user, record?.createdAt)}
+            ? getFormattedDateSubscription(user, record?.UpdatedAt)
+            : getFormattedDateSubscription(user, record?.CreatedAt)}
         </span>
       </td>
 
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <span className="flex items-center justify-left gap-2 text-center">
-          {record?.updatedById ? record?.UpdatedBy?.FullName : record?.CreatedBy?.FullName}
+          {record?.UpdatedBy ? record?.UpdatedBy?.FullName : record?.CreatedBy?.FullName}
         </span>
       </td>
     </tr>

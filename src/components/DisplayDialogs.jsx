@@ -83,7 +83,7 @@ export function VideoDialog({ open, setOpen, url, title }) {
     <>
       <ModalWrapper2 open={open} handleClose={handleClose} size={'lg'}>
         <div className="mb-2.5 ml-0 mr-0 mt-0 w-full flex flex-col gap-2 items-center justify-center rounded-xl shadow-md">
-          <p className="w-full font-bold items-left px-3 py-2 rounded-md text-white bg-primary uppercase">{title}</p>
+          <p className="w-full font-bold items-left px-3 py-2 rounded-md text-white bg-black uppercase">{title}</p>
           <div className="w-full items-left">
             <Video url={url} />
           </div>

@@ -308,7 +308,7 @@ export const AddRootUser = ({ open, setOpen }) => {
               <Button
                 type="submit"
                 className="w-fit flex flex-row-reverse items-center gap-1 text-white bg-black"
-                label="Enter"
+                label="Submit"
                 icon={<IoMdSend />}
               />
 
