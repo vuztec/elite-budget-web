@@ -10,7 +10,18 @@ export const ResourceListView = ({ gridData, hasClass, users, title }) => {
   const { user } = useUserStore();
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState(null);
-  console.log(gridData);
+  const types = [
+    'General',
+    'Home',
+    'Expenses',
+    'Other Debts',
+    'Retirement',
+    'Savings',
+    'Bank Register',
+    'Final Budget',
+    'Net Worth',
+    'Subscription',
+  ];
 
   const openVideo = (url) => {
     //window.open(url, '_blank', 'noreferrer');
@@ -29,9 +40,24 @@ export const ResourceListView = ({ gridData, hasClass, users, title }) => {
     </thead>
   );
 
+  const TableRowType = ({ type }) => (
+    <tr className="text-black font-bold text-left text-sm xl:text-[16px] bg-[whitesmoke]">
+      <td className="min-w-fit whitespace-nowrap p-2">
+        <div className="flex flex-col items-start gap-0 font-bold">
+          <div className="flex items-center gap-3">
+            <span className="font-bold">{type}</span>
+          </div>
+        </div>
+      </td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  );
+
   const TableRow = ({ record }) => (
     <tr className="border border-gray-300 text-sm xl:text-[16px] hover:bg-gray-400/10 text-left">
-      <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200">
+      <td className="min-w-fit whitespace-nowrap py-3 px-5 border-l border-gray-200">
         <div className="flex items-start gap-2">
           <span>{record?.Name}</span>
         </div>
@@ -80,9 +106,23 @@ export const ResourceListView = ({ gridData, hasClass, users, title }) => {
             <table className="w-[97%] m-5">
               <TableHeader />
               <tbody className="h-full overflow-y-auto overflow-x-auto">
-                {gridData?.map((record, index) => (
-                  <TableRow key={index} record={record} />
-                ))}
+                {types?.map((type, typeIndex) => {
+                  const videos = gridData?.filter((item) => {
+                    return item?.Type === type;
+                  });
+                  return (
+                    <>
+                      {videos?.length > 0 && (
+                        <React.Fragment key={typeIndex}>
+                          <TableRowType type={type} />
+                          {videos.map((video, videoIndex) => (
+                            <TableRow key={videoIndex} record={video} />
+                          ))}
+                        </React.Fragment>
+                      )}
+                    </>
+                  );
+                })}
               </tbody>
             </table>
           </div>
