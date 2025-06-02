@@ -5,14 +5,25 @@ import { getNoData } from '../../utils/nmrw.function';
 import { ResourceListView } from '../../components/resource/ResourceListView';
 import { getResources, getUsers } from '../../config/api';
 import { useQuery } from 'react-query';
+import Select from '../../components/Select';
+const types = [
+  'General',
+  'Home',
+  'Income',
+  'Expenses',
+  'Other Debts',
+  'Retirement',
+  'Savings',
+  'Bank Register',
+  'Final Budget',
+  'Net Worth',
+  'Subscription',
+];
 
 export const Resource = () => {
   const [isDataLoaded, setIsDataLoaded] = useState(false);
-  const { data: users, status: isUsersLoaded } = useQuery({
-    queryKey: ['users'],
-    queryFn: getUsers,
-    staleTime: 1000 * 60 * 60,
-  });
+  const [typeFilter, setTypeFilter] = useState('All');
+  const [gridData, setGridData] = useState([]);
 
   const { data: resources, status: isResourcesLoaded } = useQuery({
     queryKey: ['resources'],
@@ -21,10 +32,21 @@ export const Resource = () => {
   });
 
   useEffect(() => {
-    if (isResourcesLoaded && isUsersLoaded) {
+    if (isResourcesLoaded) {
+      let filteredData = resources;
+      if (typeFilter !== 'All' && parseInt(typeFilter) !== 0) {
+        filteredData = resources?.filter((item) => item?.Type === typeFilter);
+      }
+      setGridData(filteredData);
       setIsDataLoaded(true);
     }
-  }, [isResourcesLoaded, isUsersLoaded]);
+  }, [resources, isResourcesLoaded, typeFilter]);
+
+  const handleTypeChange = (e) => {
+    if (e && e.target?.value) {
+      setTypeFilter(e.target?.value);
+    }
+  };
 
   return (
     <>
@@ -36,8 +58,20 @@ export const Resource = () => {
                 <span className="text-lg text-gray-600">{AppIcon.Training}</span>
                 <span className="hidden lg:block">Videos:</span>
               </div>
-              <span className="font-bold">{resources?.length}</span>
+              <span className="font-bold">{gridData?.length}</span>
             </div>
+          </div>
+          <div className="w-fit px-5">
+            <Select
+              onChange={handleTypeChange}
+              value={typeFilter}
+              options={types?.map((p) => ({
+                value: p,
+                label: p,
+              }))}
+              placeholder="All"
+              className="bg-white w-full py-1"
+            />
           </div>
         </div>
       </div>
@@ -51,9 +85,9 @@ export const Resource = () => {
       {isDataLoaded && (
         <>
           <div className="py-2 w-full">
-            <ResourceListView gridData={resources} hasClass={false} users={users} title={`Training Videos`} />
+            <ResourceListView gridData={gridData} hasClass={false} types={types} title={`Training Videos`} />
           </div>
-          <div className="py-0 w-full">{resources?.length < 1 && getNoData('Resources')}</div>
+          <div className="py-0 w-full">{gridData?.length < 1 && getNoData('Resources')}</div>
         </>
       )}
     </>

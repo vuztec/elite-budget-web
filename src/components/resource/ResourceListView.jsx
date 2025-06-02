@@ -6,24 +6,10 @@ import { BsYoutube } from 'react-icons/bs';
 import { VideoDialog } from '../DisplayDialogs';
 import { getFormattedDateSubscription } from '../../utils/budget.calculation';
 
-export const ResourceListView = ({ gridData, hasClass, users, title }) => {
+export const ResourceListView = ({ gridData, hasClass, types, title }) => {
   const { user } = useUserStore();
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState(null);
-  const types = [
-    'General',
-    'Home',
-    'Income',
-    'Expenses',
-    'Other Debts',
-    'Retirement',
-    'Savings',
-    'Bank Register',
-    'Final Budget',
-    'Net Worth',
-    'Subscription',
-  ];
-
   const openVideo = (url) => {
     //window.open(url, '_blank', 'noreferrer');
     setOpen(true);
@@ -41,12 +27,13 @@ export const ResourceListView = ({ gridData, hasClass, users, title }) => {
     </thead>
   );
 
-  const TableRowType = ({ type }) => (
+  const TableRowType = ({ type, videos }) => (
     <tr className="text-gray-600 font-bold text-left text-sm xl:text-[16px] bg-[whitesmoke]">
       <td className="min-w-fit whitespace-nowrap p-2">
         <div className="flex flex-col items-start gap-0 font-bold">
           <div className="flex items-center gap-3">
             <span className="font-bold">{type}</span>
+            <span className="bg-black text-white rounded-full py-1 px-2">{videos?.length}</span>
           </div>
         </div>
       </td>
@@ -115,7 +102,7 @@ export const ResourceListView = ({ gridData, hasClass, users, title }) => {
                     <>
                       {videos?.length > 0 && (
                         <React.Fragment key={typeIndex}>
-                          <TableRowType type={type} />
+                          <TableRowType type={type} videos={videos} />
                           {videos.map((video, videoIndex) => (
                             <TableRow key={videoIndex} record={video} />
                           ))}
