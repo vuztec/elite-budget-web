@@ -41,7 +41,7 @@ export const ResourceListView = ({ gridData, hasClass, users, title }) => {
   );
 
   const TableRowType = ({ type }) => (
-    <tr className="text-black font-bold text-left text-sm xl:text-[16px] bg-[whitesmoke]">
+    <tr className="text-gray-600 font-bold text-left text-sm xl:text-[16px] bg-[whitesmoke]">
       <td className="min-w-fit whitespace-nowrap p-2">
         <div className="flex flex-col items-start gap-0 font-bold">
           <div className="flex items-center gap-3">

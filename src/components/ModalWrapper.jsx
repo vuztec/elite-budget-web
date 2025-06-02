@@ -182,7 +182,7 @@ export const ModalWrapper2 = ({ open, handleClose, size, children }) => {
             >
               <Dialog.Panel
                 className={clsx(
-                  'w-full h-fit max-h-[90%] sm:h-fit overflow-y-scroll relative transform overflow-auto rounded-xl bg-white text-left shadow-xl transition-all pb-0 sm:my-8',
+                  'w-full h-fit max-h-[90%] sm:h-fit relative transform overflow-auto rounded-xl bg-white text-left shadow-xl transition-all pb-0 sm:my-8',
                   otherClass,
                 )}
               >
