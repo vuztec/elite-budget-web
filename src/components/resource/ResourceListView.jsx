@@ -13,6 +13,7 @@ export const ResourceListView = ({ gridData, hasClass, users, title }) => {
   const types = [
     'General',
     'Home',
+    'Income',
     'Expenses',
     'Other Debts',
     'Retirement',
