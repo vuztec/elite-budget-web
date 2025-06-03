@@ -84,12 +84,14 @@ export const ResourceListView = ({ gridData, hasClass, types, title, showType })
     <>
       {gridData?.length > -1 && (
         <div className="w-full h-fit bg-white mt-4 shadow-md rounded-xl">
-          <div className="flex items-center justify-between gap-5 px-5 py-3 uppercase font-bold w-full bg-black text-white rounded-xl">
-            <div className="flex gap-5">
-              <h1 className="uppercase">{title}</h1>
-              {/* <span onClick={() => addNewClick()}>{AppIcon.AddItem}</span> */}
+          {showType && (
+            <div className="flex items-center justify-between gap-5 px-5 py-3 uppercase font-bold w-full bg-black text-white rounded-xl">
+              <div className="flex gap-5">
+                <h1 className="uppercase">{title}</h1>
+                {/* <span onClick={() => addNewClick()}>{AppIcon.AddItem}</span> */}
+              </div>
             </div>
-          </div>
+          )}
           <div className={clsx('overflow-y-auto block overflow-x-auto', hasClass ? 'h-fit' : 'h-[calc(100vh-240px)]')}>
             <table className="w-[97%] m-5">
               <TableHeader />
