@@ -80,7 +80,7 @@ export const Login = () => {
 
               <div className="flex flex-col gap-y-5">
                 <Textbox
-                  placeholder="email@example.com"
+                  placeholder="joe@company.com"
                   type="email"
                   name="email"
                   label="Email Address"

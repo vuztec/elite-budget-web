@@ -95,7 +95,7 @@ const AddPaymentMethod = ({ handleClose, isTrial }) => {
           className="w-full px-3 py-2 border rounded-md"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          placeholder="John Doe"
+          placeholder="Joe Bright"
           required
         />
       </div>
@@ -107,13 +107,15 @@ const AddPaymentMethod = ({ handleClose, isTrial }) => {
           className="w-full px-3 py-2 border rounded-md"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          placeholder="john@example.com"
+          placeholder="joe@company.com"
           required
         />
       </div>
 
       <div className="mb-4">
-        <label className="block mb-1 text-sm font-medium text-gray-700">Card Information (Number, Expiry, CVC)</label>
+        <label className="block mb-1 text-sm font-medium text-gray-700">
+          Card Information (Number, Expiry Date, CVC)
+        </label>
         <div className="border border-gray-300 rounded-md p-3">
           <CardElement options={options} />
         </div>
