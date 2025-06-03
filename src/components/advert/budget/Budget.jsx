@@ -1,4 +1,41 @@
+import React, { useEffect, useState } from 'react';
+import Loading from '../../../components/Loader';
+import { AppIcon } from '../../../utils/nmrw.icon';
+import { getNoData } from '../../../utils/nmrw.function';
+import { ResourceListView } from '../../../components/resource/ResourceListView';
+import { useQuery } from 'react-query';
+import { getResources } from '../../../config/api';
+const types = [
+  'General',
+  'Home',
+  'Income',
+  'Expenses',
+  'Other Debts',
+  'Retirement',
+  'Savings',
+  'Bank Register',
+  'Final Budget',
+  'Net Worth',
+  'Subscription',
+];
 function Budget() {
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
+  const [gridData, setGridData] = useState([]);
+
+  const { data: resources, status: isResourcesLoaded } = useQuery({
+    queryKey: ['resources'],
+    queryFn: getResources,
+    staleTime: 1000 * 60 * 60,
+  });
+
+  useEffect(() => {
+    if (isResourcesLoaded) {
+      const filteredData = resources?.filter((item) => item?.id === 1 || item?.id === 2 || item?.id === 4);
+      setGridData(filteredData);
+      setIsDataLoaded(true);
+    }
+  }, [resources, isResourcesLoaded]);
+
   const scrollToSection = (id) => {
     const section = document.getElementById(id);
     section?.scrollIntoView({ behavior: 'smooth' });
@@ -6,7 +43,7 @@ function Budget() {
 
   return (
     <>
-      <div className="w-full bg-[#2F2F2F] flex flex-col items-center p-8 md:p-16">
+      <div className="w-full bg-[#2F2F2F] flex flex-col justify-center items-center p-8 md:p-16">
         {/* Navigation Buttons */}
         <div className="w-full flex flex-wrap  gap-2 p-2 md:p-10 justify-center">
           <button
@@ -70,6 +107,28 @@ function Budget() {
             Start your 14-day FREE Trial! After that, just $95.88 upfront for a year (only $7.99/month)
           </p>
         </div>
+      </div>
+      <div className="flex flex-col gap-4 items-center justify-center text-center mt-4">
+        {!isDataLoaded && (
+          <div className="py-10">
+            <Loading />
+          </div>
+        )}
+
+        {isDataLoaded && (
+          <>
+            <div className="w-full xl:w-[60%] bg-[#2F2F2F] px-4 pb-4">
+              <ResourceListView
+                gridData={gridData}
+                hasClass={true}
+                types={types}
+                title={`Training Videos`}
+                showType={false}
+              />
+            </div>
+            <div className="py-0 w-full">{gridData?.length < 1 && getNoData('Resources')}</div>
+          </>
+        )}
       </div>
       <div className="w-full flex flex-col items-center">
         {/* Description */}

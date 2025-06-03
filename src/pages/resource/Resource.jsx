@@ -3,7 +3,7 @@ import Loading from '../../components/Loader';
 import { AppIcon } from '../../utils/nmrw.icon';
 import { getNoData } from '../../utils/nmrw.function';
 import { ResourceListView } from '../../components/resource/ResourceListView';
-import { getResources, getUsers } from '../../config/api';
+import { getResources } from '../../config/api';
 import { useQuery } from 'react-query';
 import Select from '../../components/Select';
 const types = [
@@ -85,7 +85,13 @@ export const Resource = () => {
       {isDataLoaded && (
         <>
           <div className="py-2 w-full">
-            <ResourceListView gridData={gridData} hasClass={false} types={types} title={`Training Videos`} />
+            <ResourceListView
+              gridData={gridData}
+              hasClass={false}
+              types={types}
+              title={`Training Videos`}
+              showType={true}
+            />
           </div>
           <div className="py-0 w-full">{gridData?.length < 1 && getNoData('Resources')}</div>
         </>

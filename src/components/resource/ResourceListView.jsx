@@ -6,7 +6,7 @@ import { BsYoutube } from 'react-icons/bs';
 import { VideoDialog } from '../DisplayDialogs';
 import { getFormattedDateSubscription } from '../../utils/budget.calculation';
 
-export const ResourceListView = ({ gridData, hasClass, types, title }) => {
+export const ResourceListView = ({ gridData, hasClass, types, title, showType }) => {
   const { user } = useUserStore();
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState(null);
@@ -65,7 +65,7 @@ export const ResourceListView = ({ gridData, hasClass, types, title }) => {
       </td>
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <span className="flex items-center justify-left gap-2 text-center">
-          {record?.updatedAt
+          {record?.UpdatedAt
             ? getFormattedDateSubscription(user, record?.UpdatedAt)
             : getFormattedDateSubscription(user, record?.CreatedAt)}
         </span>
@@ -102,7 +102,7 @@ export const ResourceListView = ({ gridData, hasClass, types, title }) => {
                     <>
                       {videos?.length > 0 && (
                         <React.Fragment key={typeIndex}>
-                          <TableRowType type={type} videos={videos} />
+                          {showType && <TableRowType type={type} videos={videos} />}
                           {videos.map((video, videoIndex) => (
                             <TableRow key={videoIndex} record={video} />
                           ))}
