@@ -72,14 +72,19 @@ export const ResourceListView = ({ gridData, hasClass, types, title, showType })
       }
     }, [record.id, record.Path]);
 
-    // Format duration (e.g. 1:23)
+    // Format duration (e.g. 01:23:45)
     const formatDuration = (duration) => {
       if (!duration) return 'Loading...';
-      const minutes = Math.floor(duration / 60);
-      const seconds = Math.floor(duration % 60)
-        .toString()
-        .padStart(2, '0');
-      return `${minutes}:${seconds}`;
+
+      const hours = Math.floor(duration / 3600);
+      const minutes = Math.floor((duration % 3600) / 60);
+      const seconds = Math.floor(duration % 60);
+
+      const hStr = hours.toString().padStart(2, '0');
+      const mStr = minutes.toString().padStart(2, '0');
+      const sStr = seconds.toString().padStart(2, '0');
+
+      return `${hStr}:${mStr}:${sStr}`;
     };
     return (
       <tr className="border border-gray-300 text-sm xl:text-[16px] hover:bg-gray-400/10 text-left">
