@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import useUserStore from '../../app/user';
 import clsx from 'clsx';
 import Button from '../Button';
@@ -10,6 +10,22 @@ export const ResourceListView = ({ gridData, hasClass, types, title, showType })
   const { user } = useUserStore();
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState(null);
+  const [videoDurations, setVideoDurations] = useState({});
+
+  const loadVideoDuration = (videoId, videoUrl) => {
+    const tempVideo = document.createElement('video');
+    tempVideo.src = videoUrl;
+    tempVideo.preload = 'metadata';
+
+    tempVideo.onloadedmetadata = () => {
+      const durationInSeconds = tempVideo.duration;
+      setVideoDurations((prev) => ({
+        ...prev,
+        [videoId]: durationInSeconds,
+      }));
+    };
+  };
+
   const openVideo = (url) => {
     //window.open(url, '_blank', 'noreferrer');
     setOpen(true);
@@ -21,6 +37,7 @@ export const ResourceListView = ({ gridData, hasClass, types, title, showType })
       <tr className="text-gray-600 font-bold bg-[whitesmoke] border border-gray-400 text-left text-sm xl:text-[16px]">
         <th className="p-2">Title</th>
         <th className="border-l border-gray-300 p-2">Video</th>
+        <th className="border-l border-gray-300 p-2">Duration</th>
         {showType && (
           <>
             <th className="border-l border-gray-300 p-2">Last Updated On</th>
@@ -44,49 +61,70 @@ export const ResourceListView = ({ gridData, hasClass, types, title, showType })
       <td></td>
       <td></td>
       <td></td>
+      <td></td>
     </tr>
   );
 
-  const TableRow = ({ record }) => (
-    <tr className="border border-gray-300 text-sm xl:text-[16px] hover:bg-gray-400/10 text-left">
-      <td className="min-w-fit whitespace-nowrap py-3 px-5 border-l border-gray-200">
-        <div className="flex items-start gap-2">
-          <span>{record?.Name}</span>
-        </div>
-      </td>
-      <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
-        <div className="rounded-md text-black">
-          <Button
-            label={'Watch Video'}
-            icon={<BsYoutube />}
-            className={clsx(
-              'flex flex-row-reverse gap-2 p-1 rounded-full items-center text-white hover:bg-green-600',
-              `bg-red-700 hover:text-white`,
-            )}
-            onClick={() => openVideo(record)}
-          />
-        </div>
-      </td>
-      {showType && (
-        <>
-          <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
-            <span className="flex items-center justify-left gap-2 text-center">
-              {record?.UpdatedAt
-                ? getFormattedDateSubscription(user, record?.UpdatedAt)
-                : getFormattedDateSubscription(user, record?.CreatedAt)}
-            </span>
-          </td>
+  const TableRow = ({ record }) => {
+    useEffect(() => {
+      if (!videoDurations[record.id]) {
+        loadVideoDuration(record.id, record.Path);
+      }
+    }, [record.id, record.Path]);
 
-          <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
-            <span className="flex items-center justify-left gap-2 text-center">
-              {/* {record?.UpdatedBy ? record?.UpdatedBy?.FullName : record?.CreatedBy?.FullName} */}
-              Elite Admin
-            </span>
-          </td>
-        </>
-      )}
-    </tr>
-  );
+    // Format duration (e.g. 1:23)
+    const formatDuration = (duration) => {
+      if (!duration) return 'Loading...';
+      const minutes = Math.floor(duration / 60);
+      const seconds = Math.floor(duration % 60)
+        .toString()
+        .padStart(2, '0');
+      return `${minutes}:${seconds}`;
+    };
+    return (
+      <tr className="border border-gray-300 text-sm xl:text-[16px] hover:bg-gray-400/10 text-left">
+        <td className="min-w-fit whitespace-nowrap py-3 px-5 border-l border-gray-200">
+          <div className="flex items-start gap-2">
+            <span>{record?.Name}</span>
+          </div>
+        </td>
+        <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
+          <div className="rounded-md text-black">
+            <Button
+              label={'Watch Video'}
+              icon={<BsYoutube />}
+              className={clsx(
+                'flex flex-row-reverse gap-2 p-1 rounded-full items-center text-white hover:bg-green-600',
+                `bg-red-700 hover:text-white`,
+              )}
+              onClick={() => openVideo(record)}
+            />
+          </div>
+        </td>
+        <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
+          {formatDuration(videoDurations[record.id])}
+        </td>
+        {showType && (
+          <>
+            <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
+              <span className="flex items-center justify-left gap-2 text-center">
+                {record?.UpdatedAt
+                  ? getFormattedDateSubscription(user, record?.UpdatedAt)
+                  : getFormattedDateSubscription(user, record?.CreatedAt)}
+              </span>
+            </td>
+
+            <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
+              <span className="flex items-center justify-left gap-2 text-center">
+                {/* {record?.UpdatedBy ? record?.UpdatedBy?.FullName : record?.CreatedBy?.FullName} */}
+                Elite Admin
+              </span>
+            </td>
+          </>
+        )}
+      </tr>
+    );
+  };
 
   return (
     <>
