@@ -71,7 +71,6 @@ export const ResourceListView = ({ gridData, hasClass, types, title, showType })
         loadVideoDuration(record.id, record.Path);
       }
     }, [record.id, record.Path]);
-
     // Format duration (e.g. 01:23:45)
     const formatDuration = (duration) => {
       if (!duration) return 'Loading...';
