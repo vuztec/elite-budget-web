@@ -19,10 +19,14 @@ export const ResourceListView = ({ gridData, hasClass, types, title, showType })
   const TableHeader = () => (
     <thead className="sticky top-0 z-9">
       <tr className="text-gray-600 font-bold bg-[whitesmoke] border border-gray-400 text-left text-sm xl:text-[16px]">
-        <th className="p-2">Video Title</th>
-        <th className="border-l border-gray-300 p-2">Attachment</th>
-        <th className="border-l border-gray-300 p-2">Last Updated On</th>
-        <th className="border-l border-gray-300 p-2">Last Updated By</th>
+        <th className="p-2">Title</th>
+        <th className="border-l border-gray-300 p-2">Video</th>
+        {showType && (
+          <>
+            <th className="border-l border-gray-300 p-2">Last Updated On</th>
+            <th className="border-l border-gray-300 p-2">Last Updated By</th>
+          </>
+        )}
       </tr>
     </thead>
   );
@@ -63,20 +67,24 @@ export const ResourceListView = ({ gridData, hasClass, types, title, showType })
           />
         </div>
       </td>
-      <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
-        <span className="flex items-center justify-left gap-2 text-center">
-          {record?.UpdatedAt
-            ? getFormattedDateSubscription(user, record?.UpdatedAt)
-            : getFormattedDateSubscription(user, record?.CreatedAt)}
-        </span>
-      </td>
+      {showType && (
+        <>
+          <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
+            <span className="flex items-center justify-left gap-2 text-center">
+              {record?.UpdatedAt
+                ? getFormattedDateSubscription(user, record?.UpdatedAt)
+                : getFormattedDateSubscription(user, record?.CreatedAt)}
+            </span>
+          </td>
 
-      <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
-        <span className="flex items-center justify-left gap-2 text-center">
-          {/* {record?.UpdatedBy ? record?.UpdatedBy?.FullName : record?.CreatedBy?.FullName} */}
-          Elite Admin
-        </span>
-      </td>
+          <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
+            <span className="flex items-center justify-left gap-2 text-center">
+              {/* {record?.UpdatedBy ? record?.UpdatedBy?.FullName : record?.CreatedBy?.FullName} */}
+              Elite Admin
+            </span>
+          </td>
+        </>
+      )}
     </tr>
   );
 
