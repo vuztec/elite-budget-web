@@ -4,7 +4,8 @@ import clsx from 'clsx';
 import Button from '../Button';
 import { BsYoutube } from 'react-icons/bs';
 import { VideoDialog } from '../DisplayDialogs';
-import { getFormattedDateSubscription } from '../../utils/budget.calculation';
+import { format } from 'date-fns';
+import moment from 'moment';
 
 export const ResourceListView = ({ gridData, hasClass, types, title, showType }) => {
   const { user } = useUserStore();
@@ -113,8 +114,8 @@ export const ResourceListView = ({ gridData, hasClass, types, title, showType })
             <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
               <span className="flex items-center justify-left gap-2 text-center">
                 {record?.UpdatedAt
-                  ? getFormattedDateSubscription(user, record?.UpdatedAt)
-                  : getFormattedDateSubscription(user, record?.CreatedAt)}
+                  ? moment(new Date(record?.UpdatedAt)).fromNow()
+                  : moment(new Date(record?.CreatedAt)).fromNow()}
               </span>
             </td>
 
