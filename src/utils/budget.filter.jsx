@@ -1,7 +1,7 @@
 export const incomeOwners = ['Self', 'Partner', 'Joint'];
 export const retirementOwners = ['Self', 'Partner'];
 export const expenseOwners = ['Self', 'Partner', 'Joint'];
-export const paymentMethods = ['Auto Debit', 'Auto Transfer', 'Bill Pay', 'Check or Cash/Debit', 'Credit'];
+export const paymentMethods = ['Auto Debit', 'Auto Transfer', 'Bill Pay', 'Check or Cash', 'Credit'];
 export const daydues = [
   'Weekly',
   'Bimonthly',
@@ -38,6 +38,7 @@ export const daydues = [
   '29',
   '30',
   '31',
+  'N/A',
 ];
 export const expenseCategories = [
   'Alimony',
