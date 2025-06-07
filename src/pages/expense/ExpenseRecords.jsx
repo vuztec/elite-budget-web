@@ -242,7 +242,7 @@ export const ExpenseRecords = () => {
             <ExpenseListView
               Data={gridData.filter((item) => item.Category === 'Joint Contribution')}
               category="Joint Contribution"
-              showColumn={true}
+              showColumn={false}
               showAll={showAll}
             />
           </div>

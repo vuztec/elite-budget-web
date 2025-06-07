@@ -217,11 +217,11 @@ export const Transactions = () => {
                 bankName={bankName}
                 banks={banks}
               />
-              <div className="w-full bg-white rounded-lg border-t mt-8 p-6 text-center justify-center">
-                <p>{getPageCopyright()}</p>
-              </div>
             </div>
           ))}
+          <div className="w-full bg-white rounded-lg border-t mt-8 p-6 text-center justify-center">
+            <p>{getPageCopyright()}</p>
+          </div>
           <AddTransaction
             open={open}
             handleClose={handleClose}
