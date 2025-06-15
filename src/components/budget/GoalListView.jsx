@@ -120,7 +120,7 @@ export const GoalListView = ({ gridData, goal, maingoals, Max, Total }) => {
     <tr className="border bg-[whitesmoke] font-bold border-gray-300 hover:bg-gray-400/10 text-left">
       <td className="xl:w-1/3 whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <span className="flex items-center justify-left gap-2 text-center mb-0 text-gray-900">Total %</span>
+          <span className="flex items-center justify-left gap-2 text-center mb-0 text-gray-900">Sum %</span>
         </div>
       </td>
 
