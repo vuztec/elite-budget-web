@@ -1215,7 +1215,7 @@ export const getGoalTotal = (goals) => {
     return accumulator + Number(amount);
   }, 0);
 
-  return total;
+  return total?.toFixed(2);
 };
 
 export const getCategoryTotal = (type, maingoals) => {

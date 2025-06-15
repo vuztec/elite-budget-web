@@ -7,6 +7,7 @@ import { getDebtGoals, getExpenseGoals, getMainGoals } from '../../config/api';
 import { GoalListView } from '../../components/budget/GoalListView';
 import useUserStore from '../../app/user';
 import { getPageCopyright, getPageTitle } from '../../utils';
+import { getGoalTotal } from '../../utils/budget.calculation';
 
 export const BudgetGoals = () => {
   const { user } = useUserStore();
@@ -60,15 +61,27 @@ export const BudgetGoals = () => {
       {isDataLoaded && (
         <div className="w-full">
           <div className="w-full">
-            <GoalListView gridData={maingoals} goal="Main" />
+            <GoalListView gridData={maingoals} goal="Main" Max={'100.00'} Total={getGoalTotal(maingoals)} />
           </div>
 
           <div className="w-full">
-            <GoalListView gridData={expensegoals} goal="Expense" maingoals={maingoals} />
+            <GoalListView
+              gridData={expensegoals}
+              goal="Expense"
+              maingoals={maingoals}
+              Max={maingoals?.find((g) => g?.Category === 'Expenses')?.Percentage}
+              Total={getGoalTotal(expensegoals)}
+            />
           </div>
 
           <div className="w-full">
-            <GoalListView gridData={debtgoals} goal="Debt" maingoals={maingoals} />
+            <GoalListView
+              gridData={debtgoals}
+              goal="Debt"
+              maingoals={maingoals}
+              Max={maingoals?.find((g) => g?.Category === 'Debts')?.Percentage}
+              Total={getGoalTotal(debtgoals)}
+            />
           </div>
           <div className="w-full bg-white rounded-lg border-t mt-8 p-6 text-center justify-center">
             <p>{getPageCopyright()}</p>

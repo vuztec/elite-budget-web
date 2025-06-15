@@ -10,7 +10,7 @@ import AddGoal from './AddGoal';
 import ToolTip from '../tooltip';
 import Sort from '../sort';
 
-export const GoalListView = ({ gridData, goal, maingoals }) => {
+export const GoalListView = ({ gridData, goal, maingoals, Max, Total }) => {
   //----------------CRUD----------------//
   const queryClient = useQueryClient();
   const [openDialog, setOpenDialog] = useState(false);
@@ -116,6 +116,42 @@ export const GoalListView = ({ gridData, goal, maingoals }) => {
     </tr>
   );
 
+  const TableTotal = () => (
+    <tr className="border bg-[whitesmoke] font-bold border-gray-300 hover:bg-gray-400/10 text-left">
+      <td className="xl:w-1/3 whitespace-nowrap p-2 border-l border-gray-200">
+        <div className="flex flex-col items-start gap-1">
+          <span className="flex items-center justify-left gap-2 text-center mb-0 text-gray-900">Total %</span>
+        </div>
+      </td>
+
+      <td className="xl:w-1/3 whitespace-normal p-2 border-l border-gray-200">
+        <div className="flex flex-col items-start gap-1">
+          <p className="text-black">{Total}%</p>
+        </div>
+      </td>
+
+      <td className="xl:w-1/3 p-2 border-l border-r border-gray-200"></td>
+    </tr>
+  );
+
+  const TableGoal = () => (
+    <tr className="border bg-[whitesmoke] font-bold border-gray-300 hover:bg-gray-400/10 text-left">
+      <td className="xl:w-1/3 whitespace-nowrap p-2 border-l border-gray-200">
+        <div className="flex flex-col items-start gap-1">
+          <span className="flex items-center justify-left gap-2 text-center mb-0 text-gray-900">Maximum Goal %</span>
+        </div>
+      </td>
+
+      <td className="xl:w-1/3 whitespace-normal p-2 border-l border-gray-200">
+        <div className="flex flex-col items-start gap-1">
+          <p className="text-black">{Max}%</p>
+        </div>
+      </td>
+
+      <td className="xl:w-1/3 p-2 border-l border-r border-gray-200"></td>
+    </tr>
+  );
+
   return (
     <>
       {gridData?.length > -1 && (
@@ -137,6 +173,8 @@ export const GoalListView = ({ gridData, goal, maingoals }) => {
                   {gridData?.map((record, index) => (
                     <TableRow key={index} record={record} />
                   ))}
+                  <TableTotal />
+                  <TableGoal />
                 </tbody>
               </table>
             </div>
