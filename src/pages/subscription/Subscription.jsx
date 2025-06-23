@@ -192,9 +192,7 @@ export const Subscription = () => {
         </div>
         <div className="w-full flex flex-col gap-5 xl:gap-10 bg-white p-5 mt-4  text-sm xl:text-[16px] rounded-lg">
           <div className="w-full xl:w-1/2 flex flex-col gap-5">
-            <p className="font-bold text-[16px] xl:text-[18px]">
-              Elite Cash Flow Consulting's Limited License to You:{' '}
-            </p>
+            <p className="font-bold text-[16px] xl:text-[18px]">Elite Cash Flow Products' Limited License to You: </p>
             <p className="text-justify">
               If you view, purchase or access any Program or any of the Content, you will be considered our Licensee.
               For the avoidance of doubt, you are granted a revocable, non-transferable license for personal,
