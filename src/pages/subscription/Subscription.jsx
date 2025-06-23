@@ -208,7 +208,7 @@ export const Subscription = () => {
             </p>
             <p className="text-justify">
               By downloading, printing, or otherwise using the Program or Content for personal use, you in no way assume
-              any ownership rights of the Content – it is still the property of Elite Cash Flow Consulting. Any
+              any ownership rights of the Content – it is still the property of Elite Cash Flow Products. Any
               unauthorized use of any materials found in the Program or Content shall constitute infringement. You must
               receive our written permission before using any of the Program or Content for your own commercial use or
               before sharing with others.
