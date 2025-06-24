@@ -47,7 +47,8 @@ export const getSpecial = (isFull) => {
         <div className="flex flex-col text-sm md:text-lg gap-1 w-96 mb-5 p-3 items-center bg-[#2F2F2F] rounded-lg">
           <img src={special} alt="Special Offer" className="w-14 h-auto" />
           <p className="bg-[#FF820E] text-center rounded-md p-2">
-            Launch Special: $50 for the First Year - Limited Time Only!
+            Launch Special: <span className="font-bold text-gray-200 line-through decoration-black">$95.88</span> $50
+            for the First Year - Limited Time Only!
           </p>
           <p className="text-white">Use Code: Launch2025</p>
           <a
