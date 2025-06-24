@@ -1,4 +1,3 @@
-import { IoIosArrowRoundForward } from 'react-icons/io';
 import BudgetDetails from '../../assets/image/budget-detail.png';
 import BankTransaction from '../../assets/image/bank-transactions.png';
 import Checklist from '../../assets/image/checklist.png';
@@ -15,6 +14,7 @@ import { useState } from 'react';
 import Button from '../../components/Button';
 import { TiCancel } from 'react-icons/ti';
 import ModalWrapperFull from '../../components/ModalWrapperFull';
+import { getSpecial } from '../../utils/nmrw.function';
 
 export const Advert = () => {
   const [open, setOpen] = useState(false);
@@ -49,25 +49,16 @@ export const Advert = () => {
               <li className="">Easy to make changes.</li>
               <li className="">All reports are automatically updated instantly.</li>
             </ul>
-
-            <a
-              href="/signup"
-              className="hidden lg:flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-tryBg text-tryText shadow-md rounded-md"
-            >
-              Try the App Now <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
-            </a>
+            <div className="hidden lg:flex">
+              <p>{getSpecial()}</p>
+            </div>
           </div>
 
           <div className="w-full lg:w-1/2 cursor-pointer" onClick={() => handleOpenModal(HomeImage)}>
             <img src={HomeImage} alt="Budget Details" className="w-full h-auto" />
           </div>
-          <div className="w-full lg:hidden justify-center">
-            <a
-              href="/signup"
-              className="flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-tryBg text-tryText shadow-md rounded-md lg:hidden"
-            >
-              Try the App Now <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
-            </a>
+          <div className="w-full lg:hidden flex justify-center">
+            <p>{getSpecial()}</p>
           </div>
         </div>
         <div
@@ -86,24 +77,16 @@ export const Advert = () => {
               <li className="">All reports are automatically updated instantly.</li>
             </ul>
 
-            <a
-              href="/signup"
-              className="hidden lg:flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-tryBg text-tryText shadow-md rounded-md"
-            >
-              Try the App Now <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
-            </a>
+            <div className="hidden lg:flex">
+              <p>{getSpecial()}</p>
+            </div>
           </div>
 
           <div className="w-full lg:w-1/2 cursor-pointer" onClick={() => handleOpenModal(BudgetDetails)}>
             <img src={BudgetDetails} alt="Budget Details" className="w-full h-auto" />
           </div>
-          <div className="w-full lg:hidden justify-center">
-            <a
-              href="/signup"
-              className="flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-tryBg text-tryText shadow-md rounded-md lg:hidden"
-            >
-              Try the App Now <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
-            </a>
+          <div className="w-full lg:hidden flex justify-center">
+            <p>{getSpecial()}</p>
           </div>
         </div>
         <div id="checklist" className="flex flex-col lg:flex-row items-center justify-center my-10 gap-8 lg:gap-12 p-8">
@@ -123,24 +106,16 @@ export const Advert = () => {
               <li className="">When there are budget changes, the checklist is automatically updated instantly.</li>
               <li className="">The checklist can be filtered by selected month(s).</li>
             </ul>
-            <a
-              href="/signup"
-              className="hidden lg:flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-tryBg text-tryText shadow-md rounded-md"
-            >
-              Try the App Now <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
-            </a>
+            <div className="hidden lg:flex">
+              <p>{getSpecial()}</p>
+            </div>
           </div>
 
           <div className="w-full lg:w-1/2 cursor-pointer" onClick={() => handleOpenModal(Checklist)}>
             <img src={Checklist} alt="Budget Details" className="w-full h-auto" />
           </div>
-          <div className="w-full lg:hidden justify-center">
-            <a
-              href="/signup"
-              className="flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-tryBg text-tryText shadow-md rounded-md lg:hidden"
-            >
-              Try the App Now <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
-            </a>
+          <div className="w-full lg:hidden flex justify-center">
+            <p>{getSpecial()}</p>
           </div>
         </div>
 
@@ -162,24 +137,16 @@ export const Advert = () => {
               </li>
             </ul>
 
-            <a
-              href="/signup"
-              className="hidden lg:flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-tryBg text-tryText shadow-md rounded-md"
-            >
-              Try the App Now <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
-            </a>
+            <div className="hidden lg:flex">
+              <p>{getSpecial()}</p>
+            </div>
           </div>
 
           <div className="w-full lg:w-1/2 cursor-pointer" onClick={() => handleOpenModal(ExtraPayDates)}>
             <img src={ExtraPayDates} alt="Budget Details" className="w-full h-auto" />
           </div>
-          <div className="w-full lg:hidden justify-center">
-            <a
-              href="/signup"
-              className="flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-tryBg text-tryText shadow-md rounded-md lg:hidden"
-            >
-              Try the App Now <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
-            </a>
+          <div className="w-full lg:hidden flex justify-center">
+            <p>{getSpecial()}</p>
           </div>
         </div>
         <div id="joint" className="flex flex-col lg:flex-row items-center justify-center my-10 gap-8 lg:gap-12 p-8">
@@ -190,25 +157,16 @@ export const Advert = () => {
                 Provides a <strong>joint expense split calculator</strong> when couples wish to split their joint costs.
               </li>
             </ul>
-
-            <a
-              href="/signup"
-              className="hidden lg:flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-tryBg text-tryText shadow-md rounded-md"
-            >
-              Try the App Now <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
-            </a>
+            <div className="hidden lg:flex">
+              <p>{getSpecial()}</p>
+            </div>
           </div>
 
           <div className="w-full lg:w-1/2 cursor-pointer" onClick={() => handleOpenModal(JointContribution)}>
             <img src={JointContribution} alt="Budget Details" className="w-full h-auto" />
           </div>
-          <div className="w-full lg:hidden justify-center">
-            <a
-              href="/signup"
-              className="flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-tryBg text-tryText shadow-md rounded-md lg:hidden"
-            >
-              Try the App Now <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
-            </a>
+          <div className="w-full lg:hidden flex justify-center">
+            <p>{getSpecial()}</p>
           </div>
         </div>
 
@@ -225,24 +183,16 @@ export const Advert = () => {
               </li>
             </ul>
 
-            <a
-              href="/signup"
-              className="hidden lg:flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-tryBg text-tryText shadow-md rounded-md"
-            >
-              Try the App Now <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
-            </a>
+            <div className="hidden lg:flex">
+              <p>{getSpecial()}</p>
+            </div>
           </div>
 
           <div className="w-full lg:w-1/2 cursor-pointer" onClick={() => handleOpenModal(ExtraFundTracker)}>
             <img src={ExtraFundTracker} alt="Budget Details" className="w-full h-auto" />
           </div>
-          <div className="w-full lg:hidden justify-center">
-            <a
-              href="/signup"
-              className="flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-tryBg text-tryText shadow-md rounded-md lg:hidden"
-            >
-              Try the App Now <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
-            </a>
+          <div className="w-full lg:hidden flex justify-center">
+            <p>{getSpecial()}</p>
           </div>
         </div>
         <div
@@ -261,24 +211,16 @@ export const Advert = () => {
               </li>
             </ul>
 
-            <a
-              href="/signup"
-              className="hidden lg:flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-tryBg text-tryText shadow-md rounded-md"
-            >
-              Try the App Now <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
-            </a>
+            <div className="hidden lg:flex">
+              <p>{getSpecial()}</p>
+            </div>
           </div>
 
           <div className="w-full lg:w-1/2 cursor-pointer" onClick={() => handleOpenModal(BankTransaction)}>
             <img src={BankTransaction} alt="Budget Details" className="w-full h-auto" />
           </div>
-          <div className="w-full lg:hidden justify-center">
-            <a
-              href="/signup"
-              className="flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-tryBg text-tryText shadow-md rounded-md lg:hidden"
-            >
-              Try the App Now <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
-            </a>
+          <div className="w-full lg:hidden flex justify-center">
+            <p>{getSpecial()}</p>
           </div>
         </div>
         <div
@@ -298,24 +240,16 @@ export const Advert = () => {
               <li className="">Easy to make changes.</li>
               <li className="">All reports are automatically updated instantly.</li>
             </ul>
-            <a
-              href="/signup"
-              className="hidden lg:flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-tryBg text-tryText shadow-md rounded-md"
-            >
-              Try the App Now <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
-            </a>
+            <div className="hidden lg:flex">
+              <p>{getSpecial()}</p>
+            </div>
           </div>
 
           <div className="w-full lg:w-1/2 cursor-pointer" onClick={() => handleOpenModal(NetWork)}>
             <img src={NetWork} alt="Budget Details" className="w-full h-auto" />
           </div>
-          <div className="w-full lg:hidden justify-center">
-            <a
-              href="/signup"
-              className="flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 bg-tryBg text-tryText shadow-md rounded-md lg:hidden"
-            >
-              Try the App Now <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
-            </a>
+          <div className="w-full lg:hidden flex justify-center">
+            <p>{getSpecial()}</p>
           </div>
         </div>
 

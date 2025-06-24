@@ -1,5 +1,6 @@
-import { getNoData } from '../../../utils/nmrw.function';
+import { getNoData, getSpecial } from '../../../utils/nmrw.function';
 import { ResourceListView } from '../../../components/resource/ResourceListView';
+
 const types = [
   'General',
   'Home',
@@ -105,9 +106,7 @@ function Budget() {
           >
             Try the App Now
           </a>
-          <p className="text-yellow-200 text-lg md:text-xl">
-            Start your 14-day FREE Trial! After that, just $95.88 upfront for a year (only $7.99/month)
-          </p>
+          <p>{getSpecial(true)}</p>
         </div>
       </div>
       <div className="flex flex-col gap-4 items-center justify-center text-center mt-4">

@@ -18,6 +18,7 @@ import { MdOutlineRadioButtonChecked, MdOutlineRadioButtonUnchecked } from 'reac
 import { PrivacyDialog, TermsDialog } from '../../components/DisplayDialogs';
 import { LuMousePointer } from 'react-icons/lu';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { getSpecial } from '../../utils/nmrw.function';
 
 export const Signup = () => {
   const CountryData = Country.getAllCountries();
@@ -164,27 +165,24 @@ export const Signup = () => {
 
   return (
     <>
-      <div className="w-full min-h-screen flex items-center justify-center flex-col lg:flex-row bg-[#f3f4f6]">
-        <div className="w-full md:w-auto flex gap-0 md:gap-40 flex-col md:flex-row items-center justify-center">
-          <div className="w-full min-h-screen flex items-center justify-center flex-col lg:flex-row bg-[#f3f4f6]">
-            <div className="w-full flex gap-16 flex-col items-center justify-center">
-              <div className="h-full w-full lg:w-[90%] flex flex-col lg:flex-row items-center justify-center gap-24">
-                <div className="w-full lg:w-1/2 flex flex-col items-center justify-center gap-5 md:gap-y-10 2xl:-mt-20">
-                  <h1 className="text-3xl font-bold text-gray-900">{'CREATE NEW ACCOUNT'}</h1>
-                  <div className="flex flex-col text-center py-1 px-3 border rounded-full text-sm md:text-base border-gray-300 text-tryText bg-tryBg">
-                    <span>
-                      Start your 14-day FREE Trial! After that, just $95.88 upfront for a year (only $7.99/month)
-                    </span>
-                    {/* <span>Enjoy a 14-day FREE trial followed by an annual billing totaling $95.88 ($7.99/ month)</span> */}
+      <div className="w-full min-h-screen flex items-center justify-center flex-col xl:flex-row bg-[#f3f4f6]">
+        <div className="w-full md:w-[70%] xl:w-[50%] flex gap-0 md:gap-40 flex-col xl:flex-row items-center justify-center">
+          <div className="w-full min-h-screen flex items-center justify-center flex-col xl:flex-row bg-[#f3f4f6]">
+            <div className="w-full flex gap-8 flex-col items-center justify-center">
+              <div className="h-full w-full flex flex-col xl:flex-row items-center justify-center gap-10">
+                <div className="w-full xl:w-1/2 flex flex-col items-center justify-center gap-5 md:gap-y-10 2xl:-mt-20">
+                  <h1 className="text-3xl font-bold text-gray-900">CREATE NEW ACCOUNT</h1>
+                  <div className="flex flex-col text-center">
+                    <p className="w-96">{getSpecial(true)}</p>
                   </div>
                   <p className="flex flex-col gap-0 md:gap-4 text-xl md:text-2xl xl:text-3xl font-black text-center text-black min-w-fit whitespace-nowrap ">
                     <span>The Elite Budget Web App</span>
                     <span>A NEW WAY TO BUDGET!</span>
                   </p>
 
-                  <img src={Logo} alt="Logo" className="mb-4 sm:mb-0 h-52 w-auto" />
+                  <img src={Logo} alt="Logo" className="mb-4 sm:mb-0 h-32 w-auto hidden xl:block" />
                 </div>
-                <div className="w-full lg:w-1/2 flex flex-col justify-center items-center shadow-md py-8 px-10 border rounded-lg">
+                <div className="w-full xl:w-1/2 flex flex-col justify-center items-center shadow-md py-5 px-5 border rounded-lg">
                   <form onSubmit={handleSubmit(handleOnSubmit)} className="w-full">
                     <div className="mt-2 flex flex-col gap-6 overflow-y-auto">
                       <div className="flex flex-col gap-6 w-full">
@@ -345,18 +343,20 @@ export const Signup = () => {
                           />
                         </div>
                       </div> */}
-                      <div className="flex flex-col gap-2 w-full">
-                        <div className="flex gap-2">
-                          <div className="flex items-center">
-                            {acceptPrivacy ? (
-                              <MdOutlineRadioButtonChecked className="text-green-500" />
-                            ) : (
-                              <MdOutlineRadioButtonUnchecked />
-                            )}
+                      <div className="flex flex-col gap-4 w-full">
+                        <div className="flex flex-col md:flex-row gap-0 md:gap-2 items-start">
+                          <div className="flex items-center gap-2">
+                            <div className="flex items-center">
+                              {acceptPrivacy ? (
+                                <MdOutlineRadioButtonChecked className="text-green-500" />
+                              ) : (
+                                <MdOutlineRadioButtonUnchecked />
+                              )}
+                            </div>
+                            <p className={acceptPrivacy ? 'text-green-500' : 'text-red-500'}>
+                              {acceptPrivacy ? 'You have read and accepted' : "You haven't read and accepted"}
+                            </p>
                           </div>
-                          <p className={acceptPrivacy ? 'text-green-500' : 'text-red-500'}>
-                            {acceptPrivacy ? 'You have read and accepted' : "You haven't read and accepted"}
-                          </p>
                           <a
                             onClick={() => handleOpenPrivacy()}
                             className="flex items-center justify-center text-blue-500 cursor-pointer hover:underline ml-1"
@@ -364,17 +364,20 @@ export const Signup = () => {
                             Privacy Policy <LuMousePointer />
                           </a>
                         </div>
-                        <div className="flex gap-2">
-                          <div className="flex items-center">
-                            {acceptTerms ? (
-                              <MdOutlineRadioButtonChecked className="text-green-500" />
-                            ) : (
-                              <MdOutlineRadioButtonUnchecked />
-                            )}
+                        <div className="flex flex-col md:flex-row gap-0 md:gap-2 items-start">
+                          <div className="flex items-center gap-2">
+                            <div className="flex items-center">
+                              {acceptTerms ? (
+                                <MdOutlineRadioButtonChecked className="text-green-500" />
+                              ) : (
+                                <MdOutlineRadioButtonUnchecked />
+                              )}
+                            </div>
+                            <p className={acceptTerms ? 'text-green-500' : 'text-red-500'}>
+                              {acceptTerms ? 'You have read and accepted' : "You haven't read and accepted"}
+                            </p>
                           </div>
-                          <p className={acceptTerms ? 'text-green-500' : 'text-red-500'}>
-                            {acceptTerms ? 'You have read and accepted' : "You haven't read and accepted"}
-                          </p>
+
                           <a
                             onClick={() => handleOpenTerms()}
                             className="flex items-center justify-center text-blue-500 cursor-pointer hover:underline ml-1"
