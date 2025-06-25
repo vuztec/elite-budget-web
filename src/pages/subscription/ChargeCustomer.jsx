@@ -141,7 +141,7 @@ const ChargeCustomer = ({ card, handleClose, coupons }) => {
         />
       </div>
       <div className="w-full">
-        <Textbox placeholder={'$' + coupon.toFixed(2)} type="text" label="Coupon Amount" disabled={true} />
+        <Textbox placeholder={'$' + coupon.toFixed(2)} type="text" label="Coupon Discount" disabled={true} />
       </div>
       {user.IsExpired ? (
         <>
