@@ -49,10 +49,13 @@ const ChargeCustomer = ({ card, handleClose, coupons }) => {
       .post('/api/payment/invoice', { PaymentMethodId: card.id, Coupon: CouponCode })
       .then(({ data }) => {
         // setUser(data);
-        navigate('/');
         console.log(data);
-        handleClose();
-        setIsLoading(false);
+
+        setTimeout(() => {
+          navigate('/');
+          handleClose();
+          setIsLoading(false);
+        }, 3000);
       })
       .catch((err) => {
         console.log(err);
