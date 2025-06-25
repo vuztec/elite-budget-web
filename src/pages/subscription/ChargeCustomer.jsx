@@ -42,9 +42,11 @@ const ChargeCustomer = ({ card, handleClose, coupons }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    setMessage(null);
+
     setIsLoading(true);
     axios
-      .post('/api/payment/invoice', { PaymentMethodId: card.id })
+      .post('/api/payment/invoice', { PaymentMethodId: card.id, Coupon: CouponCode })
       .then(({ data }) => {
         // setUser(data);
         navigate('/');
@@ -54,7 +56,7 @@ const ChargeCustomer = ({ card, handleClose, coupons }) => {
       })
       .catch((err) => {
         console.log(err);
-        handleClose();
+        // handleClose();
         console.log(handleAxiosResponseError(err));
         setMessage(handleAxiosResponseError(err));
         setIsLoading(false);
@@ -179,7 +181,11 @@ const ChargeCustomer = ({ card, handleClose, coupons }) => {
           <strong>{activeAccount ? getFormattedDateSubscription(user, renewal) : ''}.</strong>
         </div>
       )}
-      {message && <div id="payment-message">{message}</div>}
+      {message && (
+        <div id="payment-message" className="text-red-500">
+          {message}
+        </div>
+      )}
     </form>
   );
 };

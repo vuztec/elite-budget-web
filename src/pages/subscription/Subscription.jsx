@@ -58,8 +58,6 @@ export const Subscription = () => {
     staleTime: 1000 * 60 * 60,
   });
 
-  console.log('Couponse : ', coupons);
-
   function isLeapYear(year) {
     return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
   }
