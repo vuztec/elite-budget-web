@@ -131,7 +131,16 @@ const ChargeCustomer = ({ card, handleClose, coupons }) => {
       </div>
       <div className="w-full">
         <Textbox
-          placeholder="Enter a coupon code"
+          placeholder={'$' + subscriptionAmount.toFixed(2)}
+          type="text"
+          label="Annual Subscription"
+          disabled={true}
+          className="w-full rounded"
+        />
+      </div>
+      <div className="w-full">
+        <Textbox
+          placeholder="Enter a valid coupon code"
           type="text"
           name="CouponCode"
           label="Coupon Code"
@@ -140,15 +149,7 @@ const ChargeCustomer = ({ card, handleClose, coupons }) => {
           error={errors.CouponCode ? errors.CouponCode.message : ''}
         />
       </div>
-      <div className="w-full">
-        <Textbox
-          placeholder={'$' + subscriptionAmount.toFixed(2)}
-          type="text"
-          label="Annual Subscription"
-          disabled={true}
-          className="w-full rounded"
-        />
-      </div>
+
       <div className="w-full">
         <Textbox
           placeholder={'$' + coupon.toFixed(2)}
