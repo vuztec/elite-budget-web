@@ -55,6 +55,8 @@ const ChargeCustomer = ({ card, handleClose, coupons }) => {
           navigate('/');
           handleClose();
           setIsLoading(false);
+
+          window.location.reload();
         }, 3000);
       })
       .catch((err) => {
