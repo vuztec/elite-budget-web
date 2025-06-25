@@ -99,14 +99,8 @@ function Budget() {
             Networth
           </button>
         </div>
-        <div className="flex flex-col gap-4 items-center justify-center text-center mt-6 md:mt-8">
-          <a
-            href="/signup"
-            className="bg-tryBg text-tryText text-xl md:text-2xl whitespace-nowrap font-semibold px-6 md:px-8 text-center py-3 md:py-4 rounded-lg"
-          >
-            Try the App Now
-          </a>
-          <p>{getSpecial(true)}</p>
+        <div className="flex flex-col gap-4 items-center justify-center text-center mt-1">
+          <p>{getSpecial()}</p>
         </div>
       </div>
       <div className="flex flex-col gap-4 items-center justify-center text-center mt-4">
@@ -124,11 +118,11 @@ function Budget() {
       <div className="w-full flex flex-col items-center">
         {/* Description */}
         <div className="w-full xl:w-[60%] mt-4">
-          <div className="grid xl:grid-cols-1 gap-2 mt-6 shadow-lg py-5">
+          <div className="grid xl:grid-cols-1 gap-2 mt-6 py-5">
             <h1 className="text-[#131924] font-bold text-xl md:text-xl leading-tight md:text-center lg:text-left px-10">
               The Elite Budget app streamlines the budget management process in one easy-to-use platform.
             </h1>
-            <ul className="list-outside custom-list px-20 flex flex-col gap-5">
+            <ul className="text-lg font-normal list-outside custom-list px-20 flex flex-col gap-5">
               <li className="">
                 It’s all about the budget! Step one is to enter all of your Income, expenses, debt and the market value
                 of your assets. That’s the hardest part but just the first time!
@@ -168,8 +162,8 @@ function Budget() {
             </ul>
           </div>
 
-          <div className="grid xl:grid-cols-1 gap-6 mt-6 shadow-lg py-5">
-            <ul className="list-outside custom-list px-14 py-5  flex flex-col gap-5">
+          <div className="grid xl:grid-cols-1 gap-6 mt-0 py-0">
+            <ul className="list-outside custom-list px-14 py-1 text-lg font-normal flex flex-col gap-5">
               <li>
                 <span className="font-bold">Elite Problem Solving:</span> For those who demand a simple solution to the
                 budget process. Achieve complete control over your finances with a budgeting app designed for

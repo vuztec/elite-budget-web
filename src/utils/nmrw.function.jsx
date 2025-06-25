@@ -1,5 +1,5 @@
 import React from 'react';
-import special from '../assets/image/special-offer.avif';
+import special from '../assets/image/special-offer.png';
 import { IoIosArrowRoundForward } from 'react-icons/io';
 
 export const getNoData = (item) => {
@@ -23,37 +23,37 @@ export const getSpecial = (isFull) => {
         </div>
       )}
       {isOn && isFull && (
-        <div className="flex flex-col gap-1 bg-[#2F2F2F] p-3 items-center rounded-lg">
+        <div className="flex flex-col gap-1 p-3 items-center rounded-lg">
           <div className="flex flex-col gap-0 items-center">
-            <p className="text-yellow-200 text-lg md:text-xl">Start your 14-day FREE Trial!</p>
-            <p className="text-yellow-200 text-lg md:text-xl">
-              After that, just $<span className="font-bold text-gray-400 line-through decoration-white">95.88</span>{' '}
+            <p className="text-black text-xl md:text-3xl text-center">Start your 14-day FREE Trial!</p>
+            <p className="text-black text-xl md:text-3xl text-center">
+              After that, just $<span className="font-bold text-gray-600 line-through decoration-black">95.88</span>{' '}
               upfront for a year (only $
-              <span className="font-bold text-gray-400 line-through decoration-white">7.99</span>
+              <span className="font-bold text-gray-600 line-through decoration-black">7.99</span>
               /month)
             </p>
-            <img src={special} alt="Special Offer" className="w-24 h-auto" />
+            <img src={special} alt="Special Offer" className="w-40 h-auto" />
           </div>
 
-          <div className="flex flex-col gap-0 text-white">
-            <p className="bg-[#FF820E] text-lg md:text-xl rounded-md p-2">
+          <div className="flex flex-col gap-2 text-white items-center">
+            <p className="bg-[#FF820E] text-xl md:text-3xl rounded-md p-2 text-center">
               Launch Special: $50 for the first Year - Limited Time Only!
             </p>
-            <p className="text-lg md:text-xl">Use Code: Launch2025</p>
+            <p className="text-xl md:text-3xl text-black text-center">Use Code: Launch2025</p>
           </div>
         </div>
       )}
       {isOn && !isFull && (
-        <div className="flex flex-col text-sm md:text-lg gap-1 w-96 mb-5 p-3 items-center bg-[#2F2F2F] rounded-lg">
-          <img src={special} alt="Special Offer" className="w-14 h-auto" />
+        <div className="flex flex-col text-sm md:text-lg gap-3 w-80 md:w-96 mb-0 pb-3 items-center rounded-lg">
+          <img src={special} alt="Special Offer" className="w-40 h-auto" />
           <p className="bg-[#FF820E] text-center rounded-md p-2">
             Launch Special: <span className="font-bold text-gray-200 line-through decoration-black">$95.88</span> $50
             for the First Year - Limited Time Only!
           </p>
-          <p className="text-white">Use Code: Launch2025</p>
+          <p className="text-black bg-white p-2 rounded-md">Use Code: Launch2025</p>
           <a
             href="/signup"
-            className="flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 hover:bg-green-300 bg-tryBg text-tryText shadow-md rounded-md"
+            className="flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 mt-5 hover:bg-green-300 bg-tryBg text-tryText shadow-md rounded-md"
           >
             Try the App Now <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
           </a>

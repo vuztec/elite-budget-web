@@ -2,6 +2,7 @@ import { GoStarFill } from 'react-icons/go';
 import { TiStarHalfOutline } from 'react-icons/ti';
 import Networth from '../../../assets/image/net-worth.png';
 import { getSpecial } from '../../../utils/nmrw.function';
+import { IoIosArrowRoundForward } from 'react-icons/io';
 
 function Hero() {
   return (
@@ -23,8 +24,14 @@ function Hero() {
           unlock the power of premium budgeting.
         </p>
 
-        <div className="flex flex-col gap-4 mt-6 md:justify-center lg:justify-start">
-          <p className="w-fit">{getSpecial()}</p>
+        <div className="flex flex-col gap-2 mt-6 mb-5 justify-center items-center">
+          <p className="w-fit">{getSpecial(true)}</p>
+          <a
+            href="/signup"
+            className="flex w-fit items-center gap-2 text-xl md:text-3xl font-medium py-3 px-4 hover:bg-green-300 bg-tryBg text-tryText shadow-md rounded-md"
+          >
+            Try the App Now <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
+          </a>
         </div>
       </div>
 
