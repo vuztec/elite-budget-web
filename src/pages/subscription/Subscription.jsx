@@ -61,7 +61,7 @@ export const Subscription = () => {
   function isLeapYear(year) {
     return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
   }
-
+  const isExpired = !user?.Payment && user?.IsExpired;
   const today = new Date();
   const subscription = user?.SubscribeDate ? new Date(user?.SubscribeDate) : '';
   const todayYear = today.getFullYear();
@@ -76,7 +76,7 @@ export const Subscription = () => {
   const currentDate = new Date();
   const renewal = user?.SubscribeDate ? new Date(subscription.getTime() + totalDaysInYears * 24 * 60 * 60 * 1000) : '';
   const trialEnd = new Date(new Date(user?.CreatedAt).setDate(new Date(user?.CreatedAt).getDate() + 14));
-  const isTrial = !subscription || currentDate <= trialEnd;
+  const isTrial = !subscription || (currentDate <= trialEnd && isExpired);
 
   const PayNow = () => {
     setLoading(true);
