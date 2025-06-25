@@ -9,7 +9,7 @@ import axios from '../../config/axios';
 import ModalWrapper from '../../components/ModalWrapper';
 import CheckoutForm from './CheckoutForm';
 import './Package.css';
-import { getPaymentMethods } from '../../config/api';
+import { getCoupons, getPaymentMethods } from '../../config/api';
 import { useQuery, useQueryClient } from 'react-query';
 import AddPaymentMethod from './AddPaymentMethod';
 import ChargeCustomer from './ChargeCustomer';
@@ -51,6 +51,14 @@ export const Subscription = () => {
     queryFn: getPaymentMethods,
     staleTime: 1000 * 60 * 60,
   });
+
+  const { data: coupons, status: isCouponLoaded } = useQuery({
+    queryKey: ['coupons'],
+    queryFn: getCoupons,
+    staleTime: 1000 * 60 * 60,
+  });
+
+  console.log('Couponse : ', coupons);
 
   function isLeapYear(year) {
     return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;

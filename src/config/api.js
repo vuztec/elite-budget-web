@@ -90,10 +90,16 @@ export const getPaymentMethods = async () => {
 };
 
 export const getCoupons = async () => {
-  const res = await axios.get('/api/coupons');
+  const res = await axios.get('/api/payment/coupons');
 
   return res.data;
 };
+
+// export const getCoupons = async () => {
+//   const res = await axios.get('/api/coupons');
+
+//   return res.data;
+// };
 
 export const getOtp = async (email) => {
   if (!email) return;
