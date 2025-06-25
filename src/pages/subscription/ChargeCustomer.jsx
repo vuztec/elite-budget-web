@@ -52,11 +52,9 @@ const ChargeCustomer = ({ card, handleClose, coupons }) => {
         console.log(data);
 
         setTimeout(() => {
-          navigate('/');
+          window.location.reload();
           handleClose();
           setIsLoading(false);
-
-          window.location.reload();
         }, 3000);
       })
       .catch((err) => {
