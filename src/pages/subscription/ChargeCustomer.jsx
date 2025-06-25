@@ -1,14 +1,20 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { handleAxiosResponseError } from '../../utils/handleResponseError';
 import axios from '../../config/axios';
 import Loading from '../../components/Loader';
 import { useNavigate } from 'react-router-dom';
+import { useForm, useWatch } from 'react-hook-form';
 import useUserStore from '../../app/user';
 import { getActiveAccount } from '../../utils/permissions';
 import { getFormattedDateSubscription } from '../../utils/budget.calculation';
+import Textbox from '../../components/Textbox';
+import { set } from 'date-fns';
 
-const ChargeCustomer = ({ card, handleClose }) => {
+const ChargeCustomer = ({ card, handleClose, coupons }) => {
   const [message, setMessage] = useState(null);
+  const [coupon, setCoupon] = useState(0);
+  const subscriptionAmount = Number(7.99 * 12);
+  const [finalAmount, setFinalAmount] = useState(subscriptionAmount);
   const [isLoading, setIsLoading] = useState(false);
   const { user } = useUserStore();
   const activeAccount = getActiveAccount(user);
@@ -54,6 +60,27 @@ const ChargeCustomer = ({ card, handleClose }) => {
         setIsLoading(false);
       });
   };
+
+  const {
+    register,
+    control,
+    formState: { errors },
+  } = useForm();
+  const CouponCode = useWatch({ control, name: 'CouponCode' });
+  useEffect(() => {
+    if (CouponCode) {
+      const filteredData = coupons?.data?.find((item) => item?.name === CouponCode);
+      if (filteredData) {
+        const discount = filteredData?.amount_off
+          ? Number(filteredData?.amount_off) / 100
+          : (subscriptionAmount * Number(filteredData?.percent_off)) / 100;
+        setCoupon(discount);
+        setFinalAmount(subscriptionAmount - discount);
+      } else {
+        setCoupon(0);
+      }
+    }
+  }, [CouponCode, subscriptionAmount]);
 
   return (
     <form
@@ -102,6 +129,20 @@ const ChargeCustomer = ({ card, handleClose }) => {
           />
         </div>
       </div>
+      <div className="w-full">
+        <Textbox
+          placeholder="Enter a coupon code"
+          type="text"
+          name="CouponCode"
+          label="Coupon Code"
+          className="w-full rounded"
+          register={register('CouponCode')}
+          error={errors.CouponCode ? errors.CouponCode.message : ''}
+        />
+      </div>
+      <div className="w-full">
+        <Textbox placeholder={'$' + coupon.toFixed(2)} type="text" label="Coupon Amount" disabled={true} />
+      </div>
       {user.IsExpired ? (
         <>
           {isLoading ? (
@@ -111,7 +152,7 @@ const ChargeCustomer = ({ card, handleClose }) => {
               type="submit"
               className="flex w-full items-center justify-center rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4  focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
             >
-              Pay now ${Number(7.99 * 12).toFixed(2)}
+              Pay now ${finalAmount.toFixed(2)}
             </button>
           )}
         </>

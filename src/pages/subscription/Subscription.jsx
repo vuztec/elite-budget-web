@@ -64,8 +64,6 @@ export const Subscription = () => {
     return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
   }
 
-  // console.log(paymentmethods);
-
   const today = new Date();
   const subscription = user?.SubscribeDate ? new Date(user?.SubscribeDate) : '';
   const todayYear = today.getFullYear();
@@ -464,7 +462,7 @@ export const Subscription = () => {
           </ModalWrapper>
 
           <ModalWrapper open={openCharge} handleClose={handlePaymentClose}>
-            <ChargeCustomer card={card} handleClose={handlePaymentClose} />
+            <ChargeCustomer card={card} handleClose={handlePaymentClose} coupons={coupons} />
           </ModalWrapper>
 
           <ConfirmationDialog
