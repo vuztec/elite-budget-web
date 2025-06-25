@@ -462,7 +462,11 @@ export const Subscription = () => {
           </ModalWrapper>
 
           <ModalWrapper open={openCharge} handleClose={handlePaymentClose}>
-            <ChargeCustomer card={card} handleClose={handlePaymentClose} coupons={coupons} />
+            {acceptPrivacy && acceptTerms ? (
+              <ChargeCustomer card={card} handleClose={handlePaymentClose} coupons={coupons} />
+            ) : (
+              'Accept both Privacy Policy, and Terms and Conditions'
+            )}
           </ModalWrapper>
 
           <ConfirmationDialog
