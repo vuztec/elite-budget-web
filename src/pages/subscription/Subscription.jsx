@@ -57,6 +57,7 @@ export const Subscription = () => {
     queryFn: getCoupons,
     staleTime: 1000 * 60 * 60,
   });
+  console.log('coupons', coupons);
 
   function isLeapYear(year) {
     return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
