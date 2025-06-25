@@ -73,10 +73,10 @@ export const Login = () => {
               onSubmit={handleSubmit(submitHandler)}
               className="form-container w-full md:w-[400px] flex flex-col gap-y-8 bg-white px-10 pt-14 pb-14"
             >
-              <div className="">
+              <div className="flex flex-col items-center">
                 <p className="text-black text-3xl font-bold text-center">Welcome back!</p>
                 <p className="text-center text-base text-gray-700 ">Keep your login credentials safe</p>
-                <p className="text-center text-xs text-red-700 ">
+                <p className="text-center text-xs text-red-700 w-72">
                   For the best user experience, we recommend using Google Chrome or Microsoft Edge.
                 </p>
               </div>

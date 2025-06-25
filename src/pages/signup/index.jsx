@@ -184,7 +184,7 @@ export const Signup = () => {
                 <div className="w-full xl:w-1/2 flex flex-col justify-center gap-4 items-center shadow-md py-5 px-5 border rounded-lg">
                   <div className="flex flex-col items-center">
                     <h1 className="text-xl md:text-3xl font-bold text-gray-900">CREATE NEW ACCOUNT</h1>
-                    <p className="text-center text-xs text-red-700 ">
+                    <p className="text-center text-xs text-red-700 w-72">
                       For the best user experience, we recommend using Google Chrome or Microsoft Edge.
                     </p>
                   </div>
