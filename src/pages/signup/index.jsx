@@ -170,8 +170,7 @@ export const Signup = () => {
           <div className="w-full min-h-screen flex items-center justify-center flex-col xl:flex-row bg-[#f3f4f6]">
             <div className="w-full flex gap-8 flex-col items-center justify-center">
               <div className="h-full w-full flex flex-col xl:flex-row items-center justify-center gap-10">
-                <div className="w-full xl:w-1/2 flex flex-col items-center justify-center gap-5 md:gap-y-10 2xl:-mt-20">
-                  <h1 className="text-3xl font-bold text-gray-900">CREATE NEW ACCOUNT</h1>
+                <div className="hidden w-full xl:w-1/2 xl:flex flex-col items-center justify-center gap-5 md:gap-y-10 2xl:-mt-20">
                   <div className="flex flex-col text-center">
                     <p className="w-96">{getSpecial(true)}</p>
                   </div>
@@ -182,7 +181,13 @@ export const Signup = () => {
 
                   <img src={Logo} alt="Logo" className="mb-4 sm:mb-0 h-32 w-auto hidden xl:block" />
                 </div>
-                <div className="w-full xl:w-1/2 flex flex-col justify-center items-center shadow-md py-5 px-5 border rounded-lg">
+                <div className="w-full xl:w-1/2 flex flex-col justify-center gap-4 items-center shadow-md py-5 px-5 border rounded-lg">
+                  <div className="flex flex-col items-center">
+                    <h1 className="text-xl md:text-3xl font-bold text-gray-900">CREATE NEW ACCOUNT</h1>
+                    <p className="text-center text-xs text-red-700 ">
+                      For the best user experience, we recommend using Google Chrome or Microsoft Edge.
+                    </p>
+                  </div>
                   <form onSubmit={handleSubmit(handleOnSubmit)} className="w-full">
                     <div className="mt-2 flex flex-col gap-6 overflow-y-auto">
                       <div className="flex flex-col gap-6 w-full">

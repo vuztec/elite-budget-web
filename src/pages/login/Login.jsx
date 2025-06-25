@@ -76,6 +76,9 @@ export const Login = () => {
               <div className="">
                 <p className="text-black text-3xl font-bold text-center">Welcome back!</p>
                 <p className="text-center text-base text-gray-700 ">Keep your login credentials safe</p>
+                <p className="text-center text-xs text-red-700 ">
+                  For the best user experience, we recommend using Google Chrome or Microsoft Edge.
+                </p>
               </div>
 
               <div className="flex flex-col gap-y-5">

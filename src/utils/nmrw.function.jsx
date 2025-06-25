@@ -44,16 +44,16 @@ export const getSpecial = (isFull) => {
         </div>
       )}
       {isOn && !isFull && (
-        <div className="flex flex-col text-sm md:text-lg gap-3 w-80 md:w-96 mb-0 pb-3 items-center rounded-lg">
+        <div className="flex flex-col text-sm md:text-lg gap-0 w-80 md:w-96 mb-0 pb-3 items-center rounded-lg">
           <img src={special} alt="Special Offer" className="w-40 h-auto" />
           <p className="bg-[#FF820E] text-center rounded-md p-2">
             Launch Special: <span className="font-bold text-gray-200 line-through decoration-black">$95.88</span> $50
             for the First Year - Limited Time Only!
           </p>
-          <p className="text-black bg-white p-2 rounded-md">Use Code: Launch2025</p>
+          <p className="text-black bg-white p-2 rounded-md mt-2">Use Code: Launch2025</p>
           <a
             href="/signup"
-            className="flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 mt-5 hover:bg-green-300 bg-tryBg text-tryText shadow-md rounded-md"
+            className="flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 mt-3 hover:bg-green-300 bg-tryBg text-tryText shadow-md rounded-md"
           >
             Try the App Now <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
           </a>
