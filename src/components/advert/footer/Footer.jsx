@@ -24,7 +24,7 @@ function Footer() {
 
   return (
     <footer className="bg-white py-8">
-      <div className="container mx-auto px-4 flex flex-col md:flex-row md:justify-between w-full text-sm lg:text-lg">
+      <div className="container mx-auto px-4 flex flex-col md:flex-row md:justify-between md:items-end w-full text-sm lg:text-lg">
         <div className="flex flex-col items-left mb-8">
           <div className="flex flex-col items-left mb-2">
             <img src={Logo} alt="Logo" className="mb-4 sm:mb-0 h-32 w-52" />
