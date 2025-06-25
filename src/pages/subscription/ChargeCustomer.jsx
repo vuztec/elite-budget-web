@@ -78,6 +78,7 @@ const ChargeCustomer = ({ card, handleClose, coupons }) => {
         setFinalAmount(subscriptionAmount - discount);
       } else {
         setCoupon(0);
+        setFinalAmount(subscriptionAmount);
       }
     }
   }, [CouponCode, subscriptionAmount]);
