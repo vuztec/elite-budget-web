@@ -66,7 +66,6 @@ export const AddRootUser = ({ open, setOpen }) => {
     setIsLoading(() => true);
 
     delete data.ConfirmPassword;
-    data.Currency = country?.currency;
     data.Separator = 'en-' + country?.isoCode;
 
     if (user?.id) {
@@ -97,8 +96,9 @@ export const AddRootUser = ({ open, setOpen }) => {
         });
     } else {
       const id = toast.loading('Loading...');
-
+      data.Currency = country?.currency;
       axios
+
         .post('/api/auth/signup', data)
         .then(({ data }) => {
           toast.update(id, {
