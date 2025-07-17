@@ -47,7 +47,7 @@ export function dateFormatter(dateString) {
 
 export function getInitials(fullName) {
   const names = fullName?.split(' ');
-  const initials = names?.slice(0, 3).map((name) => name[0].toUpperCase());
+  const initials = names?.slice(0, 3)?.map((name) => name[0]?.toUpperCase());
   const initialsStr = initials?.join('');
   return initialsStr;
 }

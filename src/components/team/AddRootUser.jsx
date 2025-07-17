@@ -19,15 +19,13 @@ import { handleAxiosResponseError } from '../../utils/handleResponseError';
 export const AddRootUser = ({ open, setOpen }) => {
   const CountryData = Country.getAllCountries();
   const { setUser, user } = useUserStore();
-
+  console.log(user?.Country);
   const dateFormats = DateFormats.map((format) => ({
     value: format.value,
     label: format.label,
   }));
 
-  const [countryCode, setCountryCode] = useState(
-    user ? CountryData.find((country) => country.name === user.Country)?.isoCode : '',
-  );
+  const [country, setCountry] = useState(null);
 
   const navigate = useNavigate();
 
@@ -41,8 +39,11 @@ export const AddRootUser = ({ open, setOpen }) => {
     reset,
     formState: { errors },
   } = useForm();
-
+  const userCountry = useWatch({ control, name: 'Country' });
   const Password = useWatch({ control, name: 'Password' });
+  useEffect(() => {
+    setCountry(CountryData.find((country) => country.name === userCountry));
+  }, [userCountry]);
 
   useEffect(() => {
     if (user?.id) {
@@ -52,16 +53,9 @@ export const AddRootUser = ({ open, setOpen }) => {
       setValue('PartnerAge', user.PartnerAge);
       setValue('SelfAge', user.SelfAge);
       setValue('Country', user.Country);
-
-      // setCountryCode(country);
-
-      const country = CountryData.find((country) => country.name === user?.Country);
-
-      if (country) {
-        setValue('Country', country?.name);
-        setValue('Currency', country.currency);
-        setValue('Separator', 'en-' + country);
-      }
+      setCountry(CountryData.find((country) => country.name === user?.Country));
+    } else {
+      setValue('Country', 'United States');
     }
 
     return () => reset();
@@ -72,10 +66,6 @@ export const AddRootUser = ({ open, setOpen }) => {
     setIsLoading(() => true);
 
     delete data.ConfirmPassword;
-
-    const country = CountryData.find((country) => country.isoCode === data?.Country);
-
-    data.Country = country?.name;
     data.Currency = country?.currency;
     data.Separator = 'en-' + country?.isoCode;
 
@@ -134,19 +124,6 @@ export const AddRootUser = ({ open, setOpen }) => {
         });
     }
   };
-
-  // const handleCountryChange = (e) => {
-  //   if (e && e.target?.value) {
-  //     const selCountry = e.target?.value;
-  //     const targetCountry = CountryData.find((item) => item?.isoCode === selCountry);
-  //     setValue('Country', targetCountry.name);
-  //     setValue('Currency', targetCountry.currency);
-  //     const selCountryCode = targetCountry ? targetCountry.isoCode : '';
-  //     setCountryCode(selCountryCode);
-
-  //     setValue('Separator', 'en-' + selCountryCode);
-  //   }
-  // };
 
   const handleClose = () => {
     setOpen(false);
@@ -214,15 +191,13 @@ export const AddRootUser = ({ open, setOpen }) => {
                   placeholder="Select Country"
                   name="Country"
                   label="Country"
-                  // onChange={handleCountryChange}
                   options={CountryData?.map((country) => ({
-                    value: country.isoCode,
-                    label: country.name,
+                    value: country?.name,
+                    label: country?.name,
                   }))} // Map country array to options
                   className="w-full rounded"
-                  defaultValue={countryCode}
                   register={register('Country', {
-                    required: 'User Country is required!',
+                    required: 'Country is required!',
                   })}
                   error={errors.Country ? errors.Country.message : ''}
                 />
