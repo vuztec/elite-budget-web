@@ -54,6 +54,7 @@ const MonthlySummary = ({
     owner,
     selfContribution,
     partnerContribution,
+    user,
   ]);
 
   return (
