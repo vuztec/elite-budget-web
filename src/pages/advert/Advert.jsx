@@ -196,7 +196,7 @@ export const Advert = () => {
           </div>
         </div>
         <div
-          id="bank-tranaction"
+          id="bank-transaction"
           className="flex flex-col lg:flex-row items-center justify-center my-10 gap-8 lg:gap-12 p-8"
         >
           <div className="w-full lg:w-1/3 flex flex-col gap-6">
