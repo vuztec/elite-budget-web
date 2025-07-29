@@ -92,16 +92,20 @@ function Footer() {
 
         {/* Social Icons */}
         <div className="flex justify-center mt-4 sm:mt-0 space-x-4 text-gray-700">
-          {/* <div className="rounded-full p-2 bg-black">
+          <a
+            href="https://www.facebook.com/profile.php?id=61577962371474"
+            target="_blank"
+            className="rounded-full p-2 bg-black"
+          >
             <FaFacebookF className="text-xl text-white" />
-          </div>
-          <div className="rounded-full p-2 bg-black">
+          </a>
+          {/* <div className="rounded-full p-2 bg-black">
             <FaTwitter className="text-xl text-white" />
-          </div>
-          <div className="rounded-full p-2 bg-black">
+          </div> */}
+          {/* <div className="rounded-full p-2 bg-black">
             <FaInstagram className="text-xl text-white" />
-          </div>
-          <div className="rounded-full p-2 bg-black">
+          </div> */}
+          {/* <div className="rounded-full p-2 bg-black">
             <FaYoutube className="text-xl text-white" />
           </div> */}
         </div>

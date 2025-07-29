@@ -157,6 +157,7 @@ function Budget() {
                   </li>
                 </ul>
               </li>
+              <li>Works with all currency denominations.</li>
               <li>Easy to make changes.</li>
               <li>All reports are automatically updated instantly.</li>
             </ul>
