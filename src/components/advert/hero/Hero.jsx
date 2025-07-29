@@ -1,6 +1,5 @@
-import { GoStarFill } from 'react-icons/go';
-import { TiStarHalfOutline } from 'react-icons/ti';
 import Networth from '../../../assets/image/net-worth.png';
+import Award from '../../../assets/image/award.png';
 import { getSpecial } from '../../../utils/nmrw.function';
 import { IoIosArrowRoundForward } from 'react-icons/io';
 
@@ -36,9 +35,14 @@ function Hero() {
       </div>
 
       {/* Right Section with Images */}
-      <div className="right relative w-full lg:w-1/2 flex justify-center items-center mt-8 lg:mt-0">
+      <div className="lg:right lg:relative w-full lg:w-1/2 flex flex-col lg:flex-row justify-center items-center mt-8 lg:mt-0">
         {/* Large screen mockup */}
-        <div className="relative w-full max-w-[500px] md:max-w-none">
+        <div className="z-10 lg:absolute lg:right-10 lg:top-0">
+          <a href="https://theinsiderweekly.com/elite-cash-flow-products-llc-best-budget-web-app/">
+            <img src={Award} alt="Award mockup" className="w-40 h-auto" />
+          </a>
+        </div>
+        <div className="lg:relative w-full max-w-[500px] md:max-w-none">
           <img src={Networth} alt="Laptop mockup" className="w-full h-auto" />
         </div>
       </div>
