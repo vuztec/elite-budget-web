@@ -19,7 +19,7 @@ import { handleAxiosResponseError } from '../../utils/handleResponseError';
 export const AddRootUser = ({ open, setOpen }) => {
   const CountryData = Country.getAllCountries();
   const { setUser, user } = useUserStore();
-  console.log(user?.Country);
+  // console.log(user?.Country);
   const dateFormats = DateFormats.map((format) => ({
     value: format.value,
     label: format.label,

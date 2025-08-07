@@ -11,7 +11,7 @@ import { RiDeleteBin2Fill } from 'react-icons/ri';
 import { FaCheckSquare, FaEdit } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import axios from '../../config/axios';
-import { getUsers } from '../../config/api';
+import { getPaymentMethods, getUsers } from '../../config/api';
 import { getActiveAccount } from '../../utils/permissions';
 import { getFormattedDateSubscription, getIsTrial, getRenewalDate } from '../../utils/budget.calculation';
 
@@ -37,6 +37,14 @@ export const Users = () => {
     queryFn: getUsers,
     staleTime: 1000 * 60 * 60,
   });
+
+  // const { data: paymentmethods, status: isPaymentMethodLoaded } = useQuery({
+  //   queryKey: ['payment-methods'],
+  //   queryFn: getPaymentMethods,
+  //   staleTime: 1000 * 60 * 60,
+  // });
+
+  // console.log('paymentmethods', paymentmethods);
 
   useEffect(() => {
     if (isUserLoaded === 'success') {
@@ -122,6 +130,7 @@ export const Users = () => {
         <th className="border-l border-gray-300 p-2">License Type</th>
         <th className="border-l border-gray-300 p-2">Annual Subscription</th>
         <th className="border-l border-gray-300 p-2">Subscription Status</th>
+        <th className="border-l border-gray-300 p-2">Account Created On</th>
         <th className="border-l border-gray-300 p-2">Subscription Date</th>
         <th className="border-l border-gray-300 p-2">Renewal Date</th>
         <th className="border-l border-gray-300 p-2">Auto Renewal</th>
@@ -172,31 +181,48 @@ export const Users = () => {
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         {user?.FreeAccess ? (
           ''
-        ) : getIsTrial(user) ? (
-          <p className="text-orange-700 bg-orange-200 py-1 px-2 rounded-md">14-Day FREE Trial</p>
+        ) : user?.SubscribeDate ? (
+          getIsTrial(user) ? (
+            <p className="text-orange-700 bg-orange-200 py-1 px-2 rounded-md">14-Day FREE Trial</p>
+          ) : (
+            <p className="text-green-700 bg-green-200 py-1 px-2 rounded-md">Paid License</p>
+          )
         ) : (
-          <p className="text-green-700 bg-green-200 py-1 px-2 rounded-md">Paid License</p>
+          <p className="text-red-700 bg-red-200 py-1 px-2 rounded-md">Hasn't Add Card</p>
         )}
       </td>
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         {user?.FreeAccess ? (
           ''
-        ) : getIsTrial(user) ? (
-          <p className="text-orange-700 bg-orange-200 py-1 px-2 rounded-md">FREE</p>
+        ) : user?.SubscribeDate ? (
+          getIsTrial(user) ? (
+            <p className="text-orange-700 bg-orange-200 py-1 px-2 rounded-md">FREE</p>
+          ) : (
+            <p className="text-green-700 bg-green-200 py-1 px-2 rounded-md">$95.88</p>
+          )
         ) : (
-          <p className="text-green-700 bg-green-200 py-1 px-2 rounded-md">$95.88</p>
+          <p className="text-red-700 bg-red-200 py-1 px-2 rounded-md">Hasn't Add Card</p>
         )}
       </td>
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
-        <p className="text-2xl">
+        <p className="">
           {user?.FreeAccess ? (
             ''
           ) : getActiveAccount(user) ? (
-            <FaCheckSquare className="text-green-500" />
+            <div className="flex items-center gap-1 bg-green-200 text-green-700  py-1 px-2 rounded-md">
+              <FaCheckSquare />
+              <p>Active</p>
+            </div>
           ) : (
-            <FaSquareXmark className="text-red-500" />
+            <div className="flex items-center gap-1 bg-red-200 text-red-700 py-1 px-2 rounded-md">
+              <FaSquareXmark />
+              <p>Inactive</p>
+            </div>
           )}
         </p>
+      </td>
+      <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
+        {getFormattedDateSubscription(user, getIsTrial(user) ? user?.CreatedAt : user?.SubscribeDate)}
       </td>
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         {user?.FreeAccess
