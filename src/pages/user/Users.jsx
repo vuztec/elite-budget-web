@@ -222,13 +222,13 @@ export const Users = () => {
         </p>
       </td>
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
-        {getFormattedDateSubscription(user, getIsTrial(user) ? user?.CreatedAt : user?.SubscribeDate)}
+        {getFormattedDateSubscription(currentUser, getIsTrial(user) ? user?.CreatedAt : user?.SubscribeDate)}
       </td>
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         {user?.FreeAccess
           ? ''
           : getActiveAccount(user)
-            ? getFormattedDateSubscription(user, getIsTrial(user) ? user?.CreatedAt : user?.SubscribeDate)
+            ? getFormattedDateSubscription(currentUser, getIsTrial(user) ? user?.CreatedAt : user?.SubscribeDate)
             : ''}
       </td>
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
@@ -236,7 +236,7 @@ export const Users = () => {
           ? ''
           : getActiveAccount(user)
             ? getFormattedDateSubscription(
-                user,
+                currentUser,
                 getIsTrial(user)
                   ? new Date(new Date(user?.CreatedAt).setDate(new Date(user?.CreatedAt).getDate() + 14))
                   : getRenewalDate(user),
