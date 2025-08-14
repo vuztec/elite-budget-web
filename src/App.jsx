@@ -24,7 +24,9 @@ import {
   Signup,
   Users,
 } from './pages';
-
+import '@n8n/chat/style.css';
+import { createChat } from '@n8n/chat';
+import { useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
 import { Routes, Route, Navigate, Outlet, useLocation } from 'react-router-dom';
@@ -44,8 +46,17 @@ import Resource from './pages/resource/Resource';
 function Layout() {
   //const user = false;
   const { sidebar, user, setSidebar } = useUserStore();
-
   const location = useLocation();
+  useEffect(() => {
+    // keep this URL in an env var in real apps
+    createChat({
+      webhookUrl: import.meta.env.VITE_N8N_CHAT_WEBHOOK_URL,
+      // optional niceties:
+      mode: 'window', // or 'fullscreen'
+      enableStreaming: false, // if your workflow supports streaming
+      initialMessages: ['Hi! My Name is Kate. Ask me anything you want to know about the Budget App.'],
+    });
+  }, []);
 
   const scrollToTop = () => {
     const scrollableDiv = document.querySelector('.flex-1.overflow-auto');
@@ -85,6 +96,8 @@ function Layout() {
           </div>
         </div>
       </div>
+      {/* target container for the widget (matches default `target: "#n8n-chat"`): */}
+      <div id="n8n-chat" />
     </div>
   ) : (
     <Navigate to="/login" state={{ from: location }} replace />
