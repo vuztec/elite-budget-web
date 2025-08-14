@@ -54,7 +54,7 @@ function Layout() {
       // optional niceties:
       mode: 'window', // or 'fullscreen'
       enableStreaming: false, // if your workflow supports streaming
-      initialMessages: ['Hi! My Name is Kate. Ask me anything you want to know about the Budget App.'],
+      initialMessages: ['Hello! My Name is Kate. Ask me anything you want to know about the Budget App.'],
     });
   }, []);
 
