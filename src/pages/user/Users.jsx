@@ -44,16 +44,11 @@ export const Users = () => {
     staleTime: 1000 * 60 * 60,
   });
 
-  const customer_id = 'cus_SuTWLYEPBs95OS';
-
-  const { data: transactions, status: isTransactionLoaded } = useQuery({
-    queryKey: ['transactions', customer_id],
-    queryFn: () => getTransactionOfCustomer(customer_id),
-    staleTime: 1000 * 60 * 60,
-  });
-
-  console.log('Customers : ', customers);
-  console.log('Transactions : ', transactions);
+  // const { data: transactions, status: isTransactionLoaded } = useQuery({
+  //   queryKey: ['transactions', customer_id],
+  //   queryFn: () => getTransactionOfCustomer(customer_id),
+  //   staleTime: 1000 * 60 * 60,
+  // });
 
   useEffect(() => {
     if (isUserLoaded === 'success') {
