@@ -11,7 +11,7 @@ import { RiDeleteBin2Fill } from 'react-icons/ri';
 import { FaCheckSquare, FaEdit } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import axios from '../../config/axios';
-import { getPaymentMethods, getUsers } from '../../config/api';
+import { getStripeUsers, getTransactionOfCustomer, getUsers } from '../../config/api';
 import { getActiveAccount } from '../../utils/permissions';
 import { getFormattedDateSubscription, getIsTrial, getRenewalDate } from '../../utils/budget.calculation';
 
@@ -38,13 +38,22 @@ export const Users = () => {
     staleTime: 1000 * 60 * 60,
   });
 
-  // const { data: paymentmethods, status: isPaymentMethodLoaded } = useQuery({
-  //   queryKey: ['payment-methods'],
-  //   queryFn: getPaymentMethods,
-  //   staleTime: 1000 * 60 * 60,
-  // });
+  const { data: customers, status: isCustomerLoaded } = useQuery({
+    queryKey: ['customers'],
+    queryFn: getStripeUsers,
+    staleTime: 1000 * 60 * 60,
+  });
 
-  // console.log('paymentmethods', paymentmethods);
+  const customer_id = 'cus_SuTWLYEPBs95OS';
+
+  const { data: transactions, status: isTransactionLoaded } = useQuery({
+    queryKey: ['transactions', customer_id],
+    queryFn: () => getTransactionOfCustomer(customer_id),
+    staleTime: 1000 * 60 * 60,
+  });
+
+  console.log('Customers : ', customers);
+  console.log('Transactions : ', transactions);
 
   useEffect(() => {
     if (isUserLoaded === 'success') {

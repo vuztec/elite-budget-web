@@ -114,6 +114,16 @@ export const getUsers = async () => {
   return res.data;
 };
 
+export const getStripeUsers = async () => {
+  const res = await axios.get('/api/payment/stripe/customers');
+  return res.data;
+};
+
+export const getTransactionOfCustomer = async (customerId) => {
+  const res = await axios.get(`/api/payment/stripe/customers/${customerId}/transactions`);
+  return res.data;
+};
+
 export const getResources = async () => {
   const res = await axios.get('/api/resources');
   return res.data;
