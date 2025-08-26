@@ -8,12 +8,15 @@ import { useQuery, useQueryClient } from 'react-query';
 import { FaSquareXmark } from 'react-icons/fa6';
 import { MdPeople } from 'react-icons/md';
 import { RiDeleteBin2Fill } from 'react-icons/ri';
-import { FaCheckSquare, FaEdit } from 'react-icons/fa';
+import { FaCheckSquare, FaEdit, FaStripeS } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import axios from '../../config/axios';
 import { getStripeUsers, getTransactionOfCustomer, getUsers } from '../../config/api';
 import { getActiveAccount } from '../../utils/permissions';
 import { getFormattedDateSubscription, getIsTrial, getRenewalDate } from '../../utils/budget.calculation';
+import { BsStripe, BsYoutube } from 'react-icons/bs';
+import Button from '../../components/Button';
+import { TransactionDialog } from '../../components/DisplayDialogs';
 
 export const Users = () => {
   const { user: currentUser } = useUserStore();
@@ -26,6 +29,7 @@ export const Users = () => {
   const [openStatusDialog, setOpenStatusDialog] = useState(false);
   const [openAccessDialog, setOpenAccessDialog] = useState(false);
   const [selected, setSelected] = useState(null);
+  const [open, setOpen] = useState(false);
   const [prompt, setPrompt] = useState('');
 
   const [isDataLoaded, setIsDataLoaded] = useState(false);
@@ -43,12 +47,6 @@ export const Users = () => {
     queryFn: getStripeUsers,
     staleTime: 1000 * 60 * 60,
   });
-
-  // const { data: transactions, status: isTransactionLoaded } = useQuery({
-  //   queryKey: ['transactions', customer_id],
-  //   queryFn: () => getTransactionOfCustomer(customer_id),
-  //   staleTime: 1000 * 60 * 60,
-  // });
 
   useEffect(() => {
     if (isUserLoaded === 'success') {
@@ -124,11 +122,17 @@ export const Users = () => {
     setOpenAccessDialog(true);
   };
 
+  const openTransaction = (el) => {
+    setOpen(true);
+    setSelected(el);
+  };
+
   const TableHeader = () => (
     <thead>
       <tr className="text-gray-600 font-bold bg-[whitesmoke] border border-gray-400 text-left text-sm xl:text-[16px]">
         <th className="p-2">Full Name</th>
         <th className="border-l border-gray-300 p-2">Email</th>
+        <th className="border-l border-gray-300 p-2">Transactions</th>
         <th className="border-l border-gray-300 p-2">Allowed User</th>
         <th className="border-l border-gray-300 p-2">Free Access</th>
         <th className="border-l border-gray-300 p-2">License Type</th>
@@ -159,7 +163,19 @@ export const Users = () => {
       <td className="min-w-fit whitespace-nowrap px-2 border-l border-gray-200">
         <span className="text-black">{user?.Email}</span>
       </td>
-
+      <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
+        <div className="rounded-md text-black">
+          <Button
+            label={'Stripe Transaction'}
+            icon={<FaStripeS />}
+            className={clsx(
+              'flex flex-row-reverse gap-2 p-1 rounded-full items-center text-white hover:bg-green-600',
+              `bg-[#6761fb] hover:text-white`,
+            )}
+            onClick={() => openTransaction(user)}
+          />
+        </div>
+      </td>
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <label className="inline-flex items-center cursor-pointer">
           <input
@@ -314,6 +330,7 @@ export const Users = () => {
         buttonText={'Yes'}
         onClick={() => statusHandler()}
       />
+      <TransactionDialog open={open} setOpen={setOpen} user={selected} title={selected?.FullName} />
     </>
   );
 };
