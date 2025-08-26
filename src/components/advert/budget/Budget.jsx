@@ -96,7 +96,7 @@ function Budget() {
             onClick={() => scrollToSection('networth')}
             className="p-2 md:p-4 rounded-lg bg-[#FFC400] text-white w-full max-w-[150px] flex-grow"
           >
-            Networth
+            Net Worth
           </button>
         </div>
         <div className="flex flex-col gap-4 items-center justify-center text-center mt-1">
