@@ -1,9 +1,10 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import ClosePlugin from './vite-config-close';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), ClosePlugin()],
   base: '/',
   build: {
     outDir: 'dist', // Change if necessary, default is 'dist'
