@@ -1,6 +1,6 @@
 import Networth from '../../../assets/image/net-worth.png';
 import Award from '../../../assets/image/award.png';
-import poster from '../../../assets/image/Thumbnail.png';
+// import poster from '../../../assets/image/Thumbnail.png';
 import { getSpecial } from '../../../utils/nmrw.function';
 import { IoIosArrowRoundForward } from 'react-icons/io';
 import { useEffect, useRef, useState } from 'react';
@@ -8,6 +8,7 @@ import { AppIcon } from '../../../utils/nmrw.icon';
 
 function Hero() {
   const url = 'https://nmrwback.vuztec.com/public/elite/MarketingVideo.mp4';
+  const poster = 'https://nmrwback.vuztec.com/public/elite/Thumbnail.png';
   const vRef = useRef(null);
   const [showVideo, setShowVideo] = useState(false);
   const start = () => {
