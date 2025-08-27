@@ -228,7 +228,7 @@ export const Users = () => {
         <p className="">
           {user?.FreeAccess ? (
             ''
-          ) : (user?.SubscribeDate && getIsTrial(user)) || getActiveAccount(user) ? (
+          ) : (user?.SubscribeDate && getIsTrial(user)) || (user?.Payment && !user?.IsExpired) ? (
             <div className="flex items-center gap-1 bg-green-200 text-green-700  py-1 px-2 rounded-md">
               <FaCheckSquare />
               <p>Active</p>
