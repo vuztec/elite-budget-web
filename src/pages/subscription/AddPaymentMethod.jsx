@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
 import { handleAxiosResponseError } from '../../utils/handleResponseError';
 import axios from '../../config/axios';
@@ -24,8 +24,28 @@ const AddPaymentMethod = ({ handleClose, isTrial }) => {
   });
 
   const [coupon, setCoupon] = useState(0);
+  const [couponCode, setCouponCode] = useState('');
+
   const subscriptionAmount = Number(7.99 * 12);
   const [finalAmount, setFinalAmount] = useState(subscriptionAmount);
+
+  useEffect(() => {
+    if (couponCode) {
+      const filteredData = coupons?.data?.find(
+        (item) => item?.name?.toLocaleLowerCase() === couponCode?.toLocaleLowerCase(),
+      );
+      if (filteredData) {
+        const discount = filteredData?.amount_off
+          ? Number(filteredData?.amount_off) / 100
+          : (subscriptionAmount * Number(filteredData?.percent_off)) / 100;
+        setCoupon(discount);
+        setFinalAmount(subscriptionAmount - discount);
+      } else {
+        setCoupon(0);
+        setFinalAmount(subscriptionAmount);
+      }
+    }
+  }, [couponCode, subscriptionAmount]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -43,23 +63,6 @@ const AddPaymentMethod = ({ handleClose, isTrial }) => {
       },
     });
 
-    // const CouponCode = useWatch({ control, name: 'Coupon' });
-    //   useEffect(() => {
-    //     if (CouponCode) {
-    //       const filteredData = coupons?.data?.find((item) => item?.name === CouponCode);
-    //       if (filteredData) {
-    //         const discount = filteredData?.amount_off
-    //           ? Number(filteredData?.amount_off) / 100
-    //           : (subscriptionAmount * Number(filteredData?.percent_off)) / 100;
-    //         setCoupon(discount);
-    //         setFinalAmount(subscriptionAmount - discount);
-    //       } else {
-    //         setCoupon(0);
-    //         setFinalAmount(subscriptionAmount);
-    //       }
-    //     }
-    //   }, [CouponCode, subscriptionAmount]);
-
     if (error) {
       console.error(error);
       setMessage(error.message);
@@ -69,6 +72,7 @@ const AddPaymentMethod = ({ handleClose, isTrial }) => {
         .post('/api/payment/payment-method', {
           PaymentMethodId: paymentMethod.id,
           isTrial: isTrial,
+          Coupon: couponCode,
         })
         .then(({ data }) => {
           if (isTrial) {
@@ -140,51 +144,52 @@ const AddPaymentMethod = ({ handleClose, isTrial }) => {
         />
       </div>
 
-      {/* <div className="flex flex-col gap-6 w-full">
-                              <div className="flex flex-col md:flex-row gap-6 w-full">
-                                <div className="w-full">
-                                  <Textbox
-                                    placeholder={'$' + subscriptionAmount.toFixed(2)}
-                                    type="text"
-                                    label="Annual Subscription"
-                                    disabled={true}
-                                    className="w-full rounded"
-                                  />
-                                </div>
-                                <div className="w-full">
-                                  <Textbox
-                                    placeholder="Enter a valid coupon code"
-                                    type="text"
-                                    name="Coupon"
-                                    label="Coupon Code"
-                                    className="w-full rounded"
-                                    register={register('Coupon')}
-                                    error={errors.Coupon ? errors.Coupon.message : ''}
-                                  />
-                                </div>
-                              </div>
-      
-                              <div className="flex flex-col md:flex-row gap-6 w-full">
-                                <div className="w-full">
-                                  <Textbox
-                                    placeholder={'$' + coupon.toFixed(2)}
-                                    type="text"
-                                    label="Coupon Discount"
-                                    disabled={true}
-                                    className="w-full rounded"
-                                  />
-                                </div>
-                                <div className="w-full">
-                                  <Textbox
-                                    placeholder={'$' + finalAmount.toFixed(2)}
-                                    type="text"
-                                    label="Discounted Amount"
-                                    disabled={true}
-                                    className="w-full rounded"
-                                  />
-                                </div>
-                              </div>
-                            </div> */}
+      <div className="flex flex-col gap-6 w-full">
+        <div className="flex flex-col md:flex-row gap-6 w-full">
+          <div className="w-full">
+            <label className="block mb-1 text-sm font-medium text-gray-700">Subscription Amount</label>
+            <input
+              type="text"
+              className="w-full px-3 py-2 border rounded-md"
+              disabled
+              placeholder={'$' + subscriptionAmount.toFixed(2)}
+            />
+          </div>
+          <div className="w-full">
+            <label className="block mb-1 text-sm font-medium text-gray-700">Coupon</label>
+            <input
+              type="text"
+              className="w-full px-3 py-2 border rounded-md"
+              value={couponCode}
+              onChange={(e) => {
+                setCouponCode(e.target.value);
+              }}
+              placeholder="Enter coupon code"
+            />
+          </div>
+        </div>
+
+        <div className="flex flex-col mb-4 md:flex-row gap-6 w-full">
+          <div className="w-full">
+            <label className="block mb-1 text-sm font-medium text-gray-700">Coupon Discount</label>
+            <input
+              type="text"
+              className="w-full px-3 py-2 border rounded-md"
+              disabled
+              placeholder={'$' + coupon.toFixed(2)}
+            />
+          </div>
+          <div className="w-full">
+            <label className="block mb-1 text-sm font-medium text-gray-700">Discounted Amount</label>
+            <input
+              type="text"
+              className="w-full px-3 py-2 border rounded-md"
+              disabled
+              placeholder={'$' + finalAmount.toFixed(2)}
+            />
+          </div>
+        </div>
+      </div>
 
       <div className="mb-4">
         <label className="block mb-1 text-sm font-medium text-gray-700">

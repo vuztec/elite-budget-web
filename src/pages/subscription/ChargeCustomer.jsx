@@ -74,7 +74,9 @@ const ChargeCustomer = ({ card, handleClose, coupons }) => {
   const CouponCode = useWatch({ control, name: 'CouponCode' });
   useEffect(() => {
     if (CouponCode) {
-      const filteredData = coupons?.data?.find((item) => item?.name === CouponCode);
+      const filteredData = coupons?.data?.find(
+        (item) => item?.name?.toLocaleLowerCase() === CouponCode?.toLocaleLowerCase(),
+      );
       if (filteredData) {
         const discount = filteredData?.amount_off
           ? Number(filteredData?.amount_off) / 100
