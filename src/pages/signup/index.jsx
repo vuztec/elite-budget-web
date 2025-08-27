@@ -19,6 +19,8 @@ import { PrivacyDialog, TermsDialog } from '../../components/DisplayDialogs';
 import { LuMousePointer } from 'react-icons/lu';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { getSpecial } from '../../utils/nmrw.function';
+import { getCoupons } from '../../config/api';
+import { useQuery } from 'react-query';
 
 export const Signup = () => {
   const CountryData = Country.getAllCountries();
@@ -50,7 +52,6 @@ export const Signup = () => {
   } = useForm({
     defaultValues: { Country: 'US' },
   });
-
   const Password = useWatch({ control, name: 'Password' });
 
   useEffect(() => {
@@ -60,7 +61,7 @@ export const Signup = () => {
       setValue('Currency', user.Currency);
       setValue('PartnerAge', user.PartnerAge);
       setValue('SelfAge', user.SelfAge);
-      // setValue('Country', user.Country);
+      // setValue('Coupon', user.Coupon);
 
       const country = CountryData.find((country) => country.name === user?.Country);
 
@@ -142,19 +143,6 @@ export const Signup = () => {
     }
   };
 
-  // const handleCountryChange = (e) => {
-  //   if (e && e.target?.value) {
-  //     const selCountry = e.target?.value;
-  //     const targetCountry = CountryData.find((item) => item?.isoCode === selCountry);
-  //     setValue('Country', targetCountry.name);
-  //     setValue('Currency', targetCountry.currency);
-  //     const selCountryCode = targetCountry ? targetCountry.isoCode : '';
-  //     setCountryCode(selCountryCode);
-
-  //     setValue('Separator', 'en-' + selCountryCode);
-  //   }
-  // };
-
   const handleOpenPrivacy = () => {
     setOpenPrivacy(true);
   };
@@ -204,43 +192,7 @@ export const Signup = () => {
                             error={errors.FullName ? errors.FullName.message : ''}
                           />
                         </div>
-                        {/* <p className="text-[11px] text-gray-500">
-                          Option: To adjust the Expected Net Worth Calculation; If you didn't start working until you
-                          completed an advanced degree, served in the military or were disabled, you can deduct the
-                          years spent on those things from your age.
-                        </p>
-                        <div className="flex flex-col md:flex-row gap-6 w-full">
-                          <div className="w-full">
-                            <Textbox
-                              placeholder="Enter Amount"
-                              type="number"
-                              name="SelfAge"
-                              label="Self Age"
-                              className="w-full rounded"
-                              register={register('SelfAge', {
-                                valueAsNumber: true,
-                                validate: (value) => value >= 0 || 'Age must be zero or positive',
-                              })}
-                              error={errors.SelfAge ? errors.SelfAge.message : ''}
-                            />
-                          </div>
-                          <div className="w-full">
-                            <Textbox
-                              placeholder="Enter Amount"
-                              type="number"
-                              name="PartnerAge"
-                              label="Partner's Age"
-                              className="w-full rounded"
-                              register={register('PartnerAge', {
-                                valueAsNumber: true,
-                                validate: (value) => value >= 0 || 'Age must be zero or positive',
-                              })}
-                              error={errors.PartnerAge ? errors.PartnerAge.message : ''}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <div className="flex flex-col gap-6 w-full"> */}
+
                         <div className="w-full">
                           <Select
                             placeholder="Select Country"
@@ -321,33 +273,6 @@ export const Signup = () => {
                         </div>
                       </div>
 
-                      {/* <div className="flex flex-col md:flex-row gap-6 w-full">
-                        <div className="w-full">
-                          <Textbox
-                            placeholder="enter currency"
-                            type="text"
-                            name="Currency"
-                            label="Currency Symbol (e.g. $ or USD)"
-                            className="w-full rounded"
-                            register={register('Currency', {
-                              required: 'Currency is required!',
-                            })}
-                            error={errors.Currency ? errors.Currency.message : ''}
-                          />
-                        </div>
-
-                        <div className="w-full">
-                          <Select
-                            name="DateFormat"
-                            label="Date Format"
-                            defaultValue="yyyy-MM-dd"
-                            options={dateFormats}
-                            className="w-full rounded"
-                            register={register('DateFormat')}
-                            error={errors.DateFormat ? errors.DateFormat.message : ''}
-                          />
-                        </div>
-                      </div> */}
                       <div className="flex flex-col gap-4 w-full">
                         <div className="flex flex-col md:flex-row gap-0 md:gap-2 items-start">
                           <div className="flex items-center gap-2">
