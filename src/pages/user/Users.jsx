@@ -242,19 +242,19 @@ export const Users = () => {
         </p>
       </td>
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
-        {getFormattedDateSubscription(currentUser, getIsTrial(user) ? user?.CreatedAt : user?.SubscribeDate)}
+        {getFormattedDateSubscription(currentUser, user?.CreatedAt)}
       </td>
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         {user?.FreeAccess
           ? ''
-          : getActiveAccount(user)
+          : (user?.SubscribeDate && getIsTrial(user)) || (user?.Payment && !user?.IsExpired)
             ? getFormattedDateSubscription(currentUser, getIsTrial(user) ? user?.CreatedAt : user?.SubscribeDate)
             : ''}
       </td>
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         {user?.FreeAccess
           ? ''
-          : getActiveAccount(user)
+          : (user?.SubscribeDate && getIsTrial(user)) || (user?.Payment && !user?.IsExpired)
             ? getFormattedDateSubscription(
                 currentUser,
                 getIsTrial(user)
