@@ -107,7 +107,7 @@ export function VideoDialog({ open, setOpen, url, title }) {
 }
 
 export function TransactionDialog({ open, setOpen, user, title }) {
-  const customer_id = 'cus_SlBtEqZszz2LEM';
+  const customer_id = user?.StripeId;
   const { data: transactions, status: isTransactionLoaded } = useQuery({
     queryKey: ['transactions', customer_id],
     queryFn: () => getTransactionOfCustomer(customer_id),

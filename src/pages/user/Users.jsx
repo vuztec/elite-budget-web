@@ -7,16 +7,14 @@ import ConfirmationDialog from '../../components/Dialogs';
 import { useQuery, useQueryClient } from 'react-query';
 import { FaSquareXmark } from 'react-icons/fa6';
 import { MdPeople } from 'react-icons/md';
-import { RiDeleteBin2Fill } from 'react-icons/ri';
-import { FaCheckSquare, FaEdit, FaStripeS } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';
+import { FaCheckSquare, FaStripeS } from 'react-icons/fa';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import axios from '../../config/axios';
-import { getStripeUsers, getTransactionOfCustomer, getUsers } from '../../config/api';
-import { getActiveAccount } from '../../utils/permissions';
+import { getStripeUsers, getUsers } from '../../config/api';
 import { getFormattedDateSubscription, getIsTrial, getRenewalDate } from '../../utils/budget.calculation';
-import { BsStripe, BsYoutube } from 'react-icons/bs';
 import Button from '../../components/Button';
 import { TransactionDialog } from '../../components/DisplayDialogs';
+import { Tabs2 } from '../../components/Tabs';
 
 export const Users = () => {
   const { user: currentUser } = useUserStore();
@@ -31,6 +29,20 @@ export const Users = () => {
   const [selected, setSelected] = useState(null);
   const [open, setOpen] = useState(false);
   const [prompt, setPrompt] = useState('');
+  const [Title, setTitle] = useState('');
+
+  const [searchParams] = useSearchParams();
+  const [currentTab, setCurrentTab] = useState(0);
+  const tab = searchParams.get('tab');
+
+  useEffect(() => {
+    setCurrentTab(Number(tab));
+    if (Number(tab) === 0) {
+      setTitle('Subscribers');
+    } else if (Number(tab) === 1) {
+      setTitle('Testing Users');
+    }
+  }, [tab]);
 
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [gridData, setGridData] = useState([]);
@@ -42,6 +54,8 @@ export const Users = () => {
     staleTime: 1000 * 60 * 60,
   });
 
+  console.log('users', users);
+
   const { data: customers, status: isCustomerLoaded } = useQuery({
     queryKey: ['customers'],
     queryFn: getStripeUsers,
@@ -50,8 +64,9 @@ export const Users = () => {
 
   useEffect(() => {
     if (isUserLoaded === 'success') {
-      setGridData(users?.filter((u) => u?.id !== 1 && u?.id !== 2 && u?.id !== 14));
-      //setGridData(users);
+      const filteredIds = [1, 2, 14, 7, 8, 9, 10, 11, 25];
+      const filtered = users.filter((u) => !filteredIds.includes(Number(u?.id)));
+      setGridData(filtered);
       setIsDataLoaded(true);
     } else {
       setIsDataLoaded(false);
@@ -276,6 +291,7 @@ export const Users = () => {
       </td>
     </tr>
   );
+  const TABS = [{ title: 'Subscribers' }, { title: 'Testing Users' }];
 
   return !isDataLoaded ? (
     <div className="py-10">
@@ -288,21 +304,40 @@ export const Users = () => {
           <div className="w-full mt-5 mb-5 shadow-md rounded bg-white text-black">
             <div className="flex items-center justify-between p-5">
               <div className="text-2xl flex items-center gap-2">
-                <MdPeople className={``} />
-                <p className="uppercase">Subscribers</p>
+                <MdPeople />
+                <p className="uppercase">{Title}</p>
               </div>
             </div>
 
-            <div className="w-full h-fit bg-white rounded">
+            <div className="w-full h-[calc(100vh-240px)] bg-white rounded">
               <div className="overflow-x-auto">
-                <table className="w-[97%] mx-5">
-                  <TableHeader />
-                  <tbody>
-                    {gridData.map((user, index) => (
-                      <TableRow key={index} user={user} />
-                    ))}
-                  </tbody>
-                </table>
+                <Tabs2 tabs={TABS} selected={currentTab}>
+                  {currentTab === 0 && (
+                    <table className="w-[97%] mx-5">
+                      <TableHeader />
+                      <tbody>
+                        {gridData
+                          ?.filter((u) => !u?.IsTrash)
+                          ?.map((user, index) => (
+                            <TableRow key={user?.id ?? index} user={user} />
+                          ))}
+                      </tbody>
+                    </table>
+                  )}
+
+                  {currentTab === 1 && (
+                    <table className="w-[97%] mx-5">
+                      <TableHeader />
+                      <tbody>
+                        {gridData
+                          ?.filter((u) => u?.IsTrash)
+                          ?.map((user, index) => (
+                            <TableRow key={user?.id ?? index} user={user} />
+                          ))}
+                      </tbody>
+                    </table>
+                  )}
+                </Tabs2>
               </div>
             </div>
           </div>
