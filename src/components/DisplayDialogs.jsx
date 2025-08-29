@@ -108,10 +108,12 @@ export function VideoDialog({ open, setOpen, url, title }) {
 
 export function TransactionDialog({ open, setOpen, user, title }) {
   const customer_id = user?.StripeId;
+
   const { data: transactions, status: isTransactionLoaded } = useQuery({
     queryKey: ['transactions', customer_id],
     queryFn: () => getTransactionOfCustomer(customer_id),
     staleTime: 1000 * 60 * 60,
+    enabled: !!customer_id,
   });
 
   const handleClose = () => {
