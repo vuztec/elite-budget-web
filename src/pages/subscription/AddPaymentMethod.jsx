@@ -25,6 +25,7 @@ const AddPaymentMethod = ({ handleClose, isTrial }) => {
 
   const [coupon, setCoupon] = useState(0);
   const [couponCode, setCouponCode] = useState('');
+  const [stripeCoupon, setStripeCoupon] = useState('');
 
   const subscriptionAmount = Number(7.99 * 12);
   const [finalAmount, setFinalAmount] = useState(subscriptionAmount);
@@ -35,6 +36,7 @@ const AddPaymentMethod = ({ handleClose, isTrial }) => {
         (item) => item?.name?.toLocaleLowerCase() === couponCode?.toLocaleLowerCase(),
       );
       if (filteredData) {
+        setStripeCoupon(filteredData?.name);
         const discount = filteredData?.amount_off
           ? Number(filteredData?.amount_off) / 100
           : (subscriptionAmount * Number(filteredData?.percent_off)) / 100;
@@ -72,7 +74,7 @@ const AddPaymentMethod = ({ handleClose, isTrial }) => {
         .post('/api/payment/payment-method', {
           PaymentMethodId: paymentMethod.id,
           isTrial: isTrial,
-          Coupon: couponCode,
+          Coupon: stripeCoupon,
         })
         .then(({ data }) => {
           if (isTrial) {

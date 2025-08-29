@@ -18,6 +18,8 @@ const ChargeCustomer = ({ card, handleClose, coupons }) => {
   const [isLoading, setIsLoading] = useState(false);
   const { user } = useUserStore();
   const activeAccount = getActiveAccount(user);
+  const [stripeCoupon, setStripeCoupon] = useState('');
+
   function isLeapYear(year) {
     return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
   }
@@ -46,7 +48,7 @@ const ChargeCustomer = ({ card, handleClose, coupons }) => {
 
     setIsLoading(true);
     axios
-      .post('/api/payment/invoice', { PaymentMethodId: card.id, Coupon: CouponCode })
+      .post('/api/payment/invoice', { PaymentMethodId: card.id, Coupon: stripeCoupon })
       .then(({ data }) => {
         // setUser(data);
         console.log(data);
@@ -78,6 +80,8 @@ const ChargeCustomer = ({ card, handleClose, coupons }) => {
         (item) => item?.name?.toLocaleLowerCase() === CouponCode?.toLocaleLowerCase(),
       );
       if (filteredData) {
+        setStripeCoupon(filteredData?.name);
+
         const discount = filteredData?.amount_off
           ? Number(filteredData?.amount_off) / 100
           : (subscriptionAmount * Number(filteredData?.percent_off)) / 100;
