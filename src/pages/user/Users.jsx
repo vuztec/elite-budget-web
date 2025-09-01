@@ -147,8 +147,9 @@ export const Users = () => {
       <tr className="text-gray-600 font-bold bg-[whitesmoke] border border-gray-400 text-left text-sm xl:text-[16px]">
         <th className="p-2">Full Name</th>
         <th className="border-l border-gray-300 p-2">Email</th>
-        <th className="border-l border-gray-300 p-2">Transactions</th>
         <th className="border-l border-gray-300 p-2">Coupon Used</th>
+        <th className="border-l border-gray-300 p-2">Transactions</th>
+
         <th className="border-l border-gray-300 p-2">Allowed User</th>
         <th className="border-l border-gray-300 p-2">Free Access</th>
         <th className="border-l border-gray-300 p-2">License Type</th>
@@ -312,7 +313,7 @@ export const Users = () => {
               </div>
             </div>
 
-            <div className="w-full h-[calc(100vh-240px)] bg-white rounded">
+            <div className="w-full h-[calc(100vh-230px)] bg-white rounded">
               <div className="overflow-x-auto">
                 <Tabs2 tabs={TABS} selected={currentTab}>
                   {currentTab === 0 && (
