@@ -148,6 +148,7 @@ export const Users = () => {
         <th className="p-2">Full Name</th>
         <th className="border-l border-gray-300 p-2">Email</th>
         <th className="border-l border-gray-300 p-2">Transactions</th>
+        <th className="border-l border-gray-300 p-2">Coupon Used</th>
         <th className="border-l border-gray-300 p-2">Allowed User</th>
         <th className="border-l border-gray-300 p-2">Free Access</th>
         <th className="border-l border-gray-300 p-2">License Type</th>
@@ -174,9 +175,11 @@ export const Users = () => {
           </div>
         </div>
       </td>
-
       <td className="min-w-fit whitespace-nowrap px-2 border-l border-gray-200">
         <span className="text-black">{user?.Email}</span>
+      </td>
+      <td className="min-w-fit whitespace-nowrap px-2 border-l border-gray-200">
+        <span className="text-black">{user?.Coupon}</span>
       </td>
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="rounded-md text-black">
