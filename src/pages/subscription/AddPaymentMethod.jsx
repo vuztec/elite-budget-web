@@ -22,13 +22,10 @@ const AddPaymentMethod = ({ handleClose, isTrial }) => {
     queryFn: getCoupons,
     staleTime: 1000 * 60 * 60,
   });
-  console.log('coupons', coupons);
 
   const [coupon, setCoupon] = useState(0);
   const [couponCode, setCouponCode] = useState('');
   const [stripeCoupon, setStripeCoupon] = useState('');
-  console.log('couponCode', couponCode);
-  console.log('stripeCoupon', stripeCoupon);
 
   const subscriptionAmount = Number(7.99 * 12);
   const [finalAmount, setFinalAmount] = useState(subscriptionAmount);
