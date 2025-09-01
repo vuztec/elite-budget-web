@@ -6,7 +6,7 @@ export function getActiveAccount(user) {
   const isTrial = !subscription || currentDate <= trialEnd;
   let isActive = false;
   // if ((user?.Payment && !user?.IsExpired) || user?.FreeAccess || user?.id === 6) {
-  if ((user?.Payment && !user?.IsExpired) || user?.FreeAccess || isTrial) {
+  if ((user?.Payment && !user?.IsExpired) || user?.FreeAccess || (user?.SubscribeDate && isTrial)) {
     isActive = true;
   }
   return isActive;

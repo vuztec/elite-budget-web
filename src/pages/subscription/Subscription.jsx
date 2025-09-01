@@ -25,6 +25,7 @@ import { getPageCopyright, getPageTitle } from '../../utils';
 import clsx from 'clsx';
 import { PrivacyDialog, TermsDialog } from '../../components/DisplayDialogs';
 import { LuMousePointer } from 'react-icons/lu';
+import Package from '../../package/Package';
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
@@ -185,7 +186,7 @@ export const Subscription = () => {
       });
   };
 
-  return (
+  return activeAccount ? (
     <>
       <div className="">
         <div className="hidden md:block">
@@ -492,6 +493,8 @@ export const Subscription = () => {
         <p>{getPageCopyright()}</p>
       </div>
     </>
+  ) : (
+    <Package />
   );
 };
 
