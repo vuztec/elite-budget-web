@@ -7,8 +7,8 @@ import { useEffect, useRef, useState } from 'react';
 import { AppIcon } from '../../../utils/nmrw.icon';
 
 function Hero() {
-  const url = 'https://nmrwback.vuztec.com/public/elite/MarketingVideo.mp4';
-  const poster = 'https://nmrwback.vuztec.com/public/elite/Thumbnail.png';
+  const url = 'https://elite-training-videos.s3.us-west-1.amazonaws.com/MarketingVideo.mp4';
+  const poster = 'https://elite-training-videos.s3.us-west-1.amazonaws.com/Thumbnail.png';
   const vRef = useRef(null);
   const [showVideo, setShowVideo] = useState(false);
   const start = () => {
