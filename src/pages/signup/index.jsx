@@ -21,6 +21,7 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { getSpecial } from '../../utils/nmrw.function';
 import { getCoupons } from '../../config/api';
 import { useQuery } from 'react-query';
+import clsx from 'clsx';
 
 export const Signup = () => {
   const CountryData = Country.getAllCountries();
@@ -234,6 +235,7 @@ export const Signup = () => {
                               className="w-full rounded"
                               register={register('Password', {
                                 required: 'Password is required!',
+                                minLength: { value: 8, message: 'Password must be at least 8 characters long' },
                               })}
                               error={errors.Password ? errors.Password.message : ''}
                             />
@@ -258,6 +260,7 @@ export const Signup = () => {
                               register={register('ConfirmPassword', {
                                 required: 'Confirm Password is required!',
                                 validate: (value) => value === Password || 'Passwords do not match',
+                                minLength: { value: 8, message: 'Password must be at least 8 characters long' },
                               })}
                               error={errors.ConfirmPassword ? errors.ConfirmPassword.message : ''}
                             />
@@ -332,13 +335,21 @@ export const Signup = () => {
                         </a>
                         <Button
                           type="submit"
-                          className="w-fit flex flex-row-reverse items-center gap-1 text-white bg-black"
+                          className={clsx(
+                            'w-fit flex flex-row-reverse items-center gap-1 text-white bg-black',
+                            (!acceptPrivacy || !acceptTerms) && 'opacity-50 cursor-not-allowed',
+                          )}
                           label="Sign Up"
                           // disabled={true}
                           disabled={!acceptPrivacy || !acceptTerms}
                           icon={<IoMdSend />}
                         />
                       </div>
+                    )}
+                    {(!acceptPrivacy || !acceptTerms) && (
+                      <p className="text-red-500 text-center text-sm">
+                        You must read and accept our Privacy Policy and Terms and Conditions to create an account.
+                      </p>
                     )}
                   </form>
                 </div>

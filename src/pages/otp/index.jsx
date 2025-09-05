@@ -37,10 +37,14 @@ const OtpPage = () => {
 
     const newOtp = [...otp];
     newOtp[index] = value;
-    setOtp(newOtp);
+    setOtp(() => newOtp);
 
     if (value && index < 5) {
       inputs.current[index + 1]?.focus();
+    }
+
+    if (newOtp.length === 6 && newOtp.every((digit) => digit !== '')) {
+      handleSubmit(null, newOtp);
     }
   };
 
@@ -50,7 +54,9 @@ const OtpPage = () => {
     }
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e, otp) => {
+    e?.preventDefault();
+
     const code = otp.join('');
     const id = toast.loading('Loading....');
     if (code.length < 6) {
@@ -176,7 +182,7 @@ const OtpPage = () => {
       ) : (
         <>
           {timeLeft > 0 && (
-            <>
+            <form className="flex justify-center flex-col items-center" onSubmit={(e) => handleSubmit(e, otp)}>
               <div className="flex gap-2 mb-4">
                 {otp.map((digit, index) => (
                   <input
@@ -193,13 +199,13 @@ const OtpPage = () => {
                 ))}
               </div>
               <button
-                onClick={handleSubmit}
+                type="submit"
                 disabled={loading}
                 className="px-4 py-2 bg-gray-900 text-white rounded hover:bg-gray-700 disabled:opacity-50"
               >
                 {loading ? 'Verifying...' : 'Submit'}
               </button>
-            </>
+            </form>
           )}
           {timeLeft <= 0 && (
             <button

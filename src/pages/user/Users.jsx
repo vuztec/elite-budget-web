@@ -313,7 +313,7 @@ export const Users = () => {
               </div>
             </div>
 
-            <div className="w-full h-[calc(100vh-230px)] bg-white rounded">
+            <div className="w-full h-[calc(100vh-230px)] overflow-y-auto bg-white rounded">
               <div className="overflow-x-auto">
                 <Tabs2 tabs={TABS} selected={currentTab}>
                   {currentTab === 0 && (
