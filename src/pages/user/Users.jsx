@@ -13,7 +13,7 @@ import axios from '../../config/axios';
 import { getStripeUsers, getUsers } from '../../config/api';
 import { getFormattedDateSubscription, getIsTrial, getRenewalDate } from '../../utils/budget.calculation';
 import Button from '../../components/Button';
-import { TransactionDialog } from '../../components/DisplayDialogs';
+import { TransactionDialog, AuditDialog } from '../../components/DisplayDialogs';
 import { Tabs2 } from '../../components/Tabs';
 
 export const Users = () => {
@@ -28,6 +28,7 @@ export const Users = () => {
   const [openAccessDialog, setOpenAccessDialog] = useState(false);
   const [selected, setSelected] = useState(null);
   const [open, setOpen] = useState(false);
+  const [openAudit, setOpenAudit] = useState(false);
   const [prompt, setPrompt] = useState('');
   const [Title, setTitle] = useState('');
 
@@ -53,8 +54,6 @@ export const Users = () => {
     queryFn: getUsers,
     staleTime: 1000 * 60 * 60,
   });
-
-  console.log('users', users);
 
   const { data: customers, status: isCustomerLoaded } = useQuery({
     queryKey: ['customers'],
@@ -142,6 +141,11 @@ export const Users = () => {
     setSelected(el);
   };
 
+  const openAuditDialog = (el) => {
+    setSelected(el);
+    setOpenAudit(true);
+  };
+
   const TableHeader = () => (
     <thead>
       <tr className="text-gray-600 font-bold bg-[whitesmoke] border border-gray-400 text-left text-sm xl:text-[16px]">
@@ -159,6 +163,7 @@ export const Users = () => {
         <th className="border-l border-gray-300 p-2">Subscription Date</th>
         <th className="border-l border-gray-300 p-2">Renewal Date</th>
         <th className="border-l border-gray-300 p-2">Auto Renewal</th>
+        <th className="border-l border-gray-300 p-2">Auto-Renewal Updated On</th>
       </tr>
     </thead>
   );
@@ -293,6 +298,30 @@ export const Users = () => {
           )}
         </p>
       </td>
+      <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
+        {user?.FreeAccess ? (
+          ''
+        ) : user?.Audits && user?.Audits.length > 0 ? (
+          <div className="flex flex-col gap-2">
+            <div className="flex flex-col">
+              <span className="text-sm">
+                {user?.Audits[0]?.ActionDate ? new Date(user?.Audits[0]?.ActionDate).toLocaleString() : ''}
+              </span>
+              <span className="text-xs text-gray-500 italic">{user?.Audits?.[0]?.Action}</span>
+            </div>
+            <Button
+              label={'View All Audits'}
+              className={clsx(
+                'flex flex-row-reverse gap-2 p-1 rounded-full items-center text-white hover:bg-blue-600 text-xs',
+                `bg-blue-500 hover:text-white`,
+              )}
+              onClick={() => openAuditDialog(user)}
+            />
+          </div>
+        ) : (
+          <span className="text-gray-400 text-sm italic"></span>
+        )}
+      </td>
     </tr>
   );
   const TABS = [{ title: 'Subscribers' }, { title: 'Testing Users' }];
@@ -370,6 +399,7 @@ export const Users = () => {
         onClick={() => statusHandler()}
       />
       <TransactionDialog open={open} setOpen={setOpen} user={selected} title={selected?.FullName} />
+      <AuditDialog open={openAudit} setOpen={setOpenAudit} user={selected} title={selected?.FullName} />
     </>
   );
 };
