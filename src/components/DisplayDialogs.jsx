@@ -5,7 +5,7 @@ import PrivacyPolicy from '../pages/policy/PrivacyPolicy';
 import { TiCancel } from 'react-icons/ti';
 import TermsAndConditions from '../pages/policy/TermsAndConditions';
 import Video from './resource/Video';
-import { getTransactionOfCustomer } from '../config/api';
+import { getTransactionOfCustomer, getUserAudits } from '../config/api';
 import { useQuery } from 'react-query';
 import StripeListView from './stripe/StripeListView';
 import axios from '../config/axios';
@@ -150,9 +150,9 @@ export function AuditDialog({ open, setOpen, user, title }) {
 
   const { data: audits, status: isAuditLoaded } = useQuery({
     queryKey: ['audits', userId],
-    queryFn: () => axios.get(`/api/audit/user/${userId}`).then((res) => res.data),
+    queryFn: () => getUserAudits(userId),
     staleTime: 1000 * 60 * 60,
-    enabled: !!userId && open,
+    enabled: !!userId,
   });
 
   const handleClose = () => {
@@ -177,7 +177,7 @@ export function AuditDialog({ open, setOpen, user, title }) {
             </tr>
           </thead>
           <tbody>
-            {gridData.map((audit, index) => (
+            {gridData?.map((audit, index) => (
               <tr key={audit.id || index} className="hover:bg-gray-50">
                 <td className="border border-gray-300 p-3">
                   <span

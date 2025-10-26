@@ -114,6 +114,15 @@ export const getUsers = async () => {
   return res.data;
 };
 
+export const getUserAudits = async (userId) => {
+  console.log('Fetching audits for userId : ', userId);
+  const res = await axios.get(`/api/audit/user/${userId}`);
+
+  console.log('Data from audits API : ', res.data);
+
+  return res.data;
+};
+
 export const getStripeUsers = async () => {
   const res = await axios.get('/api/payment/stripe/customers');
   return res.data;

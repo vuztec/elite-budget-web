@@ -55,11 +55,11 @@ export const Users = () => {
     staleTime: 1000 * 60 * 60,
   });
 
-  const { data: customers, status: isCustomerLoaded } = useQuery({
-    queryKey: ['customers'],
-    queryFn: getStripeUsers,
-    staleTime: 1000 * 60 * 60,
-  });
+  // const { data: customers, status: isCustomerLoaded } = useQuery({
+  //   queryKey: ['customers'],
+  //   queryFn: getStripeUsers,
+  //   staleTime: 1000 * 60 * 60,
+  // });
 
   useEffect(() => {
     if (isUserLoaded === 'success') {
