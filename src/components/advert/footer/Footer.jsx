@@ -102,9 +102,13 @@ function Footer() {
           {/* <div className="rounded-full p-2 bg-black">
             <FaTwitter className="text-xl text-white" />
           </div> */}
-          {/* <div className="rounded-full p-2 bg-black">
+          <a
+            href="https://www.instagram.com/elitecashflowproducts"
+            target="_blank"
+            className="rounded-full p-2 bg-black"
+          >
             <FaInstagram className="text-xl text-white" />
-          </div> */}
+          </a>
           {/* <div className="rounded-full p-2 bg-black">
             <FaYoutube className="text-xl text-white" />
           </div> */}
