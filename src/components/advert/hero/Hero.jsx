@@ -8,12 +8,21 @@ import { AppIcon } from '../../../utils/nmrw.icon';
 
 function Hero() {
   const url = 'https://elite-training-videos.s3.us-west-1.amazonaws.com/MarketingVideo.mp4';
+  const audioUrl = 'https://nmrwback.vuztec.com/public/elite/elitejingle.wav';
   const poster = 'https://elite-training-videos.s3.us-west-1.amazonaws.com/Thumbnail.png';
   const vRef = useRef(null);
+  const aRef = useRef(null);
   const [showVideo, setShowVideo] = useState(false);
+  // const start = () => {
+  //   setShowVideo(true);
+  //   requestAnimationFrame(() => vRef.current?.play());
+  // };
   const start = () => {
     setShowVideo(true);
-    requestAnimationFrame(() => vRef.current?.play());
+    requestAnimationFrame(() => {
+      vRef.current?.play?.();
+      // aRef.current?.play?.();
+    });
   };
 
   return (
@@ -35,7 +44,10 @@ function Hero() {
             complicated! Join an exclusive group of elite budgeters and elevate your financial status. Sign up today and
             unlock the power of premium budgeting.
           </p>
-
+          {/* 🎵 Audio Player inserted here */}
+          <div className="mt-6 flex justify-center lg:justify-start">
+            <audio ref={aRef} src={audioUrl} controls preload="metadata" className="w-[90%] lg:w-[100%] max-w-md" />
+          </div>
           <div className="flex flex-col gap-2 mt-6 mb-5 justify-center items-center">
             <p className="w-fit">{getSpecial(true)}</p>
             <a
@@ -55,9 +67,7 @@ function Hero() {
               <img src={Award} alt="Award mockup" className="w-40 h-auto" />
             </a>
           </div>
-          {/* <div className="lg:relative w-full max-w-[500px] md:max-w-none">
-          <img src={Networth} alt="Laptop mockup" className="w-full h-auto" />
-        </div> */}
+
           <div className="overflow-y-auto block overflow-x-auto h-fit border-4 border-black">
             {!showVideo && (
               <button onClick={start} className="block w-full relative">
