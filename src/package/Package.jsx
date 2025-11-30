@@ -15,7 +15,6 @@ const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
 export const Package = () => {
   const { user } = useUserStore();
-  console.log('user', user);
 
   const [openPayment, setOpenPayment] = useState(false);
 
@@ -34,8 +33,6 @@ export const Package = () => {
   const trialEnd = new Date(new Date(user?.CreatedAt).setDate(new Date(user?.CreatedAt).getDate() + 14));
   // const isTrial = !subscription || currentDate <= trialEnd;
   const isTrial = false;
-
-  console.log('isTrial', isTrial);
 
   const navigate = useNavigate();
 

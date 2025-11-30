@@ -225,27 +225,19 @@ export const Users = () => {
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         {user?.FreeAccess ? (
           ''
-        ) : user?.SubscribeDate ? (
-          getIsTrial(user) ? (
-            <p className="text-orange-700 bg-orange-200 py-1 px-2 rounded-md">14-Day FREE Trial</p>
-          ) : (
-            <p className="text-green-700 bg-green-200 py-1 px-2 rounded-md">Paid License</p>
-          )
+        ) : getIsTrial(user) ? (
+          <p className="text-orange-700 bg-orange-200 py-1 px-2 rounded-md">14-Day FREE Trial</p>
         ) : (
-          <p className="text-red-700 bg-red-200 py-1 px-2 rounded-md">Hasn't Add Card</p>
+          <p className="text-green-700 bg-green-200 py-1 px-2 rounded-md">Paid License</p>
         )}
       </td>
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         {user?.FreeAccess ? (
           ''
-        ) : user?.SubscribeDate ? (
-          getIsTrial(user) ? (
-            <p className="text-orange-700 bg-orange-200 py-1 px-2 rounded-md">FREE</p>
-          ) : (
-            <p className="text-green-700 bg-green-200 py-1 px-2 rounded-md">$95.88</p>
-          )
+        ) : getIsTrial(user) ? (
+          <p className="text-orange-700 bg-orange-200 py-1 px-2 rounded-md">FREE</p>
         ) : (
-          <p className="text-red-700 bg-red-200 py-1 px-2 rounded-md">Hasn't Add Card</p>
+          <p className="text-green-700 bg-green-200 py-1 px-2 rounded-md">$95.88</p>
         )}
       </td>
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
