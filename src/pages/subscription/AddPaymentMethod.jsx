@@ -17,37 +17,37 @@ const AddPaymentMethod = ({ handleClose, isTrial }) => {
   const queryClient = useQueryClient();
   const { setUser } = useUserStore();
 
-  const { data: coupons, status: isCouponLoaded } = useQuery({
-    queryKey: ['coupons'],
-    queryFn: getCoupons,
-    staleTime: 1000 * 60 * 60,
-  });
+  // const { data: coupons, status: isCouponLoaded } = useQuery({
+  //   queryKey: ['coupons'],
+  //   queryFn: getCoupons,
+  //   staleTime: 1000 * 60 * 60,
+  // });
 
-  const [coupon, setCoupon] = useState(0);
-  const [couponCode, setCouponCode] = useState('');
-  const [stripeCoupon, setStripeCoupon] = useState('');
+  // const [coupon, setCoupon] = useState(0);
+  // const [couponCode, setCouponCode] = useState('');
+  // const [stripeCoupon, setStripeCoupon] = useState('');
 
-  const subscriptionAmount = Number(7.99 * 12);
-  const [finalAmount, setFinalAmount] = useState(subscriptionAmount);
+  // const subscriptionAmount = Number(7.99 * 12);
+  // const [finalAmount, setFinalAmount] = useState(subscriptionAmount);
 
-  useEffect(() => {
-    if (couponCode) {
-      const filteredData = coupons?.data?.find(
-        (item) => item?.name?.toLocaleLowerCase() === couponCode?.toLocaleLowerCase(),
-      );
-      if (filteredData) {
-        setStripeCoupon(filteredData?.name);
-        const discount = filteredData?.amount_off
-          ? Number(filteredData?.amount_off) / 100
-          : (subscriptionAmount * Number(filteredData?.percent_off)) / 100;
-        setCoupon(discount);
-        setFinalAmount(subscriptionAmount - discount);
-      } else {
-        setCoupon(0);
-        setFinalAmount(subscriptionAmount);
-      }
-    }
-  }, [couponCode, subscriptionAmount]);
+  // useEffect(() => {
+  //   if (couponCode) {
+  //     const filteredData = coupons?.data?.find(
+  //       (item) => item?.name?.toLocaleLowerCase() === couponCode?.toLocaleLowerCase(),
+  //     );
+  //     if (filteredData) {
+  //       setStripeCoupon(filteredData?.name);
+  //       const discount = filteredData?.amount_off
+  //         ? Number(filteredData?.amount_off) / 100
+  //         : (subscriptionAmount * Number(filteredData?.percent_off)) / 100;
+  //       setCoupon(discount);
+  //       setFinalAmount(subscriptionAmount - discount);
+  //     } else {
+  //       setCoupon(0);
+  //       setFinalAmount(subscriptionAmount);
+  //     }
+  //   }
+  // }, [couponCode, subscriptionAmount]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -74,7 +74,7 @@ const AddPaymentMethod = ({ handleClose, isTrial }) => {
         .post('/api/payment/payment-method', {
           PaymentMethodId: paymentMethod.id,
           isTrial: isTrial,
-          Coupon: stripeCoupon,
+          // Coupon: stripeCoupon,
         })
         .then(({ data }) => {
           if (isTrial) {
@@ -146,7 +146,7 @@ const AddPaymentMethod = ({ handleClose, isTrial }) => {
         />
       </div>
 
-      <div className="flex flex-col gap-6 w-full">
+      {/* <div className="flex flex-col gap-6 w-full">
         <div className="flex flex-col md:flex-row gap-6 w-full">
           <div className="w-full">
             <label className="block mb-1 text-sm font-medium text-gray-700">Subscription Amount</label>
@@ -191,7 +191,7 @@ const AddPaymentMethod = ({ handleClose, isTrial }) => {
             />
           </div>
         </div>
-      </div>
+      </div> */}
 
       <div className="mb-4">
         <label className="block mb-1 text-sm font-medium text-gray-700">

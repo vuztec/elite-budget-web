@@ -25,7 +25,14 @@ import clsx from 'clsx';
 
 export const Signup = () => {
   const CountryData = Country.getAllCountries();
-  const { setUser, user, acceptPrivacy, acceptTerms } = useUserStore();
+  const { setUser, user, acceptPrivacy, acceptTerms, setAcceptPrivacy, setAcceptTerms } = useUserStore();
+  const handlePolicy = () => {
+    acceptPrivacy ? setAcceptPrivacy(false) : setAcceptPrivacy(true);
+  };
+  const handleTerms = () => {
+    acceptTerms ? setAcceptTerms(false) : setAcceptTerms(true);
+  };
+
   const navigate = useNavigate();
   useEffect(() => {
     user && navigate('/');
@@ -279,7 +286,7 @@ export const Signup = () => {
                       <div className="flex flex-col gap-4 w-full">
                         <div className="flex flex-col md:flex-row gap-0 md:gap-2 items-start">
                           <div className="flex items-center gap-2">
-                            <div className="flex items-center">
+                            <div className="flex items-center hover:cursor-pointer" onClick={() => handlePolicy()}>
                               {acceptPrivacy ? (
                                 <MdOutlineRadioButtonChecked className="text-green-500" />
                               ) : (
@@ -299,7 +306,7 @@ export const Signup = () => {
                         </div>
                         <div className="flex flex-col md:flex-row gap-0 md:gap-2 items-start">
                           <div className="flex items-center gap-2">
-                            <div className="flex items-center">
+                            <div className="flex items-center hover:cursor-pointer" onClick={() => handleTerms()}>
                               {acceptTerms ? (
                                 <MdOutlineRadioButtonChecked className="text-green-500" />
                               ) : (

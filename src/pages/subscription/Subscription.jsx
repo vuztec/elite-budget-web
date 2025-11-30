@@ -26,11 +26,18 @@ import clsx from 'clsx';
 import { PrivacyDialog, TermsDialog } from '../../components/DisplayDialogs';
 import { LuMousePointer } from 'react-icons/lu';
 import Package from '../../package/Package';
+import CouponStep from './CouponStep';
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
 export const Subscription = () => {
-  const { user, setUser, acceptPrivacy, acceptTerms } = useUserStore();
+  const { setUser, user, acceptPrivacy, acceptTerms, setAcceptPrivacy, setAcceptTerms } = useUserStore();
+  const handlePolicy = () => {
+    acceptPrivacy ? setAcceptPrivacy(false) : setAcceptPrivacy(true);
+  };
+  const handleTerms = () => {
+    acceptTerms ? setAcceptTerms(false) : setAcceptTerms(true);
+  };
   const activeAccount = getActiveAccount(user);
   const [clientSecret, setClientSecret] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -44,6 +51,9 @@ export const Subscription = () => {
   const [isChecked, setIsChecked] = useState(user?.Auto_Renewal);
   const [openPrivacy, setOpenPrivacy] = useState(false);
   const [openTerms, setOpenTerms] = useState(false);
+  const [showCouponStep, setShowCouponStep] = useState(false);
+  const [couponData, setCouponData] = useState(null);
+  const [paymentData, setPaymentData] = useState(null);
 
   const queryClient = useQueryClient();
 
@@ -58,7 +68,6 @@ export const Subscription = () => {
     queryFn: getCoupons,
     staleTime: 1000 * 60 * 60,
   });
-  console.log('coupons', coupons);
 
   function isLeapYear(year) {
     return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
@@ -78,14 +87,25 @@ export const Subscription = () => {
   const currentDate = new Date();
   const renewal = user?.SubscribeDate ? new Date(subscription.getTime() + totalDaysInYears * 24 * 60 * 60 * 1000) : '';
   const trialEnd = new Date(new Date(user?.CreatedAt).setDate(new Date(user?.CreatedAt).getDate() + 14));
-  const isTrial = !subscription || (currentDate <= trialEnd && isExpired);
+  // const isTrial = !subscription || (currentDate <= trialEnd && isExpired);
+  const isTrial = false;
 
   const PayNow = () => {
+    setShowCouponStep(true);
+  };
+
+  const proceedToPayment = (couponInfo) => {
     setLoading(true);
+    setCouponData(couponInfo);
+
+    const requestData = couponInfo?.couponCode ? { coupon: couponInfo.couponCode } : {};
+
     axios
-      .post('/api/payment')
+      .post('/api/payment', requestData)
       .then(({ data }) => {
         setClientSecret(data.client_secret);
+        setPaymentData(data); // Store the complete payment data
+        setShowCouponStep(false);
         setOpen(() => true);
         setLoading(false);
       })
@@ -122,6 +142,12 @@ export const Subscription = () => {
 
   const handleClose = () => {
     setOpen(false);
+    setPaymentData(null);
+  };
+
+  const closeCouponStep = () => {
+    setShowCouponStep(false);
+    setCouponData(null);
   };
 
   const handleClosePaymentMethod = () => {
@@ -186,7 +212,7 @@ export const Subscription = () => {
       });
   };
 
-  return activeAccount ? (
+  return (
     <>
       <div className="">
         <div className="hidden md:block">
@@ -267,22 +293,26 @@ export const Subscription = () => {
                                     <MdOutlinePayment className="text-2xl" /> Add Card to Activate
                                   </button>
                                 ) : (
-                                  // (
-                                  //   <button
-                                  //     className={clsx(
-                                  //       'w-fit flex gap-3 items-center justify-center px-2 py-1 rounded-full bg-black text-white',
-                                  //       !acceptPrivacy || !acceptTerms
-                                  //         ? 'cursor-not-allowed'
-                                  //         : 'hover:bg-[whitesmoke] hover:text-black  cursor-pointer',
-                                  //     )}
-                                  //     onClick={PayNow}
-                                  //     disabled={!acceptPrivacy || !acceptTerms}
-                                  //   >
-                                  //     <MdOutlinePayment className="text-2xl" />
-                                  //     {'Subscribe Now'}
-                                  //   </button>
-                                  // )
-                                  'Inactive'
+                                  <div className="flex flex-col">
+                                    <button
+                                      className={clsx(
+                                        'w-fit flex gap-3 items-center justify-center px-2 py-1 rounded-full bg-black text-white',
+                                        !acceptPrivacy || !acceptTerms
+                                          ? 'cursor-not-allowed'
+                                          : 'hover:bg-[whitesmoke] hover:text-black  cursor-pointer',
+                                      )}
+                                      onClick={PayNow}
+                                      disabled={!acceptPrivacy || !acceptTerms}
+                                    >
+                                      <MdOutlinePayment className="text-2xl" />
+                                      {'Subscribe Now'}
+                                    </button>
+                                    {(!acceptPrivacy || !acceptTerms) && (
+                                      <p className="text-red-500 text-center text-sm">
+                                        You must read and accept our PP and T&C first.
+                                      </p>
+                                    )}
+                                  </div>
                                 )}
                               </div>
                             )}
@@ -331,7 +361,7 @@ export const Subscription = () => {
             </div>
             <div className="flex flex-col gap-2 w-full">
               <div className="flex gap-2">
-                <div className="flex items-center">
+                <div className="flex items-center hover:cursor-pointer" onClick={() => handlePolicy()}>
                   {acceptPrivacy ? (
                     <MdOutlineRadioButtonChecked className="text-green-500" />
                   ) : (
@@ -349,7 +379,7 @@ export const Subscription = () => {
                 </a>
               </div>
               <div className="flex gap-2">
-                <div className="flex items-center">
+                <div className="flex items-center hover:cursor-pointer" onClick={() => handleTerms()}>
                   {acceptTerms ? (
                     <MdOutlineRadioButtonChecked className="text-green-500" />
                   ) : (
@@ -446,12 +476,21 @@ export const Subscription = () => {
                 </button>
               </div>
             </div>
+            {(!acceptPrivacy || !acceptTerms) && (
+              <p className="text-red-500 text-center text-sm">
+                You must read and accept our Privacy Policy and Terms and Conditions to add card or subscribe.
+              </p>
+            )}
           </div>
+
+          <ModalWrapper open={showCouponStep} handleClose={closeCouponStep}>
+            <CouponStep coupons={coupons} onProceed={proceedToPayment} onCancel={closeCouponStep} loading={loading} />
+          </ModalWrapper>
 
           <ModalWrapper open={open} handleClose={handleClose}>
             {clientSecret && (
               <Elements stripe={stripePromise} options={options}>
-                <CheckoutForm />
+                <CheckoutForm paymentData={paymentData} couponData={couponData} />
               </Elements>
             )}
           </ModalWrapper>
@@ -493,8 +532,6 @@ export const Subscription = () => {
         <p>{getPageCopyright()}</p>
       </div>
     </>
-  ) : (
-    <Package />
   );
 };
 
