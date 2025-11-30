@@ -30,7 +30,13 @@ import Package from '../../package/Package';
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
 export const Subscription = () => {
-  const { user, setUser, acceptPrivacy, acceptTerms } = useUserStore();
+  const { setUser, user, acceptPrivacy, acceptTerms, setAcceptPrivacy, setAcceptTerms } = useUserStore();
+  const handlePolicy = () => {
+    acceptPrivacy ? setAcceptPrivacy(false) : setAcceptPrivacy(true);
+  };
+  const handleTerms = () => {
+    acceptTerms ? setAcceptTerms(false) : setAcceptTerms(true);
+  };
   const activeAccount = getActiveAccount(user);
   const [clientSecret, setClientSecret] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -268,20 +274,26 @@ export const Subscription = () => {
                                     <MdOutlinePayment className="text-2xl" /> Add Card to Activate
                                   </button>
                                 ) : (
-                                  <button
-                                    className={clsx(
-                                      'w-fit flex gap-3 items-center justify-center px-2 py-1 rounded-full bg-black text-white',
-                                      !acceptPrivacy || !acceptTerms
-                                        ? 'cursor-not-allowed'
-                                        : 'hover:bg-[whitesmoke] hover:text-black  cursor-pointer',
+                                  <div className="flex flex-col">
+                                    <button
+                                      className={clsx(
+                                        'w-fit flex gap-3 items-center justify-center px-2 py-1 rounded-full bg-black text-white',
+                                        !acceptPrivacy || !acceptTerms
+                                          ? 'cursor-not-allowed'
+                                          : 'hover:bg-[whitesmoke] hover:text-black  cursor-pointer',
+                                      )}
+                                      onClick={PayNow}
+                                      disabled={!acceptPrivacy || !acceptTerms}
+                                    >
+                                      <MdOutlinePayment className="text-2xl" />
+                                      {'Subscribe Now'}
+                                    </button>
+                                    {(!acceptPrivacy || !acceptTerms) && (
+                                      <p className="text-red-500 text-center text-sm">
+                                        You must read and accept our PP and T&C first.
+                                      </p>
                                     )}
-                                    onClick={PayNow}
-                                    disabled={!acceptPrivacy || !acceptTerms}
-                                  >
-                                    <MdOutlinePayment className="text-2xl" />
-                                    {'Subscribe Now'}
-                                  </button>
-                                  // 'Inactive'
+                                  </div>
                                 )}
                               </div>
                             )}
@@ -330,7 +342,7 @@ export const Subscription = () => {
             </div>
             <div className="flex flex-col gap-2 w-full">
               <div className="flex gap-2">
-                <div className="flex items-center">
+                <div className="flex items-center hover:cursor-pointer" onClick={() => handlePolicy()}>
                   {acceptPrivacy ? (
                     <MdOutlineRadioButtonChecked className="text-green-500" />
                   ) : (
@@ -348,7 +360,7 @@ export const Subscription = () => {
                 </a>
               </div>
               <div className="flex gap-2">
-                <div className="flex items-center">
+                <div className="flex items-center hover:cursor-pointer" onClick={() => handleTerms()}>
                   {acceptTerms ? (
                     <MdOutlineRadioButtonChecked className="text-green-500" />
                   ) : (
@@ -445,6 +457,11 @@ export const Subscription = () => {
                 </button>
               </div>
             </div>
+            {(!acceptPrivacy || !acceptTerms) && (
+              <p className="text-red-500 text-center text-sm">
+                You must read and accept our Privacy Policy and Terms and Conditions to add card or subscribe.
+              </p>
+            )}
           </div>
 
           <ModalWrapper open={open} handleClose={handleClose}>

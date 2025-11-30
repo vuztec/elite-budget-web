@@ -55,7 +55,7 @@ function Hero() {
               href="/signup"
               className="flex w-fit items-center gap-2 text-xl md:text-3xl font-medium py-3 px-4 hover:bg-green-300 bg-tryBg text-tryText shadow-md rounded-md"
             >
-              Try the App Now <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
+              Buy Now <IoIosArrowRoundForward className="text-2xl lg:text-3xl" />
             </a>
           </div>
         </div>
