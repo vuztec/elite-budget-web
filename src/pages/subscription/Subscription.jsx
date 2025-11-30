@@ -26,6 +26,7 @@ import clsx from 'clsx';
 import { PrivacyDialog, TermsDialog } from '../../components/DisplayDialogs';
 import { LuMousePointer } from 'react-icons/lu';
 import Package from '../../package/Package';
+import CouponStep from './CouponStep';
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
@@ -44,6 +45,9 @@ export const Subscription = () => {
   const [isChecked, setIsChecked] = useState(user?.Auto_Renewal);
   const [openPrivacy, setOpenPrivacy] = useState(false);
   const [openTerms, setOpenTerms] = useState(false);
+  const [showCouponStep, setShowCouponStep] = useState(false);
+  const [couponData, setCouponData] = useState(null);
+  const [paymentData, setPaymentData] = useState(null);
 
   const queryClient = useQueryClient();
 
@@ -58,7 +62,6 @@ export const Subscription = () => {
     queryFn: getCoupons,
     staleTime: 1000 * 60 * 60,
   });
-  console.log('coupons', coupons);
 
   function isLeapYear(year) {
     return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
@@ -82,11 +85,21 @@ export const Subscription = () => {
   const isTrial = false;
 
   const PayNow = () => {
+    setShowCouponStep(true);
+  };
+
+  const proceedToPayment = (couponInfo) => {
     setLoading(true);
+    setCouponData(couponInfo);
+
+    const requestData = couponInfo?.couponCode ? { coupon: couponInfo.couponCode } : {};
+
     axios
-      .post('/api/payment')
+      .post('/api/payment', requestData)
       .then(({ data }) => {
         setClientSecret(data.client_secret);
+        setPaymentData(data); // Store the complete payment data
+        setShowCouponStep(false);
         setOpen(() => true);
         setLoading(false);
       })
@@ -123,6 +136,12 @@ export const Subscription = () => {
 
   const handleClose = () => {
     setOpen(false);
+    setPaymentData(null);
+  };
+
+  const closeCouponStep = () => {
+    setShowCouponStep(false);
+    setCouponData(null);
   };
 
   const handleClosePaymentMethod = () => {
@@ -447,10 +466,14 @@ export const Subscription = () => {
             </div>
           </div>
 
+          <ModalWrapper open={showCouponStep} handleClose={closeCouponStep}>
+            <CouponStep coupons={coupons} onProceed={proceedToPayment} onCancel={closeCouponStep} loading={loading} />
+          </ModalWrapper>
+
           <ModalWrapper open={open} handleClose={handleClose}>
             {clientSecret && (
               <Elements stripe={stripePromise} options={options}>
-                <CheckoutForm />
+                <CheckoutForm paymentData={paymentData} couponData={couponData} />
               </Elements>
             )}
           </ModalWrapper>
