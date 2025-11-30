@@ -78,7 +78,8 @@ export const Subscription = () => {
   const currentDate = new Date();
   const renewal = user?.SubscribeDate ? new Date(subscription.getTime() + totalDaysInYears * 24 * 60 * 60 * 1000) : '';
   const trialEnd = new Date(new Date(user?.CreatedAt).setDate(new Date(user?.CreatedAt).getDate() + 14));
-  const isTrial = !subscription || (currentDate <= trialEnd && isExpired);
+  // const isTrial = !subscription || (currentDate <= trialEnd && isExpired);
+  const isTrial = false;
 
   const PayNow = () => {
     setLoading(true);
@@ -186,7 +187,7 @@ export const Subscription = () => {
       });
   };
 
-  return activeAccount ? (
+  return (
     <>
       <div className="">
         <div className="hidden md:block">
@@ -267,22 +268,20 @@ export const Subscription = () => {
                                     <MdOutlinePayment className="text-2xl" /> Add Card to Activate
                                   </button>
                                 ) : (
-                                  // (
-                                  //   <button
-                                  //     className={clsx(
-                                  //       'w-fit flex gap-3 items-center justify-center px-2 py-1 rounded-full bg-black text-white',
-                                  //       !acceptPrivacy || !acceptTerms
-                                  //         ? 'cursor-not-allowed'
-                                  //         : 'hover:bg-[whitesmoke] hover:text-black  cursor-pointer',
-                                  //     )}
-                                  //     onClick={PayNow}
-                                  //     disabled={!acceptPrivacy || !acceptTerms}
-                                  //   >
-                                  //     <MdOutlinePayment className="text-2xl" />
-                                  //     {'Subscribe Now'}
-                                  //   </button>
-                                  // )
-                                  'Inactive'
+                                  <button
+                                    className={clsx(
+                                      'w-fit flex gap-3 items-center justify-center px-2 py-1 rounded-full bg-black text-white',
+                                      !acceptPrivacy || !acceptTerms
+                                        ? 'cursor-not-allowed'
+                                        : 'hover:bg-[whitesmoke] hover:text-black  cursor-pointer',
+                                    )}
+                                    onClick={PayNow}
+                                    disabled={!acceptPrivacy || !acceptTerms}
+                                  >
+                                    <MdOutlinePayment className="text-2xl" />
+                                    {'Subscribe Now'}
+                                  </button>
+                                  // 'Inactive'
                                 )}
                               </div>
                             )}
@@ -493,8 +492,6 @@ export const Subscription = () => {
         <p>{getPageCopyright()}</p>
       </div>
     </>
-  ) : (
-    <Package />
   );
 };
 

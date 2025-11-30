@@ -32,7 +32,8 @@ export const Package = () => {
   // Calculate the renewal date
   const currentDate = new Date();
   const trialEnd = new Date(new Date(user?.CreatedAt).setDate(new Date(user?.CreatedAt).getDate() + 14));
-  const isTrial = !subscription || currentDate <= trialEnd;
+  // const isTrial = !subscription || currentDate <= trialEnd;
+  const isTrial = false;
 
   console.log('isTrial', isTrial);
 

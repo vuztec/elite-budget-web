@@ -45,7 +45,8 @@ function Hero() {
             unlock the power of premium budgeting.
           </p>
           {/* 🎵 Audio Player inserted here */}
-          <div className="mt-6 flex justify-center lg:justify-start">
+          <div className="mt-6 flex flex-col justify-center lg:justify-start border p-2 w-[55%] rounded-md bg-gray-50">
+            <h1 className="font-bold mb-3 ml-1">ELITE BUDGET APP JINGLE</h1>
             <audio ref={aRef} src={audioUrl} controls preload="metadata" className="w-[90%] lg:w-[100%] max-w-md" />
           </div>
           <div className="flex flex-col gap-2 mt-6 mb-5 justify-center items-center">
