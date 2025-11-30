@@ -1239,7 +1239,8 @@ export function getIsTrial(user) {
   const subscription = user?.SubscribeDate ? new Date(user?.SubscribeDate) : '';
   const trialEnd = new Date(new Date(user?.CreatedAt).setDate(new Date(user?.CreatedAt).getDate() + 14));
   const currentDate = new Date();
-  const isTrial = !subscription || currentDate <= trialEnd;
+  // const isTrial = !subscription || currentDate <= trialEnd;
+  const isTrial = false;
   return isTrial;
 }
 
