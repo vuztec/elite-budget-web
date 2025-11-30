@@ -80,15 +80,15 @@ export const getSpecial = (isFull) => {
         <div className="flex flex-col gap-1 p-3 items-center rounded-lg">
           <div className="flex flex-col gap-0 items-center">
             <p className="text-black text-xl md:text-3xl text-center">
-              Just $<span className="font-bold text-gray-600 line-through decoration-black">95.88</span> $59.88 upfront
+              Just $<span className="font-bold text-gray-600 line-through decoration-black">95.88</span> $47.88 upfront
               for a year (only $<span className="font-bold text-gray-600 line-through decoration-black">7.99</span>{' '}
-              $4.99/month)
+              $3.99/month)
             </p>
             <img src={special} alt="Special Offer" className="w-40 h-auto" />
           </div>
 
           <div className="flex flex-col gap-2 text-white items-center">
-            <p className="bg-[#FF820E] text-xl md:text-3xl rounded-md p-2 text-center">Valid Until Mar 31, 2026!</p>
+            <p className="bg-[#FF820E] text-xl md:text-3xl rounded-md p-2 text-center">Limited Time Only!</p>
             <p className="text-xl md:text-3xl text-black text-center">Use Code: NEWYEAR2026</p>
           </div>
         </div>
@@ -97,9 +97,9 @@ export const getSpecial = (isFull) => {
         <div className="flex flex-col text-sm md:text-lg gap-0 w-80 md:w-96 mb-0 pb-3 items-center rounded-lg">
           <img src={special} alt="Special Offer" className="w-40 h-auto" />
           <p className="bg-[#FF820E] text-center rounded-md p-2">
-            <span className="font-bold text-gray-200 line-through decoration-black">$95.88</span> $59.88 for the First
+            <span className="font-bold text-gray-200 line-through decoration-black">$95.88</span> $47.88 for the First
             Year
-            <p>Valid Until Mar 31, 2026</p>
+            <p>Limited Time Only!</p>
           </p>
           <p className="text-black bg-white p-2 rounded-md mt-2">Use Code: NEWYEAR2026</p>
           <a
