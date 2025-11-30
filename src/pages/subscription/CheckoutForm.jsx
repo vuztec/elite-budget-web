@@ -113,9 +113,7 @@ export default function CheckoutForm({ paymentData, couponData }) {
           id="submit"
           className={'px-4 py-1 rounded-full font-semibold bg-black text-white w-full my-2'}
         >
-          <span id="button-text">
-            {hasDiscount ? `Pay now $${displayAmount} (was $${originalAmount})` : `Pay now $${displayAmount}`}
-          </span>
+          <span id="button-text">{hasDiscount ? `Pay $${displayAmount} ` : `Pay now $${displayAmount}`}</span>
         </button>
       )}
       {/* Show any error or success messages */}

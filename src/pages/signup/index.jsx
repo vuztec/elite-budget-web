@@ -29,7 +29,6 @@ export const Signup = () => {
   const handlePolicy = () => {
     acceptPrivacy ? setAcceptPrivacy(false) : setAcceptPrivacy(true);
   };
-
   const handleTerms = () => {
     acceptTerms ? setAcceptTerms(false) : setAcceptTerms(true);
   };
