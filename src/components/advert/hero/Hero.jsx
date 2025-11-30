@@ -7,7 +7,8 @@ import { useEffect, useRef, useState } from 'react';
 import { AppIcon } from '../../../utils/nmrw.icon';
 
 function Hero() {
-  const url = 'https://elite-training-videos.s3.us-west-1.amazonaws.com/MarketingVideo.mp4';
+  // const url = 'https://elite-training-videos.s3.us-west-1.amazonaws.com/MarketingVideo.mp4';
+  const url = 'https://nmrwback.vuztec.com/public/elite/MarketingVideo.mp4';
   const audioUrl = 'https://nmrwback.vuztec.com/public/elite/elitejingle.wav';
   const poster = 'https://elite-training-videos.s3.us-west-1.amazonaws.com/Thumbnail.png';
   const vRef = useRef(null);
