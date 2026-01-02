@@ -199,10 +199,10 @@ function Budget() {
                 App offers privacy security ensuring complete peace of mind. Integrate with your existing security
                 functions and customize protection with features like double encryption, and user authentication.
               </li>
-              <li>
+              {/* <li>
                 <span className="font-bold">Free Trial:</span> Try the app for <strong>FREE</strong> for 14-days so you
                 can start taking control of your finances today!
-              </li>
+              </li> */}
               <li>
                 <span className="font-bold">Ease of Onboarding:</span> Sign up in seconds and start taking control of
                 your finances immediately!

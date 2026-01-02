@@ -49,9 +49,9 @@ export const Package = () => {
       <p className="flex flex-col items-center justify-center font-bold text-red-500">
         {isTrial ? (
           <div className="flex flex-col items-center justify-center mb-5 text-black">
-            <h1>Please add your credit card to activate your 14-day free trial</h1>
+            {/* <h1>Please add your credit card to activate your 14-day free trial</h1> */}
             <p className="italic text-xs text-red-500 p-1 rounded-md">
-              Your card will not be charged during the 14-day free trial.
+              {/* Your card will not be charged during the 14-day free trial. */}
             </p>
             <p className="italic text-xs text-red-500 p-1 rounded-md">
               Billing will only occur after the trial period if you choose to continue your subscription.

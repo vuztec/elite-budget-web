@@ -140,9 +140,9 @@ export const CreateNewAccount = ({ setNewUser }) => {
           <div className="h-full w-full lg:w-2/3 flex flex-col lg:flex-row items-center justify-center gap-24">
             <div className="w-full lg:w-1/3 flex flex-col items-center justify-center gap-5 md:gap-y-10 2xl:-mt-20">
               <h1 className="text-3xl font-bold text-gray-900">{'CREATE NEW ACCOUNT'}</h1>
-              <span className="flex text-center py-1 px-3 border rounded-full text-sm md:text-base border-gray-300 text-tryText bg-tryBg">
+              {/* <span className="flex text-center py-1 px-3 border rounded-full text-sm md:text-base border-gray-300 text-tryText bg-tryBg">
                 Enjoy a 14-day free trial followed by an annual billing at just $7.99 per month
-              </span>
+              </span> */}
               <p className="flex flex-col gap-0 md:gap-4 text-xl md:text-2xl xl:text-3xl font-black text-center text-black min-w-fit whitespace-nowrap ">
                 <span>The Elite Budget Web App</span>
                 <span>A NEW WAY TO BUDGET!</span>

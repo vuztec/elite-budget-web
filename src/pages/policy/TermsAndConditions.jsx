@@ -103,9 +103,9 @@ export const TermsAndConditions = ({ isDialog }) => {
           You agree to the following fees and payment schedule:
           <br />
           <br />
-          After the 14-day free trial of the Elite Web App, you will be billed a total of <strong>$95.88</strong>, and
-          then billed annually on the anniversary of the date you initially paid, referenced as your anniversary date.
-          All other product prices are posted and offered for sale at the listed prices.
+          When signing up, you will be billed a total of <strong>$95.88</strong>, and then billed annually on the
+          anniversary of the date you initially paid, referenced as your anniversary date. All other product prices are
+          posted and offered for sale at the listed prices.
           <br />
           <br />
           If paying by debit card or credit card, you give us permission to automatically charge your credit or debit
