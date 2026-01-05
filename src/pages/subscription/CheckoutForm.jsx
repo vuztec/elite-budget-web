@@ -49,7 +49,7 @@ export default function CheckoutForm({ paymentData, couponData }) {
 
     if (paymentIntent?.status === 'succeeded') {
       axios
-        .patch('/api/payment', { PaymentMethodId: paymentIntent.payment_method })
+        .patch('/api/payment')
         .then(({ data }) => {
           setUser(data);
           navigate('/');
