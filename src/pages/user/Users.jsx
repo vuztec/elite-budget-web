@@ -63,7 +63,7 @@ export const Users = () => {
 
   useEffect(() => {
     if (isUserLoaded === 'success') {
-      const filteredIds = [1, 2, 14, 7, 8, 9, 10, 11, 25];
+      const filteredIds = [2, 14, 7, 8, 9, 10, 11, 25];
       const filtered = users.filter((u) => !filteredIds.includes(Number(u?.id)));
       setGridData(filtered);
       setIsDataLoaded(true);
