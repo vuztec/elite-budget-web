@@ -116,7 +116,7 @@ export function TransactionDialog({ open, setOpen, user, title }) {
     staleTime: 1000 * 60 * 60,
     enabled: !!customer_id,
   });
-
+  console.log('transactions', transactions);
   const handleClose = () => {
     setOpen(false);
   };
