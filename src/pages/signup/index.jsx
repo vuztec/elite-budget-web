@@ -69,16 +69,11 @@ export const Signup = () => {
       setValue('Currency', user.Currency);
       setValue('PartnerAge', user.PartnerAge);
       setValue('SelfAge', user.SelfAge);
-      // setValue('Coupon', user.Coupon);
-
       const country = CountryData.find((country) => country.name === user?.Country);
-
       if (country) {
         setValue('Country', country?.name);
-        setValue('Currency', country.currency);
         setValue('Separator', 'en-' + country);
       }
-      // setCountryCode(country);
     }
 
     return () => reset();
@@ -93,7 +88,6 @@ export const Signup = () => {
     const country = CountryData.find((country) => country.isoCode === data?.Country);
 
     data.Country = country?.name;
-    data.Currency = country?.currency;
     data.Separator = 'en-' + country?.isoCode;
 
     if (user?.id) {
@@ -217,6 +211,20 @@ export const Signup = () => {
                             error={errors.Country ? errors.Country.message : ''}
                           />
                         </div>
+                        <div className="w-full">
+                          <Textbox
+                            placeholder="enter your budget currency"
+                            type="text"
+                            name="Currency"
+                            label="Currency Symbol (e.g. $ or USD)"
+                            className="w-full rounded"
+                            register={register('Currency', {
+                              required: 'Currency is required!',
+                            })}
+                            error={errors.Currency ? errors.Currency.message : ''}
+                          />
+                        </div>
+
                         <div className="w-full">
                           <Textbox
                             placeholder="Email Address"

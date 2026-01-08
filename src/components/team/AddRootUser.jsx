@@ -19,7 +19,7 @@ import { handleAxiosResponseError } from '../../utils/handleResponseError';
 export const AddRootUser = ({ open, setOpen }) => {
   const CountryData = Country.getAllCountries();
   const { setUser, user } = useUserStore();
-  // console.log(user?.Country);
+  console.log(user);
   const dateFormats = DateFormats.map((format) => ({
     value: format.value,
     label: format.label,
@@ -53,6 +53,7 @@ export const AddRootUser = ({ open, setOpen }) => {
       setValue('PartnerAge', user.PartnerAge);
       setValue('SelfAge', user.SelfAge);
       setValue('Country', user.Country);
+      setValue('DateFormat', user.DateFormat);
       setCountry(CountryData.find((country) => country.name === user?.Country));
     } else {
       setValue('Country', 'United States');

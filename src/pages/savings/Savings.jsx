@@ -16,12 +16,14 @@ import { hasRecords } from '../../utils/budget.calculation';
 import { defaultDebSort } from '../../utils/budget.sort';
 import useUserStore from '../../app/user';
 import { getPageCopyright, getPageTitle } from '../../utils';
+import { ToolTip2 } from '../../components/tooltip';
 
 export const Savings = () => {
   const { user } = useUserStore();
   const [showAll, setShowAll] = useState(false);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [gridData, setGridData] = useState([]);
+  const [ownerData, setOwnerData] = useState([]);
   const activeAccount = getActiveAccount(user);
 
   // Filters
@@ -44,6 +46,7 @@ export const Savings = () => {
   useEffect(() => {
     if (isSavingLoaded === 'success') {
       const savingData = getOwnerGridData(savings, owner);
+      setOwnerData(savingData);
       let updatedData = savingData;
       if (!showAll && hasRecords(savingData)) {
         updatedData = savingData.filter(
@@ -72,17 +75,22 @@ export const Savings = () => {
     <>
       <div className="fixed bg-white w-[calc(100vw-40px)] lg:w-[calc(100vw-270px)] -mt-4 rounded px-4 z-9">
         <div className="w-full gap-4 h-10 md:h-12 px-2 rounded-full bg-white flex items-center justify-between">
-          <div className="text-sm min-w-fit whitespace-nowrap">
-            <Button
-              label={!showAll ? 'Add New' : 'Completed'}
-              icon={!showAll && <IoMdAdd className="text-lg" />}
-              className={clsx(
-                'flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:bg-viewcolor bg-black hover:text-black',
-                !showAll ? 'bg-black' : 'bg-red-800',
-              )}
-              onClick={() => setShowAll((old) => !old)}
-            />
-          </div>
+          {hasRecords(ownerData) ? (
+            <div className="group flex relative">
+              <Button
+                label={!showAll ? 'Add New' : 'Completed'}
+                icon={!showAll && <IoMdAdd className="text-lg" />}
+                className={clsx(
+                  'flex flex-row-reverse gap-2 p-1 text-sm rounded-full items-center text-white hover:bg-viewcolor bg-black hover:text-black',
+                  !showAll ? 'bg-black' : 'bg-red-800',
+                )}
+                onClick={() => setShowAll((old) => !old)}
+              />
+              <ToolTip2 showing={showAll} item={'savings records'} />
+            </div>
+          ) : (
+            <div className="text-white">All</div>
+          )}
           <div>{getPageTitle('Normal Savings', user)}</div>
           <div className="text-sm min-w-fit whitespace-nowrap">
             <Button
