@@ -6,13 +6,15 @@ import { SidebarLinks } from '../utils/sidebar.data';
 import Logo from '../assets/logo.png';
 import useUserStore from '../app/user';
 import { GrClose } from 'react-icons/gr';
+import { MdEmail } from 'react-icons/md';
+import CustomerService from './customerService/CustomerService';
 
 const Sidebar = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [sidebarData, setSideBarData] = useState(SidebarLinks);
   const { setSidebar, setDefaultSidebar, sidebar, user } = useUserStore();
-
+  const [open, setOpen] = useState(false);
   const path = location.pathname?.split('/')[1];
 
   const [width, setWidth] = useState(window.innerWidth);
@@ -144,7 +146,15 @@ const Sidebar = () => {
         {sidebarData.map((item, index) => (
           <NavLinks el={item} key={index} />
         ))}
+        <div className="pl-3 flex gap-1">
+          <MdEmail className="inline mr-2 text-lg" />
+          <div onClick={() => setOpen(true)} className="text-blue-500 hover:underline hover:cursor-pointer">
+            Customer Service
+          </div>
+        </div>
       </div>
+
+      <CustomerService open={open} onOpenChange={setOpen} />
     </div>
   );
 };
