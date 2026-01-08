@@ -4,7 +4,8 @@ export const expenseOwners = ['Self', 'Partner', 'Joint'];
 export const paymentMethods = ['Auto Debit', 'Auto Transfer', 'Bill Pay', 'Check or Cash', 'Credit'];
 export const daydues = [
   'Weekly',
-  'Bimonthly',
+  'Biweekly',
+  'Monthly',
   'Quarterly',
   'Annually',
   '01',
