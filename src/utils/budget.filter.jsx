@@ -5,6 +5,7 @@ export const paymentMethods = ['Auto Debit', 'Auto Transfer', 'Bill Pay', 'Check
 export const daydues = [
   'Weekly',
   'Biweekly',
+  'Semi-Monthly',
   'Monthly',
   'Quarterly',
   'Annually',
