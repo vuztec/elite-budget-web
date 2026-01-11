@@ -167,7 +167,10 @@ export const Home = () => {
   const handlePdf = () => {
     setShowPdfContent(true);
     setTimeout(() => {
-      generatePDF(pdfRef, { filename: 'home.pdf', page: { margin: Margin.MEDIUM } });
+      generatePDF(pdfRef, {
+        filename: 'home.pdf',
+        page: { size: 'A4', orientation: 'landscape', margin: Margin.MEDIUM },
+      });
       setShowPdfContent(false);
     }, 10);
   };

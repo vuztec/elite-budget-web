@@ -114,7 +114,7 @@ export const CheckListPDF = ({
 
   return (
     <Document>
-      <Page style={styles.page} orientation="landscape" size="A3">
+      <Page style={styles.page} orientation="landscape" size="Letter">
         {/* Header Section */}
         <View style={styles.headerContainer}>
           <View style={styles.titleContainer}>
