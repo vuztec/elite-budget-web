@@ -86,7 +86,7 @@ export const Signup = () => {
     delete data.ConfirmPassword;
 
     const country = CountryData.find((country) => country.isoCode === data?.Country);
-
+    data.DateFormat = 'dd/MM/yyyy';
     data.Country = country?.name;
     data.Separator = 'en-' + country?.isoCode;
 
