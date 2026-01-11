@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-import useUserStore from "../../app/user";
+import useUserStore from '../../app/user';
 import {
   getSummaryMarketValueTotal,
   getSummaryLoanBalanceTotal,
@@ -10,30 +10,20 @@ import {
   getLoanBalanceTotal,
   getMonthlyBudgetTotal,
   getYearlyBudgetTotal,
-} from "../../utils/budget.calculation";
+} from '../../utils/budget.calculation';
 
 export const ExpenseSummary = ({ gridData }) => {
   const { user } = useUserStore();
-  const uniqueCategories = [
-    ...new Set(gridData.map((record) => record.Category)),
-  ];
+  const uniqueCategories = [...new Set(gridData.map((record) => record.Category))].sort((a, b) => a.localeCompare(b));
 
   const TableHeader = () => (
     <thead>
       <tr className="border border-gray-300 bg-[whitesmoke] text-black">
         <td className="p-3 font-bold border-l border-gray-300">Category</td>
-        <td className="p-3 font-bold border-l border-gray-300">
-          Total Market Value
-        </td>
-        <td className="p-3 font-bold border-l border-gray-300">
-          Total Loan Balance
-        </td>
-        <td className="p-3 font-bold border-l border-gray-300">
-          Total Monthly Budget
-        </td>
-        <td className="p-3 font-bold border-l border-gray-300">
-          Total Yearly Cost
-        </td>
+        <td className="p-3 font-bold border-l border-gray-300">Total Market Value</td>
+        <td className="p-3 font-bold border-l border-gray-300">Total Loan Balance</td>
+        <td className="p-3 font-bold border-l border-gray-300">Total Monthly Budget</td>
+        <td className="p-3 font-bold border-l border-gray-300">Total Yearly Cost</td>
       </tr>
     </thead>
   );
@@ -58,9 +48,7 @@ export const ExpenseSummary = ({ gridData }) => {
 
   const TableTotal = ({ gridData }) => (
     <tr className="border border-gray-300 bg-[whitesmoke] text-gray-600">
-      <td className="min-w-fit whitespace-nowrap text-left p-2 font-bold">
-        Total
-      </td>
+      <td className="min-w-fit whitespace-nowrap text-left p-2 font-bold">Total</td>
       <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">
         {getMarketValueTotal(user, gridData)}
       </td>
