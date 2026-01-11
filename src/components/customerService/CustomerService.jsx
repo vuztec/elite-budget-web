@@ -1,6 +1,6 @@
 // CustomerService.jsx
 import React, { useEffect, useMemo, useState } from 'react';
-import axios from 'axios';
+import { submitCustomerService } from '../../config/api';
 import { useForm } from 'react-hook-form';
 
 /**
@@ -9,10 +9,9 @@ import { useForm } from 'react-hook-form';
  * Props:
  * - open (boolean): controls visibility
  * - onOpenChange (fn): called with (false) to close
- * - apiUrl (string): backend endpoint to receive the payload (default: "/api/customer-service")
  * - recordData (object, optional): if you want to prefill fields
  */
-export default function CustomerService({ open, onOpenChange, apiUrl = '/api/customer-service', recordData }) {
+export default function CustomerService({ open, onOpenChange, recordData }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitState, setSubmitState] = useState({ ok: false, msg: '' });
 
@@ -71,17 +70,11 @@ export default function CustomerService({ open, onOpenChange, apiUrl = '/api/cus
     setSubmitState({ ok: false, msg: '' });
 
     try {
-      // You can add additional fields here if you want:
-      // const payload = { ...data, source: "customer-service-dialog" };
-      const payload = { ...data };
-
-      await axios.post(apiUrl, payload, {
-        headers: { 'Content-Type': 'application/json' },
-      });
+      const result = await submitCustomerService(data);
 
       setSubmitState({
         ok: true,
-        msg: 'Your message has been sent. Please check your inbox (and spam/junk) for our reply.',
+        msg: result.message || 'Your message has been sent. Please check your inbox (and spam/junk) for our reply.',
       });
 
       // Optional: close after short delay (comment out if you prefer staying open)
