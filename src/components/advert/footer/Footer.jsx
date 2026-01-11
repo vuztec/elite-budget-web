@@ -7,8 +7,11 @@ import Visa from '../../../assets/icon/visa.png';
 import American from '../../../assets/icon/amiricanexpress.png';
 import Discover from '../../../assets/icon/discover.png';
 import { getPageCopyright } from '../../../utils';
+import { useState } from 'react';
+import CustomerService from '../../customerService/CustomerService';
 
 function Footer() {
+  const [open, setOpen] = useState(false);
   const paymentMethod = [
     { name: 'masterCard', link: MasterCard },
     // { name: 'bitPay', link: 'src/assets/icon/bitpay.png' },
@@ -23,98 +26,97 @@ function Footer() {
   ];
 
   return (
-    <footer className="bg-white py-8">
-      <div className="container mx-auto px-4 flex flex-col md:flex-row md:justify-between md:items-end w-full text-sm lg:text-lg">
-        <div className="flex flex-col items-left mb-8">
-          <div className="flex flex-col items-left mb-2">
-            <img src={Logo} alt="Logo" className="mb-4 sm:mb-0 h-32 w-52" />
+    <>
+      <footer className="bg-white py-8">
+        <div className="container mx-auto px-4 flex flex-col md:flex-row md:justify-between md:items-end w-full text-sm lg:text-lg">
+          <div className="flex flex-col items-left mb-8">
+            <div className="flex flex-col items-left mb-2">
+              <img src={Logo} alt="Logo" className="mb-4 sm:mb-0 h-32 w-52" />
 
-            <div className="flex flex-col item-left gap-3 pt-5">
-              <p className="text-[#0A0A0A] font-medium text-3xl">Need help?</p>
-              <p className="text-[#0A0A0A] font-medium">We’ve got you covered with email support </p>
-              <div className="mb-4 flex items-center gap-1">
-                <MdEmail className="inline mr-2 text-lg" />
-                <a
-                  href="https://www.elitecashflowproducts.com/"
-                  target="_blank"
-                  className="text-blue-500 hover:underline"
-                >
-                  Click Here for Customer Service
-                </a>
+              <div className="flex flex-col item-left gap-3 pt-5">
+                <p className="text-[#0A0A0A] font-medium text-3xl">Need help?</p>
+                <p className="text-[#0A0A0A] font-medium">We’ve got you covered with email support </p>
+                <div className="mb-4 flex items-center gap-1">
+                  <MdEmail className="inline mr-2 text-lg" />
+                  <div onClick={() => setOpen(true)} className="text-blue-500 hover:underline hover:cursor-pointer">
+                    Click Here for Customer Service
+                  </div>
+                </div>
               </div>
             </div>
+            <div className="flex flex-col item-left gap-2 pt-2">
+              <h1 className="font-extrabold text-xl">Mailing address: </h1>
+              <p className="text-[#0A0A0A] font-medium">Bishop Ranch 3</p>
+              <p className="text-[#0A0A0A] font-medium">2603 Camino Ramon, Suite 200</p>
+              <p className="text-[#0A0A0A] font-medium">San Ramon, CA 94583</p>
+              <p className="text-[#0A0A0A] font-medium">USA</p>
+            </div>
           </div>
-          <div className="flex flex-col item-left gap-2 pt-2">
-            <h1 className="font-extrabold text-xl">Mailing address: </h1>
-            <p className="text-[#0A0A0A] font-medium">Bishop Ranch 3</p>
-            <p className="text-[#0A0A0A] font-medium">2603 Camino Ramon, Suite 200</p>
-            <p className="text-[#0A0A0A] font-medium">San Ramon, CA 94583</p>
-            <p className="text-[#0A0A0A] font-medium">USA</p>
-          </div>
-        </div>
-        <div className="flex flex-col items-left mb-8">
-          <h3 className="font-semibold mb-2">Company</h3>
-          <ul className="space-y-2">
-            {/* <li>
+          <div className="flex flex-col items-left mb-8">
+            <h3 className="font-semibold mb-2">Company</h3>
+            <ul className="space-y-2">
+              {/* <li>
                 <a href="/faqs" className="text-gray-700 hover:underline">
                   FAQs
                 </a>
               </li> */}
-            <li>
-              <a href="/about-elite?page=advert" className="text-gray-700 hover:underline">
-                About Elite
-              </a>
-            </li>
-            <li>
-              <a href="/privacy-policy?page=advert" className="text-gray-700 hover:underline">
-                Privacy Policy
-              </a>
-            </li>
-            <li>
-              <a href="/terms-and-conditions?page=advert" className="text-gray-700 hover:underline">
-                Terms and Conditions
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div className="flex flex-col items-left mb-8">
-          <h3 className="font-semibold mb-2">Payment methods possible</h3>
-          <div className="flex flex-wrap gap-2">
-            {paymentMethod.map((pay, index) => (
-              <img key={index} src={pay.link} alt={pay.name} className="w-10 h-6" />
-            ))}
+              <li>
+                <a href="/about-elite?page=advert" className="text-gray-700 hover:underline">
+                  About Elite
+                </a>
+              </li>
+              <li>
+                <a href="/privacy-policy?page=advert" className="text-gray-700 hover:underline">
+                  Privacy Policy
+                </a>
+              </li>
+              <li>
+                <a href="/terms-and-conditions?page=advert" className="text-gray-700 hover:underline">
+                  Terms and Conditions
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div className="flex flex-col items-left mb-8">
+            <h3 className="font-semibold mb-2">Payment methods possible</h3>
+            <div className="flex flex-wrap gap-2">
+              {paymentMethod.map((pay, index) => (
+                <img key={index} src={pay.link} alt={pay.name} className="w-10 h-6" />
+              ))}
+            </div>
           </div>
         </div>
-      </div>
-      {/* Footer Bottom */}
-      <div className="border-t mt-8 p-6 text-center flex flex-col sm:flex-row justify-between items-center">
-        <p>{getPageCopyright('true')}</p>
+        {/* Footer Bottom */}
+        <div className="border-t mt-8 p-6 text-center flex flex-col sm:flex-row justify-between items-center">
+          <p>{getPageCopyright('true')}</p>
 
-        {/* Social Icons */}
-        <div className="flex justify-center mt-4 sm:mt-0 space-x-4 text-gray-700">
-          <a
-            href="https://www.facebook.com/profile.php?id=61577962371474"
-            target="_blank"
-            className="rounded-full p-2 bg-black"
-          >
-            <FaFacebookF className="text-xl text-white" />
-          </a>
-          {/* <div className="rounded-full p-2 bg-black">
+          {/* Social Icons */}
+          <div className="flex justify-center mt-4 sm:mt-0 space-x-4 text-gray-700">
+            <a
+              href="https://www.facebook.com/profile.php?id=61577962371474"
+              target="_blank"
+              className="rounded-full p-2 bg-black"
+            >
+              <FaFacebookF className="text-xl text-white" />
+            </a>
+            {/* <div className="rounded-full p-2 bg-black">
             <FaTwitter className="text-xl text-white" />
           </div> */}
-          <a
-            href="https://www.instagram.com/elitecashflowproducts"
-            target="_blank"
-            className="rounded-full p-2 bg-black"
-          >
-            <FaInstagram className="text-xl text-white" />
-          </a>
-          {/* <div className="rounded-full p-2 bg-black">
+            <a
+              href="https://www.instagram.com/elitecashflowproducts"
+              target="_blank"
+              className="rounded-full p-2 bg-black"
+            >
+              <FaInstagram className="text-xl text-white" />
+            </a>
+            {/* <div className="rounded-full p-2 bg-black">
             <FaYoutube className="text-xl text-white" />
           </div> */}
+          </div>
         </div>
-      </div>
-    </footer>
+      </footer>
+      <CustomerService open={open} onOpenChange={setOpen} />
+    </>
   );
 }
 

@@ -1,0 +1,281 @@
+// CustomerService.jsx
+import React, { useEffect, useMemo, useState } from 'react';
+import { submitCustomerService } from '../../config/api';
+import { useForm } from 'react-hook-form';
+
+/**
+ * CustomerService dialog (modal) that matches the attached UI.
+ *
+ * Props:
+ * - open (boolean): controls visibility
+ * - onOpenChange (fn): called with (false) to close
+ * - recordData (object, optional): if you want to prefill fields
+ */
+export default function CustomerService({ open, onOpenChange, recordData }) {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitState, setSubmitState] = useState({ ok: false, msg: '' });
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    setValue,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      name: '',
+      email: '',
+      subject: '',
+      message: '',
+      // If you later wire real reCAPTCHA, store a token here:
+      recaptchaToken: '',
+    },
+    mode: 'onBlur',
+  });
+
+  // Optional: prefill from recordData (kept similar to your pattern)
+  useEffect(() => {
+    if (recordData?.id) {
+      // Adjust mapping as needed for your app
+      if (recordData?.Owner) setValue('name', recordData.Owner);
+      if (recordData?.Email) setValue('email', recordData.Email);
+      if (recordData?.Description) setValue('message', recordData.Description);
+      if (recordData?.Subject) setValue('subject', recordData.Subject);
+    }
+
+    return () => {
+      // Clean up when recordData changes/unmounts
+      reset();
+      setSubmitState({ ok: false, msg: '' });
+      setIsSubmitting(false);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [recordData]);
+
+  // Close modal + clear state
+  const close = () => {
+    onOpenChange?.(false);
+    setSubmitState({ ok: false, msg: '' });
+    setIsSubmitting(false);
+    reset();
+  };
+
+  const titleId = useMemo(() => `cs-title-${Math.random().toString(16).slice(2)}`, []);
+
+  // -----------------------------
+  // handleOnSubmit (as requested)
+  // -----------------------------
+  const handleOnSubmit = async (data) => {
+    setIsSubmitting(true);
+    setSubmitState({ ok: false, msg: '' });
+
+    try {
+      const result = await submitCustomerService(data);
+
+      setSubmitState({
+        ok: true,
+        msg: result.message || 'Your message has been sent. Please check your inbox (and spam/junk) for our reply.',
+      });
+
+      // Optional: close after short delay (comment out if you prefer staying open)
+      // setTimeout(() => close(), 1200);
+
+      reset();
+    } catch (err) {
+      const msg =
+        err?.response?.data?.message ||
+        err?.message ||
+        'Something went wrong while sending your message. Please try again.';
+      setSubmitState({ ok: false, msg });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  if (!open) return null;
+
+  return (
+    <div className="fixed inset-0 z-[9999]">
+      {/* Backdrop */}
+      <button
+        type="button"
+        aria-label="Close customer service dialog"
+        onClick={close}
+        className="absolute inset-0 bg-black/70"
+      />
+
+      {/* Modal */}
+      <div className="relative z-[10000] flex min-h-full items-center justify-center p-4">
+        <div className="w-full max-w-[720px] rounded-none border border-white/40 bg-black shadow-2xl">
+          {/* Header */}
+          <div className="px-6 pt-10 text-center">
+            <h2
+              id={titleId}
+              className="font-serif text-5xl leading-none tracking-wide text-white"
+              style={{ textShadow: '0 2px 0 rgba(0,0,0,.6)' }}
+            >
+              CUSTOMER SERVICE
+            </h2>
+
+            <div className="mt-8 space-y-2">
+              <p className="text-xl font-semibold text-white">Need help?</p>
+              <p className="text-sm text-white/90">We’ve got you covered with email support.</p>
+              <p className="text-sm text-white/90">
+                If you don’t hear from us soon, please check your junk or spam folder—just in case!
+              </p>
+            </div>
+          </div>
+
+          {/* Body */}
+          <div className="px-6 pb-10 pt-8">
+            <div className="mx-auto max-w-[520px] border border-white/60 px-6 py-10">
+              <form onSubmit={handleSubmit(handleOnSubmit)} className="space-y-4">
+                {/* Name */}
+                <div>
+                  <input
+                    type="text"
+                    placeholder="Name"
+                    className={inputClass(errors.name)}
+                    {...register('name', { required: 'Name is required.' })}
+                    disabled={isSubmitting}
+                  />
+                  {errors.name && <FieldError msg={errors.name.message} />}
+                </div>
+
+                {/* Email */}
+                <div>
+                  <input
+                    type="email"
+                    placeholder="Email"
+                    className={inputClass(errors.email)}
+                    {...register('email', {
+                      required: 'Email is required.',
+                      pattern: {
+                        value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                        message: 'Please enter a valid email address.',
+                      },
+                    })}
+                    disabled={isSubmitting}
+                  />
+                  {errors.email && <FieldError msg={errors.email.message} />}
+                </div>
+
+                {/* Subject */}
+                <div>
+                  <input
+                    type="text"
+                    placeholder="Subject"
+                    className={inputClass(errors.subject)}
+                    {...register('subject', { required: 'Subject is required.' })}
+                    disabled={isSubmitting}
+                  />
+                  {errors.subject && <FieldError msg={errors.subject.message} />}
+                </div>
+
+                {/* Message */}
+                <div>
+                  <textarea
+                    rows={6}
+                    placeholder="Type your message here..."
+                    className={textareaClass(errors.message)}
+                    {...register('message', {
+                      required: 'Message is required.',
+                      minLength: { value: 10, message: 'Message must be at least 10 characters.' },
+                    })}
+                    disabled={isSubmitting}
+                  />
+                  {errors.message && <FieldError msg={errors.message.message} />}
+                </div>
+
+                {/* reCAPTCHA placeholder (UI only; no backend code as requested) */}
+                <div className="flex items-center justify-start">
+                  <div className="flex w-full max-w-[360px] items-center justify-between border border-black/20 bg-white px-4 py-3">
+                    <div className="flex items-center gap-3">
+                      <div className="h-5 w-5 border border-black/40" />
+                      <span className="text-sm text-black">I'm not a robot</span>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-xs font-semibold text-black/70">reCAPTCHA</div>
+                      <div className="text-[10px] text-black/50">Privacy - Terms</div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Status */}
+                {submitState.msg ? (
+                  <div
+                    className={[
+                      'rounded border px-3 py-2 text-sm',
+                      submitState.ok
+                        ? 'border-emerald-400/40 bg-emerald-950/40 text-emerald-100'
+                        : 'border-red-400/40 bg-red-950/40 text-red-100',
+                    ].join(' ')}
+                  >
+                    {submitState.msg}
+                  </div>
+                ) : null}
+
+                {/* Actions */}
+                <div className="pt-6">
+                  <div className="flex items-center justify-center gap-3">
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className={[
+                        'min-w-[160px] border border-[#c9aa62] bg-[#c9aa62] px-8 py-3',
+                        'font-serif text-lg text-black shadow',
+                        'hover:brightness-95 active:brightness-90 disabled:opacity-60 disabled:cursor-not-allowed',
+                      ].join(' ')}
+                    >
+                      {isSubmitting ? 'Sending...' : 'Submit'}
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={close}
+                      disabled={isSubmitting}
+                      className="min-w-[120px] border border-white/40 bg-transparent px-6 py-3 font-serif text-lg text-white hover:bg-white/10 disabled:opacity-60 disabled:cursor-not-allowed"
+                    >
+                      Close
+                    </button>
+                  </div>
+
+                  <p className="mt-4 text-center text-xs text-white/60">
+                    By submitting, you agree to be contacted via email regarding your request.
+                  </p>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// -----------------
+// Small UI helpers
+// -----------------
+function FieldError({ msg }) {
+  return <p className="mt-1 text-xs text-red-300">{msg}</p>;
+}
+
+function inputClass(hasError) {
+  return [
+    'w-full border bg-white px-4 py-3 text-sm text-black outline-none',
+    'placeholder:text-black/50',
+    hasError ? 'border-red-400' : 'border-black/30',
+    'focus:border-black/60',
+    'disabled:opacity-70',
+  ].join(' ');
+}
+
+function textareaClass(hasError) {
+  return [
+    'w-full resize-none border bg-white px-4 py-3 text-sm text-black outline-none',
+    'placeholder:text-black/50',
+    hasError ? 'border-red-400' : 'border-black/30',
+    'focus:border-black/60',
+    'disabled:opacity-70',
+  ].join(' ');
+}
