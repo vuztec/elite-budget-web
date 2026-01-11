@@ -139,6 +139,6 @@ export const getResources = async () => {
 };
 
 export const submitCustomerService = async (data) => {
-  const res = await axios.post('/customer-service', data);
+  const res = await axios.post('/api/customer-service', data);
   return res.data;
 };
