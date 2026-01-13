@@ -155,6 +155,13 @@ export const ExpenseRecords = () => {
               className="bg-white w-full py-1"
             />
           </div>
+          <div className="flex items-end w-60 italic">
+            {catFilter === 'Joint Contribution' ? (
+              <p className="text-red-500">You must select Self or Partner as Account Owner</p>
+            ) : (
+              ''
+            )}
+          </div>
         </div>
       </div>
 

@@ -41,6 +41,7 @@ export const AddDebt = ({ open, setOpen, recordData }) => {
       setValue('Description', recordData.Description);
       setValue('NickName', recordData.NickName);
       setValue('Owner', recordData.Owner);
+      setValue('Frequency', recordData.Frequency);
       setValue('PaymentMethod', recordData.PaymentMethod);
       setValue('LoanBalance', recordData.LoanBalance ? Number(recordData.LoanBalance).toFixed(2) : '');
       setValue('MonthlyBudget', recordData.MonthlyBudget ? Number(recordData.MonthlyBudget).toFixed(2) : '');
@@ -146,11 +147,30 @@ export const AddDebt = ({ open, setOpen, recordData }) => {
               />
             </div>
             <div className="flex flex-col gap-6 w-full">
+              <Select
+                name="Frequency"
+                label="Frequency"
+                defaultValue="Monthly"
+                options={[
+                  { value: 'Weekly', label: 'Weekly: Deducted Weekly' },
+                  { value: 'Bi-Weekly', label: 'Bi-Weekly: Deducted Every 2 Weeks' },
+                  { value: 'Semi-Monthly', label: 'Semi-Monthly: Deducted on 15th & last day' },
+                  { value: 'Monthly', label: 'Monthly: Deducted 1x per month' },
+                  { value: 'Yearly', label: 'Yearly: Deducted 1x per year' },
+                ]}
+                className="w-full rounded"
+                register={register('Frequency', {
+                  required: 'Frequency is required!',
+                })}
+                error={errors.Frequency ? errors.Frequency.message : ''}
+              />
+            </div>
+            <div className="flex flex-col gap-6 w-full">
               <Textbox
                 placeholder="Enter Amount"
                 type="number"
                 name="MonthlyBudget"
-                label="Monthly Budget"
+                label="Debt Amount"
                 className="w-full rounded"
                 register={register('MonthlyBudget', {
                   valueAsNumber: true,

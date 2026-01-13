@@ -240,7 +240,7 @@ export const getNetMonthlyTotal = (user, data) => {
 
 export const getGrossYearlyTotal = (user, data) => {
   const Amount = data?.reduce((accumulator, record) => {
-    const income = record?.GrossAmount || 0;
+    const income = record?.GrossAmount || record?.MonthlyBudget || 0;
     const payFrequency = record?.Frequency || '';
 
     let yearlyIncome = 0;
@@ -325,7 +325,30 @@ export const getLoanBalanceTotal = (user, data) => {
 export const getMonthlyBudgetTotal = (user, data) => {
   const Amount = data?.reduce((accumulator, record) => {
     const amount = record?.MonthlyBudget || 0;
-    return accumulator + Number(amount);
+    const payFrequency = record?.Frequency || '';
+
+    let monthlyBudget = 0;
+
+    switch (payFrequency) {
+      case 'Yearly':
+        monthlyBudget = amount / 12;
+        break;
+      case 'Monthly':
+        monthlyBudget = amount;
+        break;
+      case 'Semi-Monthly':
+        monthlyBudget = amount * 2;
+        break;
+      case 'Weekly':
+        monthlyBudget = (amount * 52) / 12;
+        break;
+      case 'Bi-Weekly':
+        monthlyBudget = (amount * 26) / 12;
+        break;
+      default:
+        monthlyBudget = 0;
+    }
+    return accumulator + Number(monthlyBudget);
   }, 0);
   const formattedAmount = getFormattedValueTotal(user, Amount);
   return formattedAmount;
@@ -335,7 +358,28 @@ export const getMonthlyBudgetCategory = (user, data, cat) => {
   const filteredData = data?.filter((item) => item.Category === cat);
   const Amount = filteredData?.reduce((accumulator, record) => {
     const amount = record?.MonthlyBudget || 0;
-    return accumulator + Number(amount);
+    const payFrequency = record?.Frequency || '';
+    let monthlyBudget = 0;
+    switch (payFrequency) {
+      case 'Yearly':
+        monthlyBudget = amount / 12;
+        break;
+      case 'Monthly':
+        monthlyBudget = amount;
+        break;
+      case 'Semi-Monthly':
+        monthlyBudget = amount * 2;
+        break;
+      case 'Weekly':
+        monthlyBudget = (amount * 52) / 12;
+        break;
+      case 'Bi-Weekly':
+        monthlyBudget = (amount * 26) / 12;
+        break;
+      default:
+        monthlyBudget = 0;
+    }
+    return accumulator + Number(monthlyBudget);
   }, 0);
   const formattedAmount = getFormattedValueTotal(user, Amount);
   return formattedAmount;
@@ -345,19 +389,63 @@ export const getMonthlyBudgetItem = (user, data, cat, budgetItem) => {
   const filteredData = data?.filter((item) => item.Category === cat && item.BudgetItem === budgetItem);
   const Amount = filteredData?.reduce((accumulator, record) => {
     const amount = record?.MonthlyBudget || 0;
-    return accumulator + Number(amount);
+    const payFrequency = record?.Frequency || '';
+    let monthlyBudget = 0;
+    switch (payFrequency) {
+      case 'Yearly':
+        monthlyBudget = amount / 12;
+        break;
+      case 'Monthly':
+        monthlyBudget = amount;
+        break;
+      case 'Semi-Monthly':
+        monthlyBudget = amount * 2;
+        break;
+      case 'Weekly':
+        monthlyBudget = (amount * 52) / 12;
+        break;
+      case 'Bi-Weekly':
+        monthlyBudget = (amount * 26) / 12;
+        break;
+      default:
+        monthlyBudget = 0;
+    }
+    return accumulator + Number(monthlyBudget);
   }, 0);
   const formattedAmount = getFormattedValueTotal(user, Amount);
   return formattedAmount;
 };
 
 export const getYearlyBudgetTotal = (user, data) => {
-  const Amount =
-    12 *
-    data?.reduce((accumulator, record) => {
-      const amount = record?.MonthlyBudget || 0;
-      return accumulator + Number(amount);
-    }, 0);
+  const Amount = data?.reduce((accumulator, record) => {
+    const amount = record?.MonthlyBudget || 0;
+    const frequency = record?.Frequency || '';
+
+    let yearlyBudget = 0;
+
+    switch (frequency) {
+      case 'Yearly':
+        yearlyBudget = amount;
+        break;
+      case 'Monthly':
+        yearlyBudget = amount * 12;
+        break;
+      case 'Semi-Monthly':
+        yearlyBudget = amount * 24;
+        break;
+      case 'Weekly':
+        yearlyBudget = amount * 52;
+        break;
+      case 'Bi-Weekly':
+        yearlyBudget = amount * 26;
+        break;
+      default:
+        yearlyBudget = 0;
+    }
+
+    return accumulator + Number(yearlyBudget);
+  }, 0);
+
   const formattedAmount = getFormattedValueTotal(user, Amount);
   return formattedAmount;
 };
@@ -868,19 +956,63 @@ export const getUnformattedMonthlyBudgetExp = (data) => {
 };
 
 export const getUnformattedYearlyBudgetTotal = (data) => {
-  const Amount =
-    12 *
-    data?.reduce((accumulator, record) => {
-      const amount = record?.MonthlyBudget || 0;
-      return accumulator + Number(amount);
-    }, 0);
+  const Amount = data?.reduce((accumulator, record) => {
+    const amount = record?.MonthlyBudget || 0;
+    const frequency = record?.Frequency || '';
+
+    let yearlyBudget = 0;
+
+    switch (frequency) {
+      case 'Yearly':
+        yearlyBudget = amount;
+        break;
+      case 'Monthly':
+        yearlyBudget = amount * 12;
+        break;
+      case 'Semi-Monthly':
+        yearlyBudget = amount * 24;
+        break;
+      case 'Weekly':
+        yearlyBudget = amount * 52;
+        break;
+      case 'Bi-Weekly':
+        yearlyBudget = amount * 26;
+        break;
+      default:
+        yearlyBudget = 0;
+    }
+    return accumulator + Number(yearlyBudget);
+  }, 0);
   return Amount;
 };
 
 export const getUnformattedMonthlyBudget = (data) => {
   const Amount = data?.reduce((accumulator, record) => {
     const amount = record?.MonthlyBudget || 0;
-    return accumulator + Number(amount);
+    const payFrequency = record?.Frequency || '';
+
+    let monthlyBudget = 0;
+
+    switch (payFrequency) {
+      case 'Yearly':
+        monthlyBudget = amount / 12;
+        break;
+      case 'Monthly':
+        monthlyBudget = amount;
+        break;
+      case 'Semi-Monthly':
+        monthlyBudget = amount * 2;
+        break;
+      case 'Weekly':
+        monthlyBudget = (amount * 52) / 12;
+        break;
+      case 'Bi-Weekly':
+        monthlyBudget = (amount * 26) / 12;
+        break;
+      default:
+        monthlyBudget = 0;
+    }
+    return accumulator + Number(monthlyBudget);
   }, 0);
   return Amount;
 };

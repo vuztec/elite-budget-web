@@ -39,6 +39,8 @@ export const AddExtraPay = ({ open, setOpen, recordData }) => {
     } else {
       setValue('Date', formatDateForForm(new Date()));
       setSelected('no');
+      setValue('SelfAmount', Number(0));
+      setValue('PartnerAmount', Number(0));
     }
 
     return () => reset();
@@ -128,7 +130,7 @@ export const AddExtraPay = ({ open, setOpen, recordData }) => {
 
             <div className="flex flex-col gap-6 w-full">
               <Textbox
-                placeholder="Enter Amount"
+                placeholder="0.00"
                 type="number"
                 name="SelfAmount"
                 label="Self Amount"
@@ -140,7 +142,7 @@ export const AddExtraPay = ({ open, setOpen, recordData }) => {
                 error={errors.SelfAmount ? errors.SelfAmount.message : ''}
               />
               <Textbox
-                placeholder="Enter Amount"
+                placeholder="0.00"
                 type="number"
                 name="PartnerAmount"
                 label="Partner Amount"

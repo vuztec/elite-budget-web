@@ -8,12 +8,16 @@ import { useQueryClient } from 'react-query';
 import ConfirmationDialog from '../Dialogs';
 import axios from '../../config/axios';
 import { handleAxiosResponseError } from '../../utils/handleResponseError';
-import { getFormattedValue } from '../../utils/budget.calculation';
+import {
+  getFormattedValue,
+  getFormattedValueTotal,
+  getUnformattedBankBalanceTotal,
+} from '../../utils/budget.calculation';
 import AddBank from './AddBank';
 import ToolTip from '../tooltip';
 import Sort from '../sort';
 
-export const BankListView = ({ gridData }) => {
+export const BankListView = ({ gridData, transactions }) => {
   const { user } = useUserStore();
 
   //----------------CRUD----------------//
@@ -96,7 +100,7 @@ export const BankListView = ({ gridData }) => {
             />
           </div>
         </th>
-        <th className="border-l border-gray-300 p-2">
+        {/* <th className="border-l border-gray-300 p-2">
           <div className="flex justify-between items-center gap-2">
             Opening Balance
             <Sort
@@ -111,8 +115,23 @@ export const BankListView = ({ gridData }) => {
               isNumber
             />
           </div>
+        </th> */}
+        <th className="border-l border-gray-300 p-2">
+          <div className="flex justify-between items-center gap-2">
+            Current Balance
+            <Sort
+              tab={'bank'}
+              order={order}
+              setOrder={setOrder}
+              column={4}
+              name={'OpeningBalance'}
+              data={data}
+              setData={setData}
+              defaultData={gridData}
+              isNumber
+            />
+          </div>
         </th>
-
         <th className="p-2 border-l border-gray-300">Actions</th>
       </tr>
     </thead>
@@ -132,12 +151,25 @@ export const BankListView = ({ gridData }) => {
         </div>
       </td>
 
-      <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
+      {/* <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
           <p className="text-black">{getFormattedValue(user, record?.OpeningBalance)}</p>
         </div>
+      </td> */}
+      <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200">
+        <div className="flex flex-col items-start gap-1">
+          <p>
+            {getFormattedValueTotal(
+              user,
+              Number(
+                getUnformattedBankBalanceTotal(
+                  transactions?.filter((item) => item?.BankAccountName?.id === record?.id),
+                ),
+              ) + Number(record?.OpeningBalance),
+            )}
+          </p>
+        </div>
       </td>
-
       <td className="min-w-max p-2 border-l border-r border-gray-200">
         <div className="flex items-center text-left gap-3 justify-start">
           <div className="group flex relative">
