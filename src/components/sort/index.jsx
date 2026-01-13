@@ -1,6 +1,7 @@
 import { LiaSortDownSolid, LiaSortSolid, LiaSortUpSolid } from 'react-icons/lia';
 import {
   ascendingSort,
+  ascendingSortCurrentBalance,
   ascendingSortExtraPayCheck,
   defaultBankSort,
   defaultDebSort,
@@ -8,6 +9,7 @@ import {
   defaultIncomeSort,
   defaultTransactionSort,
   descendingSort,
+  descendingSortCurrentBalance,
   descendingSortExtraPayCheck,
 } from '../../utils/budget.sort';
 import { calculateBalances } from '../../utils/budget.filter';
@@ -24,6 +26,7 @@ export default function Sort({
   defaultData,
   isNumber,
   type,
+  transactions,
 }) {
   const sortDefaultClick = () => {
     setOrder((prev) => prev.map((_, index) => (index + 1 === column ? 'asc' : 'default')));
@@ -31,6 +34,8 @@ export default function Sort({
     let sorteditems = [];
 
     if (tab === 'extra-pay-checks') sorteditems = ascendingSortExtraPayCheck(data, name, isNumber);
+    else if (tab === 'bank' && name === 'OpeningBalance')
+      sorteditems = ascendingSortCurrentBalance(data, name, transactions);
     else sorteditems = ascendingSort(data, name, name2, isNumber, type);
 
     if (tab === 'transaction' || tab === 'fund') setData(calculateBalances(sorteditems));
@@ -42,6 +47,8 @@ export default function Sort({
 
     let sorteditems = [];
     if (tab === 'extra-pay-checks') sorteditems = descendingSortExtraPayCheck(data, name, isNumber);
+    else if (tab === 'bank' && name === 'OpeningBalance')
+      sorteditems = descendingSortCurrentBalance(data, name, transactions);
     else sorteditems = descendingSort(data, name, name2, isNumber, type);
 
     if (tab === 'transaction' || tab === 'fund') setData(calculateBalances(sorteditems));

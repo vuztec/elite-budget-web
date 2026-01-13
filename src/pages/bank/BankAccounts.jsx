@@ -8,7 +8,7 @@ import clsx from 'clsx';
 import Select from '../../components/Select';
 import { getActiveAccount } from '../../utils/permissions';
 import Package from '../../package/Package';
-import { getBankAccountNames } from '../../config/api';
+import { getBankAccountNames, getBankAccountTransactions } from '../../config/api';
 import { getOwnerGridData, incomeOwners } from '../../utils/budget.filter';
 import AddBank from '../../components/bank/AddBank';
 import { BankListView } from '../../components/bank/BankListView';
@@ -32,6 +32,12 @@ export const BankAccounts = () => {
     staleTime: 1000 * 60 * 60,
   });
 
+  const { data: transactions, status: isTransactionLoaded } = useQuery({
+    queryKey: ['banktransactions'],
+    queryFn: getBankAccountTransactions,
+    staleTime: 1000 * 60 * 60,
+  });
+
   ///-------------Filters Data Source --------------------------------///
   const owners = incomeOwners.map((owner) => ({
     value: owner,
@@ -41,7 +47,7 @@ export const BankAccounts = () => {
   ///-------------END Filters Data Source --------------------------------///
 
   useEffect(() => {
-    if (isNamesLoaded === 'success') {
+    if (isNamesLoaded === 'success' && isTransactionLoaded === 'success') {
       const accountData = getOwnerGridData(accountnames, owner);
 
       // Sort the data by Owner property
@@ -51,7 +57,7 @@ export const BankAccounts = () => {
     } else {
       setIsDataLoaded(false);
     }
-  }, [accountnames, isNamesLoaded, owner]);
+  }, [accountnames, isNamesLoaded, owner, isTransactionLoaded]);
 
   const handleOwnerChange = (e) => {
     if (e && e.target?.value) {
@@ -119,7 +125,7 @@ export const BankAccounts = () => {
       {isDataLoaded && (
         <div className="w-full">
           <div className="w-full">
-            <BankListView gridData={gridData} />
+            <BankListView gridData={gridData} transactions={transactions} />
           </div>
           <div className="w-full bg-white rounded-lg border-t mt-8 p-6 text-center justify-center">
             <p>{getPageCopyright()}</p>

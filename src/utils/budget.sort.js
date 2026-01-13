@@ -1,3 +1,5 @@
+import { getUnformattedBankBalanceTotal } from './budget.calculation';
+
 const customIncomeList = [
   'Main Job',
   'Side Job',
@@ -153,6 +155,37 @@ export const ascendingSort = (data, sortBy, sortBy2, isNumber, type) => {
     if (aDisplayName < bDisplayName) return -1;
     if (aDisplayName > bDisplayName) return 1;
 
+    return 0;
+  });
+};
+
+export const ascendingSortCurrentBalance = (data, sortBy, transactions) => {
+  return data.sort((a, b) => {
+    let aDisplayName =
+      Number(a[sortBy]) +
+      getUnformattedBankBalanceTotal(transactions?.filter((item) => item?.BankAccountName?.id === a.id));
+    let bDisplayName =
+      Number(b[sortBy]) +
+      getUnformattedBankBalanceTotal(transactions?.filter((item) => item?.BankAccountName?.id === b.id));
+
+    if (aDisplayName < bDisplayName) return -1;
+    if (aDisplayName > bDisplayName) return 1;
+
+    return 0;
+  });
+};
+
+export const descendingSortCurrentBalance = (data, sortBy, transactions) => {
+  return data.sort((a, b) => {
+    let aDisplayName =
+      Number(a[sortBy]) +
+      getUnformattedBankBalanceTotal(transactions?.filter((item) => item?.BankAccountName?.id === a.id));
+    let bDisplayName =
+      Number(b[sortBy]) +
+      getUnformattedBankBalanceTotal(transactions?.filter((item) => item?.BankAccountName?.id === b.id));
+
+    if (aDisplayName < bDisplayName) return 1;
+    if (aDisplayName > bDisplayName) return -1;
     return 0;
   });
 };

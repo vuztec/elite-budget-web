@@ -12,6 +12,7 @@ import { AddSaving } from './AddSaving';
 import {
   canDelete,
   getFormattedValue,
+  getGrossYearlyTotal,
   getMarketValueTotal,
   getMonthlyBudgetTotal,
   getYearlyBudgetTotal,
@@ -169,7 +170,7 @@ export const SavingListView = ({ gridData }) => {
         <th className="border-l border-gray-300 p-1">
           <div className="flex justify-between items-center gap-2">
             <div className="flex flex-col">
-              <span className="text-left">Monthly</span>
+              {/* <span className="text-left">Monthly</span> */}
               <span className="text-left">Savings</span>
             </div>
 
@@ -186,6 +187,21 @@ export const SavingListView = ({ gridData }) => {
             />
           </div>
         </th>
+        <th className="border-l border-gray-300 p-2">
+          <div className="flex justify-between items-center gap-2">
+            Frequency
+            <Sort
+              tab={'saving'}
+              order={order}
+              setOrder={setOrder}
+              column={7}
+              name={'Frequency'}
+              data={data}
+              setData={setData}
+              defaultData={gridData}
+            />
+          </div>
+        </th>
         <th className="border-l border-gray-300 p-1">
           <div className="flex justify-between items-center gap-2">
             <div className="flex flex-col">
@@ -197,7 +213,7 @@ export const SavingListView = ({ gridData }) => {
               tab={'saving'}
               order={order}
               setOrder={setOrder}
-              column={7}
+              column={8}
               name={'MonthlyBudget'}
               data={data}
               setData={setData}
@@ -253,10 +269,14 @@ export const SavingListView = ({ gridData }) => {
           <p className="text-black">{getFormattedValue(user, record?.MonthlyBudget)}</p>
         </div>
       </td>
-
       <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
-          <p className="text-black">{getFormattedValue(user, 12 * record?.MonthlyBudget)}</p>
+          <p className="text-black"> {record?.Frequency}</p>
+        </div>
+      </td>
+      <td className="min-w-fit whitespace-nowrap p-2 border-l border-gray-200">
+        <div className="flex flex-col items-start gap-1">
+          <p className="text-black">{getGrossYearlyTotal(user, [record])}</p>
         </div>
       </td>
 
@@ -310,7 +330,7 @@ export const SavingListView = ({ gridData }) => {
           <p>{getMonthlyBudgetTotal(user, gridData)}</p>
         </div>
       </td>
-
+      <td className="min-w-fit whitespace-nowrap p-3 border-gray-200"></td>
       <td className="min-w-fit whitespace-nowrap p-3 border-l border-gray-200">
         <div className="flex flex-col items-start gap-1">
           <p>{getYearlyBudgetTotal(user, gridData)}</p>

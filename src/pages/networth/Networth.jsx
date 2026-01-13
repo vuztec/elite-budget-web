@@ -46,7 +46,10 @@ export const Networth = () => {
   const [debtGridData, setDebtGridData] = useState([]);
   const [transactionGridData, setTransactionGridData] = useState([]);
   const [bankGridData, setBankGridData] = useState([]);
-  const { toPDF, targetRef } = usePDF({ filename: 'networth.pdf', page: { margin: Margin.MEDIUM } });
+  const { toPDF, targetRef } = usePDF({
+    filename: 'networth.pdf',
+    page: { size: 'A4', orientation: 'landscape', margin: Margin.MEDIUM },
+  });
   const [showPdfContent, setShowPdfContent] = useState(false);
   const [title, setTitle] = useState('');
   const location = useLocation();
