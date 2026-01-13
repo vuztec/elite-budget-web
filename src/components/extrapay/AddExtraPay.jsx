@@ -133,7 +133,7 @@ export const AddExtraPay = ({ open, setOpen, recordData }) => {
 
             <div className="flex flex-col gap-6 w-full">
               <Textbox
-                placeholder="0.00"
+                placeholder="Enter Amount"
                 type="number"
                 name="SelfAmount"
                 label="Self Amount"
@@ -145,7 +145,7 @@ export const AddExtraPay = ({ open, setOpen, recordData }) => {
                 error={errors.SelfAmount ? errors.SelfAmount.message : ''}
               />
               <Textbox
-                placeholder="0.00"
+                placeholder="Enter Amount"
                 type="number"
                 name="PartnerAmount"
                 label="Partner Amount"

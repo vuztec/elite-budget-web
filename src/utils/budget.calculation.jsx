@@ -420,9 +420,7 @@ export const getYearlyBudgetTotal = (user, data) => {
   const Amount = data?.reduce((accumulator, record) => {
     const amount = record?.MonthlyBudget || 0;
     const frequency = record?.Frequency || '';
-
     let yearlyBudget = 0;
-
     switch (frequency) {
       case 'Yearly':
         yearlyBudget = amount;
@@ -1157,12 +1155,36 @@ export const getUniqueBudgetItemsWithSum = (data) => {
   const budgetItemValue = {};
   data?.forEach((record) => {
     const budgetItem = record?.Category || '';
-    const monthlyPayment = record?.MonthlyBudget || 0;
+    // const monthlyPayment = record?.MonthlyBudget || 0;
+    const amount = record?.MonthlyBudget || 0;
+    const payFrequency = record?.Frequency || '';
+
+    let monthlyBudget = 0;
+
+    switch (payFrequency) {
+      case 'Yearly':
+        monthlyBudget = amount / 12;
+        break;
+      case 'Monthly':
+        monthlyBudget = amount;
+        break;
+      case 'Semi-Monthly':
+        monthlyBudget = amount * 2;
+        break;
+      case 'Weekly':
+        monthlyBudget = (amount * 52) / 12;
+        break;
+      case 'Bi-Weekly':
+        monthlyBudget = (amount * 26) / 12;
+        break;
+      default:
+        monthlyBudget = 0;
+    }
     if (!uniqueBudgetItems.has(budgetItem)) {
       uniqueBudgetItems.add(budgetItem);
       budgetItemValue[budgetItem] = 0;
     }
-    budgetItemValue[budgetItem] += Number(monthlyPayment);
+    budgetItemValue[budgetItem] += Number(monthlyBudget);
   });
 
   return {
@@ -1179,8 +1201,31 @@ export const getUniqueDescriptionsWithSumForEachBudgetItem = (data) => {
     const budgetItem = record?.Category || '';
     const description = record?.Description || '';
     const nickName = record?.NickName || '';
-    const monthlyPayment = record?.MonthlyBudget || 0;
+    // const monthlyPayment = record?.MonthlyBudget || 0;
+    const amount = record?.MonthlyBudget || 0;
+    const payFrequency = record?.Frequency || '';
 
+    let monthlyBudget = 0;
+
+    switch (payFrequency) {
+      case 'Yearly':
+        monthlyBudget = amount / 12;
+        break;
+      case 'Monthly':
+        monthlyBudget = amount;
+        break;
+      case 'Semi-Monthly':
+        monthlyBudget = amount * 2;
+        break;
+      case 'Weekly':
+        monthlyBudget = (amount * 52) / 12;
+        break;
+      case 'Bi-Weekly':
+        monthlyBudget = (amount * 26) / 12;
+        break;
+      default:
+        monthlyBudget = 0;
+    }
     // Use NickName if it's not blank, otherwise use Description
     const displayName = nickName || description;
 
@@ -1192,7 +1237,7 @@ export const getUniqueDescriptionsWithSumForEachBudgetItem = (data) => {
       uniqueDescriptions[budgetItem][displayName] = 0;
     }
 
-    uniqueDescriptions[budgetItem][displayName] += Number(monthlyPayment);
+    uniqueDescriptions[budgetItem][displayName] += Number(monthlyBudget);
   });
 
   return uniqueDescriptions;
