@@ -44,7 +44,10 @@ export const BudgetDetails = () => {
   const [debtGridData, setDebtGridData] = useState([]);
   const [selfContribution, setSelfContribution] = useState(0);
   const [partnerContribution, setPartnerContribution] = useState(0);
-  const { toPDF, targetRef } = usePDF({ filename: 'budget-details.pdf', page: { margin: Margin.MEDIUM } });
+  const { toPDF, targetRef } = usePDF({
+    filename: 'budget-details.pdf',
+    page: { size: 'A4', orientation: 'landscape', margin: Margin.MEDIUM },
+  });
   const [showPdfContent, setShowPdfContent] = useState(false);
   const [title, setTitle] = useState('');
   const location = useLocation();
