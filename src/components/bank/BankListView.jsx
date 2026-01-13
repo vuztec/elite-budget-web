@@ -123,12 +123,13 @@ export const BankListView = ({ gridData, transactions }) => {
               tab={'bank'}
               order={order}
               setOrder={setOrder}
-              column={4}
+              column={3}
               name={'OpeningBalance'}
               data={data}
               setData={setData}
               defaultData={gridData}
               isNumber
+              transactions={transactions}
             />
           </div>
         </th>

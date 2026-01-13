@@ -33,8 +33,11 @@ export const AddExtraPay = ({ open, setOpen, recordData }) => {
         'Date',
         formatDateForForm(new Date(recordData.Date ? recordData.Date?.split('T')[0] + 'T00:00:00' : new Date())),
       );
-      setValue('SelfAmount', recordData.SelfAmount ? Number(recordData.SelfAmount).toFixed(2) : '');
-      setValue('PartnerAmount', recordData.PartnerAmount ? Number(recordData.PartnerAmount).toFixed(2) : '');
+      setValue('SelfAmount', recordData.SelfAmount ? Number(recordData.SelfAmount).toFixed(2) : Number(0).toFixed(2));
+      setValue(
+        'PartnerAmount',
+        recordData.PartnerAmount ? Number(recordData.PartnerAmount).toFixed(2) : Number(0).toFixed(2),
+      );
       setSelected(recordData.IsDateKnown ? 'yes' : 'no');
     } else {
       setValue('Date', formatDateForForm(new Date()));
