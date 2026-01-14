@@ -35,6 +35,8 @@ export const ExpenseListView = ({ Data, category, showColumn, showAll }) => {
     'default',
     'default',
     'default',
+    'default',
+    'default',
   ]);
   useEffect(() => {
     const sortedData = defaultDebSort(Data);
@@ -118,7 +120,7 @@ export const ExpenseListView = ({ Data, category, showColumn, showAll }) => {
               tab={'expense'}
               order={order}
               setOrder={setOrder}
-              column={2}
+              column={3}
               name={'NickName'}
               data={gridData}
               setData={setGridData}
@@ -139,7 +141,7 @@ export const ExpenseListView = ({ Data, category, showColumn, showAll }) => {
                   tab={'expense'}
                   order={order}
                   setOrder={setOrder}
-                  column={3}
+                  column={4}
                   name={'MarketValue'}
                   data={gridData}
                   setData={setGridData}
@@ -159,7 +161,7 @@ export const ExpenseListView = ({ Data, category, showColumn, showAll }) => {
                   tab={'expense'}
                   order={order}
                   setOrder={setOrder}
-                  column={4}
+                  column={5}
                   name={'LoanBalance'}
                   data={gridData}
                   setData={setGridData}
@@ -177,7 +179,7 @@ export const ExpenseListView = ({ Data, category, showColumn, showAll }) => {
               tab={'expense'}
               order={order}
               setOrder={setOrder}
-              column={5}
+              column={6}
               name={'DueDate'}
               data={gridData}
               setData={setGridData}
@@ -196,7 +198,7 @@ export const ExpenseListView = ({ Data, category, showColumn, showAll }) => {
               tab={'expense'}
               order={order}
               setOrder={setOrder}
-              column={6}
+              column={7}
               name={'PaymentMethod'}
               data={gridData}
               setData={setGridData}
@@ -215,7 +217,7 @@ export const ExpenseListView = ({ Data, category, showColumn, showAll }) => {
               tab={'expense'}
               order={order}
               setOrder={setOrder}
-              column={7}
+              column={8}
               name={'MonthlyBudget'}
               data={gridData}
               setData={setGridData}
@@ -231,7 +233,7 @@ export const ExpenseListView = ({ Data, category, showColumn, showAll }) => {
               tab={'expense'}
               order={order}
               setOrder={setOrder}
-              column={8}
+              column={9}
               name={'Frequency'}
               data={gridData}
               setData={setGridData}
@@ -249,12 +251,13 @@ export const ExpenseListView = ({ Data, category, showColumn, showAll }) => {
               tab={'expense'}
               order={order}
               setOrder={setOrder}
-              column={9}
-              name={'MonthlyBudget'}
+              column={10}
+              name={'AnnualCost'}
               data={gridData}
               setData={setGridData}
               defaultData={Data}
               isNumber
+              user={user}
             />
           </div>
         </th>

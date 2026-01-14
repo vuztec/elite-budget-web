@@ -29,7 +29,17 @@ export const RetirementListView = ({ gridData }) => {
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [order, setOrder] = useState(['default', 'default', 'default', 'default', 'default', 'default', 'default']);
+  const [order, setOrder] = useState([
+    'default',
+    'default',
+    'default',
+    'default',
+    'default',
+    'default',
+    'default',
+    'default',
+    'default',
+  ]);
   const [data, setData] = useState(gridData);
 
   useEffect(() => {
@@ -106,7 +116,7 @@ export const RetirementListView = ({ gridData }) => {
               tab={'retirement'}
               order={order}
               setOrder={setOrder}
-              column={2}
+              column={3}
               name={'NickName'}
               data={data}
               setData={setData}
@@ -124,7 +134,7 @@ export const RetirementListView = ({ gridData }) => {
               tab={'retirement'}
               order={order}
               setOrder={setOrder}
-              column={3}
+              column={4}
               name={'MarketValue'}
               data={data}
               setData={setData}
@@ -141,7 +151,7 @@ export const RetirementListView = ({ gridData }) => {
               tab={'retirement'}
               order={order}
               setOrder={setOrder}
-              column={4}
+              column={5}
               name={'DueDate'}
               data={data}
               setData={setData}
@@ -160,7 +170,7 @@ export const RetirementListView = ({ gridData }) => {
               tab={'retirement'}
               order={order}
               setOrder={setOrder}
-              column={5}
+              column={6}
               name={'PaymentMethod'}
               data={data}
               setData={setData}
@@ -179,7 +189,7 @@ export const RetirementListView = ({ gridData }) => {
               tab={'retirement'}
               order={order}
               setOrder={setOrder}
-              column={6}
+              column={7}
               name={'MonthlyBudget'}
               data={data}
               setData={setData}
@@ -195,7 +205,7 @@ export const RetirementListView = ({ gridData }) => {
               tab={'retirement'}
               order={order}
               setOrder={setOrder}
-              column={7}
+              column={8}
               name={'Frequency'}
               data={data}
               setData={setData}
@@ -214,12 +224,13 @@ export const RetirementListView = ({ gridData }) => {
               tab={'retirement'}
               order={order}
               setOrder={setOrder}
-              column={8}
-              name={'MonthlyBudget'}
+              column={9}
+              name={'AnnualCost'}
               data={data}
               setData={setData}
               defaultData={gridData}
               isNumber
+              user={user}
             />
           </div>
         </th>

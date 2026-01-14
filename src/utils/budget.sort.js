@@ -1,4 +1,4 @@
-import { getUnformattedBankBalanceTotal } from './budget.calculation';
+import { getGrossYearlyTotal, getUnformattedBankBalanceTotal } from './budget.calculation';
 
 const customIncomeList = [
   'Main Job',
@@ -170,6 +170,29 @@ export const ascendingSortCurrentBalance = (data, sortBy, transactions) => {
 
     if (aDisplayName < bDisplayName) return -1;
     if (aDisplayName > bDisplayName) return 1;
+
+    return 0;
+  });
+};
+export const ascendingSortAnnualCost = (user, data) => {
+  return data.sort((a, b) => {
+    let aDisplayName = getGrossYearlyTotal(user, [a]);
+    let bDisplayName = getGrossYearlyTotal(user, [b]);
+
+    if (aDisplayName < bDisplayName) return -1;
+    if (aDisplayName > bDisplayName) return 1;
+
+    return 0;
+  });
+};
+
+export const descendingSortAnnualCost = (user, data) => {
+  return data.sort((a, b) => {
+    let aDisplayName = getGrossYearlyTotal(user, [a]);
+    let bDisplayName = getGrossYearlyTotal(user, [b]);
+
+    if (aDisplayName < bDisplayName) return 1;
+    if (aDisplayName > bDisplayName) return -1;
 
     return 0;
   });
