@@ -25,7 +25,17 @@ import { defaultDebSort } from '../../utils/budget.sort';
 export const DebtListView = ({ Data, category, showAll }) => {
   const { user } = useUserStore();
   const [gridData, setGridData] = useState([]);
-  const [order, setOrder] = useState(['default', 'default', 'default', 'default', 'default', 'default', 'default']);
+  const [order, setOrder] = useState([
+    'default',
+    'default',
+    'default',
+    'default',
+    'default',
+    'default',
+    'default',
+    'default',
+    'default',
+  ]);
   useEffect(() => {
     const sortedData = defaultDebSort(Data);
     setGridData(sortedData);
@@ -108,7 +118,7 @@ export const DebtListView = ({ Data, category, showAll }) => {
               tab={'debt'}
               order={order}
               setOrder={setOrder}
-              column={2}
+              column={3}
               name={'NickName'}
               data={gridData}
               setData={setGridData}
@@ -126,7 +136,7 @@ export const DebtListView = ({ Data, category, showAll }) => {
               tab={'debt'}
               order={order}
               setOrder={setOrder}
-              column={3}
+              column={4}
               name={'LoanBalance'}
               data={gridData}
               setData={setGridData}
@@ -142,7 +152,7 @@ export const DebtListView = ({ Data, category, showAll }) => {
               tab={'debt'}
               order={order}
               setOrder={setOrder}
-              column={4}
+              column={5}
               name={'DueDate'}
               data={gridData}
               setData={setGridData}
@@ -161,7 +171,7 @@ export const DebtListView = ({ Data, category, showAll }) => {
               tab={'debt'}
               order={order}
               setOrder={setOrder}
-              column={5}
+              column={6}
               name={'PaymentMethod'}
               data={gridData}
               setData={setGridData}
@@ -180,7 +190,7 @@ export const DebtListView = ({ Data, category, showAll }) => {
               tab={'debt'}
               order={order}
               setOrder={setOrder}
-              column={6}
+              column={7}
               name={'MonthlyBudget'}
               data={gridData}
               setData={setGridData}
@@ -196,7 +206,7 @@ export const DebtListView = ({ Data, category, showAll }) => {
               tab={'debt'}
               order={order}
               setOrder={setOrder}
-              column={7}
+              column={8}
               name={'Frequency'}
               data={gridData}
               setData={setGridData}
@@ -214,12 +224,13 @@ export const DebtListView = ({ Data, category, showAll }) => {
               tab={'debt'}
               order={order}
               setOrder={setOrder}
-              column={8}
-              name={'MonthlyBudget'}
+              column={9}
+              name={'AnnualCost'}
               data={gridData}
               setData={setGridData}
               defaultData={Data}
               isNumber
+              user={user}
             />
           </div>
         </th>
