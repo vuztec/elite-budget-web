@@ -25,6 +25,7 @@ export const CheckListView = ({
               <tr className="text-black font-bold bg-[whitesmoke] border border-gray-400 text-left text-sm xl:text-[16px] uppercase">
                 <th className="px-1 py-2">Savings & Spending</th>
                 <th className="border-l border-gray-300 px-1 py-2">Nickname</th>
+                <th className="border-l border-gray-300 px-1 py-2">Frequency</th>
                 <th className="border-l border-gray-300 px-1 py-2">Day Due</th>
                 <th className="border-l border-gray-300 px-1 py-2">Payment Method</th>
                 <th className="border-l border-gray-300 px-1 py-2">Monthly Budget</th>
@@ -46,6 +47,7 @@ export const CheckListView = ({
                       <td className=""></td>
                       <td className=""></td>
                       <td className=""></td>
+                      <td className=""></td>
                       <td className="">{getMonthlyBudgetCategory(user, combinedData, category)}</td>
                       {monthHeaders?.map((index) => (
                         <td key={index} className=""></td>
@@ -57,6 +59,7 @@ export const CheckListView = ({
                           <tr className="text-gray-600 font-bold bg-[whitesmoke] border-b border-t border-gray-200 text-left text-sm xl:text-[16px]">
                             <td className="p-2 lg:px-5 py-2">{budgetItem}</td>
 
+                            <td className=""></td>
                             <td className=""></td>
                             <td className=""></td>
                             <td className=""></td>
@@ -79,6 +82,9 @@ export const CheckListView = ({
                                   </td>
                                   <td className="min-w-fit whitespace-nowrap border-l p-2 border-gray-200">
                                     {details.NickName}
+                                  </td>
+                                  <td className="min-w-fit whitespace-nowrap border-l p-2 border-gray-200">
+                                    {details.Frequency}
                                   </td>
                                   <td className="min-w-fit whitespace-nowrap border-l p-2 border-gray-200">
                                     {details.DueDate}
@@ -106,6 +112,7 @@ export const CheckListView = ({
               <tr className="text-gray-600 font-bold bg-gray-400/50 border-b border-t border-gray-400 text-left text-sm xl:text-[16px] uppercase">
                 <td className="px-1 lg:px-2 py-2">OVERALL TOTAL</td>
 
+                <td className=""></td>
                 <td className=""></td>
                 <td className=""></td>
                 <td className=""></td>
