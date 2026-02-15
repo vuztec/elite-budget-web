@@ -162,6 +162,7 @@ export const getCombineData = (savings, expenses, retirement, debts) => {
         Category: category,
         BudgetItem: item.Category || '',
         Description: item.Description || '',
+        Frequency: item.Frequency || '',
         DueDate: item.DueDate || '',
         MonthlyBudget: item.MonthlyBudget || 0,
         PaymentMethod: item.PaymentMethod || '',
@@ -235,6 +236,7 @@ export const getUniqueDescriptionsByCategory = (combinedData) => {
     const category = item.Category;
     const budgetItem = item.BudgetItem;
     const description = item.Description;
+    const frequency = item.Frequency;
     const DueDate = item.DueDate;
     const paymentMethod = item.PaymentMethod;
     const MonthlyBudget = item.MonthlyBudget;
@@ -254,6 +256,7 @@ export const getUniqueDescriptionsByCategory = (combinedData) => {
         MonthlyBudget: MonthlyBudget,
         NickName: NickName,
         Owner: owner,
+        Frequency: frequency,
       };
     }
   });
@@ -263,11 +266,12 @@ export const getUniqueDescriptionsByCategory = (combinedData) => {
 
 export const getDescriptionsByCategory = (combinedData) => {
   const descriptionsByCategory = {};
-
+  console.log('combinedData', combinedData);
   combinedData.forEach((item) => {
     const Category = item.Category;
     const BudgetItem = item.BudgetItem;
     const Description = item.Description;
+    const Frequency = item.Frequency;
     const DueDate = item.DueDate;
     const PaymentMethod = item.PaymentMethod;
     const MonthlyBudget = item.MonthlyBudget;
@@ -285,6 +289,7 @@ export const getDescriptionsByCategory = (combinedData) => {
     // Add the description and associated data to the array
     descriptionsByCategory[Category][BudgetItem].push({
       Description: Description,
+      Frequency: Frequency,
       DueDate: DueDate,
       PaymentMethod: PaymentMethod,
       MonthlyBudget: MonthlyBudget,

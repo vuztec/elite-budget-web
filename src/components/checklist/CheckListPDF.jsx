@@ -110,7 +110,7 @@ export const CheckListPDF = ({
   const numOfMonthHeaders = monthHeaders.length;
   const fixedWidth = numOfMonthHeaders * 4; // Total fixed width for date columns
   const remainingWidth = 100 - fixedWidth; // Remaining width to be divided
-  const dynamicWidth = remainingWidth / 4; // Dynamic width for each of the four columns
+  const dynamicWidth = remainingWidth / 6; // Dynamic width for each of the four columns
 
   return (
     <Document>
@@ -136,6 +136,7 @@ export const CheckListPDF = ({
           <View style={[styles.tableRow, styles.tableHeader]} fixed>
             <Text style={[styles.tableCell, styles.headerCell, { width: `${dynamicWidth}%` }]}>Savings & Spending</Text>
             <Text style={[styles.tableCell, styles.headerCell, { width: `${dynamicWidth}%` }]}>NickName</Text>
+            <Text style={[styles.tableCell, styles.headerCell, { width: `${dynamicWidth}%` }]}>Frequency</Text>
             <Text style={[styles.tableCell, styles.headerCell, styles.dateCell]}>Day Due</Text>
             <Text style={[styles.tableCell, styles.headerCell, { width: `${dynamicWidth}%` }]}>Payment Method</Text>
             <Text style={[styles.tableCell, styles.headerCell, { width: `${dynamicWidth}%` }]}>Monthly Budget</Text>
@@ -154,6 +155,9 @@ export const CheckListPDF = ({
                 <Text style={[styles.tableCell, styles.categoryCell, { width: `${dynamicWidth}%`, borderRight: 0 }]}>
                   {category}
                 </Text>
+                <Text
+                  style={[styles.tableCell, styles.categoryCell, { width: `${dynamicWidth}%`, borderRight: 0 }]}
+                ></Text>
                 <Text
                   style={[styles.tableCell, styles.categoryCell, { width: `${dynamicWidth}%`, borderRight: 0 }]}
                 ></Text>
@@ -184,6 +188,9 @@ export const CheckListPDF = ({
                     <Text
                       style={[styles.tableCell, styles.categoryCell, { width: `${dynamicWidth}%`, borderRight: 0 }]}
                     ></Text>
+                    <Text
+                      style={[styles.tableCell, styles.categoryCell, { width: `${dynamicWidth}%`, borderRight: 0 }]}
+                    ></Text>
                     <Text style={[styles.tableCell, styles.categoryCell, styles.dateCell, { borderRight: 0 }]}></Text>
                     <Text
                       style={[styles.tableCell, styles.categoryCell, { width: `${dynamicWidth}%`, borderRight: 0 }]}
@@ -208,6 +215,7 @@ export const CheckListPDF = ({
                         <View style={styles.tableRow} key={`${category}_${budgetItem}_${descriptionIndex}`}>
                           <Text style={[styles.tableCell, { width: `${dynamicWidth}%` }]}>{details.Description}</Text>
                           <Text style={[styles.tableCell, { width: `${dynamicWidth}%` }]}>{details.NickName}</Text>
+                          <Text style={[styles.tableCell, { width: `${dynamicWidth}%` }]}>{details.Frequency}</Text>
                           <Text style={[styles.tableCell, styles.dateCell]}>{details.DueDate}</Text>
                           <Text style={[styles.tableCell, { width: `${dynamicWidth}%` }]}>{details.PaymentMethod}</Text>
                           <Text style={[styles.tableCell, { width: `${dynamicWidth}%` }]}>
@@ -228,6 +236,7 @@ export const CheckListPDF = ({
             <Text style={[styles.tableCell, styles.headerCell, { width: `${dynamicWidth}%`, borderRight: 0 }]}>
               OVERALL TOTAL
             </Text>
+            <Text style={[styles.tableCell, styles.headerCell, { width: `${dynamicWidth}%`, borderRight: 0 }]}></Text>
             <Text style={[styles.tableCell, styles.headerCell, { width: `${dynamicWidth}%`, borderRight: 0 }]}></Text>
             <Text style={[styles.tableCell, styles.headerCell, styles.dateCell, { borderRight: 0 }]}></Text>
             <Text style={[styles.tableCell, styles.headerCell, { width: `${dynamicWidth}%`, borderRight: 0 }]}></Text>
