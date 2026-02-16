@@ -64,6 +64,8 @@ export const getIncomeAmount = (user, amount, frequency, column) => {
         Amount = amount * 1;
       } else if (frequency === 'Monthly') {
         Amount = amount * 12;
+      } else if (frequency === 'Quarterly') {
+        Amount = amount * 4;
       } else if (frequency === 'Semi-Monthly') {
         Amount = amount * 24;
       } else if (frequency === 'Weekly') {
@@ -78,6 +80,8 @@ export const getIncomeAmount = (user, amount, frequency, column) => {
     if (column === 'Monthly') {
       if (frequency === 'Yearly') {
         Amount = amount / 12;
+      } else if (frequency === 'Quarterly') {
+        Amount = amount / 3;
       } else if (frequency === 'Monthly') {
         Amount = amount * 1;
       } else if (frequency === 'Semi-Monthly') {
@@ -180,9 +184,12 @@ export const getGrossMonthlyTotal = (user, data) => {
     let monthlyIncome = 0;
 
     switch (payFrequency) {
-      // case "Yearly":
-      //   monthlyIncome = income / 12;
-      //   break;
+      case 'Yearly':
+        monthlyIncome = income / 12;
+        break;
+      case 'Quarterly':
+        monthlyIncome = income / 3;
+        break;
       case 'Monthly':
         monthlyIncome = income;
         break;
@@ -213,9 +220,12 @@ export const getNetMonthlyTotal = (user, data) => {
     let monthlyIncome = 0;
 
     switch (payFrequency) {
-      // case "Yearly":
-      //   monthlyIncome = income / 12;
-      //   break;
+      case 'Yearly':
+        monthlyIncome = income / 12;
+        break;
+      case 'Quarterly':
+        monthlyIncome = income / 3;
+        break;
       case 'Monthly':
         monthlyIncome = income;
         break;
@@ -249,6 +259,9 @@ export const getGrossYearlyTotal = (user, data) => {
       case 'Yearly':
         yearlyIncome = income;
         break;
+      case 'Quarterly':
+        yearlyIncome = income * 4;
+        break;
       case 'Monthly':
         yearlyIncome = income * 12;
         break;
@@ -281,6 +294,9 @@ export const getNetYearlyTotal = (user, data) => {
     switch (payFrequency) {
       case 'Yearly':
         yearlyIncome = income;
+        break;
+      case 'Quarterly':
+        yearlyIncome = income * 4;
         break;
       case 'Monthly':
         yearlyIncome = income * 12;
@@ -333,6 +349,9 @@ export const getMonthlyBudgetTotal = (user, data) => {
       case 'Yearly':
         monthlyBudget = amount / 12;
         break;
+      case 'Quarterly':
+        monthlyBudget = amount / 3;
+        break;
       case 'Monthly':
         monthlyBudget = amount;
         break;
@@ -364,6 +383,10 @@ export const getMonthlyBudgetCategory = (user, data, cat) => {
       case 'Yearly':
         monthlyBudget = amount / 12;
         break;
+      case 'Quarterly':
+        monthlyBudget = amount / 3;
+        break;
+
       case 'Monthly':
         monthlyBudget = amount;
         break;
@@ -395,6 +418,9 @@ export const getMonthlyBudgetItem = (user, data, cat, budgetItem) => {
       case 'Yearly':
         monthlyBudget = amount / 12;
         break;
+      case 'Quarterly':
+        monthlyBudget = amount / 3;
+        break;
       case 'Monthly':
         monthlyBudget = amount;
         break;
@@ -424,6 +450,9 @@ export const getYearlyBudgetTotal = (user, data) => {
     switch (frequency) {
       case 'Yearly':
         yearlyBudget = amount;
+        break;
+      case 'Quarterly':
+        yearlyBudget = amount * 4;
         break;
       case 'Monthly':
         yearlyBudget = amount * 12;
@@ -622,9 +651,12 @@ export const getUnformattedGrossMonthlyTotal = (data) => {
     let monthlyIncome = 0;
 
     switch (payFrequency) {
-      // case "Yearly":
-      //   monthlyIncome = income / 12;
-      //   break;
+      case 'Yearly':
+        monthlyIncome = income / 12;
+        break;
+      case 'Quarterly':
+        monthlyIncome = income / 3;
+        break;
       case 'Monthly':
         monthlyIncome = income;
         break;
@@ -669,9 +701,12 @@ export const getGrossMonthlyTotalOwner = (user, data) => {
     let monthlyIncome = 0;
 
     switch (payFrequency) {
-      // case "Yearly":
-      //   monthlyIncome = income / 12;
-      //   break;
+      case 'Yearly':
+        monthlyIncome = income / 12;
+        break;
+      case 'Quarterly':
+        monthlyIncome = income / 3;
+        break;
       case 'Monthly':
         monthlyIncome = income;
         break;
@@ -703,9 +738,12 @@ export const getGrossMonthlyTotalJoint = (data) => {
     let monthlyIncome = 0;
 
     switch (payFrequency) {
-      // case "Yearly":
-      //   monthlyIncome = income / 12;
-      //   break;
+      case 'Yearly':
+        monthlyIncome = income / 12;
+        break;
+      case 'Quarterly':
+        monthlyIncome = income / 3;
+        break;
       case 'Monthly':
         monthlyIncome = income;
         break;
@@ -826,6 +864,9 @@ export const getUnformattedGrossYearlyTotal = (data) => {
       case 'Yearly':
         yearlyIncome = income;
         break;
+      case 'Quarterly':
+        yearlyIncome = income * 4;
+        break;
       case 'Monthly':
         yearlyIncome = income * 12;
         break;
@@ -858,6 +899,9 @@ export const getUnformattedNetYearlyTotal = (data) => {
       case 'Yearly':
         yearlyIncome = income;
         break;
+      case 'Quarterly':
+        yearlyIncome = income * 4;
+        break;
       case 'Monthly':
         yearlyIncome = income * 12;
         break;
@@ -887,9 +931,12 @@ export const getUnformattedNetMonthlyTotal = (data) => {
     let monthlyIncome = 0;
 
     switch (payFrequency) {
-      // case "Yearly":
-      //   monthlyIncome = income / 12;
-      //   break;
+      case 'Yearly':
+        monthlyIncome = income / 12;
+        break;
+      case 'Quarterly':
+        monthlyIncome = income / 3;
+        break;
       case 'Monthly':
         monthlyIncome = income;
         break;
@@ -920,9 +967,12 @@ export const getUnformattedNetMonthlyExp = (data) => {
     let monthlyIncome = 0;
 
     switch (payFrequency) {
-      // case "Yearly":
-      //   monthlyIncome = income / 12;
-      //   break;
+      case 'Yearly':
+        monthlyIncome = income / 12;
+        break;
+      case 'Quarterly':
+        monthlyIncome = income / 3;
+        break;
       case 'Monthly':
         monthlyIncome = income;
         break;
@@ -964,6 +1014,9 @@ export const getUnformattedYearlyBudgetTotal = (data) => {
       case 'Yearly':
         yearlyBudget = amount;
         break;
+      case 'Quarterly':
+        yearlyBudget = amount * 4;
+        break;
       case 'Monthly':
         yearlyBudget = amount * 12;
         break;
@@ -994,6 +1047,9 @@ export const getUnformattedMonthlyBudget = (data) => {
     switch (payFrequency) {
       case 'Yearly':
         monthlyBudget = amount / 12;
+        break;
+      case 'Quarterly':
+        monthlyBudget = amount / 3;
         break;
       case 'Monthly':
         monthlyBudget = amount;
@@ -1165,6 +1221,9 @@ export const getUniqueBudgetItemsWithSum = (data) => {
       case 'Yearly':
         monthlyBudget = amount / 12;
         break;
+      case 'Quarterly':
+        monthlyBudget = amount / 3;
+        break;
       case 'Monthly':
         monthlyBudget = amount;
         break;
@@ -1210,6 +1269,9 @@ export const getUniqueDescriptionsWithSumForEachBudgetItem = (data) => {
     switch (payFrequency) {
       case 'Yearly':
         monthlyBudget = amount / 12;
+        break;
+      case 'Quarterly':
+        monthlyBudget = amount / 3;
         break;
       case 'Monthly':
         monthlyBudget = amount;
