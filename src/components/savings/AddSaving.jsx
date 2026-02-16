@@ -144,6 +144,7 @@ export const AddSaving = ({ open, setOpen, recordData, chatUsers }) => {
                   { value: 'Bi-Weekly', label: 'Bi-Weekly: Deducted Every 2 Weeks' },
                   { value: 'Semi-Monthly', label: 'Semi-Monthly: Deducted on 15th & last day' },
                   { value: 'Monthly', label: 'Monthly: Deducted 1x per month' },
+                  { value: 'Quarterly', label: 'Quarterly: Deducted 4x per year' },
                   { value: 'Yearly', label: 'Yearly: Deducted 1x per year' },
                 ]}
                 className="w-full rounded"
