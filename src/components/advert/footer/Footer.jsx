@@ -46,8 +46,8 @@ function Footer() {
             </div>
             <div className="flex flex-col item-left gap-2 pt-2">
               <h1 className="font-extrabold text-xl">Mailing address: </h1>
-              <p className="text-[#0A0A0A] font-medium">Bishop Ranch 3</p>
-              <p className="text-[#0A0A0A] font-medium">2603 Camino Ramon, Suite 200</p>
+              {/* <p className="text-[#0A0A0A] font-medium">Bishop Ranch 3</p> */}
+              <p className="text-[#0A0A0A] font-medium">231 Market Place, Suite 504</p>
               <p className="text-[#0A0A0A] font-medium">San Ramon, CA 94583</p>
               <p className="text-[#0A0A0A] font-medium">USA</p>
             </div>
