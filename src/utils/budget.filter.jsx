@@ -3,12 +3,12 @@ export const retirementOwners = ['Self', 'Partner'];
 export const expenseOwners = ['Self', 'Partner', 'Joint'];
 export const paymentMethods = ['Auto Debit', 'Auto Transfer', 'Bill Pay', 'Check or Cash', 'Credit'];
 export const daydues = [
-  // 'Weekly',
-  // 'Biweekly',
-  // 'Semi-Monthly',
-  // 'Monthly',
-  // 'Quarterly',
-  // 'Annually',
+  'Weekly',
+  'Biweekly',
+  'Semi-Monthly',
+  'Monthly',
+  'Quarterly',
+  'Annually',
   '01',
   '02',
   '03',
