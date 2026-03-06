@@ -13,7 +13,7 @@ import { set } from 'date-fns';
 const ChargeCustomer = ({ card, handleClose, coupons }) => {
   const [message, setMessage] = useState(null);
   const [coupon, setCoupon] = useState(0);
-  const subscriptionAmount = Number(7.99 * 12);
+  const subscriptionAmount = Number(3.99 * 12);
   const [finalAmount, setFinalAmount] = useState(subscriptionAmount);
   const [isLoading, setIsLoading] = useState(false);
   const { user } = useUserStore();
