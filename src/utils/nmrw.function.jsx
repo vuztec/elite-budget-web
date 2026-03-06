@@ -74,7 +74,7 @@ export const getSpecial = (isFull) => {
       {!isOn && isFull && (
         <div className="flex flex-col gap-0 bg-[#2F2F2F] p-3 items-center rounded-lg">
           <p className="text-yellow-200 text-lg md:text-4xl">$3.99/month</p>
-          <p className="text-yellow-200 text-lg">(Billed annually $47.88)</p>
+          <p className="text-yellow-200 text-lg">(Billed annually at $47.88)</p>
         </div>
       )}
       {isOn && isFull && (
@@ -115,7 +115,7 @@ export const getSpecial = (isFull) => {
         <div className="flex flex-col items-center text-sm md:text-lg gap-2 w-96 mb-5 p-0">
           <div className="flex flex-col gap-0 bg-[#2F2F2F] p-3 items-center rounded-lg">
             <p className="text-yellow-200 text-lg md:text-4xl">$3.99/month</p>
-            <p className="text-yellow-200 text-lg">(Billed annually $47.88)</p>
+            <p className="text-yellow-200 text-lg">(Billed annually at $47.88)</p>
           </div>
           <a
             href="/signup"
