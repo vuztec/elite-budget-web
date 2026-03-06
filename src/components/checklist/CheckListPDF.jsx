@@ -254,7 +254,7 @@ export const CheckListPDF = ({
         </View>
 
         <View style={styles.footerContainer}>
-          <Text>Copyright © 2024 Elite Cash Flow Products, LLC</Text>
+          <Text>Copyright © 2024 Elite Cash Flow™ Products, LLC</Text>
           <Text>All Rights Reserved</Text>
         </View>
 

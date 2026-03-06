@@ -16,10 +16,10 @@ export default function CheckoutForm({ paymentData, couponData }) {
   const [isLoading, setIsLoading] = useState(false);
 
   // Calculate display amount from payment data or fallback to default
-  const displayAmount = paymentData?.amount ? (paymentData.amount / 100).toFixed(2) : (7.99 * 12).toFixed(2);
+  const displayAmount = paymentData?.amount ? (paymentData.amount / 100).toFixed(2) : (3.99 * 12).toFixed(2);
   const originalAmount = paymentData?.originalAmount
     ? (paymentData.originalAmount / 100).toFixed(2)
-    : (7.99 * 12).toFixed(2);
+    : (3.99 * 12).toFixed(2);
 
   // Check if discount is applied - either from backend paymentData or frontend couponData
   const hasDiscount =

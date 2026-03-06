@@ -263,7 +263,7 @@ export const Subscription = () => {
                       <p>{isTrial ? 'Start your 14-day FREE Trial! After that, just' : ''}</p>
                       <div className="flex items-start gap-1">
                         <p className=""> $95.88 upfront for a year</p>
-                        <p className="italic">(only $7.99/month)</p>
+                        <p className="italic">(only $3.99/month)</p>
                       </div>
                     </td>
                   </tr>

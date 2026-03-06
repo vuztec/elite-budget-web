@@ -11,14 +11,14 @@ export const getNoData = (item) => {
 };
 
 export const getSpecial = (isFull) => {
-  const isOn = true;
+  const isOn = false;
   return (
     // <>
     //   {!isOn && isFull && (
     //     <div className="flex flex-col gap-0 bg-[#2F2F2F] p-3 items-center rounded-lg">
     //       <p className="text-yellow-200 text-lg md:text-xl">Start your 14-day FREE Trial!</p>
     //       <p className="text-yellow-200 text-lg md:text-xl">
-    //         After that, just $95.88 upfront for a year (only $7.99/month)
+    //         After that, just $95.88 upfront for a year (only $3.99/month)
     //       </p>
     //     </div>
     //   )}
@@ -73,7 +73,8 @@ export const getSpecial = (isFull) => {
     <>
       {!isOn && isFull && (
         <div className="flex flex-col gap-0 bg-[#2F2F2F] p-3 items-center rounded-lg">
-          <p className="text-yellow-200 text-lg md:text-xl">Just $95.88 upfront for a year (only $7.99/month)</p>
+          <p className="text-yellow-200 text-lg md:text-4xl">$3.99/month</p>
+          <p className="text-yellow-200 text-lg">(Billed annually $47.88)</p>
         </div>
       )}
       {isOn && isFull && (
@@ -111,7 +112,11 @@ export const getSpecial = (isFull) => {
         </div>
       )}
       {!isOn && !isFull && (
-        <div className="text-sm md:text-lg gap-1 w-96 mb-5 p-0">
+        <div className="flex flex-col items-center text-sm md:text-lg gap-2 w-96 mb-5 p-0">
+          <div className="flex flex-col gap-0 bg-[#2F2F2F] p-3 items-center rounded-lg">
+            <p className="text-yellow-200 text-lg md:text-4xl">$3.99/month</p>
+            <p className="text-yellow-200 text-lg">(Billed annually $47.88)</p>
+          </div>
           <a
             href="/signup"
             className="flex w-fit items-center gap-2 text-lg lg:text-xl font-medium py-3 px-4 hover:bg-green-300 bg-tryBg text-tryText shadow-md rounded-md"

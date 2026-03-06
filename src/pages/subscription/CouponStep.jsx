@@ -8,7 +8,7 @@ const CouponStep = ({ coupons, onProceed, onCancel, loading = false }) => {
   const [stripeCoupon, setStripeCoupon] = useState('');
   const [finalAmount, setFinalAmount] = useState(0);
 
-  const subscriptionAmount = Number(7.99 * 12);
+  const subscriptionAmount = Number(3.99 * 12);
 
   useEffect(() => {
     setFinalAmount(subscriptionAmount);

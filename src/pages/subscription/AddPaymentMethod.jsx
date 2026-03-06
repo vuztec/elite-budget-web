@@ -27,7 +27,7 @@ const AddPaymentMethod = ({ handleClose, isTrial }) => {
   // const [couponCode, setCouponCode] = useState('');
   // const [stripeCoupon, setStripeCoupon] = useState('');
 
-  // const subscriptionAmount = Number(7.99 * 12);
+  // const subscriptionAmount = Number(3.99 * 12);
   // const [finalAmount, setFinalAmount] = useState(subscriptionAmount);
 
   // useEffect(() => {
