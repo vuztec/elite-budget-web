@@ -6,6 +6,7 @@ import {
   getMonthlyBudgetItem,
   getMonthlyBudgetTotal,
 } from '../../utils/budget.calculation';
+import { getMonthlyAmount } from '../../utils/budget.filter';
 
 const styles = StyleSheet.create({
   page: {
@@ -136,7 +137,7 @@ export const CheckListPDF = ({
           <View style={[styles.tableRow, styles.tableHeader]} fixed>
             <Text style={[styles.tableCell, styles.headerCell, { width: `${dynamicWidth}%` }]}>Savings & Spending</Text>
             <Text style={[styles.tableCell, styles.headerCell, { width: `${dynamicWidth}%` }]}>NickName</Text>
-            <Text style={[styles.tableCell, styles.headerCell, { width: `${dynamicWidth}%` }]}>Frequency</Text>
+            {/* <Text style={[styles.tableCell, styles.headerCell, { width: `${dynamicWidth}%` }]}>Frequency</Text> */}
             <Text style={[styles.tableCell, styles.headerCell, styles.dateCell]}>Day Due</Text>
             <Text style={[styles.tableCell, styles.headerCell, { width: `${dynamicWidth}%` }]}>Payment Method</Text>
             <Text style={[styles.tableCell, styles.headerCell, { width: `${dynamicWidth}%` }]}>Monthly Budget</Text>
@@ -158,9 +159,9 @@ export const CheckListPDF = ({
                 <Text
                   style={[styles.tableCell, styles.categoryCell, { width: `${dynamicWidth}%`, borderRight: 0 }]}
                 ></Text>
-                <Text
+                {/* <Text
                   style={[styles.tableCell, styles.categoryCell, { width: `${dynamicWidth}%`, borderRight: 0 }]}
-                ></Text>
+                ></Text> */}
                 <Text style={[styles.tableCell, styles.categoryCell, styles.dateCell, { borderRight: 0 }]}></Text>
                 <Text
                   style={[styles.tableCell, styles.categoryCell, { width: `${dynamicWidth}%`, borderRight: 0 }]}
@@ -188,9 +189,9 @@ export const CheckListPDF = ({
                     <Text
                       style={[styles.tableCell, styles.categoryCell, { width: `${dynamicWidth}%`, borderRight: 0 }]}
                     ></Text>
-                    <Text
+                    {/* <Text
                       style={[styles.tableCell, styles.categoryCell, { width: `${dynamicWidth}%`, borderRight: 0 }]}
-                    ></Text>
+                    ></Text> */}
                     <Text style={[styles.tableCell, styles.categoryCell, styles.dateCell, { borderRight: 0 }]}></Text>
                     <Text
                       style={[styles.tableCell, styles.categoryCell, { width: `${dynamicWidth}%`, borderRight: 0 }]}
@@ -215,11 +216,11 @@ export const CheckListPDF = ({
                         <View style={styles.tableRow} key={`${category}_${budgetItem}_${descriptionIndex}`}>
                           <Text style={[styles.tableCell, { width: `${dynamicWidth}%` }]}>{details.Description}</Text>
                           <Text style={[styles.tableCell, { width: `${dynamicWidth}%` }]}>{details.NickName}</Text>
-                          <Text style={[styles.tableCell, { width: `${dynamicWidth}%` }]}>{details.Frequency}</Text>
+                          {/* <Text style={[styles.tableCell, { width: `${dynamicWidth}%` }]}>{details.Frequency}</Text> */}
                           <Text style={[styles.tableCell, styles.dateCell]}>{details.DueDate}</Text>
                           <Text style={[styles.tableCell, { width: `${dynamicWidth}%` }]}>{details.PaymentMethod}</Text>
                           <Text style={[styles.tableCell, { width: `${dynamicWidth}%` }]}>
-                            {getFormattedValueTotal(user, details.MonthlyBudget)}
+                            {getFormattedValueTotal(user, getMonthlyAmount(details))}
                           </Text>
                           {monthHeaders.map((_, index) => (
                             <Text key={index} style={[styles.tableCell, styles.dateCell]}></Text>
@@ -237,7 +238,7 @@ export const CheckListPDF = ({
               OVERALL TOTAL
             </Text>
             <Text style={[styles.tableCell, styles.headerCell, { width: `${dynamicWidth}%`, borderRight: 0 }]}></Text>
-            <Text style={[styles.tableCell, styles.headerCell, { width: `${dynamicWidth}%`, borderRight: 0 }]}></Text>
+            {/* <Text style={[styles.tableCell, styles.headerCell, { width: `${dynamicWidth}%`, borderRight: 0 }]}></Text> */}
             <Text style={[styles.tableCell, styles.headerCell, styles.dateCell, { borderRight: 0 }]}></Text>
             <Text style={[styles.tableCell, styles.headerCell, { width: `${dynamicWidth}%`, borderRight: 0 }]}></Text>
             <Text style={[styles.tableCell, styles.headerCell, { width: `${dynamicWidth}%`, borderRight: 0 }]}>

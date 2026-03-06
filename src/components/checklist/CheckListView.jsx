@@ -7,6 +7,7 @@ import {
   getMonthlyBudgetTotal,
 } from '../../utils/budget.calculation';
 import './checklist.css';
+import { getMonthlyAmount } from '../../utils/budget.filter';
 export const CheckListView = ({
   uniqueCategories,
   uniqueBudgetItemsByCategory,
@@ -25,7 +26,7 @@ export const CheckListView = ({
               <tr className="text-black font-bold bg-[whitesmoke] border border-gray-400 text-left text-sm xl:text-[16px] uppercase">
                 <th className="px-1 py-2">Savings & Spending</th>
                 <th className="border-l border-gray-300 px-1 py-2">Nickname</th>
-                <th className="border-l border-gray-300 px-1 py-2">Frequency</th>
+                {/* <th className="border-l border-gray-300 px-1 py-2">Frequency</th> */}
                 <th className="border-l border-gray-300 px-1 py-2">Day Due</th>
                 <th className="border-l border-gray-300 px-1 py-2">Payment Method</th>
                 <th className="border-l border-gray-300 px-1 py-2">Monthly Budget</th>
@@ -46,7 +47,7 @@ export const CheckListView = ({
 
                       <td className=""></td>
                       <td className=""></td>
-                      <td className=""></td>
+                      {/* <td className=""></td> */}
                       <td className=""></td>
                       <td className="">{getMonthlyBudgetCategory(user, combinedData, category)}</td>
                       {monthHeaders?.map((index) => (
@@ -61,7 +62,7 @@ export const CheckListView = ({
 
                             <td className=""></td>
                             <td className=""></td>
-                            <td className=""></td>
+                            {/* <td className=""></td> */}
                             <td className=""></td>
                             <td className="">{getMonthlyBudgetItem(user, combinedData, category, budgetItem)}</td>
                             {monthHeaders.map((index) => (
@@ -83,9 +84,9 @@ export const CheckListView = ({
                                   <td className="min-w-fit whitespace-nowrap border-l p-2 border-gray-200">
                                     {details.NickName}
                                   </td>
-                                  <td className="min-w-fit whitespace-nowrap border-l p-2 border-gray-200">
+                                  {/* <td className="min-w-fit whitespace-nowrap border-l p-2 border-gray-200">
                                     {details.Frequency}
-                                  </td>
+                                  </td> */}
                                   <td className="min-w-fit whitespace-nowrap border-l p-2 border-gray-200">
                                     {details.DueDate}
                                   </td>
@@ -93,7 +94,7 @@ export const CheckListView = ({
                                     {details.PaymentMethod}
                                   </td>
                                   <td className="min-w-fit whitespace-nowrap border-l p-2 border-gray-200">
-                                    {getFormattedValueTotal(user, details.MonthlyBudget)}
+                                    {getFormattedValueTotal(user, getMonthlyAmount(details))}
                                   </td>
 
                                   {monthHeaders?.map((index) => (
@@ -114,7 +115,7 @@ export const CheckListView = ({
 
                 <td className=""></td>
                 <td className=""></td>
-                <td className=""></td>
+                {/* <td className=""></td> */}
                 <td className=""></td>
                 <td className="">{getMonthlyBudgetTotal(user, combinedData)}</td>
                 {monthHeaders?.map((index) => (

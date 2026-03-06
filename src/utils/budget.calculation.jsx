@@ -770,7 +770,31 @@ export const getUnformattedMonthlyBudgetTotal = (data) => {
   const updatedData = data?.filter((data) => data.Owner === 'Joint');
   const Amount = updatedData?.reduce((accumulator, record) => {
     const amount = record?.MonthlyBudget || 0;
-    return accumulator + Number(amount);
+    const payFrequency = record?.Frequency || '';
+    let monthlyBudget = 0;
+    switch (payFrequency) {
+      case 'Yearly':
+        monthlyBudget = amount / 12;
+        break;
+      case 'Quarterly':
+        monthlyBudget = amount / 3;
+        break;
+      case 'Monthly':
+        monthlyBudget = amount;
+        break;
+      case 'Semi-Monthly':
+        monthlyBudget = amount * 2;
+        break;
+      case 'Weekly':
+        monthlyBudget = (amount * 52) / 12;
+        break;
+      case 'Bi-Weekly':
+        monthlyBudget = (amount * 26) / 12;
+        break;
+      default:
+        monthlyBudget = 0;
+    }
+    return accumulator + Number(monthlyBudget);
   }, 0);
   return Amount;
 };

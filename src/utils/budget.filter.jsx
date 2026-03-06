@@ -152,7 +152,37 @@ export const getCatGridData = (data, owner, catFilter) => {
 };
 
 ///************************CHECKLIST*************************** */
+export const getMonthlyAmount = (record = {}) => {
+  const amount = Number(record?.MonthlyBudget) || 0;
+  const payFrequency = String(record?.Frequency || '')
+    .trim()
+    .toLowerCase();
+  let monthlyBudget = amount;
+  switch (payFrequency) {
+    case 'yearly':
+      monthlyBudget = amount / 12;
+      break;
+    case 'quarterly':
+      monthlyBudget = amount / 3;
+      break;
+    case 'monthly':
+      monthlyBudget = amount;
+      break;
+    case 'semi-monthly':
+      monthlyBudget = amount * 2;
+      break;
+    case 'weekly':
+      monthlyBudget = (amount * 52) / 12;
+      break;
+    case 'bi-weekly':
+      monthlyBudget = (amount * 26) / 12;
+      break;
+    default:
+      monthlyBudget = amount;
+  }
 
+  return Number(monthlyBudget.toFixed(2));
+};
 export const getCombineData = (savings, expenses, retirement, debts) => {
   const combinedArray = [];
   // Function to add data from a specific category
@@ -164,7 +194,7 @@ export const getCombineData = (savings, expenses, retirement, debts) => {
         Description: item.Description || '',
         Frequency: item.Frequency || '',
         DueDate: item.DueDate || '',
-        MonthlyBudget: item.MonthlyBudget || 0,
+        MonthlyBudget: item?.MonthlyBudget,
         PaymentMethod: item.PaymentMethod || '',
         NickName: item.NickName || '',
       });
