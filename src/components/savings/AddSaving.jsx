@@ -58,6 +58,8 @@ export const AddSaving = ({ open, setOpen, recordData, chatUsers }) => {
     const numericSelectedID = Number(recordData.id);
     setIsLoading(() => true);
 
+    if (data.MarketValue) data.MarketValue = Number(data.MarketValue);
+
     axios
       .patch('/api/savings-retirements/' + numericSelectedID, data)
       .then(({ data }) => {
