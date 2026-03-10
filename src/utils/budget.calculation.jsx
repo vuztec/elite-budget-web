@@ -350,7 +350,7 @@ export const getMonthlyBudgetTotal = (user, data) => {
         monthlyBudget = amount / 12;
         break;
       case 'Quarterly':
-        monthlyBudget = amount / 3;
+        monthlyBudget = amount / 4;
         break;
       case 'Monthly':
         monthlyBudget = amount;
@@ -384,7 +384,7 @@ export const getMonthlyBudgetCategory = (user, data, cat) => {
         monthlyBudget = amount / 12;
         break;
       case 'Quarterly':
-        monthlyBudget = amount / 3;
+        monthlyBudget = amount / 4;
         break;
 
       case 'Monthly':
@@ -419,7 +419,7 @@ export const getMonthlyBudgetItem = (user, data, cat, budgetItem) => {
         monthlyBudget = amount / 12;
         break;
       case 'Quarterly':
-        monthlyBudget = amount / 3;
+        monthlyBudget = amount / 4;
         break;
       case 'Monthly':
         monthlyBudget = amount;
@@ -777,7 +777,7 @@ export const getUnformattedMonthlyBudgetTotal = (data) => {
         monthlyBudget = amount / 12;
         break;
       case 'Quarterly':
-        monthlyBudget = amount / 3;
+        monthlyBudget = amount / 4;
         break;
       case 'Monthly':
         monthlyBudget = amount;
@@ -1073,7 +1073,7 @@ export const getUnformattedMonthlyBudget = (data) => {
         monthlyBudget = amount / 12;
         break;
       case 'Quarterly':
-        monthlyBudget = amount / 3;
+        monthlyBudget = amount / 4;
         break;
       case 'Monthly':
         monthlyBudget = amount;
@@ -1246,7 +1246,7 @@ export const getUniqueBudgetItemsWithSum = (data) => {
         monthlyBudget = amount / 12;
         break;
       case 'Quarterly':
-        monthlyBudget = amount / 3;
+        monthlyBudget = amount / 4;
         break;
       case 'Monthly':
         monthlyBudget = amount;
@@ -1295,7 +1295,7 @@ export const getUniqueDescriptionsWithSumForEachBudgetItem = (data) => {
         monthlyBudget = amount / 12;
         break;
       case 'Quarterly':
-        monthlyBudget = amount / 3;
+        monthlyBudget = amount / 4;
         break;
       case 'Monthly':
         monthlyBudget = amount;
