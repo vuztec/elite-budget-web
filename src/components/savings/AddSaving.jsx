@@ -45,11 +45,11 @@ export const AddSaving = ({ open, setOpen, recordData, chatUsers }) => {
       setValue('Owner', recordData.Owner);
       setValue('Frequency', recordData.Frequency);
       setValue('PaymentMethod', recordData.PaymentMethod);
-      setValue('MarketValue', recordData.MarketValue ? Number(recordData.MarketValue).toFixed(2) : '');
-      setValue('MonthlyBudget', recordData.MonthlyBudget ? Number(recordData.MonthlyBudget).toFixed(2) : '');
+      setValue('MarketValue', recordData.MarketValue ? Number(recordData.MarketValue).toFixed(2) : 0);
+      setValue('MonthlyBudget', recordData.MonthlyBudget ? Number(recordData.MonthlyBudget).toFixed(2) : 0);
       setValue('DueDate', recordData.DueDate);
     }
-
+    setValue('MarketValue', Number(0).toFixed(2));
     return () => reset();
   }, [recordData]);
 
