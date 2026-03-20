@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   getActualGoal,
+  getActualGoalExp,
   getActualGoalYearly,
   getBudgetGoal,
   getDifference,
@@ -34,7 +35,7 @@ const MonthlyExpenseHome = ({ expenseGridData, incomeGridData, maingoals, owner 
                         owner === 'Joint' ? 'bg-[whitesmoke]' : 'bg-white',
                       )}
                     >
-                      {owner === 'Joint' ? '' : getActualGoal(incomeGridData, expenseGridData, 'Expenses')}%
+                      {owner === 'Joint' ? '' : getActualGoalExp(incomeGridData, expenseGridData, 'Expenses')}%
                     </p>
                     <p className="p-2 hidden lg:block">
                       {owner === 'Joint' ? '' : getIcon(incomeGridData, expenseGridData, 'Expenses', maingoals)}

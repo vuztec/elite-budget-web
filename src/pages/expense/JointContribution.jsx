@@ -231,7 +231,7 @@ export const JointContribution = () => {
                     <tr className="border border-gray-300 text-black">
                       <td className="min-w-fit whitespace-nowrap p-2">Total Joint Expenses</td>
                       <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">
-                        <span>{getFormattedValueTotal(user, totalJointExpense)}</span>
+                        <span>{getFormattedValueTotal(user, Math.round(totalJointExpense))}</span>
                       </td>
                       <td className="min-w-fit whitespace-nowrap p-2 font-bold border-l border-gray-300">
                         <span></span>

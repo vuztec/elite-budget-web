@@ -17,6 +17,7 @@ const MonthlyExpenses = ({ expenseGridData, incomeGridData, maingoals, expensego
   const { user } = useUserStore();
   const [catData, setCatData] = useState({});
   const [descData, setDescData] = useState({});
+  console.log(descData);
 
   useEffect(() => {
     const filteredData = expenseGridData.filter((data) => data.MonthlyBudget > 0);

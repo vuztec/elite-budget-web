@@ -140,7 +140,6 @@ export const BudgetDetails = () => {
 
       const expenseData = getOwnerExpenseGridData(expenses, owner);
       setExpenseGridData(expenseData);
-
       const debtData = getOwnerGridData(debts, owner);
       setDebtGridData(debtData);
 
